@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ContentCard from "../../components/ContentCard.astro";
 ---
 
 <Layout title="Digital Garden">
@@ -11,8 +12,30 @@ Digital Garden
 </h1>
 
 <p class="mt-4 text-gray-400">
-Learning notes, concepts and evolving ideas.
+A growing archive of ideas, experiments and knowledge.
 </p>
+
+<div class="grid gap-6 mt-10 md:grid-cols-3">
+
+<ContentCard
+title="Notes"
+description="Engineering thoughts and principles."
+href="/notes"
+/>
+
+<ContentCard
+title="Writing"
+description="Technical essays and discoveries."
+href="/writing"
+/>
+
+<ContentCard
+title="Experiments"
+description="Prototypes and technical explorations."
+href="/experiments"
+/>
+
+</div>
 
 </main>
 
