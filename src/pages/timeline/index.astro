@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
 
 const timeline = await getCollection("timeline");
@@ -17,26 +18,15 @@ Timeline
 Engineering journey and milestones.
 </p>
 
-
-<div class="mt-10 space-y-6">
+<div class="grid gap-6 mt-10">
 
 {
-timeline.map(item => (
-<article class="border border-gray-800 rounded-xl p-6">
-
-<h2 class="text-2xl font-bold">
-{item.data.title}
-</h2>
-
-<p class="mt-3 text-gray-400">
-{item.data.description}
-</p>
-
-<div class="mt-4 text-sm text-gray-500">
-{item.data.date.toDateString()}
-</div>
-
-</article>
+timeline.map(event => (
+<ContentCard
+title={event.data.title}
+description={event.data.description}
+meta={`${event.data.date.toDateString()} • ${event.data.tags.join(" • ")}`}
+/>
 ))
 }
 
