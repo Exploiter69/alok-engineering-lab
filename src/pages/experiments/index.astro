@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
 
 const experiments = await getCollection("experiments");
@@ -17,26 +18,15 @@ Experiments
 Small technical explorations and prototypes.
 </p>
 
-
-<div class="grid gap-6 mt-10">
+<div class="grid gap-6 mt-10 md:grid-cols-2">
 
 {
 experiments.map(experiment => (
-<article class="border border-gray-800 rounded-xl p-6">
-
-<h2 class="text-2xl font-bold">
-{experiment.data.title}
-</h2>
-
-<p class="mt-3 text-gray-400">
-{experiment.data.description}
-</p>
-
-<div class="mt-4 text-sm text-gray-500">
-{experiment.data.tags.join(" • ")}
-</div>
-
-</article>
+<ContentCard
+title={experiment.data.title}
+description={experiment.data.description}
+meta={experiment.data.tags.join(" • ")}
+/>
 ))
 }
 
