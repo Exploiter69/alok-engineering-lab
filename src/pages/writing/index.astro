@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("writing");
@@ -17,21 +18,15 @@ Writing
 Technical essays, research notes and engineering discoveries.
 </p>
 
-<div class="grid gap-6 mt-10">
+<div class="grid gap-6 mt-10 md:grid-cols-2">
 
 {
 posts.map(post => (
-<article class="border border-gray-800 rounded-xl p-6">
-
-<h2 class="text-2xl font-bold">
-{post.data.title}
-</h2>
-
-<p class="mt-3 text-gray-400">
-{post.data.description}
-</p>
-
-</article>
+<ContentCard
+title={post.data.title}
+description={post.data.description}
+meta={post.data.tags.join(" • ")}
+/>
 ))
 }
 
