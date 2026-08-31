@@ -1,5 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const experiments = await getCollection("experiments");
 ---
 
 <Layout title="Experiments">
@@ -13,6 +16,31 @@ Experiments
 <p class="mt-4 text-gray-400">
 Small technical explorations and prototypes.
 </p>
+
+
+<div class="grid gap-6 mt-10">
+
+{
+experiments.map(experiment => (
+<article class="border border-gray-800 rounded-xl p-6">
+
+<h2 class="text-2xl font-bold">
+{experiment.data.title}
+</h2>
+
+<p class="mt-3 text-gray-400">
+{experiment.data.description}
+</p>
+
+<div class="mt-4 text-sm text-gray-500">
+{experiment.data.tags.join(" • ")}
+</div>
+
+</article>
+))
+}
+
+</div>
 
 </main>
 
