@@ -1,18 +1,29 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { SITE } from "../data/site";
+import { getCollection } from "astro:content";
+import ContentCard from "../components/ContentCard.astro";
+
+const projects = await getCollection("projects");
+const writing = await getCollection("writing");
+const notes = await getCollection("notes");
+const timeline = await getCollection("timeline");
+
+const latestWriting = writing.slice(0,3);
+const latestNotes = notes.slice(0,3);
+const latestTimeline = timeline.slice(0,3);
 ---
 
 <Layout>
 
+<main class="max-w-6xl mx-auto px-6 py-24">
 
-<main class="max-w-6xl mx-auto px-6 py-32">
 
+<section>
 
 <p class="text-neutral-400 mb-6">
 Engineering Lab / Digital Garden
 </p>
-
 
 <h1 class="text-6xl font-bold tracking-tight">
 
@@ -26,93 +37,108 @@ Documenting the journey.
 
 </h1>
 
-
 <p class="mt-8 max-w-xl text-xl text-neutral-400">
-
 {SITE.description}
-
 </p>
 
-
-
-<div class="mt-12 flex gap-4">
-
-
-<a
-
-href="/projects"
-
-class="bg-white text-black px-6 py-3 rounded-xl"
-
->
-Explore Projects
-</a>
-
-
-<a
-
-href="/writing"
-
-class="border border-neutral-700 px-6 py-3 rounded-xl"
-
->
-Read Writing
-</a>
-
-
-</div>
+</section>
 
 
 
-<section class="grid md:grid-cols-3 gap-6 mt-32">
+<section class="mt-24">
 
-
-<div class="border border-neutral-800 rounded-xl p-6">
-
-<h2 class="font-bold">
+<h2 class="text-3xl font-bold">
 Projects
 </h2>
 
-<p class="text-neutral-400 mt-3">
-Systems, software and experiments.
-</p>
+<div class="grid gap-6 mt-8 md:grid-cols-2">
+
+{
+projects.slice(0,4).map(project => (
+<ContentCard
+title={project.data.title}
+description={project.data.description}
+meta={project.data.stack?.join(" • ")}
+href={`/projects/${project.id}`}
+/>
+))
+}
 
 </div>
 
+</section>
 
 
-<div class="border border-neutral-800 rounded-xl p-6">
 
-<h2 class="font-bold">
+<section class="mt-24">
+
+<h2 class="text-3xl font-bold">
+Writing
+</h2>
+
+<div class="grid gap-6 mt-8 md:grid-cols-2">
+
+{
+latestWriting.map(item => (
+<ContentCard
+title={item.data.title}
+description={item.data.description}
+/>
+))
+}
+
+</div>
+
+</section>
+
+
+
+<section class="mt-24">
+
+<h2 class="text-3xl font-bold">
 Digital Garden
 </h2>
 
-<p class="text-neutral-400 mt-3">
-Notes and evolving knowledge.
-</p>
+<div class="grid gap-6 mt-8 md:grid-cols-2">
+
+{
+latestNotes.map(item => (
+<ContentCard
+title={item.data.title}
+description={item.data.description}
+/>
+))
+}
 
 </div>
 
+</section>
 
 
-<div class="border border-neutral-800 rounded-xl p-6">
 
-<h2 class="font-bold">
-Engineering Journey
+<section class="mt-24">
+
+<h2 class="text-3xl font-bold">
+Timeline
 </h2>
 
-<p class="text-neutral-400 mt-3">
-Learning, failures and milestones.
-</p>
+<div class="grid gap-6 mt-8">
+
+{
+latestTimeline.map(item => (
+<ContentCard
+title={item.data.title}
+description={item.data.description}
+meta={item.data.date.toDateString()}
+/>
+))
+}
 
 </div>
-
-
 
 </section>
 
 
 </main>
-
 
 </Layout>
