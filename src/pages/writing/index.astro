@@ -26,6 +26,7 @@ posts.map(post => (
 title={post.data.title}
 description={post.data.description}
 meta={post.data.tags.join(" • ")}
+href={`/writing/${post.id}`}
 />
 ))
 }
