@@ -1,0 +1,47 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths(){
+
+const posts = await getCollection("notes");
+
+return posts.map(post => ({
+params:{
+slug:post.id
+},
+props:{
+post
+}
+}));
+
+}
+
+const {post}=Astro.props;
+
+const {Content}=await render(post);
+---
+
+<Layout title={post.data.title}>
+
+<main class="max-w-3xl mx-auto px-6 py-20">
+
+<h1 class="text-5xl font-bold">
+{post.data.title}
+</h1>
+
+<p class="mt-4 text-gray-400">
+{post.data.description}
+</p>
+
+<div class="mt-4 text-sm text-gray-500">
+{post.data.date.toDateString()}
+</div>
+
+<article class="prose prose-invert mt-10">
+<Content />
+</article>
+
+</main>
+
+</Layout>
