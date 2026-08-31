@@ -1,11 +1,118 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import { SITE } from "../data/site";
 ---
 
 <Layout>
-	<Welcome />
+
+
+<main class="max-w-6xl mx-auto px-6 py-32">
+
+
+<p class="text-neutral-400 mb-6">
+Engineering Lab / Digital Garden
+</p>
+
+
+<h1 class="text-6xl font-bold tracking-tight">
+
+Building systems.
+<br/>
+
+Exploring technology.
+<br/>
+
+Documenting the journey.
+
+</h1>
+
+
+<p class="mt-8 max-w-xl text-xl text-neutral-400">
+
+{SITE.description}
+
+</p>
+
+
+
+<div class="mt-12 flex gap-4">
+
+
+<a
+
+href="/projects"
+
+class="bg-white text-black px-6 py-3 rounded-xl"
+
+>
+Explore Projects
+</a>
+
+
+<a
+
+href="/writing"
+
+class="border border-neutral-700 px-6 py-3 rounded-xl"
+
+>
+Read Writing
+</a>
+
+
+</div>
+
+
+
+<section class="grid md:grid-cols-3 gap-6 mt-32">
+
+
+<div class="border border-neutral-800 rounded-xl p-6">
+
+<h2 class="font-bold">
+Projects
+</h2>
+
+<p class="text-neutral-400 mt-3">
+Systems, software and experiments.
+</p>
+
+</div>
+
+
+
+<div class="border border-neutral-800 rounded-xl p-6">
+
+<h2 class="font-bold">
+Digital Garden
+</h2>
+
+<p class="text-neutral-400 mt-3">
+Notes and evolving knowledge.
+</p>
+
+</div>
+
+
+
+<div class="border border-neutral-800 rounded-xl p-6">
+
+<h2 class="font-bold">
+Engineering Journey
+</h2>
+
+<p class="text-neutral-400 mt-3">
+Learning, failures and milestones.
+</p>
+
+</div>
+
+
+
+</section>
+
+
+</main>
+
+
 </Layout>

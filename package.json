@@ -9,10 +9,18 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "dev:clean": "./scripts/dev.sh",
+    "stop-dev": "npx astro dev stop",
+    "clean-dev": "./scripts/clean-dev.sh",
+    "start": "npm run clean-dev && npm run dev"
   },
   "dependencies": {
-    "astro": "^7.2.9"
+    "@astrojs/mdx": "^7.0.8",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.9",
+    "fast-glob": "^3.3.3",
+    "tailwindcss": "^4.3.3"
   },
   "allowScripts": {
     "esbuild": true
