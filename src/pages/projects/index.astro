@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
 
 const projects = await getCollection("projects");
@@ -17,24 +18,19 @@ Projects
 Engineering systems, experiments and shipped work.
 </p>
 
-<div class="grid gap-6 mt-10">
+
+<div class="grid gap-6 mt-10 md:grid-cols-2">
 
 {
 projects.map(project => (
-<a 
+
+<ContentCard
+title={project.data.title}
+description={project.data.description}
+meta={project.data.stack?.join(" • ")}
 href={`/projects/${project.id}`}
-class="border border-gray-800 rounded-xl p-6 hover:border-white"
->
+/>
 
-<h2 class="text-2xl font-bold">
-{project.data.title}
-</h2>
-
-<p class="mt-3 text-gray-400">
-{project.data.description}
-</p>
-
-</a>
 ))
 }
 
