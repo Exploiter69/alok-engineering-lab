@@ -1,46 +1,38 @@
-<nav class="border-b border-gray-800 px-8 py-5">
+<nav class="border-b border-gray-800 px-4 py-4 sm:px-6 sm:py-5">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex items-center justify-between gap-4">
+      <a
+        href="/"
+        class="min-w-0 font-bold text-lg sm:text-xl"
+      >
+        Alok Engineering Lab
+      </a>
 
-<div class="max-w-6xl mx-auto flex justify-between items-center">
+      <div class="hidden md:flex items-center gap-5 text-gray-400 text-sm">
+        <a href="/projects" class="hover:text-white transition">Projects</a>
+        <a href="/writing" class="hover:text-white transition">Writing</a>
+        <a href="/garden" class="hover:text-white transition">Garden</a>
+        <a href="/experiments" class="hover:text-white transition">Experiments</a>
+        <a href="/timeline" class="hover:text-white transition">Timeline</a>
+        <a href="/docs" class="hover:text-white transition">Docs</a>
+        <a href="/changelog" class="hover:text-white transition">Changelog</a>
+      </div>
 
-<a 
-href="/"
-class="font-bold text-xl">
-Alok Engineering Lab
-</a>
+      <details class="relative md:hidden">
+        <summary class="cursor-pointer list-none rounded-lg border border-gray-800 px-3 py-2 text-sm text-gray-300 hover:border-gray-600 hover:text-white">
+          Menu
+        </summary>
 
-
-<div class="flex gap-6 text-gray-400 text-sm">
-
-<a href="/projects" class="hover:text-white">
-Projects
-</a>
-
-<a href="/writing" class="hover:text-white">
-Writing
-</a>
-
-<a href="/garden" class="hover:text-white">
-Garden
-</a>
-
-<a href="/experiments" class="hover:text-white">
-Experiments
-</a>
-
-<a href="/timeline" class="hover:text-white">
-Timeline
-</a>
-
-<a href="/docs" class="hover:text-white">
-Docs
-</a>
-
-<a href="/changelog" class="hover:text-white">
-Changelog
-</a>
-
-</div>
-
-</div>
-
+        <div class="absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-gray-800 bg-black p-2 shadow-2xl">
+          <a href="/projects" class="block rounded-lg px-3 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-white">Projects</a>
+          <a href="/writing" class="block rounded-lg px-3 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-white">Writing</a>
+          <a href="/garden" class="block rounded-lg px-3 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-white">Garden</a>
+          <a href="/experiments" class="block rounded-lg px-3 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-white">Experiments</a>
+          <a href="/timeline" class="block rounded-lg px-3 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-white">Timeline</a>
+          <a href="/docs" class="block rounded-lg px-3 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-white">Docs</a>
+          <a href="/changelog" class="block rounded-lg px-3 py-2 text-sm text-gray-300 hover:bg-gray-900 hover:text-white">Changelog</a>
+        </div>
+      </details>
+    </div>
+  </div>
 </nav>

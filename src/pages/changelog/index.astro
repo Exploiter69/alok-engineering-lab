@@ -10,15 +10,15 @@ const changelog = (await getCollection("changelog"))
 
 <Layout title="Changelog">
 
-<main class="min-h-screen p-10">
+<main class="min-h-screen max-w-6xl mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
 
-<h1 class="text-4xl font-bold">Changelog</h1>
+<h1 class="text-3xl font-bold sm:text-4xl">Changelog</h1>
 
 <p class="mt-4 text-gray-400">
 Engineering releases and notable changes.
 </p>
 
-<div class="grid gap-6 mt-10">
+<div class="mt-8 grid gap-5 sm:gap-6">
 
 {changelog.map(entry => (
 <ContentCard
