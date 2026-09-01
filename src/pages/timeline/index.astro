@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import ContentCard from "../../components/ContentCard.astro";
 
-const timeline = await getCollection("timeline");
+const timeline = (await getCollection("timeline")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Layout title="Timeline">
@@ -26,6 +26,7 @@ timeline.map(item => (
 title={item.data.title}
 description={item.data.description}
 meta={item.data.date.toDateString()}
+href={`/timeline/${item.id}`}
 />
 ))
 }

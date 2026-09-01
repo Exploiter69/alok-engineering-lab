@@ -1,18 +1,35 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ContentCard from "../../components/ContentCard.astro";
+import { getCollection } from "astro:content";
+
+const changelog = (await getCollection("changelog"))
+  .filter(item => item.data.status !== "draft")
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Layout title="Changelog">
 
 <main class="min-h-screen p-10">
 
-<h1 class="text-4xl font-bold">
-Changelog
-</h1>
+<h1 class="text-4xl font-bold">Changelog</h1>
 
 <p class="mt-4 text-gray-400">
-Engineering timeline and releases.
+Engineering releases and notable changes.
 </p>
+
+<div class="grid gap-6 mt-10">
+
+{changelog.map(entry => (
+<ContentCard
+title={entry.data.title}
+description={entry.data.description}
+meta={entry.data.date.toDateString()}
+href={`/changelog/${entry.id}`}
+/>
+))}
+
+</div>
 
 </main>
 

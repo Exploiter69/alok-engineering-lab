@@ -4,14 +4,10 @@ import { SITE } from "../data/site";
 import { getCollection } from "astro:content";
 import ContentCard from "../components/ContentCard.astro";
 
-const projects = await getCollection("projects");
-const writing = await getCollection("writing");
-const notes = await getCollection("notes");
-const timeline = await getCollection("timeline");
-
-const latestWriting = writing.slice(0,3);
-const latestNotes = notes.slice(0,3);
-const latestTimeline = timeline.slice(0,3);
+const projects = (await getCollection("projects")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
+const writing = (await getCollection("writing")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
+const notes = (await getCollection("notes")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
+const timeline = (await getCollection("timeline")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Layout>
@@ -79,10 +75,12 @@ Writing
 <div class="grid gap-6 mt-8 md:grid-cols-2">
 
 {
-latestWriting.map(item => (
+writing.slice(0,3).map(item => (
 <ContentCard
 title={item.data.title}
 description={item.data.description}
+meta={item.data.tags.join(" • ")}
+href={`/writing/${item.id}`}
 />
 ))
 }
@@ -102,10 +100,12 @@ Digital Garden
 <div class="grid gap-6 mt-8 md:grid-cols-2">
 
 {
-latestNotes.map(item => (
+notes.slice(0,3).map(item => (
 <ContentCard
 title={item.data.title}
 description={item.data.description}
+meta={`${item.data.stage} • ${item.data.tags.join(" • ")}`}
+href={`/notes/${item.id}`}
 />
 ))
 }
@@ -125,11 +125,12 @@ Timeline
 <div class="grid gap-6 mt-8">
 
 {
-latestTimeline.map(item => (
+timeline.slice(0,3).map(item => (
 <ContentCard
 title={item.data.title}
 description={item.data.description}
 meta={item.data.date.toDateString()}
+href={`/timeline/${item.id}`}
 />
 ))
 }

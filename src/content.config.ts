@@ -1,4 +1,5 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
 
@@ -24,7 +25,7 @@ export const collections = {
 
 		loader: glob({
 			base: "./src/content/projects",
-			pattern: "**/*.md",
+			pattern: "**/*.(md|mdx)",
 		}),
 
 		schema: commonSchema.extend({
@@ -40,7 +41,7 @@ export const collections = {
 
 		loader: glob({
 			base: "./src/content/writing",
-			pattern: "**/*.md",
+			pattern: "**/*.(md|mdx)",
 		}),
 
 		schema: commonSchema,
@@ -53,7 +54,7 @@ export const collections = {
 
 		loader: glob({
 			base: "./src/content/notes",
-			pattern: "**/*.md",
+			pattern: "**/*.(md|mdx)",
 		}),
 
 		schema: commonSchema.extend({
@@ -73,7 +74,7 @@ export const collections = {
 
 		loader: glob({
 			base: "./src/content/experiments",
-			pattern: "**/*.md",
+			pattern: "**/*.(md|mdx)",
 		}),
 
 		schema: commonSchema,
@@ -86,12 +87,20 @@ export const collections = {
 
 		loader: glob({
 			base: "./src/content/timeline",
-			pattern: "**/*.md",
+			pattern: "**/*.(md|mdx)",
 		}),
 
 		schema: commonSchema,
 
 	}),
 
+
+	changelog: defineCollection({
+		loader: glob({
+			base: "./src/content/changelog",
+			pattern: "**/*.(md|mdx)",
+		}),
+		schema: commonSchema,
+	}),
 
 };

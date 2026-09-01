@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
 
-const notes = await getCollection("notes");
+const notes = (await getCollection("notes")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Layout title="Notes">
@@ -11,7 +11,7 @@ const notes = await getCollection("notes");
 <main class="min-h-screen p-10">
 
 <h1 class="text-4xl font-bold">
-Digital Garden
+Notes
 </h1>
 
 <p class="mt-4 text-gray-400">
@@ -26,6 +26,7 @@ notes.map(note => (
 title={note.data.title}
 description={note.data.description}
 meta={`${note.data.stage} • ${note.data.tags.join(" • ")}`}
+href={`/notes/${note.id}`}
 />
 ))
 }

@@ -4,38 +4,38 @@ import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths(){
 
-const posts = (await getCollection("timeline")).filter(entry => entry.data.status !== "draft");
+const entries = (await getCollection("changelog"))
+  .filter(entry => entry.data.status !== "draft");
 
-return posts.map(post => ({
+return entries.map(entry => ({
 params:{
-slug:post.id
+slug:entry.id
 },
 props:{
-post
+entry
 }
 }));
 
 }
 
-const {post}=Astro.props;
-
-const {Content}=await render(post);
+const {entry}=Astro.props;
+const {Content}=await render(entry);
 ---
 
-<Layout title={post.data.title}>
+<Layout title={entry.data.title}>
 
 <main class="max-w-3xl mx-auto px-6 py-20">
 
 <h1 class="text-5xl font-bold">
-{post.data.title}
+{entry.data.title}
 </h1>
 
 <p class="mt-4 text-gray-400">
-{post.data.description}
+{entry.data.description}
 </p>
 
 <div class="mt-4 text-sm text-gray-500">
-{post.data.date.toDateString()}
+{entry.data.date.toDateString()}
 </div>
 
 <article class="prose prose-invert mt-10">

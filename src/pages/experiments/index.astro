@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
 
-const experiments = await getCollection("experiments");
+const experiments = (await getCollection("experiments")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Layout title="Experiments">
@@ -26,6 +26,7 @@ experiments.map(experiment => (
 title={experiment.data.title}
 description={experiment.data.description}
 meta={experiment.data.tags.join(" • ")}
+href={`/experiments/${experiment.id}`}
 />
 ))
 }
