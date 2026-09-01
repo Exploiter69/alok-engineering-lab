@@ -8,6 +8,4 @@ tags:
 status: active
 ---
 
-# First Engineering Experiment
-
 This section will contain small experiments, prototypes, benchmarks, and technical investigations.

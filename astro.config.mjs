@@ -3,6 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
 
 export default defineConfig({
+  site: 'https://www.alokthakur.me',
   integrations: [
     mdx(),
   ],

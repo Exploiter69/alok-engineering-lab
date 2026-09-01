@@ -9,6 +9,4 @@ status: active
 stage: evergreen
 ---
 
-# Engineering Philosophy
-
 Notes about how systems are designed, built, tested, and improved.

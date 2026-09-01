@@ -8,6 +8,4 @@ tags:
 status: active
 ---
 
-# Welcome to Alok Engineering Lab
-
 This space documents technical writing, experiments, discoveries, and lessons learned while building systems.

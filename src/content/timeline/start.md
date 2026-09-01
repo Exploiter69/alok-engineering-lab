@@ -8,6 +8,4 @@ tags:
 status: active
 ---
 
-# Engineering Lab Started
-
 The first milestone of building a personal engineering archive.

@@ -24,22 +24,28 @@ const { Content } = await render(project);
 
 ---
 
-<Layout title={project.data.title}>
+<Layout title={project.data.title} description={project.data.description}>
 
-<main class="min-h-screen bg-black text-white px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+<main class="max-w-3xl mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
 
-<article class="prose prose-invert max-w-3xl">
+<a href="/projects" class="inline-block mb-8 text-sm text-gray-500 hover:text-white transition">
+  ← Projects
+</a>
 
-<h1>
+<h1 class="text-3xl font-bold sm:text-5xl">
 {project.data.title}
 </h1>
 
-<p>
+<p class="mt-4 text-gray-400">
 {project.data.description}
 </p>
 
-<Content />
+<div class="mt-4 text-sm text-gray-500">
+{project.data.date.toDateString()}
+</div>
 
+<article class="prose prose-invert mt-10">
+<Content />
 </article>
 
 </main>

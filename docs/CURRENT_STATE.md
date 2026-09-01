@@ -6,13 +6,17 @@
 
 **Current release:** `v1.0.0`
 
-**HEAD / release commit:** `b0c61f8` — `feat: make v1 responsive`
+**Release commit:** `b0c61f8` — `feat: make v1 responsive` (tag: v1.0.0)
 
-Reported Git state:
+**Post-release HEAD:** `5711e91` — `docs: establish project context system`
+
+v1.1 implementation is in progress on top of this commit (uncommitted as of last session).
+
+Reported Git state at v1.0.0 tag:
 
 ```text
 master...origin/master
-b0c61f8 (HEAD -> master, tag: v1.0.0, origin/master)
+b0c61f8 (tag: v1.0.0) feat: make v1 responsive
 79c0ef6 (tag: v1.0.0-pre-responsive) feat: establish engineering lab content foundation
 5a6517f link content cards to detail pages
 ```
@@ -20,8 +24,6 @@ b0c61f8 (HEAD -> master, tag: v1.0.0, origin/master)
 The `v1.0.0` tag was successfully pushed to GitHub.
 
 ## Confirmed v1 foundation
-
-Previous development reported:
 
 - Astro check completed successfully
 - no reported errors, warnings or hints
@@ -33,17 +35,37 @@ Previous development reported:
 - GitHub remote synchronized
 - Vercel deployment live
 
+## v1.1 work in progress
+
+CP-1 (Structural), CP-2 (Metadata/SEO), CP-3 (UX Polish), and CP-4 (Documentation)
+are complete. CP-5 (final verification and commit) is the remaining step.
+
+Changes included in v1.1 (uncommitted):
+
+- Duplicate `h1` removed from all six detail-page Markdown files
+- `ContentCard` heading changed from `h2` to `h3`
+- `projects/[slug].astro` layout restructured to match other detail pages
+- Date display added to project detail page
+- Back-navigation added to all six detail pages
+- `/docs` removed from Navbar (route preserved)
+- Branded `404.astro` created
+- Full `<head>` metadata: description, canonical URL, favicon links, Open Graph, Twitter card
+- `site: 'https://www.alokthakur.me'` added to `astro.config.mjs`
+- System font stack replaces undeclared Inter reference in `global.css`
+- Per-page descriptions wired from frontmatter on all detail pages
+- `README.md` replaced with project-specific documentation
+
 ## Deployment
 
 Production deployment is through Vercel.
 
-The custom Namecheap domain was the last external setup item.
-
-At the stopping point, Namecheap was under maintenance, so DNS work was paused.
+Domain `alokthakur.me` is live. DNS configured through Namecheap.
+Production URL: `https://www.alokthakur.me` (bare domain redirects to www).
+Vercel deployment confirmed live and serving the current build (verified in Checkpoint B).
 
 Do not randomly change nameservers or delete existing DNS records, especially mail/MX records.
 
-Previously supplied Vercel DNS values were:
+Previously applied Vercel DNS values:
 
 ```text
 A
@@ -55,11 +77,9 @@ Host: www
 Value: 75a7cde743866b88.vercel-dns-017.com
 ```
 
-These values must be rechecked against the current Vercel/Namecheap UI before applying them.
-
 ## Existing project direction
 
-The site contains or was designed around areas such as:
+The site contains or is designed around areas such as:
 
 - Home
 - Projects
@@ -68,19 +88,21 @@ The site contains or was designed around areas such as:
 - Experiments / Lab
 - Garden
 - Timeline
-- Documentation
+- Documentation (stub — not in navbar for v1.1)
 - Changelog
-- About
+- About (planned, not yet implemented)
 
 The exact information architecture may evolve, but it should preserve the Engineering Lab concept.
 
 ## Next step
 
-Before implementing v1.1:
+v1.1 CP-5 final verification:
 
-1. Inspect the actual current repository.
-2. Run the relevant checks.
-3. Compare actual code against this context.
-4. Identify drift, bugs or unfinished work.
-5. Decide the v1.1 scope.
-6. Implement incrementally with Git checkpoints.
+1. Run `npm run build` — confirm 0 errors, 16 pages.
+2. Run `git diff --check`.
+3. Audit built HTML head tags.
+4. Commit all v1.1 changes.
+5. Tag `v1.1.0`.
+6. Push to GitHub — Vercel will deploy automatically.
+7. Verify production after deploy.
+8. Update this document to reflect the completed v1.1 release.

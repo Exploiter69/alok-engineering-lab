@@ -27,19 +27,20 @@ Pre-responsive checkpoint:
 
 `v1.0.0-pre-responsive`
 
+Post-release HEAD at last session:
+
+`5711e91` — `docs: establish project context system`
+
+v1.1 implementation is in progress on top of this commit (uncommitted as of last session).
+
 ## Last known stopping point
 
-Namecheap was under maintenance while custom-domain DNS setup was pending.
+Custom domain `alokthakur.me` is live. DNS configured through Namecheap.
+Production URL: `https://www.alokthakur.me` (bare domain redirects to www).
+Vercel deployment confirmed live and serving the current build.
 
-The last successful terminal commands included:
-
-```bash
-cd ~/alok-engineering-lab && git tag v1.0.0 && git push origin v1.0.0
-git status --short --branch
-git log --oneline --decorate -3
-```
-
-The reported result showed a clean/synchronized `master` branch and `v1.0.0` at `b0c61f8`.
+v1.1 production readiness work (CP-1 through CP-4) was completed in the last session.
+CP-5 final verification and commit are the remaining steps before tagging `v1.1.0`.
 
 ## What to do first
 

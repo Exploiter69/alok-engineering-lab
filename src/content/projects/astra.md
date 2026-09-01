@@ -16,9 +16,6 @@ stack:
   - Software Architecture
 ---
 
-# ASTRA Engine
-
-
 ## Vision
 
 A system that allows engineering work to continue while the developer is away.
