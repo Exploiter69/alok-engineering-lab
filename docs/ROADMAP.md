@@ -90,7 +90,7 @@ The visual direction remains intentionally restrained. Large animation systems, 
 
 Latest confirmed local checkpoint:
 
-`06e003c` — `feat: refine CP3 collection and detail pages`
+`b2aaf1d` — `test: add automated quality audit`
 
 ---
 

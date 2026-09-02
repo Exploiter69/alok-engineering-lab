@@ -28,7 +28,7 @@ Local `master` is ahead of `origin/master`.
 
 Latest confirmed local checkpoint:
 
-`06e003c` — `feat: refine CP3 collection and detail pages`
+`b2aaf1d` — `test: add automated quality audit`
 
 Working tree was clean at the CP3 checkpoint.
 
@@ -160,6 +160,8 @@ CP3 checkpoints were verified with:
 - mobile responsive inspection
 
 Build completed successfully with Astro check reporting no errors, warnings or hints.
+
+The automated quality audit verifies 30 cases across desktop and mobile layouts with 30/30 passing, zero failures and zero warnings. It also checks overflow, browser errors, internal links, document structure, headings, image alt attributes and button accessible names.
 
 ## Development rules
 
