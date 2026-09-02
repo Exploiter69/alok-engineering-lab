@@ -10,6 +10,9 @@ export const SITE = {
   author:
     "Alok Thakur",
 
+  currently:
+    "Building ASTRA Engine — an autonomous engineering system for asynchronous software work.",
+
   links: {
     github: "",
     linkedin: "",

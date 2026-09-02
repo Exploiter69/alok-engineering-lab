@@ -7,6 +7,7 @@ import ContentCard from "../components/ContentCard.astro";
 const projects = (await getCollection("projects")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 const writing = (await getCollection("writing")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 const notes = (await getCollection("notes")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
+const experiments = (await getCollection("experiments")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 const timeline = (await getCollection("timeline")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
@@ -15,10 +16,11 @@ const timeline = (await getCollection("timeline")).filter(item => item.data.stat
 <main class="max-w-6xl mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:py-24">
 
 
+<!-- Identity -->
 <section>
 
 <p class="text-neutral-400 mb-6">
-Engineering Lab / Digital Garden
+Alok Thakur · Engineering Lab
 </p>
 
 <h1 class="text-4xl font-bold tracking-tight sm:text-6xl">
@@ -34,18 +36,31 @@ Documenting the journey.
 </h1>
 
 <p class="mt-8 max-w-xl text-xl text-neutral-400">
-{SITE.description}
+{SITE.tagline}
 </p>
 
 </section>
 
 
+<!-- Currently -->
+<section class="mt-16">
 
+<p class="text-sm text-gray-500 uppercase tracking-widest mb-3">Currently</p>
+
+<p class="text-gray-300 max-w-xl">
+{SITE.currently}
+</p>
+
+</section>
+
+
+<!-- Selected Work -->
 <section class="mt-24">
 
-<h2 class="text-3xl font-bold">
-Projects
-</h2>
+<div class="flex items-baseline justify-between gap-4">
+  <h2 class="text-3xl font-bold">Selected Work</h2>
+  <a href="/projects" class="text-sm text-gray-500 hover:text-white transition">See all →</a>
+</div>
 
 <div class="grid gap-6 mt-8 md:grid-cols-2">
 
@@ -65,22 +80,23 @@ href={`/projects/${project.id}`}
 </section>
 
 
-
+<!-- From the Lab -->
 <section class="mt-24">
 
-<h2 class="text-3xl font-bold">
-Writing
-</h2>
+<div class="flex items-baseline justify-between gap-4">
+  <h2 class="text-3xl font-bold">From the Lab</h2>
+  <a href="/experiments" class="text-sm text-gray-500 hover:text-white transition">See all →</a>
+</div>
 
 <div class="grid gap-6 mt-8 md:grid-cols-2">
 
 {
-writing.slice(0,3).map(item => (
+experiments.slice(0,3).map(item => (
 <ContentCard
 title={item.data.title}
 description={item.data.description}
 meta={item.data.tags.join(" • ")}
-href={`/writing/${item.id}`}
+href={`/experiments/${item.id}`}
 />
 ))
 }
@@ -90,37 +106,69 @@ href={`/writing/${item.id}`}
 </section>
 
 
-
+<!-- Knowledge -->
 <section class="mt-24">
 
-<h2 class="text-3xl font-bold">
-Digital Garden
-</h2>
+<h2 class="text-3xl font-bold">Knowledge</h2>
 
-<div class="grid gap-6 mt-8 md:grid-cols-2">
+<div class="mt-10">
 
-{
-notes.slice(0,3).map(item => (
-<ContentCard
-title={item.data.title}
-description={item.data.description}
-meta={`${item.data.stage} • ${item.data.tags.join(" • ")}`}
-href={`/notes/${item.id}`}
-/>
-))
-}
+  <div class="flex items-baseline justify-between gap-4">
+    <p class="text-sm text-gray-500 uppercase tracking-widest">Writing</p>
+    <a href="/writing" class="text-sm text-gray-500 hover:text-white transition">See all →</a>
+  </div>
+
+  <div class="grid gap-6 mt-5 md:grid-cols-2">
+
+  {
+  writing.slice(0,3).map(item => (
+  <ContentCard
+  title={item.data.title}
+  description={item.data.description}
+  meta={item.data.tags.join(" • ")}
+  href={`/writing/${item.id}`}
+  />
+  ))
+  }
+
+  </div>
+
+</div>
+
+<div class="mt-10">
+
+  <div class="flex items-baseline justify-between gap-4">
+    <p class="text-sm text-gray-500 uppercase tracking-widest">Notes</p>
+    <a href="/notes" class="text-sm text-gray-500 hover:text-white transition">See all →</a>
+  </div>
+
+  <div class="grid gap-6 mt-5 md:grid-cols-2">
+
+  {
+  notes.slice(0,3).map(item => (
+  <ContentCard
+  title={item.data.title}
+  description={item.data.description}
+  meta={`${item.data.stage} • ${item.data.tags.join(" • ")}`}
+  href={`/notes/${item.id}`}
+  />
+  ))
+  }
+
+  </div>
 
 </div>
 
 </section>
 
 
-
+<!-- Journey -->
 <section class="mt-24">
 
-<h2 class="text-3xl font-bold">
-Timeline
-</h2>
+<div class="flex items-baseline justify-between gap-4">
+  <h2 class="text-3xl font-bold">Journey</h2>
+  <a href="/timeline" class="text-sm text-gray-500 hover:text-white transition">See all →</a>
+</div>
 
 <div class="grid gap-6 mt-8">
 
