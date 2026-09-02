@@ -90,7 +90,7 @@ The visual direction remains intentionally restrained. Large animation systems, 
 
 Latest confirmed local checkpoint:
 
-`b2aaf1d` — `test: add automated quality audit`
+`b1d1e84` — `content: deepen ASTRA project case study`
 
 ---
 
@@ -218,7 +218,7 @@ For each meaningful phase or release:
 11. deploy only when appropriate
 
 ## CP4.1 — Content + Discovery Foundation
-**Status: Planned / Scope Locked**
+**Status: Foundation implemented / Scope locked**
 
 CP4.1 will combine content depth with a small product-level discovery improvement.
 

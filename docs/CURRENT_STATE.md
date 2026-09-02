@@ -28,9 +28,9 @@ Local `master` is ahead of `origin/master`.
 
 Latest confirmed local checkpoint:
 
-`b2aaf1d` — `test: add automated quality audit`
+`b1d1e84` — `content: deepen ASTRA project case study`
 
-Working tree was clean at the CP3 checkpoint.
+Working tree is clean at the current CP4.1 checkpoint.
 
 ## Completed phases
 
@@ -130,9 +130,9 @@ DNS is managed through Namecheap.
 
 Do not randomly modify DNS records or nameservers.
 
-## Current priority
+## Current phase
 
-The next development phase should focus on **content and product depth**, rather than another broad visual redesign.
+The project is actively progressing through **CP4 — Content & Product Depth**, with CP4.1 content and discovery foundation implemented.
 
 Proposed next phase:
 

@@ -52,11 +52,11 @@ Completed development phases:
 
 Latest confirmed local checkpoint:
 
-`b2aaf1d` — `test: add automated quality audit`
+`b1d1e84` — `content: deepen ASTRA project case study`
 
 Local `master` is ahead of `origin/master`.
 
-The CP3 checkpoint had a clean working tree.
+The current CP4.1 checkpoint has a clean working tree.
 
 ## CP3 outcome
 
@@ -116,11 +116,13 @@ Do not blindly follow AI suggestions.
 
 The user remains the final decision-maker.
 
-## Current next phase
+## Current phase
 
-The next planned development phase is:
+The project is actively progressing through:
 
 **CP4 — Content & Product Depth**
+
+The current completed CP4.1 foundation combines content depth with lightweight discovery improvements.
 
 The focus should shift from broad visual refinement toward making the Engineering Lab substantially richer and more useful.
 
@@ -134,7 +136,7 @@ Possible CP4 areas include:
 - better Garden discovery
 - stronger content quality standards
 
-Do not implement these automatically. Define the actual CP4 scope before coding.
+CP4.1 has established the initial content and discovery foundation. Further CP4 work still requires an identified product problem, explicit scope, verification method, and Git checkpoint before implementation.
 
 ## Visual direction
 
