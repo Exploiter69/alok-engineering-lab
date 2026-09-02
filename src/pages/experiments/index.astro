@@ -37,6 +37,7 @@ const experiments = (await getCollection("experiments"))
             meta={experiment.data.tags.join(" • ")}
             href={`/experiments/${experiment.id}`}
             eyebrow={`EXPERIMENT / ${String(index + 1).padStart(2, "0")}`}
+            headingLevel="h2"
           />
         ))
       }

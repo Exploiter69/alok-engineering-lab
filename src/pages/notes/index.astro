@@ -37,6 +37,7 @@ const notes = (await getCollection("notes"))
             meta={`${note.data.stage} • ${note.data.tags.join(" • ")}`}
             href={`/notes/${note.id}`}
             eyebrow={`NOTE / ${String(index + 1).padStart(2, "0")}`}
+            headingLevel="h2"
           />
         ))
       }
