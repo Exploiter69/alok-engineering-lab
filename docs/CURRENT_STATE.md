@@ -1,108 +1,173 @@
 # Alok Engineering Lab — Current State
 
-> Snapshot of the project at the last confirmed stopping point.
+> Snapshot of the current confirmed project state.
 
-## Release
+## Project
 
-**Current release:** `v1.0.0`
+Alok Engineering Lab is a long-term personal Engineering Lab / digital garden rather than a conventional portfolio.
 
-**Release commit:** `b0c61f8` — `feat: make v1 responsive` (tag: v1.0.0)
+## Stack
 
-**Post-release HEAD:** `5711e91` — `docs: establish project context system`
+- Astro
+- Tailwind CSS
+- MDX / Astro content collections
+- TypeScript
+- Git / GitHub
+- Vercel
+- Namecheap custom domain
 
-v1.1 implementation is in progress on top of this commit (uncommitted as of last session).
+## Current release state
 
-Reported Git state at v1.0.0 tag:
+The project is currently in active development after the `v1.1` website release baseline.
 
-```text
-master...origin/master
-b0c61f8 (tag: v1.0.0) feat: make v1 responsive
-79c0ef6 (tag: v1.0.0-pre-responsive) feat: establish engineering lab content foundation
-5a6517f link content cards to detail pages
-```
+The stable `v1.0.0` history remains preserved and must not be rewritten.
 
-The `v1.0.0` tag was successfully pushed to GitHub.
+## Current Git state
 
-## Confirmed v1 foundation
+Local `master` is ahead of `origin/master`.
 
-- Astro check completed successfully
-- no reported errors, warnings or hints
-- 15 static pages generated
-- responsive/mobile work completed
-- mobile navigation handled
-- responsive typography/layout/content cards/grids/footer addressed
-- `git diff --check` clean
-- GitHub remote synchronized
-- Vercel deployment live
+Latest confirmed local checkpoint:
 
-## v1.1 work in progress
+`06e003c` — `feat: refine CP3 collection and detail pages`
 
-CP-1 (Structural), CP-2 (Metadata/SEO), CP-3 (UX Polish), and CP-4 (Documentation)
-are complete. CP-5 (final verification and commit) is the remaining step.
+Working tree was clean at the CP3 checkpoint.
 
-Changes included in v1.1 (uncommitted):
+## Completed phases
 
-- Duplicate `h1` removed from all six detail-page Markdown files
-- `ContentCard` heading changed from `h2` to `h3`
-- `projects/[slug].astro` layout restructured to match other detail pages
-- Date display added to project detail page
-- Back-navigation added to all six detail pages
-- `/docs` removed from Navbar (route preserved)
-- Branded `404.astro` created
-- Full `<head>` metadata: description, canonical URL, favicon links, Open Graph, Twitter card
-- `site: 'https://www.alokthakur.me'` added to `astro.config.mjs`
-- System font stack replaces undeclared Inter reference in `global.css`
-- Per-page descriptions wired from frontmatter on all detail pages
-- `README.md` replaced with project-specific documentation
+### CP0 — UI/UX Audit
 
-## Deployment
+**Status:** Complete.
 
-Production deployment is through Vercel.
+The original website was audited for hierarchy, navigation, responsiveness, visual consistency and overall product direction.
 
-Domain `alokthakur.me` is live. DNS configured through Namecheap.
-Production URL: `https://www.alokthakur.me` (bare domain redirects to www).
-Vercel deployment confirmed live and serving the current build (verified in Checkpoint B).
+### CP1 — Design System
 
-Do not randomly change nameservers or delete existing DNS records, especially mail/MX records.
+**Status:** Complete and locked.
 
-Previously applied Vercel DNS values:
+Established the visual foundation:
 
-```text
-A
-Host: @
-Value: 216.198.79.1
+- modern engineering aesthetic
+- restrained technical / hacker character
+- typography-led hierarchy
+- black canvas
+- thin borders and rules
+- monospace technical labels
+- responsive spacing
+- restrained cards
+- minimal decorative effects
 
-CNAME
-Host: www
-Value: 75a7cde743866b88.vercel-dns-017.com
-```
+### CP2 — Information Architecture
 
-## Existing project direction
+**Status:** Complete and verified.
 
-The site contains or is designed around areas such as:
+Primary navigation:
+
+- Projects
+- Writing
+- Notes
+- Experiments
+- Timeline
+
+Secondary / supporting areas:
+
+- Garden
+- Changelog
+- Docs
+- About
+
+The homepage acts as a curated gateway rather than another content archive.
+
+Content is designed to form a connected engineering knowledge system.
+
+### CP3 — Visual / UX Refinement
+
+**Status:** Complete and checkpointed.
+
+CP3 refined:
+
+- homepage hierarchy
+- hero presentation
+- Currently section
+- selected work presentation
+- featured ASTRA project treatment
+- collection pages
+- detail pages
+- metadata presentation
+- responsive behavior
+- mobile layouts
+- visual consistency
+
+Verified desktop and mobile layouts using browser responsive tooling.
+
+The current visual direction is intentionally restrained. No unnecessary 3D, WebGL, particle systems or decorative effects have been introduced.
+
+## Current content architecture
+
+The site currently contains / supports:
 
 - Home
 - Projects
 - Writing
 - Notes
-- Experiments / Lab
-- Garden
+- Experiments
 - Timeline
-- Documentation (stub — not in navbar for v1.1)
+- Garden
 - Changelog
-- About (planned, not yet implemented)
+- Docs
+- About
 
-The exact information architecture may evolve, but it should preserve the Engineering Lab concept.
+Projects, writing, notes, experiments and other knowledge areas can reference related content.
 
-## Next step
+## Deployment
 
-v1.1 CP-5 final verification:
+Production deployment uses Vercel.
 
-1. Run `npm run build` — confirm 0 errors, 16 pages.
-2. Run `git diff --check`.
-3. Audit built HTML head tags.
-4. Commit all v1.1 changes.
-5. Tag `v1.1.0`.
-6. Push to GitHub — Vercel will deploy automatically.
-7. Verify production after deploy.
-8. Update this document to reflect the completed v1.1 release.
+Custom domain:
+
+`alokthakur.me`
+
+DNS is managed through Namecheap.
+
+Do not randomly modify DNS records or nameservers.
+
+## Current priority
+
+The next development phase should focus on **content and product depth**, rather than another broad visual redesign.
+
+Proposed next phase:
+
+**CP4 — Content & Product Depth**
+
+Potential scope:
+
+- strengthen project case studies
+- improve ASTRA project documentation
+- improve writing / notes / experiment content
+- strengthen cross-linking
+- make Timeline / Journey useful
+- improve Garden discovery
+- establish stronger content quality standards
+
+These items require explicit implementation decisions before coding.
+
+## Verification baseline
+
+CP3 checkpoints were verified with:
+
+- `npm run build`
+- `git diff --check`
+- desktop visual inspection
+- mobile responsive inspection
+
+Build completed successfully with Astro check reporting no errors, warnings or hints.
+
+## Development rules
+
+- Inspect before modifying.
+- Prefer small, reviewable changes.
+- Preserve the Astro architecture.
+- Do not rewrite `v1.0.0`.
+- Run appropriate checks after changes.
+- Use Git checkpoints.
+- Keep the project at ₹0 / $0.
+- Treat the repository and Git state as the strongest source of truth.

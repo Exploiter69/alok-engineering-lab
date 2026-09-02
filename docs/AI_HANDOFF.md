@@ -4,89 +4,188 @@
 
 ## Current project
 
-Alok Engineering Lab is a long-term personal Engineering Lab, not just a portfolio.
+Alok Engineering Lab is a long-term personal Engineering Lab / digital garden, not merely a portfolio.
 
-Current stack:
+## Current stack
 
 - Astro
-- Tailwind
-- content collections / MDX-oriented content
-- Git/GitHub
+- Tailwind CSS
+- MDX / Astro content collections
+- TypeScript
+- Git / GitHub
 - Vercel
-- custom domain: `alokthakur.me`
+- Namecheap custom domain: `alokthakur.me`
 
-## Current release
+## Source of truth
 
-`v1.0.0`
+When information conflicts, use this order:
 
-Current release commit:
+1. Actual current repository
+2. Current Git state
+3. Explicit current user decisions
+4. Canonical `docs/` files
+5. Recent project conversations
+6. Older conversations
+
+Always inspect the repository before making engineering changes.
+
+## Stable baseline
+
+`v1.0.0` is the preserved stable foundation.
+
+Release commit:
 
 `b0c61f8` — `feat: make v1 responsive`
 
-Pre-responsive checkpoint:
+Do not rewrite the `v1.0.0` history.
 
-`v1.0.0-pre-responsive`
+## Current state
 
-Post-release HEAD at last session:
+The project has progressed beyond the original v1.1 handoff.
 
-`5711e91` — `docs: establish project context system`
+Completed development phases:
 
-v1.1 implementation is in progress on top of this commit (uncommitted as of last session).
+- CP0 — UI/UX Audit
+- CP1 — Design System
+- CP2 — Information Architecture
+- CP3 — Visual / UX Refinement
 
-## Last known stopping point
+Latest confirmed local checkpoint:
 
-Custom domain `alokthakur.me` is live. DNS configured through Namecheap.
-Production URL: `https://www.alokthakur.me` (bare domain redirects to www).
-Vercel deployment confirmed live and serving the current build.
+`06e003c` — `feat: refine CP3 collection and detail pages`
 
-v1.1 production readiness work (CP-1 through CP-4) was completed in the last session.
-CP-5 final verification and commit are the remaining steps before tagging `v1.1.0`.
+Local `master` is ahead of `origin/master`.
 
-## What to do first
+The CP3 checkpoint had a clean working tree.
 
-Do not assume the old chat description is still accurate.
+## CP3 outcome
 
-First inspect the current repository and Git state.
+The current website has a cohesive modern engineering visual system based on:
 
-Recommended checks:
+- black canvas
+- strong typography
+- restrained borders and rules
+- monospace technical labels
+- editorial spacing
+- responsive layouts
+- restrained content cards
+- minimal decorative effects
+
+The homepage now provides a clearer Engineering Lab identity and hierarchy.
+
+Collection and detail pages have also been refined for consistency and responsive behavior.
+
+Desktop and mobile layouts were visually inspected.
+
+## Current information architecture
+
+Primary navigation:
+
+- Projects
+- Writing
+- Notes
+- Experiments
+- Timeline
+
+Supporting areas:
+
+- Garden
+- Changelog
+- Docs
+- About
+
+The homepage is a curated gateway.
+
+The Garden is intended as a discovery layer rather than simply another collection.
+
+Content should remain interconnected where useful.
+
+## Current development philosophy
+
+The project is being developed using a fast but disciplined workflow:
+
+**inspect → implement → verify → review → checkpoint**
+
+Do not create unnecessary planning overhead.
+
+Prefer small, high-impact, reviewable changes.
+
+Do not blindly follow AI suggestions.
+
+The user remains the final decision-maker.
+
+## Current next phase
+
+The next planned development phase is:
+
+**CP4 — Content & Product Depth**
+
+The focus should shift from broad visual refinement toward making the Engineering Lab substantially richer and more useful.
+
+Possible CP4 areas include:
+
+- stronger project case studies
+- deeper ASTRA project documentation
+- better writing / notes / experiment content
+- stronger cross-linking
+- useful Timeline / Journey presentation
+- better Garden discovery
+- stronger content quality standards
+
+Do not implement these automatically. Define the actual CP4 scope before coding.
+
+## Visual direction
+
+Preserve the current restrained engineering aesthetic.
+
+Do not add visual technology merely because it is technically impressive.
+
+3D, WebGL, particles, large animation systems and similar effects should only be introduced if they provide a clear UX or product benefit.
+
+## Financial constraint
+
+The entire project must remain:
+
+**₹0 / $0**
+
+Do not recommend or enable:
+
+- paid APIs
+- pay-as-you-go AI
+- paid services
+- workflows that can unexpectedly incur charges
+
+Prefer free, local and open-source solutions.
+
+## Deployment
+
+Production deployment uses Vercel.
+
+Domain:
+
+`alokthakur.me`
+
+DNS is managed through Namecheap.
+
+Do not randomly modify nameservers or DNS records.
+
+## Development rules
+
+- Do not migrate Astro to Next.js without an explicit architecture decision.
+- Do not rewrite v1.0.0 history.
+- Inspect before modifying.
+- Preserve working architecture.
+- Prefer small changes.
+- Run appropriate checks.
+- Review diffs.
+- Create Git checkpoints.
+- Do not push unless explicitly requested.
+- Keep documentation durable and concise.
+
+## If continuing this project
+
+First inspect:
 
 ```bash
-cd ~/alok-engineering-lab
 git status --short --branch
-git log --oneline --decorate -5
-git tag --list --sort=-version:refname | head
-find . -maxdepth 2 -type f | sort
-```
-
-Then run the project's existing validation commands after inspecting `package.json`.
-
-## Important rules
-
-- Do not migrate Astro to Next.js without an explicit new decision.
-- Do not rewrite v1.0.0 history.
-- Do not blindly redesign working parts.
-- Inspect before modifying.
-- Prefer small, reviewable changes.
-- Run checks after changes.
-- Keep Git checkpoints.
-- Keep the project at ₹0 / $0.
-- Do not enable paid APIs or pay-as-you-go services.
-- Treat the repository as the strongest source of truth.
-
-## Context hierarchy
-
-Repository → Git state → current user decisions → `docs/` → recent conversations → old conversations.
-
-## If this session reaches its limit
-
-The next session should read:
-
-1. `docs/MASTER_CONTEXT.md`
-2. `docs/CURRENT_STATE.md`
-3. `docs/DECISIONS.md`
-4. `docs/ROADMAP.md`
-5. `docs/AI_HANDOFF.md`
-
-Then inspect the actual repository before making changes.
-
-At the end of a meaningful work session, update `CURRENT_STATE.md` and `AI_HANDOFF.md` if the durable project state changed.
+git log --oneline --decorate -8
