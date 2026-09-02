@@ -36,29 +36,76 @@ const gardenItems = [
 
 <Layout title="Digital Garden">
 
-<main class="min-h-screen max-w-6xl mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+<main class="mx-auto min-h-screen max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
 
-<h1 class="text-3xl font-bold sm:text-4xl">
-Digital Garden
-</h1>
+  <header class="max-w-3xl border-b border-neutral-900 pb-10">
+    <p class="lab-label mb-4">Knowledge / Explore</p>
 
-<p class="mt-4 max-w-2xl text-gray-400">
-A connected layer for ideas, notes, writing and experiments growing through the Lab.
-</p>
+    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+      Digital Garden
+    </h1>
 
-<div class="mt-8 grid gap-5 sm:gap-6 md:grid-cols-2">
+    <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">
+      A connected layer for ideas, notes, writing and experiments growing through the Lab.
+    </p>
+  </header>
 
-{gardenItems.map(item => (
-  <ContentCard
-    title={item.data.title}
-    description={item.data.description}
-    meta={`${item.type} • ${item.data.tags.join(" • ")}`}
-    href={item.href}
-    headingLevel="h2"
-  />
-))}
+  <nav
+    class="mt-8 flex flex-wrap items-center gap-2"
+    aria-label="Garden content views"
+  >
+    <span class="mr-2 lab-label">View</span>
 
-</div>
+    <a
+      href="/garden"
+      aria-current="page"
+      class="rounded-full border border-neutral-600 px-4 py-2 font-mono text-xs uppercase tracking-wider text-white transition hover:border-neutral-400"
+    >
+      All
+    </a>
+
+    <a
+      href="/notes"
+      class="rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 transition hover:border-neutral-600 hover:text-white"
+    >
+      Notes
+    </a>
+
+    <a
+      href="/writing"
+      class="rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 transition hover:border-neutral-600 hover:text-white"
+    >
+      Writing
+    </a>
+
+    <a
+      href="/experiments"
+      class="rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 transition hover:border-neutral-600 hover:text-white"
+    >
+      Experiments
+    </a>
+  </nav>
+
+  <section class="mt-10">
+    <div class="mb-5 flex items-baseline justify-between gap-4">
+      <p class="lab-label">Latest across the Lab</p>
+      <span class="font-mono text-xs text-neutral-600">{gardenItems.length} items</span>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      {
+        gardenItems.map(item => (
+          <ContentCard
+            title={item.data.title}
+            description={item.data.description}
+            meta={`${item.type} • ${item.data.tags.join(" • ")}`}
+            href={item.href}
+            headingLevel="h2"
+          />
+        ))
+      }
+    </div>
+  </section>
 
 </main>
 
