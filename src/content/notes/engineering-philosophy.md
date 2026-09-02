@@ -6,6 +6,9 @@ tags:
   - Engineering
   - Philosophy
 status: active
+related:
+  - projects:astra
+  - writing:welcome
 stage: evergreen
 ---
 

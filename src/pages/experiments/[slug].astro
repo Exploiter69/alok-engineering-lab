@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import RelatedContent from "../../components/RelatedContent.astro";
+import { resolveRelated } from "../../lib/related";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths(){
@@ -20,6 +22,7 @@ post
 const {post}=Astro.props;
 
 const {Content}=await render(post);
+const relatedItems = await resolveRelated(post.data.related);
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
@@ -45,6 +48,8 @@ const {Content}=await render(post);
 <article class="prose prose-invert mt-10">
 <Content />
 </article>
+
+<RelatedContent items={relatedItems} />
 
 </main>
 

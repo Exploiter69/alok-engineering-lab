@@ -6,6 +6,9 @@ tags:
   - Engineering
   - Learning
 status: active
+related:
+  - projects:astra
+  - notes:engineering-philosophy
 ---
 
 This space documents technical writing, experiments, discoveries, and lessons learned while building systems.

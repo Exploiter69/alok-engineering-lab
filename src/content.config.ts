@@ -8,6 +8,7 @@ const commonSchema = z.object({
 	description: z.string(),
 	date: z.coerce.date(),
 	tags: z.array(z.string()).default([]),
+	related: z.array(z.string()).default([]),
 
 	status: z.enum([
 		"draft",

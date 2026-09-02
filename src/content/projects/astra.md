@@ -9,6 +9,9 @@ tags:
   - Automation
 
 status: active
+related:
+  - experiments:first-experiment
+  - notes:engineering-philosophy
 
 stack:
   - Python

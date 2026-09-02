@@ -6,6 +6,9 @@ tags:
   - Experiment
   - Prototype
 status: active
+related:
+  - projects:astra
+  - notes:engineering-philosophy
 ---
 
 This section will contain small experiments, prototypes, benchmarks, and technical investigations.

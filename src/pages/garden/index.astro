@@ -1,6 +1,37 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import ContentCard from "../../components/ContentCard.astro";
+import { getCollection } from "astro:content";
+
+const [notes, writing, experiments] = await Promise.all([
+  getCollection("notes"),
+  getCollection("writing"),
+  getCollection("experiments"),
+]);
+
+const gardenItems = [
+  ...notes
+    .filter(item => item.data.status !== "draft")
+    .map(item => ({
+      ...item,
+      href: `/notes/${item.id}`,
+      type: "Note",
+    })),
+  ...writing
+    .filter(item => item.data.status !== "draft")
+    .map(item => ({
+      ...item,
+      href: `/writing/${item.id}`,
+      type: "Writing",
+    })),
+  ...experiments
+    .filter(item => item.data.status !== "draft")
+    .map(item => ({
+      ...item,
+      href: `/experiments/${item.id}`,
+      type: "Experiment",
+    })),
+].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Layout title="Digital Garden">
@@ -11,29 +42,20 @@ import ContentCard from "../../components/ContentCard.astro";
 Digital Garden
 </h1>
 
-<p class="mt-4 text-gray-400">
-A growing archive of ideas, experiments and knowledge.
+<p class="mt-4 max-w-2xl text-gray-400">
+A connected layer for ideas, notes, writing and experiments growing through the Lab.
 </p>
 
-<div class="mt-8 grid gap-5 sm:gap-6 md:grid-cols-3">
+<div class="mt-8 grid gap-5 sm:gap-6 md:grid-cols-2">
 
-<ContentCard
-title="Notes"
-description="Engineering thoughts and principles."
-href="/notes"
-/>
-
-<ContentCard
-title="Writing"
-description="Technical essays and discoveries."
-href="/writing"
-/>
-
-<ContentCard
-title="Experiments"
-description="Prototypes and technical explorations."
-href="/experiments"
-/>
+{gardenItems.map(item => (
+  <ContentCard
+    title={item.data.title}
+    description={item.data.description}
+    meta={`${item.type} • ${item.data.tags.join(" • ")}`}
+    href={item.href}
+  />
+))}
 
 </div>
 

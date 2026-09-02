@@ -1,0 +1,49 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { SITE } from "../../data/site";
+---
+
+<Layout title="About">
+
+<main class="max-w-3xl mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
+
+<a href="/" class="inline-block mb-8 text-sm text-gray-500 hover:text-white transition">
+  ← Home
+</a>
+
+<h1 class="text-3xl font-bold sm:text-5xl">
+About
+</h1>
+
+<p class="mt-4 text-gray-400">
+{SITE.tagline}
+</p>
+
+<article class="prose prose-invert mt-10">
+
+<h2>Why this Lab exists</h2>
+
+<p>
+Alok Engineering Lab is a personal space for building systems, exploring technology,
+documenting experiments, and preserving what is learned along the way.
+</p>
+
+<h2>What lives here</h2>
+
+<p>
+Projects, technical writing, engineering notes, experiments, documentation,
+and milestones from the journey.
+</p>
+
+<h2>Engineering philosophy</h2>
+
+<p>
+Build deliberately. Test what matters. Document decisions. Learn from failures.
+Keep useful knowledge connected and easy to revisit.
+</p>
+
+</article>
+
+</main>
+
+</Layout>
