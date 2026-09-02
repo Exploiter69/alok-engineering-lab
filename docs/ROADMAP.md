@@ -216,3 +216,36 @@ For each meaningful phase or release:
 9. update `AI_HANDOFF.md` when continuation context changes
 10. update this roadmap when phase status changes
 11. deploy only when appropriate
+
+## CP4.1 — Content + Discovery Foundation
+**Status: Planned / Scope Locked**
+
+CP4.1 will combine content depth with a small product-level discovery improvement.
+
+### Goals
+* improve the usefulness and depth of Engineering Lab content
+* establish practical quality standards for Projects, Writing, Notes, Experiments, and Timeline
+* improve discovery using the existing content/relationship architecture
+* preserve the current Astro, MDX, and content-collection architecture
+
+### Initial product direction
+The first discovery improvement will be selected after reviewing the current rendered experience. Candidate areas include:
+* Garden organization
+* content metadata presentation
+* related-content discovery
+* lightweight tag/topic discovery
+
+### Out of Scope
+* search infrastructure
+* database or CMS
+* authentication
+* analytics
+* newsletter
+* external APIs
+* major redesign
+* framework migration
+* changes to the ASTRA repository
+* paid services
+
+### CP4.1 Development Rule
+No implementation is approved merely because it is listed as a candidate. Each change must first have an identified user/product problem, a defined scope, and a clear verification method.
