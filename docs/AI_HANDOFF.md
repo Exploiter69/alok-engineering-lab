@@ -50,10 +50,11 @@ Completed development phases:
 - CP2 — Information Architecture
 - CP3 — Visual / UX Refinement
 - CP4.1 — Content + Discovery Foundation
+- CP4.2 — Engineering Archive Curation
 
 Latest confirmed repository checkpoint:
 
-`46647c6` — `content: add v1.1 website milestone`
+current master — curated engineering archive restored
 
 Local `master` is synchronized with `origin/master`.
 
@@ -130,11 +131,14 @@ The project is actively progressing through:
 
 CP4.1 established the initial content and discovery foundation.
 
+CP4.2 curated the engineering archive around current repository evidence, restored the primary project set, added repository provenance and explicit featured ordering, and kept Astra distinct from VAJRA.
+
 The focus should now shift from broad visual refinement toward making the Engineering Lab substantially richer and more useful.
 
 Priority areas include:
 
 - stronger project case studies
+- curated engineering project archive
 - deeper ASTRA project documentation
 - better writing / notes / experiment content
 - stronger cross-linking
