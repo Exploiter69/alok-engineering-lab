@@ -41,12 +41,34 @@ Completed scope includes:
 - stronger About/identity
 - refreshed current-direction homepage copy
 
+## CP5 status
+The repository-level CP5 hardening pass is implemented.
+
+It now includes:
+- stronger shared SEO metadata
+- explicit 404 noindex behavior
+- removal of the favicon as a default social-preview image
+- consistent keyboard focus visibility
+- labelled primary/secondary navigation
+- deterministic Garden topic anchors
+- safer external repository links
+- a zero-cost GitHub Actions build gate
+
+Do not declare CP5 fully closed until the current tree has passed fresh build/browser verification.
+
 ## Next phase
-CP5 — Product Quality / UX Hardening.
+CP6 — Production / Release Readiness after CP5 verification.
 
-Do not immediately redesign the UI. First verify the complete existing product: content schema, routes, accessibility, metadata, internal links, responsive behavior, performance and rendered edge cases.
-
-After CP5, perform CP6 production/release readiness, then CP7 becomes ongoing maintenance.
+CP6 should cover:
+- full production build
+- route/content validation
+- browser audit
+- broken-link check
+- Git diff/history review
+- Vercel deployment verification
+- custom-domain verification
+- release notes
+- Git tag/checkpoint
 
 ## Visual direction
 Preserve the restrained engineering aesthetic: black canvas, strong typography, thin borders/rules, monospace technical labels, editorial spacing, responsive layouts and minimal decoration.
