@@ -16,36 +16,48 @@ stack:
   - SQLite/WAL
 ---
 
-## The Problem
+## Problem
 
-A feature-rich Telegram userbot becomes difficult to maintain when plugins own too much infrastructure and background work is treated as disposable.
+A large Telegram userbot can accumulate dozens of commands while becoming harder to operate safely: plugin lifecycle, background jobs, media processing, storage and AI integrations all compete for ownership.
 
-AstraUserbot focuses on turning that kind of system into a more reliable platform without replacing the existing architecture with a framework rewrite.
+AstraUserbot treats reliability as the platform problem rather than adding another framework rewrite.
+
+## Constraints
+
+- Keep a single-process Python/asyncio modular monolith.
+- Keep Telegram/Telethon at the edge.
+- Keep SQLite/WAL as the durable source of truth.
+- Avoid Redis, Kafka, Celery, Kubernetes, microservices and paid infrastructure.
+- AI remains advisory and replaceable rather than authoritative.
 
 ## Architecture
 
-The system remains a **single-process Python/asyncio modular monolith**.
+The platform core owns shared infrastructure while plugins remain the feature edge.
 
-Telegram is the transport layer. Shared infrastructure is owned by the platform core while plugins remain the feature edge.
+Key boundaries include **ApplicationContext**, supervised tasks/services, **JobEngine**, storage, cache, HTTP/subprocess/media infrastructure, search and optional AI providers.
 
-The central flow is built around an ApplicationContext, plugins, a durable JobEngine, supervised tasks and services for storage, cache, HTTP, subprocesses, media, AI, search and operations.
-
-SQLite/WAL is the default durable store.
+The design favors explicit lifecycle and ownership contracts over a distributed architecture.
 
 ## Reliability Work
 
-The repository emphasizes deterministic plugin lifecycle and command ownership, bounded shutdown, durable job leases and recovery, SQLite integrity and backup/restore verification, bounded media workspaces, FTS5 search, secret-safe diagnostics and explicit isolation boundaries.
+The current engineering focus includes deterministic plugin lifecycle and command ownership, supervised background work, durable job leases and recovery, bounded shutdown behavior, SQLite integrity plus backup/restore verification, bounded media workspaces, FTS5 search, secret-safe diagnostics and explicit isolation boundaries.
 
-AI providers remain replaceable and AI output is not treated as authority.
+This is the work that makes a userbot predictable after restarts, failures and future plugin growth.
 
 ## Current State
 
 The repository currently describes release candidate **1.0.1**, with **56 active plugins** and **4 intentionally quarantined legacy AI modules**.
 
+The quarantined modules are kept as an explicit compatibility/history boundary rather than being silently deleted.
+
 ## Verification
 
-A dedicated non-destructive release acceptance gate and focused checks cover production hardening, plugin behavior, ecosystem contracts, media pipelines, isolation, storage, jobs and shutdown behavior.
+A non-destructive release acceptance gate is supported by focused checks for plugin behavior, plugin ecosystem contracts, media pipelines, isolation/security, storage hardening, jobs and shutdown behavior.
 
-## Lessons
+## Design Lesson
 
-The valuable work is not only the number of commands a userbot exposes. It is the infrastructure that makes those commands predictable under restart, failure, resource limits and future change.
+The useful metric is not only how many commands the bot has. The deeper engineering value is whether the platform can keep those commands predictable under restart, resource pressure, plugin change and partial failure.
+
+## Why It Belongs Here
+
+AstraUserbot demonstrates a different side of engineering from VAJRA: instead of designing a new autonomous runtime, it hardens a long-lived application around clear ownership, durability and operational boundaries.
