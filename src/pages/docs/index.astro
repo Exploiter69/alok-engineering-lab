@@ -1,19 +1,31 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 ---
-
 <Layout title="Documentation">
-
 <main class="min-h-screen max-w-6xl mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
-
-<h1 class="text-3xl font-bold sm:text-4xl">
-Documentation
-</h1>
-
-<p class="mt-4 text-gray-400">
-Technical documentation and system guides.
-</p>
-
+<header class="max-w-3xl border-b border-neutral-900 pb-10">
+<p class="lab-label mb-4">Reference / Lab</p>
+<h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Documentation</h1>
+<p class="mt-5 text-lg leading-8 text-neutral-400">How the Engineering Lab is structured, maintained and evolved.</p>
+</header>
+<article class="prose prose-invert mt-12 max-w-3xl">
+<h2>What the Lab is</h2>
+<p>Alok Engineering Lab is a long-term engineering archive rather than a conventional portfolio. Projects record substantial systems. Writing develops technical ideas. Notes preserve durable knowledge. Experiments capture questions and evidence. Timeline records the journey.</p>
+<h2>Content model</h2>
+<ul>
+<li><strong>Projects</strong> — substantial engineering systems and case studies.</li>
+<li><strong>Writing</strong> — developed technical explanations and arguments.</li>
+<li><strong>Notes</strong> — compact ideas, principles and observations.</li>
+<li><strong>Experiments</strong> — bounded questions, setups, observations and results.</li>
+<li><strong>Timeline</strong> — important engineering milestones and turning points.</li>
+<li><strong>Changelog</strong> — meaningful releases and product checkpoints.</li>
+</ul>
+<h2>Engineering principles</h2>
+<p>Inspect before modifying. Prefer simple systems. Make decisions explicit. Test reality rather than intention. Keep authority boundaries clear. Treat failures as information. Preserve provenance where trust matters.</p>
+<h2>Technology</h2>
+<p>The site uses Astro, Tailwind CSS, TypeScript and content collections, deployed as a static site. The architecture intentionally avoids a database, CMS and paid services.</p>
+<h2>Maintenance</h2>
+<p>The preferred workflow is <strong>inspect → implement → verify → review → checkpoint</strong>. Current repository state and Git history are stronger sources of truth than old conversations.</p>
+</article>
 </main>
-
 </Layout>
