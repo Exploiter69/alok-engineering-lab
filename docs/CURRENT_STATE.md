@@ -26,7 +26,7 @@ The stable `v1.0.0` history remains preserved and must not be rewritten.
 
 Current repository checkpoint:
 
-`46647c6` — `content: add v1.1 website milestone`
+current master — curated engineering archive restored
 
 Local `master` and `origin/master` are synchronized.
 
@@ -100,6 +100,7 @@ CP3 refined:
 The current visual direction is intentionally restrained. No unnecessary 3D, WebGL, particle systems or decorative effects have been introduced.
 
 ### CP4.1 — Content + Discovery Foundation
+- CP4.2 — Engineering Archive Curation
 
 **Status:** Implemented / verified.
 
@@ -151,11 +152,14 @@ The automated audit checks HTTP responses, browser errors, horizontal overflow, 
 
 The project is actively progressing through **CP4 — Content & Product Depth**.
 
+CP4.2 is complete; the next focus is deeper case-study documentation.
+
 The website foundation is stable enough that the next meaningful work should focus primarily on engineering content and knowledge depth rather than another broad visual redesign.
 
 Priority areas:
 
 - stronger project case studies
+- curated engineering project archive
 - deeper ASTRA documentation
 - more real writing / notes / experiments
 - stronger relationships between content
