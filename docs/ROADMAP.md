@@ -1,265 +1,213 @@
 # Alok Engineering Lab — Roadmap
 
-> Directional roadmap for the Engineering Lab.
-> Roadmap items are not automatically approved for implementation.
+> Directional roadmap for the Engineering Lab. Roadmap items are not automatically approved for implementation.
 
 ## Completed
 
 ### v1.0.0 — Foundation
+- initial Engineering Lab foundation
+- content structure and detail-page linking
+- responsive/mobile improvements
+- Git/GitHub release checkpoint
+- Vercel deployment foundation
 
-* initial Engineering Lab foundation
-* content structure
-* detail-page linking
-* responsive/mobile improvements
-* Git/GitHub release checkpoint
-* Vercel deployment foundation
-
-The `v1.0.0` history is preserved and must not be rewritten.
+The v1.0.0 history is preserved and must not be rewritten.
 
 ### v1.1 — Website Release Baseline
-
-The project progressed beyond the original v1.1 handoff and established the current website baseline.
+The current website baseline was established beyond the original v1.1 handoff.
 
 ### CP0 — UI/UX Audit
-
 **Status: Complete**
 
-Audited:
-
-* hierarchy
-* navigation
-* responsiveness
-* visual consistency
-* overall product direction
+Hierarchy, navigation, responsiveness, visual consistency and product direction were audited.
 
 ### CP1 — Design System
-
 **Status: Complete and locked**
 
-Established the current visual foundation:
-
-* modern engineering aesthetic
-* restrained technical / hacker character
-* typography-led hierarchy
-* black canvas
-* thin borders and rules
-* monospace technical labels
-* responsive spacing
-* restrained cards
-* minimal decorative effects
+Established the modern engineering aesthetic, typography-led hierarchy, black canvas, thin rules, technical labels, responsive spacing, restrained cards and minimal decoration.
 
 ### CP2 — Information Architecture
-
 **Status: Complete and verified**
 
-Established the primary navigation and supporting information architecture:
-
-* Projects
-* Writing
-* Notes
-* Experiments
-* Timeline
-* Garden
-* Changelog
-* Docs
-* About
-
-The homepage acts as a curated gateway, while the Garden serves as a discovery layer.
+Established Projects, Writing, Notes, Experiments and Timeline as primary areas, with Garden, Changelog, Docs and About as supporting areas. The homepage is a curated gateway.
 
 ### CP3 — Visual / UX Refinement
-
 **Status: Complete and checkpointed**
 
-Refined:
-
-* homepage hierarchy
-* hero presentation
-* Currently section
-* selected work presentation
-* featured ASTRA project treatment
-* collection pages
-* detail pages
-* metadata presentation
-* responsive behavior
-* mobile layouts
-* visual consistency
-
-Desktop and mobile layouts were visually inspected.
-
-The visual direction remains intentionally restrained. Large animation systems, 3D, WebGL, particles and similar effects are not part of the current system.
+Refined homepage hierarchy, hero, Currently section, selected work, collection/detail pages, metadata, responsive behavior and mobile layouts. The restrained visual direction remains intentional.
 
 ### CP4.1 — Content + Discovery Foundation
+**Status: Complete**
 
-**Status: Complete / foundation implemented**
+Established initial content depth, related-content support, Garden discovery, timeline/release milestones and automated browser quality auditing.
 
-Implemented:
+### CP4.2 — Engineering Archive Curation
+**Status: Complete**
 
-* initial content depth improvements
-* ASTRA project case-study foundation
-* first engineering experiment
-* Garden content discovery improvement
-* related-content architecture
-* timeline and release milestones
-* automated browser quality audit
+Restored and curated the primary engineering project archive from current GitHub repository evidence, added repository provenance and explicit featured ordering, and kept Astra distinct from VAJRA.
 
-Verification baseline:
+### CP4.3 — Deep Engineering Case Studies
+**Status: Complete**
 
-* Astro check/build passes
-* 20 pages generated
-* 30/30 browser audit cases pass
-* 15/15 desktop cases pass
-* 15/15 mobile cases pass
-* zero audit warnings and failures
+Six curated projects now have substantially deeper evidence-led case studies covering problem, constraints, architecture, implementation/evolution, verification or safety boundaries, current state and design lessons.
 
----
+Covered projects:
+1. VAJRA
+2. AstraUserbot
+3. VGU Signal
+4. TelDrive Lab
+5. GeminiAgentBridge
+6. Astra
 
-## Current Phase
+## Remaining Product Phases
 
-### CP4 — Content & Product Depth
+### CP4.4 — Knowledge Archive Depth
+**Status: Next**
 
-**Status: Active**
+Turn Writing, Notes and Experiments into a real engineering knowledge archive.
 
-The next work is not another broad visual redesign. The stable website foundation should now be used to build a substantially richer engineering archive.
+Scope:
+- substantive technical writing
+- useful engineering notes
+- multiple real experiments
+- content quality and maturity metadata
+- no filler or generic AI-written posts
 
-Priority areas:
+Done when the non-project sections are useful on their own.
 
-* stronger project case studies
-* deeper ASTRA project documentation
-* more real writing, notes and experiment content
-* stronger cross-linking between related content
-* useful Timeline / Journey presentation
-* Garden discovery driven by actual content
-* practical content quality standards
+### CP4.5 — Cross-Linking / Knowledge Graph
+**Status: Planned**
 
-### CP4 planning rule
+Connect projects, writing, notes and experiments into one body of knowledge.
 
-Before implementing a meaningful CP4 change:
+Scope:
+- project ↔ writing/note/experiment relationships
+- contextual links inside long-form content
+- related-content presentation
+- avoid duplicate or noisy links
 
-1. inspect the current repository
-2. identify the actual problem or opportunity
-3. define the specific scope
-4. decide what is intentionally out of scope
-5. implement a small, reviewable change
-6. verify the result
-7. review the visual and functional outcome
-8. create a Git checkpoint
-9. update the canonical documentation
+Done when visitors can naturally move from a project to the ideas, experiments and lessons behind it.
 
----
+### CP4.6 — Journey / Timeline Depth
+**Status: Planned**
 
-## Longer-Term Ideas
+Turn Timeline into a meaningful engineering journey.
 
-These remain exploratory ideas and are not commitments:
+Scope:
+- project milestones
+- learning and technology transitions
+- releases and architectural turning points
+- links to relevant content
+- distinction between personal milestones and software releases
 
-* advanced content search
-* richer project case studies
-* deeper content relationships
-* timeline / changelog integration
-* knowledge-graph-like navigation
-* analytics
-* newsletter
-* more engineering experiments
-* expanded documentation
-* additional discovery mechanisms
+### CP4.7 — Garden / Discovery
+**Status: Planned**
 
-A future idea should not be implemented merely because it appears on this roadmap.
+Make Garden a genuine discovery surface once enough content exists.
 
----
+Scope:
+- useful filters/views
+- tag/topic discovery
+- maturity/stage signals
+- latest/relevant grouping
+- connected-content entry points
+
+No database, CMS or search infrastructure unless real scale proves the need.
+
+### CP4.8 — Documentation Surface
+**Status: Planned**
+
+Turn the currently minimal Docs area into useful public engineering documentation.
+
+Scope:
+- how the Lab is structured
+- content conventions
+- engineering principles
+- selected durable architecture decisions
+- links to project documentation
+
+### CP4.9 — Changelog / Release History
+**Status: Planned**
+
+Make the Lab's own evolution visible through meaningful release entries, phase checkpoints and notable architectural changes.
+
+### CP4.10 — About / Identity
+**Status: Planned**
+
+Strengthen the human identity without turning the Lab into a generic resume.
+
+Scope:
+- who is building the Lab
+- engineering interests
+- current focus
+- philosophy
+- links to relevant work
+
+### CP5 — Product Quality / UX Hardening
+**Status: Planned**
+
+After content depth exists, perform a complete product audit:
+- navigation consistency
+- accessibility and keyboard/focus behavior
+- semantic HTML
+- metadata/SEO
+- 404 behavior
+- internal-link integrity
+- mobile/desktop layouts
+- performance
+- content rendering edge cases
+
+This is hardening, not a redesign.
+
+### CP6 — Release / Production Readiness
+**Status: Planned**
+
+Final production checkpoint:
+- full build verification
+- content validation
+- route audit
+- browser audit
+- broken-link check
+- Git diff/history review
+- Vercel deployment verification
+- custom-domain verification
+- release notes
+- Git tag/checkpoint
+
+### CP7 — Long-Term Maintenance
+**Status: Ongoing**
+
+After the next stable release, the Lab becomes an evolving system:
+- new projects
+- writing
+- notes
+- experiments
+- timeline milestones
+- changelog entries
+- documentation updates
+- periodic quality audits
+
+## Explicitly Not Needed Yet
+
+Do not add these for technical sophistication alone:
+- database/CMS
+- authentication
+- paid APIs
+- analytics
+- newsletter
+- heavy search infrastructure
+- WebGL/3D/particle systems
+- framework migration
+- unnecessary client-side state
+
+Introduce them only when an actual product problem justifies them.
 
 ## Product Direction
 
-Alok Engineering Lab is intended to grow into a long-term personal Engineering Lab / digital garden containing:
+Alok Engineering Lab is intended to become a long-term personal Engineering Lab / digital garden containing projects, technical writing, engineering notes, experiments, Linux/rooting work, AI experiments, learning journey, timeline, changelog, documentation and a durable knowledge archive.
 
-* portfolio
-* projects
-* technical writing
-* engineering notes
-* experiments
-* Linux / rooting work
-* AI experiments
-* learning journey
-* timeline
-* changelog
-* documentation
-* knowledge archive
-
-The site should prioritize:
-
-* useful content
-* clarity
-* maintainability
-* performance
-* responsive UX
-* meaningful relationships between knowledge
-* durable documentation
-
-Visual complexity should serve the product rather than become the product.
-
----
-
-## Development Principles
-
-The preferred workflow is:
+Preferred workflow:
 
 **inspect → implement → verify → review → checkpoint**
 
-Development should remain:
-
-* small and reviewable
-* architecture-preserving
-* evidence-driven
-* documentation-aware
-* ₹0 / $0
-* free of unnecessary complexity
-
-The repository and current Git state remain stronger sources of truth than this roadmap.
-
-The user remains the final decision-maker for scope and implementation.
-
----
-
-## Release / Change Rule
-
-For each meaningful phase or release:
-
-1. define scope
-2. inspect current code
-3. implement
-4. run appropriate checks
-5. review the diff
-6. visually inspect where applicable
-7. create a Git checkpoint
-8. update `CURRENT_STATE.md`
-9. update `AI_HANDOFF.md` when continuation context changes
-10. update this roadmap when phase status changes
-11. deploy only when appropriate
-
-## CP4.1 — Content + Discovery Foundation
-
-**Status: Complete / foundation implemented**
-
-CP4.1 combined content depth with a small product-level discovery improvement.
-
-### Delivered
-
-* deeper initial Engineering Lab content
-* practical related-content support
-* Garden organization/discovery improvement
-* initial project and experiment documentation
-* timeline and release milestones
-* browser-based quality auditing
-
-### Out of Scope
-
-* search infrastructure
-* database or CMS
-* authentication
-* analytics
-* newsletter
-* external APIs
-* major redesign
-* framework migration
-* changes to the ASTRA repository
-* paid services
-
-CP4.1 is now a completed foundation. Future CP4 work should be driven by actual content/product problems rather than the old candidate list.
+The repository and current Git state remain stronger sources of truth than this roadmap. The user remains the final decision-maker for scope and implementation.
