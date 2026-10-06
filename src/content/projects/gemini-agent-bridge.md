@@ -16,38 +16,53 @@ stack:
   - Asyncio
 ---
 
-## The Problem
+## Problem
 
-Coding agents need reasoning backends, but the reasoning layer should not silently become the component that owns filesystem, terminal or Git execution.
+Coding agents often need a reasoning backend, but the reasoning layer should not silently become the component that owns filesystem, terminal or Git execution.
 
-GeminiAgentBridge provides a local OpenAI-compatible boundary between an agent client and Gemini Web.
+GeminiAgentBridge creates a local OpenAI-compatible boundary between an agent client and Gemini Web while preserving tool authority in the downstream client.
+
+## Constraints
+
+- Python 3.11+.
+- Local-first default operation.
+- No arbitrary downstream tool execution inside the bridge.
+- Non-loopback use must be explicitly authenticated.
+- Request, image and streaming behavior must be bounded.
+- Credentials and session material remain local and secret-safe.
 
 ## Architecture
 
-The bridge handles protocol and tool-call normalization, bounded requests and images, and cancellable streaming.
+**Coding Agent → OpenAI-compatible Bridge → Gemini Web**
 
-The downstream coding agent remains responsible for executing tools.
+The bridge handles protocol/tool-call normalization, bounded requests and images, and cancellable streaming.
 
-**Gemini → Bridge → normalized tool call → Agent executes → observation → Bridge → Gemini**
+For tool use:
 
-The bridge never executes arbitrary shell, filesystem or Git operations on behalf of the model.
+**Gemini → proposed tool call → Bridge normalization → Agent execution → observation → Gemini**
+
+The bridge never executes shell, filesystem or Git operations for the model.
 
 ## Security Boundaries
 
-The maintained release line defaults to loopback binding.
+The maintained release line defaults to '127.0.0.1'.
 
-Non-loopback listeners require explicit API-key configuration. Request bodies and remote images are bounded, redirects are revalidated, and secret or upstream transport details are kept out of ordinary logs and client errors.
+Non-loopback listeners require configured API keys. Request bodies and remote image downloads are bounded, redirects are revalidated, and upstream exception details or signed URLs are not exposed in normal logs.
 
-Streaming is designed around a real boundary: once output has crossed the backend boundary, the request is not retried in a way that could duplicate tool-call prefixes.
+Streaming has an explicit failure boundary: the bridge waits for meaningful upstream output before committing HTTP 200, and after output crosses the backend boundary it does not retry in a way that could duplicate tool-call prefixes.
+
+## Compatibility
+
+The bridge exposes an OpenAI-compatible API so existing clients can use Gemini Web without being rewritten around a provider-specific interface.
+
+Real-client validation targets OpenCode and Hermes in addition to deterministic tests and compilation checks.
 
 ## Current State
 
-The repository describes a release-hardening line using the modern gemini-webapi transport and a Python 3.11+ implementation.
+The repository describes a release-hardening line using the modern 'gemini-webapi' transport. Release promotion is gated on CI, a fresh authenticated Gemini Web run and real client validation.
 
-Release promotion is gated on CI, a fresh authenticated Gemini Web run and real OpenCode/Hermes validation.
+## Design Lesson
 
-## Lessons
+The valuable engineering work is the **boundary**, not the adapter.
 
-The useful part of an agent bridge is the boundary, not merely the model adapter.
-
-Keeping downstream tool authority in the client makes the system easier to reason about and prevents a reasoning backend from quietly becoming an execution authority.
+A reasoning backend can be replaced without giving it execution authority. Keeping that authority in the downstream agent makes the system easier to reason about and safer to compose.
