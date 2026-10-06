@@ -55,22 +55,11 @@ Established the current Astro/Tailwind website foundation.
 ## Next Product Phases
 
 ### CP5 — Product Quality / UX Hardening
-**Next.**
+**Implemented; verification pending.**
 
-Full product audit after content depth:
-- Astro/content/type validation
-- accessibility and semantic HTML
-- keyboard/focus behavior
-- metadata and SEO
-- canonical/OG correctness
-- 404 behavior
-- internal-link integrity
-- mobile and desktop layouts
-- performance
-- content rendering edge cases
-- visual consistency
+Repository-level hardening covers metadata/SEO, 404 indexing behavior, keyboard focus, semantic navigation labels, Garden anchor determinism, external-link safety and a free build-quality workflow.
 
-This is hardening, not a redesign.
+Fresh build/browser verification must pass before marking CP5 complete.
 
 ### CP6 — Release / Production Readiness
 **Planned.**
