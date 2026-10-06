@@ -49,16 +49,17 @@ Completed development phases:
 - CP1 — Design System
 - CP2 — Information Architecture
 - CP3 — Visual / UX Refinement
+- CP4.1 — Content + Discovery Foundation
 
-Latest confirmed local checkpoint:
+Latest confirmed repository checkpoint:
 
-`b1d1e84` — `content: deepen ASTRA project case study`
+`46647c6` — `content: add v1.1 website milestone`
 
-Local `master` is ahead of `origin/master`.
+Local `master` is synchronized with `origin/master`.
 
-The current CP4.1 checkpoint has a clean working tree.
+The working tree was clean at the latest confirmed local verification.
 
-## CP3 outcome
+## CP3 / verification outcome
 
 The current website has a cohesive modern engineering visual system based on:
 
@@ -71,13 +72,18 @@ The current website has a cohesive modern engineering visual system based on:
 - restrained content cards
 - minimal decorative effects
 
-The homepage now provides a clearer Engineering Lab identity and hierarchy.
+The homepage provides a clear Engineering Lab identity and hierarchy.
 
-Collection and detail pages have also been refined for consistency and responsive behavior.
+Collection and detail pages are consistent and responsive.
 
-Desktop and mobile layouts were visually inspected.
+The automated quality audit verifies 15 routes at desktop and 15 routes at mobile size, with 30/30 cases passing and zero warnings or failures.
 
-The automated quality audit now verifies 15 routes at desktop and 15 routes at mobile size, with 30/30 cases passing and zero warnings or failures.
+The latest local verification also confirmed:
+
+- `npm run build` passes
+- Astro check reports 0 errors, 0 warnings and 0 hints
+- 20 pages are generated successfully
+- browser audit reports 30/30 passing
 
 ## Current information architecture
 
@@ -122,11 +128,11 @@ The project is actively progressing through:
 
 **CP4 — Content & Product Depth**
 
-The current completed CP4.1 foundation combines content depth with lightweight discovery improvements.
+CP4.1 established the initial content and discovery foundation.
 
-The focus should shift from broad visual refinement toward making the Engineering Lab substantially richer and more useful.
+The focus should now shift from broad visual refinement toward making the Engineering Lab substantially richer and more useful.
 
-Possible CP4 areas include:
+Priority areas include:
 
 - stronger project case studies
 - deeper ASTRA project documentation
@@ -136,7 +142,7 @@ Possible CP4 areas include:
 - better Garden discovery
 - stronger content quality standards
 
-CP4.1 has established the initial content and discovery foundation. Further CP4 work still requires an identified product problem, explicit scope, verification method, and Git checkpoint before implementation.
+Further CP4 work requires an identified product problem, explicit scope, verification method, and Git checkpoint before implementation.
 
 ## Visual direction
 
@@ -193,3 +199,4 @@ First inspect:
 ```bash
 git status --short --branch
 git log --oneline --decorate -8
+```
