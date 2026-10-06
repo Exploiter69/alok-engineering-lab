@@ -4,9 +4,23 @@ import { SITE } from "../data/site";
 import { getCollection } from "astro:content";
 import ContentCard from "../components/ContentCard.astro";
 
+const featuredProjectIds = new Set([
+  "vajra",
+  "astra-userbot",
+  "vgu-signal",
+  "teldrive-lab",
+  "gemini-agent-bridge",
+]);
+
 const projects = (await getCollection("projects"))
   .filter(item => item.data.status !== "draft")
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort((a, b) => {
+    const aFeatured = featuredProjectIds.has(a.id);
+    const bFeatured = featuredProjectIds.has(b.id);
+
+    if (aFeatured !== bFeatured) return aFeatured ? -1 : 1;
+    return b.data.date.valueOf() - a.data.date.valueOf();
+  });
 
 const writing = (await getCollection("writing"))
   .filter(item => item.data.status !== "draft")
