@@ -3,204 +3,70 @@
 > Start here when a new AI chat/session needs to continue the project.
 
 ## Current project
-
 Alok Engineering Lab is a long-term personal Engineering Lab / digital garden, not merely a portfolio.
 
-## Current stack
-
+## Stack
 - Astro
 - Tailwind CSS
 - MDX / Astro content collections
 - TypeScript
 - Git / GitHub
 - Vercel
-- Namecheap custom domain: `alokthakur.me`
+- Namecheap custom domain: alokthakur.me
 
 ## Source of truth
-
-When information conflicts, use this order:
-
 1. Actual current repository
 2. Current Git state
 3. Explicit current user decisions
-4. Canonical `docs/` files
+4. Canonical docs
 5. Recent project conversations
 6. Older conversations
 
 Always inspect the repository before making engineering changes.
 
 ## Stable baseline
+v1.0.0 is preserved. Do not rewrite its history.
 
-`v1.0.0` is the preserved stable foundation.
+## CP4 status
+CP4.1 through CP4.10 are complete.
 
-Release commit:
+Completed scope includes:
+- six deep engineering project case studies
+- substantive Writing, Notes and Experiments
+- project/content cross-linking
+- meaningful Timeline milestones
+- Garden topic discovery
+- useful public Docs
+- meaningful Changelog entry
+- stronger About/identity
+- refreshed current-direction homepage copy
 
-`b0c61f8` — `feat: make v1 responsive`
+## Next phase
+CP5 — Product Quality / UX Hardening.
 
-Do not rewrite the `v1.0.0` history.
+Do not immediately redesign the UI. First verify the complete existing product: content schema, routes, accessibility, metadata, internal links, responsive behavior, performance and rendered edge cases.
 
-## Current state
-
-The project has progressed beyond the original v1.1 handoff.
-
-Completed development phases:
-
-- CP0 — UI/UX Audit
-- CP1 — Design System
-- CP2 — Information Architecture
-- CP3 — Visual / UX Refinement
-- CP4.1 — Content + Discovery Foundation
-- CP4.2 — Engineering Archive Curation
-
-Latest confirmed repository checkpoint:
-
-current master — curated engineering archive restored
-
-Local `master` is synchronized with `origin/master`.
-
-The working tree was clean at the latest confirmed local verification.
-
-## CP3 / verification outcome
-
-The current website has a cohesive modern engineering visual system based on:
-
-- black canvas
-- strong typography
-- restrained borders and rules
-- monospace technical labels
-- editorial spacing
-- responsive layouts
-- restrained content cards
-- minimal decorative effects
-
-The homepage provides a clear Engineering Lab identity and hierarchy.
-
-Collection and detail pages are consistent and responsive.
-
-The automated quality audit verifies 15 routes at desktop and 15 routes at mobile size, with 30/30 cases passing and zero warnings or failures.
-
-The latest local verification also confirmed:
-
-- `npm run build` passes
-- Astro check reports 0 errors, 0 warnings and 0 hints
-- 20 pages are generated successfully
-- browser audit reports 30/30 passing
-
-## Current information architecture
-
-Primary navigation:
-
-- Projects
-- Writing
-- Notes
-- Experiments
-- Timeline
-
-Supporting areas:
-
-- Garden
-- Changelog
-- Docs
-- About
-
-The homepage is a curated gateway.
-
-The Garden is intended as a discovery layer rather than simply another collection.
-
-Content should remain interconnected where useful.
-
-## Current development philosophy
-
-The project is being developed using a fast but disciplined workflow:
-
-**inspect → implement → verify → review → checkpoint**
-
-Do not create unnecessary planning overhead.
-
-Prefer small, high-impact, reviewable changes.
-
-Do not blindly follow AI suggestions.
-
-The user remains the final decision-maker.
-
-## Current phase
-
-The project is actively progressing through:
-
-**CP4 — Content & Product Depth**
-
-CP4.1 established the initial content and discovery foundation.
-
-CP4.2 curated the engineering archive around current repository evidence, restored the primary project set, added repository provenance and explicit featured ordering, and kept Astra distinct from VAJRA.
-
-The focus should now shift from broad visual refinement toward making the Engineering Lab substantially richer and more useful.
-
-Priority areas include:
-
-- stronger project case studies
-- curated engineering project archive
-- deeper ASTRA project documentation
-- better writing / notes / experiment content
-- stronger cross-linking
-- useful Timeline / Journey presentation
-- better Garden discovery
-- stronger content quality standards
-
-Further CP4 work requires an identified product problem, explicit scope, verification method, and Git checkpoint before implementation.
+After CP5, perform CP6 production/release readiness, then CP7 becomes ongoing maintenance.
 
 ## Visual direction
+Preserve the restrained engineering aesthetic: black canvas, strong typography, thin borders/rules, monospace technical labels, editorial spacing, responsive layouts and minimal decoration.
 
-Preserve the current restrained engineering aesthetic.
-
-Do not add visual technology merely because it is technically impressive.
-
-3D, WebGL, particles, large animation systems and similar effects should only be introduced if they provide a clear UX or product benefit.
+Do not introduce 3D/WebGL/particles or large client-side systems without a real UX need.
 
 ## Financial constraint
+The project remains permanently ₹0 / $0. No paid APIs, services, subscriptions or pay-as-you-go infrastructure.
 
-The entire project must remain:
+## Development workflow
+**inspect → implement → verify → review → checkpoint**
 
-**₹0 / $0**
+Do not rewrite v1.0.0. Prefer small, durable, reviewable changes. Keep canonical docs concise and current.
 
-Do not recommend or enable:
-
-- paid APIs
-- pay-as-you-go AI
-- paid services
-- workflows that can unexpectedly incur charges
-
-Prefer free, local and open-source solutions.
-
-## Deployment
-
-Production deployment uses Vercel.
-
-Domain:
-
-`alokthakur.me`
-
-DNS is managed through Namecheap.
-
-Do not randomly modify nameservers or DNS records.
-
-## Development rules
-
-- Do not migrate Astro to Next.js without an explicit architecture decision.
-- Do not rewrite v1.0.0 history.
-- Inspect before modifying.
-- Preserve working architecture.
-- Prefer small changes.
-- Run appropriate checks.
-- Review diffs.
-- Create Git checkpoints.
-- Do not push unless explicitly requested.
-- Keep documentation durable and concise.
-
-## If continuing this project
-
-First inspect:
-
-```bash
-git status --short --branch
-git log --oneline --decorate -8
-```
+## Continuation
+When continuing:
+1. inspect current GitHub state
+2. read this file and relevant canonical docs
+3. identify the actual product problem
+4. implement only the required scope
+5. verify
+6. checkpoint
+7. update durable docs
