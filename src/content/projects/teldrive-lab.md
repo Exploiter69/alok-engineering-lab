@@ -16,36 +16,44 @@ stack:
   - Local Storage
 ---
 
-## The Problem
+## Problem
 
-An existing TelDrive deployment can accumulate a large amount of storage and metadata without having a safe engineering layer for cataloging, planning, verification and controlled maintenance.
+An existing TelDrive deployment can accumulate a large corpus of Telegram-backed storage without having a safe engineering layer for cataloging, planning, verification and controlled maintenance.
 
-TelDrive Lab adds that control plane without taking ownership away from the production storage system.
-
-## Boundary
-
-TelDrive remains the production storage authority.
-
-The Lab is a sidecar that observes, catalogs, searches, plans and performs explicitly authorized operations while protecting existing Telegram-backed storage, rclone mounts and services.
-
-## Safety Model
-
-**Observe → understand → plan → authorize → controlled execution → verify → record evidence**
-
-Read-only consumers are preferred. Consequential mutation is bounded by explicit policy and authorization.
-
-The repository intentionally does not require cloud AI, a speech-to-text provider or a local LLM runtime for normal operation.
-
-## Current Capabilities
-
-The current product includes corpus discovery and local cataloging, unified search, media cataloging, durable jobs and recovery, storage/cache intelligence, OCR and document fingerprints, deterministic local embeddings, storage analytics, manifests, verification and restore planning, report-only deduplication primitives and a loopback-only read-only Control Center.
+The goal is not to replace TelDrive. It is to make the surrounding system easier to understand and operate without weakening the production boundary.
 
 ## Constraints
 
-The project is designed for **₹0 / $0 infrastructure** and resource-conscious operation.
+- TelDrive remains the production storage authority.
+- Existing Telegram data must not be migrated or re-uploaded.
+- Existing rclone mounts and services remain protected.
+- Sidecars must be disposable and rebuildable.
+- Prefer read-only consumers.
+- No cloud AI, speech-to-text provider or local LLM is required for normal operation.
+- ₹0 / $0 infrastructure and resource-conscious operation.
 
-The existing TelDrive deployment and its data remain protected rather than being migrated into a new system.
+## Architecture
 
-## Lessons
+The safety lifecycle is:
 
-The interesting engineering problem is not replacing TelDrive. It is building useful intelligence around an existing production boundary without making that boundary fragile.
+**Observe → understand → plan → authorize → controlled execution → verify → record evidence**
+
+TelDrive Lab sits beside the production system as a control plane. Catalogs, search indexes, analytics and planning are derived views; the underlying production storage remains authoritative.
+
+## Current Capabilities
+
+The repository currently covers authoritative corpus discovery and local cataloging, unified search, media catalog and Jellyfin integration, durable jobs and recovery, storage/cache intelligence, read-only metadata/API interoperability, OCR and document fingerprints, deterministic local embeddings, storage analytics, snapshots and manifests, restore planning, report-only CAS/deduplication primitives and a loopback-only read-only Control Center.
+
+## Safety Model
+
+Consequential mutation is intentionally harder than observation. Read-only paths are preferred, while writes require explicit policy/authorization and controlled execution followed by verification and evidence recording.
+
+That makes the Lab a safety-oriented sidecar rather than a second storage authority.
+
+## Current State
+
+The project remains an active engineering system around an existing TelDrive deployment. The repository's current architecture, roadmap and release checklist are authoritative for exact capability and operational status.
+
+## Design Lesson
+
+The interesting problem is not building another storage service. It is adding intelligence and control **around** an existing production boundary without silently taking ownership of the data.
