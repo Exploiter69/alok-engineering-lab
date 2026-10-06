@@ -16,42 +16,56 @@ stack:
   - Sandboxing
 ---
 
-## The Problem
+## Problem
 
-VAJRA explores how software work can continue autonomously without making a language model the authority over execution or completion.
-
-## Architecture
-
-The system is organized around durable Engineering Runs and an explicit authority chain:
-
-**Policy → Broker → Sandbox → Verification**
-
-Reasoning can propose work, but deterministic system components control execution. Independent verification provides evidence that a run actually achieved its objective.
-
-## What Changed
-
-The project has progressed through implementation phases covering durable execution, workspaces, independent verification, autonomous objective-to-evidence loops, chaos and recovery behavior, capability-aware routing, an always-on control plane, provenance-bound memory, production hardening, advanced autonomy and controlled self-improvement.
-
-The current repository reports **Phase 17 — Controlled Self-Improvement: complete / local gate passed**.
-
-Controlled self-improvement remains bounded: proposals go through isolation, tests, independent verification, security verification, human approval and explicit promotion.
+Most autonomous coding systems blur reasoning, execution and proof. VAJRA explores a different model: an engineering run must survive worker, model, process and machine failure without allowing the reasoning layer to become the authority.
 
 ## Constraints
 
-VAJRA is local-first and model-agnostic.
+- Local-first and model-agnostic.
+- ₹0.00 operating-cost target.
+- No paid inference or infrastructure dependency.
+- Canonical state must survive disposable workers and attempts.
+- Humans remain the final authority.
 
-The repository states a strict **₹0.00 operating-cost constraint** and does not make paid inference or infrastructure a project dependency.
+## Architecture
+
+The central boundary is:
+
+**Objective → Context → Reasoning → Intent → Policy → Execution Broker → Sandbox / Workspace → Artifact → Independent Verification → Evidence**
+
+A worker or model proposes work. Policy decides what is permitted. The broker is the execution authority. The sandbox and workspace contain effects. Independent verification decides whether evidence supports progress.
+
+The durable distinction is fundamental:
+
+**Run = durable · Step = durable · Attempt = disposable · Worker = disposable · Model = disposable**
+
+## Engineering Evolution
+
+The repository has progressed through durable execution and recovery, safety/control boundaries, context and workspace isolation, independent verification and anti-gaming, bounded objective-to-evidence autonomy, chaos and long-run durability, capability-aware routing, an always-on control plane, provenance-bound engineering memory, production hardening, advanced autonomy, and controlled self-improvement.
+
+The current repository reports **Phase 17 — Controlled Self-Improvement: complete / local gate passed**.
+
+## Self-Improvement Boundary
+
+Self-improvement is deliberately not unrestricted self-modification. A bounded proposal moves through:
+
+**proposal → isolated branch → tests → independent verification → security verification → human approval → explicit promotion**
+
+Authority and security surfaces remain outside the improvement scope. The model cannot authorize, promote, modify protected authority or restart VAJRA itself.
+
+## Failure as a Design Input
+
+VAJRA treats failures, leases, retries, recovery, provenance and verification evidence as first-class state rather than incidental logs. Recovery is therefore a controlled engineering operation instead of simply asking a model to try again.
 
 ## Verification
 
-Verification is a first-class architectural boundary. Failure, recovery, leases, provenance and evidence are treated as durable engineering concerns.
+The project has explicit phase gates and a substantial validation trail. Independent verification is structurally separated from worker/model output so that producing an artifact and proving it correct are different responsibilities.
 
-## Lessons
+## Why It Matters
 
-Autonomy without authority boundaries is difficult to trust.
-
-The important design decision is preserving deterministic control over what may execute, what counts as progress and who has final authority.
+VAJRA is less interesting as an "AI agent" than as an experiment in **trustworthy autonomy**: how far autonomous engineering can go while deterministic policy, evidence and human authority remain above model reasoning.
 
 ## Current State
 
-VAJRA is an active engineering system with a substantial implementation and documentation trail. The repository is the authoritative source for its phase gates and current implementation state.
+The repository is the authoritative source for current phase status, implementation details and gate evidence. The frozen v0.1.0 baseline remains preserved while later phases continue on main.
