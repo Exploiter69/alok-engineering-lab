@@ -16,34 +16,55 @@ stack:
   - Telegram
 ---
 
-## The Problem
+## Problem
 
-University information is distributed across pages, PDFs, notices, calendars and separate portals. Students need a useful information layer without turning forwarded messages or generated summaries into an authority.
+University information is fragmented across pages, PDFs, notices, calendars and separate student portals. A useful student tool must reduce that search cost without turning forwarded messages or generated summaries into an authority.
 
-## Core Loop
+## Constraints
+
+- Official VGU sources remain authoritative.
+- Preserve evidence and provenance for published information.
+- Handle duplicates, changes, supersession and conflicts explicitly.
+- Personalize delivery without changing source truth.
+- Keep the operating target at ₹0 / $0.
+- Prefer deterministic processing before AI-heavy features.
+
+## Architecture
+
+The information loop is:
 
 **Discover → Fetch → Evidence → Extract → Verify / Deduplicate / Supersede → Personalize → Deliver → Verify again**
 
-The official VGU source remains authoritative. VGU Signal discovers, structures, verifies and delivers information while preserving provenance.
+The Python side handles acquisition, evidence and structured processing. The Cloudflare Worker/D1 side provides the delivery/control layer, with Telegram as the student-facing channel.
 
 ## Trust Model
 
-Information moves through explicit states such as DISCOVERED, FETCHED, PARSED, VERIFIED, CHANGED, SUPERSEDED, EXPIRED and CONFLICTING.
+Information moves through explicit states such as:
 
-Community signals can be useful inputs, but they are never authoritative by themselves.
+'DISCOVERED' → 'FETCHED' → 'PARSED' → 'VERIFIED'
 
-## Current Implementation
+and can later become:
 
-The repository contains a Python acquisition and evidence pipeline alongside a Cloudflare Worker/D1 delivery layer and Telegram integration.
+'CHANGED / SUPERSEDED / EXPIRED / CONFLICTING / REMOVED'
 
-The project is designed around a strict **₹0 / $0 operating-cost target**.
+Community submissions are useful signals but are never authoritative by themselves.
+
+The important product rule is simple: **the system can make information easier to consume, but it cannot make an unofficial source official.**
 
 ## Engineering Direction
 
-The project deliberately prioritizes deterministic source monitoring and evidence handling before AI-heavy features.
+The project deliberately builds deterministic source monitoring and evidence handling before leaning on AI. Every useful published fact should retain enough provenance for a student to trace it back to the source.
 
-Useful student information is only valuable if the system can explain where it came from and distinguish current information from stale or conflicting information.
+This also makes corrections and stale information explicit instead of silently replacing history.
+
+## Delivery
+
+Telegram provides practical alert and query workflows for students. The architecture keeps acquisition, trust and delivery concerns separate so that a future delivery surface does not need to redefine source authority.
 
 ## Current State
 
-The repository is actively evolving through its implementation roadmap. Its roadmap and gate documents are the source of truth for phase completion.
+The repository is actively evolving through its implementation roadmap. Its current roadmap, gate records and Git state remain authoritative for exact production status.
+
+## Design Lesson
+
+A student information system is fundamentally a **trust and provenance problem**, not merely a scraping or Telegram-bot problem.
