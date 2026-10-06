@@ -18,19 +18,19 @@ Alok Engineering Lab is a long-term personal Engineering Lab / digital garden ra
 
 ## Current release state
 
-The project is currently in active development after the `v1.1` website release baseline.
+The project is in active development after the `v1.1` website release baseline.
 
 The stable `v1.0.0` history remains preserved and must not be rewritten.
 
 ## Current Git state
 
-Local `master` is ahead of `origin/master`.
+Current repository checkpoint:
 
-Latest confirmed local checkpoint:
+`46647c6` — `content: add v1.1 website milestone`
 
-`b1d1e84` — `content: deepen ASTRA project case study`
+Local `master` and `origin/master` are synchronized.
 
-Working tree is clean at the current CP4.1 checkpoint.
+The latest confirmed working tree is clean.
 
 ## Completed phases
 
@@ -97,9 +97,21 @@ CP3 refined:
 - mobile layouts
 - visual consistency
 
-Verified desktop and mobile layouts using browser responsive tooling.
-
 The current visual direction is intentionally restrained. No unnecessary 3D, WebGL, particle systems or decorative effects have been introduced.
+
+### CP4.1 — Content + Discovery Foundation
+
+**Status:** Implemented / verified.
+
+CP4.1 established:
+
+- deeper initial Engineering Lab content
+- ASTRA case-study foundation
+- first engineering experiment
+- Garden discovery improvements
+- related-content support
+- timeline and release milestones
+- automated browser quality auditing
 
 ## Current content architecture
 
@@ -118,6 +130,39 @@ The site currently contains / supports:
 
 Projects, writing, notes, experiments and other knowledge areas can reference related content.
 
+## Verification baseline
+
+Latest confirmed local verification:
+
+- `npm install` completed successfully
+- `npm run build` passed
+- Astro check: 0 errors, 0 warnings, 0 hints
+- 20 pages generated successfully
+- browser quality audit: 30/30 cases passed
+- desktop: 15/15 passed
+- mobile: 15/15 passed
+- overflow: 0
+- browser errors: 0
+- audit warnings: 0
+
+The automated audit checks HTTP responses, browser errors, horizontal overflow, document metadata, navigation/main/footer presence, heading structure, image alt attributes, button accessible names and internal links.
+
+## Current phase
+
+The project is actively progressing through **CP4 — Content & Product Depth**.
+
+The website foundation is stable enough that the next meaningful work should focus primarily on engineering content and knowledge depth rather than another broad visual redesign.
+
+Priority areas:
+
+- stronger project case studies
+- deeper ASTRA documentation
+- more real writing / notes / experiments
+- stronger relationships between content
+- useful Timeline / Journey presentation
+- Garden discovery improvements driven by actual content
+- durable content quality standards
+
 ## Deployment
 
 Production deployment uses Vercel.
@@ -130,39 +175,6 @@ DNS is managed through Namecheap.
 
 Do not randomly modify DNS records or nameservers.
 
-## Current phase
-
-The project is actively progressing through **CP4 — Content & Product Depth**, with CP4.1 content and discovery foundation implemented.
-
-Proposed next phase:
-
-**CP4 — Content & Product Depth**
-
-Potential scope:
-
-- strengthen project case studies
-- improve ASTRA project documentation
-- improve writing / notes / experiment content
-- strengthen cross-linking
-- make Timeline / Journey useful
-- improve Garden discovery
-- establish stronger content quality standards
-
-These items require explicit implementation decisions before coding.
-
-## Verification baseline
-
-CP3 checkpoints were verified with:
-
-- `npm run build`
-- `git diff --check`
-- desktop visual inspection
-- mobile responsive inspection
-
-Build completed successfully with Astro check reporting no errors, warnings or hints.
-
-The automated quality audit verifies 30 cases across desktop and mobile layouts with 30/30 passing, zero failures and zero warnings. It also checks overflow, browser errors, internal links, document structure, headings, image alt attributes and button accessible names.
-
 ## Development rules
 
 - Inspect before modifying.
@@ -172,4 +184,4 @@ The automated quality audit verifies 30 cases across desktop and mobile layouts 
 - Run appropriate checks after changes.
 - Use Git checkpoints.
 - Keep the project at ₹0 / $0.
-- Treat the repository and Git state as the strongest source of truth.
+- Treat the repository and Git state as the strongest sources of truth.
