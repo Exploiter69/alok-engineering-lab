@@ -10,57 +10,41 @@ interface Props {
   ogImage?: string;
 }
 
-const {
-  title = SITE.name,
-  description = SITE.description,
-  ogImage,
-} = Astro.props;
-
+const { title = SITE.name, description = SITE.description, ogImage } = Astro.props;
 const site = Astro.site ?? new URL("https://www.alokthakur.me");
 const canonicalURL = new URL(Astro.url.pathname, site);
-const pageTitle = title === SITE.name ? SITE.name : `${title} — ${SITE.name}`;
-const resolvedOgImage = ogImage ?? `${site}favicon.svg`;
+const pageTitle = title === SITE.name ? SITE.name : title + " — " + SITE.name;
+const resolvedOgImage = ogImage ? new URL(ogImage, site).href : undefined;
 ---
 
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width" />
-
-  <!-- Primary -->
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
+  <meta name="author" content={SITE.author} />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#050505" />
   <link rel="canonical" href={canonicalURL} />
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content={SITE.name} />
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalURL} />
-  <meta property="og:image" content={resolvedOgImage} />
-
-  <!-- Twitter / X -->
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:locale" content="en_IN" />
+  {resolvedOgImage && <meta property="og:image" content={resolvedOgImage} />}
+  <meta name="twitter:card" content={resolvedOgImage ? "summary_large_image" : "summary"} />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={resolvedOgImage} />
+  {resolvedOgImage && <meta name="twitter:image" content={resolvedOgImage} />}
 </head>
-
 <body class="bg-black text-white">
-
 <Navbar />
-
 <slot />
-
 <Footer />
-
 </body>
-
 </html>
