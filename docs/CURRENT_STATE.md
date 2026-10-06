@@ -32,16 +32,29 @@ Timeline has meaningful CP4 milestones. Changelog records the CP4 checkpoint. Do
 ### Cross-linking
 Projects, writing, notes and experiments use related-content metadata so the archive behaves as a connected system rather than isolated collections.
 
-## Current product weakness
-CP4 is complete, but the site has not yet received the final post-content quality audit. The next work is CP5, not another content expansion cycle.
+## CP5 status
+CP5 Product Quality / UX Hardening is implemented at the repository level.
+
+The hardening pass covered:
+- shared metadata and canonical handling
+- removal of the favicon as an implicit social-preview image
+- explicit robots behavior with 404 noindex
+- keyboard focus visibility across primary and related navigation
+- semantic navigation labels
+- deterministic Garden topic anchors
+- consistent external-link security attributes
+- current-direction About copy
+- a zero-cost GitHub Actions build gate
+
+A fresh local/browser validation against the current tree remains the final verification step before CP5 is declared fully closed.
 
 ## Next priorities
-1. CP5 — Product Quality / UX Hardening
+1. Finish CP5 verification against the current tree
 2. CP6 — Release / Production Readiness
 3. CP7 — Long-Term Maintenance
 
 ## Verification baseline
-Previously confirmed local verification includes npm install, npm run build, Astro diagnostics with 0 errors/warnings/hints, 20 generated pages, and a 30/30 desktop/mobile browser audit. A fresh local build has not yet been run against the current CP4 content changes.
+Previously confirmed local verification includes npm install, npm run build, Astro diagnostics with 0 errors/warnings/hints, 20 generated pages, and a 30/30 desktop/mobile browser audit. Earlier local verification covered the pre-CP5 tree. Current CP5 changes now have a repository CI build gate; the latest Vercel deployment check is still pending.
 
 ## Deployment
 Production uses Vercel at alokthakur.me; DNS is managed through Namecheap.
