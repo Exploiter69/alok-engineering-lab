@@ -88,9 +88,28 @@ Desktop and mobile layouts were visually inspected.
 
 The visual direction remains intentionally restrained. Large animation systems, 3D, WebGL, particles and similar effects are not part of the current system.
 
-Latest confirmed local checkpoint:
+### CP4.1 — Content + Discovery Foundation
 
-`b1d1e84` — `content: deepen ASTRA project case study`
+**Status: Complete / foundation implemented**
+
+Implemented:
+
+* initial content depth improvements
+* ASTRA project case-study foundation
+* first engineering experiment
+* Garden content discovery improvement
+* related-content architecture
+* timeline and release milestones
+* automated browser quality audit
+
+Verification baseline:
+
+* Astro check/build passes
+* 20 pages generated
+* 30/30 browser audit cases pass
+* 15/15 desktop cases pass
+* 15/15 mobile cases pass
+* zero audit warnings and failures
 
 ---
 
@@ -98,31 +117,29 @@ Latest confirmed local checkpoint:
 
 ### CP4 — Content & Product Depth
 
-**Status: Planned**
+**Status: Active**
 
-The next phase shifts the focus from broad visual refinement toward making the Engineering Lab substantially richer, more useful and more representative of actual engineering work.
+The next work is not another broad visual redesign. The stable website foundation should now be used to build a substantially richer engineering archive.
 
-Potential areas:
+Priority areas:
 
 * stronger project case studies
 * deeper ASTRA project documentation
-* better writing, notes and experiment content
+* more real writing, notes and experiment content
 * stronger cross-linking between related content
 * useful Timeline / Journey presentation
-* better Garden discovery
-* stronger content quality standards
+* Garden discovery driven by actual content
+* practical content quality standards
 
 ### CP4 planning rule
 
-These are **candidate areas**, not approved implementation tasks.
-
-Before coding:
+Before implementing a meaningful CP4 change:
 
 1. inspect the current repository
 2. identify the actual problem or opportunity
-3. define the specific CP4 scope
+3. define the specific scope
 4. decide what is intentionally out of scope
-5. implement small, reviewable changes
+5. implement a small, reviewable change
 6. verify the result
 7. review the visual and functional outcome
 8. create a Git checkpoint
@@ -218,24 +235,22 @@ For each meaningful phase or release:
 11. deploy only when appropriate
 
 ## CP4.1 — Content + Discovery Foundation
-**Status: Foundation implemented / Scope locked**
 
-CP4.1 will combine content depth with a small product-level discovery improvement.
+**Status: Complete / foundation implemented**
 
-### Goals
-* improve the usefulness and depth of Engineering Lab content
-* establish practical quality standards for Projects, Writing, Notes, Experiments, and Timeline
-* improve discovery using the existing content/relationship architecture
-* preserve the current Astro, MDX, and content-collection architecture
+CP4.1 combined content depth with a small product-level discovery improvement.
 
-### Initial product direction
-The first discovery improvement will be selected after reviewing the current rendered experience. Candidate areas include:
-* Garden organization
-* content metadata presentation
-* related-content discovery
-* lightweight tag/topic discovery
+### Delivered
+
+* deeper initial Engineering Lab content
+* practical related-content support
+* Garden organization/discovery improvement
+* initial project and experiment documentation
+* timeline and release milestones
+* browser-based quality auditing
 
 ### Out of Scope
+
 * search infrastructure
 * database or CMS
 * authentication
@@ -247,5 +262,4 @@ The first discovery improvement will be selected after reviewing the current ren
 * changes to the ASTRA repository
 * paid services
 
-### CP4.1 Development Rule
-No implementation is approved merely because it is listed as a candidate. Each change must first have an identified user/product problem, a defined scope, and a clear verification method.
+CP4.1 is now a completed foundation. Future CP4 work should be driven by actual content/product problems rather than the old candidate list.
