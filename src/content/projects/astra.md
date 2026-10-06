@@ -15,24 +15,52 @@ stack:
   - Automation
 ---
 
-## What It Is
+## Problem
 
-Astra 3.5 is a modular architectural refactor of the Astra system.
+A mature automation tool accumulates behavior that users depend on. A large refactor can improve architecture while accidentally breaking that behavior.
 
-The established implementation is retained in astra/core/legacy.py as a compatibility and behavior anchor while explicit subsystem boundaries are introduced around the mature workflow.
+Astra 3.5 approaches the problem as an incremental modularization rather than a rewrite.
+
+## Constraints
+
+- Preserve established behavior while improving structure.
+- Avoid a destabilizing full rewrite.
+- Make infrastructure/domain boundaries explicit.
+- Keep future subsystem replacement possible.
+- Use the existing tested implementation as evidence, not as disposable legacy.
 
 ## Architecture
 
-The repository separates infrastructure boundaries such as CLI, state, workspace and clipboard from domains including detection, parsing, planning, execution, validation, recovery, automation, models and plugins.
+Infrastructure boundaries include:
 
-The goal is incremental replacement rather than a destabilizing rewrite.
+'cli.py', 'state.py', 'workspace.py', and 'clipboard.py'.
 
-## Why It Belongs in the Lab
+Replaceable domains include:
 
-Astra is an engineering study in how to evolve a mature automation workflow without throwing away tested behavior.
+'detection/', 'parsing/', 'planning/', 'execution/', 'validation/', 'recovery/', 'automation/', 'models/', and 'plugins/'.
+
+The mature implementation in 'astra/core/legacy.py' remains a compatibility and behavior anchor while these boundaries are migrated incrementally.
+
+## Migration Strategy
+
+The key choice is **replacement behind boundaries**, not “rewrite everything and hope the tests catch it.”
+
+The legacy core provides a stable reference point. New modules can be validated against established behavior and migrated one subsystem at a time.
 
 ## Current State
 
-The repository currently describes the Astra 3.5 modular build and its Phase 3.5 architectural refactor.
+The repository describes **Astra 3.5 — Modular Build**, with the Phase 3.5 architectural refactor established and the legacy behavior anchor intentionally retained.
 
-This project is intentionally distinct from VAJRA. VAJRA is the broader autonomous engineering runtime; Astra is the modular automation/QA line.
+## Design Lesson
+
+Architecture quality is not only about having clean modules. It is also about being able to change architecture without losing the behavior that made the existing system useful.
+
+## Relationship to VAJRA
+
+Astra and VAJRA are intentionally different projects.
+
+**Astra** studies modular evolution of an automation/QA system.
+
+**VAJRA** studies bounded autonomous engineering with durable state, policy authority and independent verification.
+
+Keeping that distinction explicit prevents the Lab from presenting two related systems as the same project.
