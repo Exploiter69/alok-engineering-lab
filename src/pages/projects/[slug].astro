@@ -47,6 +47,16 @@ const relatedItems = await resolveRelated(project.data.related);
       {project.data.stack?.length > 0 && (
         <span>{project.data.stack.join(" • ")}</span>
       )}
+      {project.data.repository && (
+        <a
+          href={project.data.repository}
+          target="_blank"
+          rel="noreferrer"
+          class="transition hover:text-white"
+        >
+          GitHub ↗
+        </a>
+      )}
     </div>
   </header>
 
