@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
+    "audit": "node scripts/visual-audit.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "dev:clean": "./scripts/dev.sh",
