@@ -32,6 +32,7 @@ export const collections = {
 		schema: commonSchema.extend({
 
 			stack: z.array(z.string()).default([]),
+			repository: z.string().url().optional(),
 
 		}),
 	}),
