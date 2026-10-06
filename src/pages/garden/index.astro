@@ -16,6 +16,12 @@ const gardenItems = [
 ].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const topics = [...new Set(gardenItems.flatMap(item => item.data.tags))].sort();
+const topicAnchors = new Map(
+  topics.map((topic, index) => [
+    topic,
+    `topic-${topic.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "topic"}-${index + 1}`,
+  ])
+);
 ---
 
 <Layout title="Digital Garden">
@@ -34,21 +40,21 @@ const topics = [...new Set(gardenItems.flatMap(item => item.data.tags))].sort();
 <a href="/experiments" class="rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white">Experiments</a>
 </nav>
 
-<section class="mt-10">
+<section class="mt-10" aria-labelledby="topics-heading">
 <div class="mb-5 flex items-baseline justify-between gap-4">
-<p class="lab-label">Topics</p>
+<p id="topics-heading" class="lab-label">Topics</p>
 <span class="font-mono text-xs text-neutral-600">{topics.length} topics</span>
 </div>
 <div class="flex flex-wrap gap-2">
 {topics.map(topic => (
-<a href={`#topic-${topic.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`} class="rounded-full border border-neutral-900 px-3 py-1.5 text-xs text-neutral-500 hover:border-neutral-600 hover:text-white">{topic}</a>
+<a href={`#${topicAnchors.get(topic)}`} class="rounded-full border border-neutral-900 px-3 py-1.5 text-xs text-neutral-500 hover:border-neutral-600 hover:text-white">{topic}</a>
 ))}
 </div>
 </section>
 
-<section class="mt-12">
+<section class="mt-12" aria-labelledby="latest-heading">
 <div class="mb-5 flex items-baseline justify-between gap-4">
-<p class="lab-label">Latest across the Lab</p>
+<p id="latest-heading" class="lab-label">Latest across the Lab</p>
 <span class="font-mono text-xs text-neutral-600">{gardenItems.length} items</span>
 </div>
 <div class="grid gap-4 md:grid-cols-2">
@@ -58,11 +64,11 @@ const topics = [...new Set(gardenItems.flatMap(item => item.data.tags))].sort();
 </div>
 </section>
 
-<section class="mt-12 border-t border-neutral-900 pt-8">
-<p class="lab-label mb-5">Topic Index</p>
+<section class="mt-12 border-t border-neutral-900 pt-8" aria-labelledby="topic-index-heading">
+<p id="topic-index-heading" class="lab-label mb-5">Topic Index</p>
 <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 {topics.map(topic => {
-  const slug = topic.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const slug = topicAnchors.get(topic)!;
   const matches = gardenItems.filter(item => item.data.tags.includes(topic));
   return (
     <div id={`topic-${slug}`} class="rounded-xl border border-neutral-900 p-4">
