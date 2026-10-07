@@ -197,7 +197,7 @@ export async function workflowJobs(token, runId) {
   }));
 }
 
-export async function contentHealth(token, ref = "master", now = Date.now()) {
+export async function contentHealth(token, ref = "master", now = Date.now(), includeBody = false) {
   const entries = await contentEntries(token, ref);
   const records = await mapLimit(entries, 8, async (entry) => {
     const [record, commit] = await Promise.all([readContent(token, entry, ref), latestCommitForPath(token, entry.path, ref)]);
@@ -289,7 +289,7 @@ export function auditFromHealth(health, repository, runs, deployment = null) {
   return checks;
 }
 
-export function serializeExport({ health, repository, runs, selection = null }) {
+export function serializeExport({ health, repository, runs, config = null, selection = null }) {
   const records = selection ? health.records.filter((record) => selection.includes(referenceFor(record.collection, record.slug))) : health.records;
   return {
     exportedAt: new Date().toISOString(),
@@ -302,7 +302,7 @@ export function serializeExport({ health, repository, runs, selection = null }) 
       latestCommit: repository?.latestCommit || null,
     },
     records: records.map(({ source, metadata, ...record }) => ({ ...record, metadata })),
-    repositoryHealth: { totals: health.totals, workflowRuns: runs },
+    repositoryHealth: { totals: health.totals, workflowRuns: runs },\n    configuration: config,
   };
 }
 
@@ -317,7 +317,7 @@ export function markdownArchive(health, selection = null) {
     "",
   ];
   for (const record of records) {
-    sections.push(`## ${record.title}`, "", `- Collection: ${record.collection}`, `- Slug: ${record.slug}`, `- Status: ${record.status}`, `- Date: ${record.date}`, `- Updated: ${record.updatedAt || "unknown"}`, `- Related: ${record.related.join(", ") || "none"}`, "", record.description || "", "");
+    sections.push(`## ${record.title}`, "", `Source: ${record.path}`, "", record.body !== undefined ? serializeMetadata(record.metadata, record.body) : record.description || "", "");
   }
   return sections.join("\n");
 }
