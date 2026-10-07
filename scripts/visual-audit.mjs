@@ -413,6 +413,28 @@ for (const [device, viewport] of Object.entries(viewports)) {
         if (!interaction.ok) errors.push("Garden search empty-state interaction failed");
       }
 
+      if (route === "/explore/") {
+        const interaction = await page.evaluate(() => {
+          const search = document.querySelector("#explore-search");
+          const all = document.querySelector('[data-type="all"]');
+          const projects = document.querySelector('[data-type="Projects"]');
+          const items = [...document.querySelectorAll("[data-explore-item]")];
+          if (!(search instanceof HTMLInputElement) || !(projects instanceof HTMLButtonElement)) return { ok: false, reason: "Explore controls missing" };
+          const before = items.filter(item => !item.hidden).length;
+          search.value = "__no_such_record__";
+          search.dispatchEvent(new Event("input", { bubbles: true }));
+          const empty = !document.querySelector("#explore-empty")?.classList.contains("hidden");
+          search.value = "";
+          search.dispatchEvent(new Event("input", { bubbles: true }));
+          projects.click();
+          const pressed = projects.getAttribute("aria-pressed") === "true";
+          const filtered = items.filter(item => !item.hidden).every(item => item.dataset.type === "Projects");
+          all?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+          return { ok: before >= 1 && empty && pressed && filtered };
+        });
+        if (!interaction.ok) errors.push("Explore search/filter interaction failed: " + (interaction.reason || "state mismatch"));
+      }
+
       const navigationInteraction = await page.evaluate(() => {
         const mobile = document.querySelector("[data-nav-mobile]");
         const desktop = document.querySelector("[data-nav-desktop] details");
