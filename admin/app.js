@@ -71,45 +71,13 @@ async function list(name) {
 
 function fieldInput(key, descriptor, value) {
   const [kind, required, options] = descriptor;
-  const label = `<label for="field-${key}">${esc(key)}${required ? " *" : ""}</label>`;
-  if (kind === "enum") return `${label}<select id="field-${key}" data-field="${key}">${options.map((x) => `<option value="${esc(x)}" ${value === x ? "selected" : ""}>${esc(x)}</option>`).join("")}</select>`;
-  if (kind === "string-array") return `${label}<input id="field-${key}" data-field="${key}" value="${esc((value || []).join(", "))}" placeholder="Comma-separated values">`;
-  if (kind === "lifecycle-history") return `${label}<textarea id="field-${key}" data-field="${key}" rows="8" placeholder='[{"state":"building","date":"2026-10-07","note":"..."}]'>${esc(JSON.stringify(value || [], null, 2))}</textarea><small>Keep lifecycle history chronological; the validator enforces the current state/date boundary.</small>`;
+  const label = `<label for="field-${key}">${esc(key)}${required ? " *" : ""}`;
+  if (kind === "enum") return `${label}<select id="field-${key}" data-field="${key}">${options.map((x) => `<option value="${esc(x)}" ${value === x ? "selected" : ""}>${esc(x)}</option>`).join("")}</select></label>`;
+  if (kind === "string-array") return `${label}<input id="field-${key}" data-field="${key}" value="${esc((value || []).join(", "))}" placeholder="Comma-separated values"></label>`;
+  if (kind === "lifecycle-history") return `${label}<textarea id="field-${key}" data-field="${key}" rows="8" placeholder='[{"state":"building","date":"2026-10-07","note":"..."}]'>${esc(JSON.stringify(value || [], null, 2))}</textarea><small>Chronology is validated before save.</small></label>`;
+  if (kind === "textarea") return `${label}<textarea id="field-${key}" data-field="${key}" rows="4">${esc(value || "")}</textarea></label>`;
   const type = kind === "date" ? "date" : "text";
-  return `${label}<${kind === "textarea" ? "textarea" : "input"} ${kind === "textarea" ? "rows=\"4\"" : `type="${type}"`} id="field-${key}" data-field="${key}" ${kind === "textarea" ? "" : `value="${esc(value || "")}"`}>${kind === "textarea" ? esc(value || "") : ""}</${kind === "textarea" ? "textarea" : "input"}>`;
-}
-
-async function editor(name = state.collection, slug = null) {
-  const data = slug ? await api(`/api/content?collection=${encodeURIComponent(name)}&slug=${encodeURIComponent(slug)}`) : { metadata: {}, body: "", sha: null };
-  state.collection = name || Object.keys(state.schema.collections)[0];
-  state.slug = slug; state.sha = data.sha || null; state.extension = data.path?.endsWith(".mdx") ? "mdx" : "md";
-  const def = state.schema.collections[state.collection];
-  shell(`
-    <header class="page-head"><p class="eyebrow">${esc(def.label)}</p><h1>${slug ? "Edit record" : "Create record"}</h1><p class="muted">Frontmatter is generated from the repository schema descriptor; MDX/Markdown body remains editable source.</p></header>
-    <div class="editor-grid"><section class="card"><div class="fields">
-      ${Object.entries(def.fields).map(([key, descriptor]) => fieldInput(key, descriptor, data.metadata?.[key])).join("")}
-    </div></section>
-    <section class="card"><label for="body">Markdown / MDX body</label><textarea id="body" class="body-editor" rows="30">${esc(data.body || "")}</textarea></section></div>
-    <section class="card"><div class="workflow-row"><label for="slug">Slug</label><input id="slug" value="${esc(slug || "")}" placeholder="my-entry"><label for="branch">Branch</label><input id="branch" value="${esc(state.branch || "")}" placeholder="admin/my-entry"></div>
-      <div id="validation" class="validation" aria-live="polite"></div><div class="actions"><button id="validate" class="button secondary">Validate</button><button id="save" class="button">Save to branch</button>${slug ? '<button id="delete" class="button danger">Delete</button>' : ""}</div></section>`);
-  loadCollections();
-  document.querySelector("#validate").addEventListener("click", () => validateForm(def));
-  document.querySelector("#save").addEventListener("click", () => save(def));
-  document.querySelector("#delete")?.addEventListener("click", () => remove());
-}
-
-function collectMetadata(def) {
-  const metadata = {};
-  for (const key of Object.keys(def.fields)) {
-    const input = document.querySelector(`[data-field="${key}"]`);
-    if (!input) continue;
-    const kind = def.fields[key][0];
-    if (kind === "string-array") metadata[key] = input.value.split(",").map((x) => x.trim()).filter(Boolean);
-    else if (kind === "lifecycle-history") {
-      try { metadata[key] = JSON.parse(input.value || "[]"); } catch { metadata[key] = input.value; }
-    } else metadata[key] = input.value;
-  }
-  return metadata;
+  return `${label}<input type="${type}" id="field-${key}" data-field="${key}" value="${esc(value || "")}"></label>`;
 }
 
 async function validateForm(def) {
