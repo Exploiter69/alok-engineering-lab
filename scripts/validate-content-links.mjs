@@ -43,7 +43,8 @@ function relatedReferences(source) {
   }
 
   const block = [];
-  const lines = source.split("\n");
+  const lines = source.split("
+");
   const start = lines.findIndex((line) => /^related:\s*$/.test(line));
 
   if (start === -1) return [];
@@ -80,8 +81,17 @@ for (const collection of collections) {
       .replaceAll(path.sep, "/")
       .replace(/\.(md|mdx)$/, "")}`;
 
-    const references = relatedReferences(source);\n    const seenReferences = new Set();\n\n    for (const reference of references) {
-      if (seenReferences.has(reference)) {\n        errors.push(`${sourceId}: duplicate related reference "${reference}"`);\n        continue;\n      }\n      seenReferences.add(reference);\n\n      const separator = reference.indexOf(":");
+    const references = relatedReferences(source);
+    const seenReferences = new Set();
+
+    for (const reference of references) {
+      if (seenReferences.has(reference)) {
+        errors.push(`${sourceId}: duplicate related reference "${reference}"`);
+        continue;
+      }
+      seenReferences.add(reference);
+
+      const separator = reference.indexOf(":");
 
       if (separator <= 0 || separator === reference.length - 1) {
         errors.push(`${sourceId}: invalid related reference "${reference}"`);
