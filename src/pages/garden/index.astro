@@ -19,12 +19,7 @@ const gardenItems = [
 ].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const topics = [...new Set(gardenItems.flatMap(item => item.data.tags))].sort();
-const topicAnchors = new Map(
-  topics.map((topic, index) => [
-    topic,
-    `topic-${topic.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "topic"}-${index + 1}`,
-  ])
-);
+const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 ---
 
 <Layout title="Digital Garden">
