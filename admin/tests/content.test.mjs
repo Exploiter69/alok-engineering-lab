@@ -42,7 +42,7 @@ test("enforces project lifecycle chronology and current-state boundary", () => {
 
 test("rejects invalid relationships and slugs", () => {
   const metadata = { title:"x", description:"x", date:"2026-10-07", tags:[], related:["missing"], status:"draft" };
-  assert.ok(validateMetadata("notes", metadata, ["missing"]).some((error) => error.includes("missing") === false || error.includes("required") === false));
+  assert.ok(validateMetadata("notes", metadata, ["missing"]).some((error) => error.includes("invalid related reference")));
   assert.equal(validSlug("safe-entry"), true);
   assert.equal(validSlug("../escape"), false);
   assert.equal(validSlug("UPPER"), false);
