@@ -22,13 +22,13 @@ const posts = (await getCollection("writing"))
     </p>
   </header>
 
-  <section class="mt-10">
+  <section class="mt-12">
     <div class="mb-5 flex items-baseline justify-between gap-4">
       <p class="lab-label">Published writing</p>
       <span class="font-mono text-xs text-neutral-600">{posts.length} items</span>
     </div>
 
-    <div class="grid gap-4 md:grid-cols-2">
+    <div>
       {
         posts.map((post, index) => (
           <ContentCard
