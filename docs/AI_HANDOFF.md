@@ -102,3 +102,17 @@ When continuing:
 7. update durable docs
 
 CP9 should begin from a newly demonstrated product or knowledge gap rather than automatically adding infrastructure.
+
+
+## Post-CP10 stabilization
+The first post-CP10 audit is closed. The Lab now has:
+- Garden in primary desktop/mobile navigation
+- active-route navigation context with `aria-current`
+- zero-cost in-browser Garden search
+- corrected deterministic Garden topic anchors
+- additional project-derived notes, writing and experiments
+- changelog and timeline records for the stabilization pass
+
+Latest stabilization commit `e39163d` passed the GitHub Actions Quality workflow and has a READY Vercel production deployment.
+
+Do not invent a new phase from these changes. Continue from the actual repository state and only create the next phase when a real product or engineering gap is demonstrated.
