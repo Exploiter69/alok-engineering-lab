@@ -15,6 +15,7 @@ const commandEntries = [
   ...(await getCollection("writing")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Writing", href: "/writing/" + item.id })),
   ...(await getCollection("notes")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Note", href: "/notes/" + item.id })),
   ...(await getCollection("experiments")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Experiment", href: "/experiments/" + item.id })),
+  ...(await getCollection("evidence")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Evidence", href: "/evidence/" + item.id })),
   { title: "Projects", type: "Page", href: "/projects" },
   { title: "Lab", type: "Page", href: "/garden" },
   { title: "Journey", type: "Page", href: "/timeline" },
@@ -72,6 +73,7 @@ const gardenLinks = [
               isActive(link.href) ? "bg-neutral-900 text-white" : "text-neutral-300"
             ]}>{link.label}</a>
           ))}
+          <button type="button" data-command-open class="mt-2 flex min-h-11 w-full items-center justify-between rounded-lg border border-neutral-800 px-3 text-sm text-neutral-400 hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" aria-label="Open command palette"><span>Search the Lab</span><kbd class="font-mono text-[10px] text-neutral-600">Ctrl K</kbd></button>
           <div class="my-2 border-t border-neutral-900 pt-2">
             <p class="px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-600">Lab</p>
             {gardenLinks.map(link => (
