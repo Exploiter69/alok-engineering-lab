@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  build-and-audit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,3 +24,22 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Start preview server
+        run: |
+          npm run preview -- --host 127.0.0.1 > /tmp/astro-preview.log 2>&1 &
+          echo $! > /tmp/astro-preview.pid
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4321/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/astro-preview.log
+          exit 1
+
+      - name: Browser quality audit
+        run: npm run audit
