@@ -80,6 +80,81 @@ function fieldInput(key, descriptor, value) {
   return `${label}<input type="${type}" id="field-${key}" data-field="${key}" value="${esc(value || "")}"></label>`;
 }
 
+
+function collectMetadata(def) {
+  const metadata = {};
+  for (const [key, descriptor] of Object.entries(def.fields)) {
+    const element = document.querySelector(`[data-field="${key}"]`);
+    if (!element) continue;
+    const kind = descriptor[0];
+    if (kind === "string-array") metadata[key] = element.value.split(",").map((value) => value.trim()).filter(Boolean);
+    else if (kind === "lifecycle-history") {
+      try { metadata[key] = element.value.trim() ? JSON.parse(element.value) : []; }
+      catch { metadata[key] = "__invalid_json__"; }
+    } else metadata[key] = element.value;
+  }
+  return metadata;
+}
+
+function defaultMetadata(def) {
+  const metadata = {};
+  for (const [key, descriptor] of Object.entries(def.fields)) {
+    if (descriptor[0] === "string-array" || descriptor[0] === "lifecycle-history") metadata[key] = [];
+    else if (descriptor[0] === "enum") metadata[key] = descriptor[2]?.[0] ?? "";
+    else metadata[key] = "";
+  }
+  return metadata;
+}
+
+async function editor(name = state.collection, slug = null) {
+  state.collection = name;
+  state.slug = slug;
+  state.branch = null;
+  state.sha = null;
+  state.extension = "md";
+  const def = state.schema.collections[name];
+  let record = { metadata: defaultMetadata(def), body: "" };
+  if (slug) {
+    const data = await api(`/api/content?collection=${encodeURIComponent(name)}&slug=${encodeURIComponent(slug)}`);
+    record = data;
+    state.sha = data.sha;
+    state.extension = data.path.endsWith(".mdx") ? "mdx" : "md";
+  }
+  shell(`
+    <header class="page-head">
+      <p class="eyebrow">${esc(def.label)}</p>
+      <h1>${slug ? "Edit record" : "Create record"}</h1>
+      <p class="muted">${slug ? esc(slug) : "Create a repository-backed record. Saving always starts an admin branch."}</p>
+    </header>
+    <section class="editor-grid">
+      <div class="card">
+        <div class="fields">
+          <label for="slug">Slug *<input id="slug" value="${esc(slug || "")}" placeholder="lowercase-slug"></label>
+          ${Object.entries(def.fields).map(([key, descriptor]) => fieldInput(key, descriptor, record.metadata?.[key])).join("")}
+        </div>
+        <label class="workflow-row-label" for="branch">Admin branch
+          <input id="branch" value="" placeholder="admin/${esc(slug || "new-content")}-...">
+        </label>
+        <div class="actions">
+          <button id="save" class="button" type="button">Save to branch</button>
+          ${slug ? '<button id="delete" class="button danger" type="button">Delete from branch</button>' : ""}
+          <button id="back" class="button secondary" type="button">Back</button>
+        </div>
+        <div id="validation" class="validation" aria-live="polite"><strong>Ready.</strong> Validation runs before every save.</div>
+      </div>
+      <div class="card">
+        <label for="body">Markdown / MDX body
+          <textarea id="body" class="body-editor" rows="28" placeholder="# Technical record">${esc(record.body || "")}</textarea>
+        </label>
+        <p class="tiny">Frontmatter is generated from the validated metadata. The body remains Markdown/MDX source.</p>
+      </div>
+    </section>`);
+  loadCollections();
+  document.querySelector("#save").addEventListener("click", () => save(def));
+  document.querySelector("#delete")?.addEventListener("click", remove);
+  document.querySelector("#back").addEventListener("click", () => list(name));
+}
+
 async function validateForm(def) {
   const metadata = collectMetadata(def);
   const related = metadata.related || [];
