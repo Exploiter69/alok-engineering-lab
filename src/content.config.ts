@@ -43,7 +43,10 @@ export const collections = {
   }),
   writing: defineCollection({
     loader: glob({ base: "./src/content/writing", pattern: "**/*.(md|mdx)" }),
-    schema: commonSchema,
+    schema: commonSchema.extend({
+      format: z.enum(["essay", "case-study", "guide", "postmortem", "reference"]).default("essay"),
+      audience: z.string().optional(),
+    }),
   }),
   notes: defineCollection({
     loader: glob({ base: "./src/content/notes", pattern: "**/*.(md|mdx)" }),
