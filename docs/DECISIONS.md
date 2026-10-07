@@ -91,3 +91,8 @@ Do not rewrite release history. Future work proceeds forward with new commits/re
 **Decision:** Content metadata, relationships, project lifecycle history and writing provenance are repository validation gates.
 **Status:** Active.
 **Reason:** A long-lived archive should enforce its documented integrity contracts automatically before production builds.
+
+## D-020 — Archive chronology is repository-backed
+**Decision:** Long-term project history is presented from dated lifecycle and timeline records already stored in the repository; the Lab does not synthesize live activity or maintain a second historical database.
+**Status:** Active.
+**Reason:** The archive should remain trustworthy and durable as it grows while preserving the zero-cost, static architecture.

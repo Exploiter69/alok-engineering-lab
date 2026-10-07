@@ -125,6 +125,9 @@ CP8 makes the Lab more useful as a living engineering archive without adding a d
 ### CP16 — Lab Automation
 **Complete.** Metadata, relationship, lifecycle and writing validators now run before Astro diagnostics/build, and GitHub Actions runs the repository validation explicitly.
 
+### CP17 — Long-Term Archive
+**Complete.** Project archive surfaces now summarize lifecycle state counts and historical records, while project detail pages make the chronology boundary explicit. The archive remains composed from repository-backed dates, lifecycle history and timeline records.
+
 ## Explicitly Not Needed Unless Proven Necessary
 
 - database/CMS

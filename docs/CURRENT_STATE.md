@@ -122,3 +122,13 @@ Confirmed repository capabilities:
 - CP16: metadata, relationship, lifecycle and writing validation gates wired into build and CI
 - sitemap includes published evidence and static Garden topic routes while excluding draft content
 - Astro, Vercel and the ₹0 / $0 architecture remain unchanged
+
+
+## CP17 status
+CP17 Long-Term Archive is complete.
+
+Confirmed:
+- Projects expose lifecycle distribution at the archive level.
+- Project detail pages distinguish current state, lifecycle baseline and recorded historical states.
+- Historical chronology is explicitly repository-backed rather than presented as live telemetry.
+- No new database, runtime service, analytics, paid infrastructure or framework migration was introduced.

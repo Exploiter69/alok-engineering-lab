@@ -129,4 +129,4 @@ The final batch is considered complete only after the latest GitHub Actions Qual
 After verification, sync the local checkout with:
 git pull --ff-only origin master
 
-Do not invent CP17 automatically. The next phase should begin only after a new real product or engineering gap is demonstrated.
+CP17 Long-Term Archive is complete. CP18 Performance & Accessibility Excellence is the next approved checkpoint after CP17 verification.
