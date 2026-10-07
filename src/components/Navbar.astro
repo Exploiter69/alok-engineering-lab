@@ -30,7 +30,7 @@ const gardenLinks = [
           ]}>{link.label}</a>
         ))}
         <details class="relative">
-          <summary class="inline-flex min-h-11 cursor-pointer list-none items-center rounded-lg px-3 text-sm text-neutral-400 transition-colors hover:bg-neutral-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+          <summary aria-label="Open Garden navigation" class:list={["inline-flex min-h-11 cursor-pointer list-none items-center rounded-lg px-3 text-sm transition-colors hover:bg-neutral-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white", gardenLinks.some(link => isActive(link.href)) || isActive("/garden") ? "bg-neutral-900 text-white" : "text-neutral-400"]}>
             Garden +
           </summary>
           <div class="absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-neutral-800 bg-black p-2 shadow-2xl">
