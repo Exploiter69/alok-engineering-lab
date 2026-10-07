@@ -74,15 +74,22 @@ jobs:
             --output-path=/tmp/lighthouse.json
           node --input-type=module <<'NODE'
           import fs from "node:fs";
+
           const report = JSON.parse(fs.readFileSync("/tmp/lighthouse.json", "utf8"));
           const categories = ["performance", "accessibility", "best-practices", "seo"];
-          const scores = Object.fromEntries(categories.map((name) => [name, Math.round(report.categories[name].score * 100)]));
+          const scores = Object.fromEntries(
+            categories.map((name) => [name, Math.round(report.categories[name].score * 100)]),
+          );
+
           console.log("Lighthouse scores:", scores);
+
           const failedScores = categories.filter((name) => scores[name] < 95);
           const lcp = report.audits["largest-contentful-paint"]?.numericValue ?? Infinity;
           const cls = report.audits["cumulative-layout-shift"]?.numericValue ?? Infinity;
+
           console.log(`LCP: ${Math.round(lcp)}ms`);
           console.log(`CLS: ${cls}`);
+
           if (failedScores.length || lcp >= 1500 || cls > 0) {
             console.error("Lighthouse target failed.");
             if (failedScores.length) console.error("Scores below 95:", failedScores.join(", "));
@@ -94,71 +101,138 @@ jobs:
         run: |
           node --input-type=module <<'NODE'
           import { chromium } from "playwright";
+
           const browser = await chromium.launch({ headless: true });
           const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+
           await page.goto("http://127.0.0.1:4321/", { waitUntil: "networkidle" });
-          const supported = await page.evaluate(() => PerformanceObserver.supportedEntryTypes.includes("event"));
-          if (!supported) throw new Error("PerformanceEventTiming is unavailable; cannot measure interaction responsiveness.");
+
+          const supported = await page.evaluate(() =>
+            PerformanceObserver.supportedEntryTypes.includes("event")
+          );
+          if (!supported) {
+            throw new Error("PerformanceEventTiming is unavailable; cannot measure interaction responsiveness.");
+          }
+
           await page.evaluate(() => {
             window.__interactionDurations = [];
             const observer = new PerformanceObserver((list) => {
               for (const entry of list.getEntries()) {
-                if (entry.interactionId > 0) window.__interactionDurations.push({ name: entry.name, duration: entry.duration, interactionId: entry.interactionId });
+                if (entry.interactionId > 0) {
+                  window.__interactionDurations.push({
+                    name: entry.name,
+                    duration: entry.duration,
+                    interactionId: entry.interactionId,
+                  });
+                }
               }
             });
             observer.observe({ type: "event", buffered: true, durationThreshold: 16 });
             window.__interactionObserver = observer;
           });
-          await page.locator("nav details[data-nav-mobile] summary").click();
+
+          const menu = page.locator("nav details[data-nav-mobile] summary");
+          await menu.click();
           await page.waitForTimeout(150);
-          await page.locator("nav details[data-nav-mobile] button[data-command-open]").click();
+
+          const search = page.locator("nav details[data-nav-mobile] button[data-command-open]");
+          await search.click();
           await page.waitForTimeout(150);
-          const durations = await page.evaluate(() => { window.__interactionObserver.disconnect(); return window.__interactionDurations.map((entry) => entry.duration); });
+
+          const durations = await page.evaluate(() => {
+            window.__interactionObserver.disconnect();
+            return window.__interactionDurations.map((entry) => entry.duration);
+          });
+
           await browser.close();
-          if (!durations.length) throw new Error("No measurable user interactions were captured.");
+
+          if (!durations.length) {
+            throw new Error("No measurable user interactions were captured.");
+          }
+
           const inp = Math.max(...durations);
           console.log(`Lab INP: ${Math.round(inp)}ms`);
-          if (inp >= 200) throw new Error(`Interaction responsiveness target failed: ${Math.round(inp)}ms >= 200ms`);
+          console.log(`Measured interactions: ${durations.length}`);
+
+          if (inp >= 200) {
+            throw new Error(`Interaction responsiveness target failed: ${Math.round(inp)}ms >= 200ms`);
+          }
           NODE
 
       - name: Production viewport audit
         run: |
           node --input-type=module <<'NODE'
           import { chromium } from "playwright";
+
           const baseUrl = "https://alokthakur.me/";
           const viewports = [320, 390, 768, 1440];
           const browser = await chromium.launch({ headless: true });
           const page = await browser.newPage();
           const errors = [];
+
           page.on("pageerror", (error) => errors.push(`pageerror: ${error.message}`));
-          page.on("console", (message) => { if (message.type() === "error") errors.push(`console: ${message.text()}`); });
+          page.on("console", (message) => {
+            if (message.type() === "error") errors.push(`console: ${message.text()}`);
+          });
+
           for (const width of viewports) {
             await page.setViewportSize({ width, height: 900 });
             let response;
+
             for (let attempt = 1; attempt <= 6; attempt += 1) {
               try {
-                response = await page.goto(baseUrl, { waitUntil: "domcontentloaded", timeout: 15000 });
+                response = await page.goto(baseUrl, {
+                  waitUntil: "domcontentloaded",
+                  timeout: 15000,
+                });
                 if (response?.ok()) break;
               } catch (error) {
                 if (attempt === 6) throw error;
               }
               await page.waitForTimeout(5000);
             }
-            if (!response?.ok()) throw new Error(`Production returned HTTP ${response?.status() ?? "no response"} at ${width}px`);
-            const checks = await page.evaluate(() => ({ title: document.title, main: Boolean(document.querySelector("main")), horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1, nav: Boolean(document.querySelector("nav")) }));
-            if (!checks.title || !checks.main || !checks.nav) throw new Error(`Production structure check failed at ${width}px: ${JSON.stringify(checks)}`);
-            if (checks.horizontalOverflow) throw new Error(`Horizontal overflow detected at ${width}px`);
+
+            if (!response?.ok()) {
+              throw new Error(`Production returned HTTP ${response?.status() ?? "no response"} at ${width}px`);
+            }
+
+            const checks = await page.evaluate(() => ({
+              title: document.title,
+              main: Boolean(document.querySelector("main")),
+              horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
+              nav: Boolean(document.querySelector("nav")),
+            }));
+
+            if (!checks.title || !checks.main || !checks.nav) {
+              throw new Error(`Production structure check failed at ${width}px: ${JSON.stringify(checks)}`);
+            }
+
+            if (checks.horizontalOverflow) {
+              throw new Error(`Horizontal overflow detected at ${width}px`);
+            }
+
             if (width < 768) {
               const menu = page.locator("nav details[data-nav-mobile]");
-              if (!(await menu.isVisible())) throw new Error(`Mobile navigation is not visible at ${width}px`);
+              if (!(await menu.isVisible())) {
+                throw new Error(`Mobile navigation is not visible at ${width}px`);
+              }
               await menu.locator("summary").click();
-              if (!(await menu.locator(".nav-menu-panel").isVisible())) throw new Error(`Mobile navigation panel did not open at ${width}px`);
+              if (!(await menu.locator(".nav-menu-panel").isVisible())) {
+                throw new Error(`Mobile navigation panel did not open at ${width}px`);
+              }
             } else {
               const desktop = page.locator("nav [data-nav-desktop]");
-              if (!(await desktop.isVisible())) throw new Error(`Desktop navigation is not visible at ${width}px`);
+              if (!(await desktop.isVisible())) {
+                throw new Error(`Desktop navigation is not visible at ${width}px`);
+              }
             }
+
             console.log(`Production viewport ${width}px: passed`);
           }
+
           await browser.close();
-          if (errors.length) throw new Error(`Production browser errors: ${errors.join(" | ")}`);
+
+          if (errors.length) {
+            throw new Error(`Production browser errors: ${errors.join(" | ")}`);
+          }
           NODE
