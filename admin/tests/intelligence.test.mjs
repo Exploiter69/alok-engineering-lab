@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   STALE_DAYS, isStale, staleReason, classifyDiffFile, semanticDiff,
-  validateBulkSelection, bulkMetadata, auditFromHealth, parseReference, markdownArchive, serializeExport,
+  validateBulkSelection, bulkMetadata, auditFromHealth, parseReference, markdownArchive, serializeExport, contentEntryFromPath,
 } from "../lib/intelligence.mjs";
 
 test("stale detection uses the explicit 180-day rule", () => {
@@ -11,6 +11,12 @@ test("stale detection uses the explicit 180-day rule", () => {
   assert.equal(isStale({ date: "2026-04-10" }, now), true);
   assert.equal(isStale({ date: "2026-04-11" }, now), false);
   assert.equal(staleReason({ date: "2026-04-10" }, now).thresholdDays, 180);
+});
+
+test("content paths distinguish md and mdx without accepting nested traversal", () => {
+  assert.deepEqual(contentEntryFromPath("src/content/projects/astra.md").extension, "md");
+  assert.deepEqual(contentEntryFromPath("src/content/projects/astra.mdx").extension, "mdx");
+  assert.equal(contentEntryFromPath("src/content/projects/a/b.md"), null);
 });
 
 test("relationship references remain collection-scoped", () => {
