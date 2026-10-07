@@ -19,7 +19,10 @@
     "validate:metadata": "node scripts/validate-content-metadata.mjs",
     "validate:links": "node scripts/validate-content-links.mjs",
     "validate:lifecycle": "node scripts/validate-project-lifecycle.mjs",
-    "validate:writing": "node scripts/validate-writing.mjs"
+    "validate:writing": "node scripts/validate-writing.mjs",
+    "audit:performance": "node scripts/performance-audit.mjs",
+    "new:content": "node scripts/new-content.mjs",
+    "check": "npm run validate && astro check && astro build && npm run audit"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.8",
