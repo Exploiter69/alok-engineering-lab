@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ContentNavigation from "../../components/ContentNavigation.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -8,6 +9,10 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
+const adjacent = (await getCollection("timeline")).filter(item => item.data.status !== "draft").sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const currentIndex = adjacent.findIndex(item => item.id === entry.id);
+const previous = currentIndex >= 0 && currentIndex < adjacent.length - 1 ? { title: adjacent[currentIndex + 1].data.title, href: "/timeline/" + adjacent[currentIndex + 1].id } : undefined;
+const next = currentIndex > 0 ? { title: adjacent[currentIndex - 1].data.title, href: "/timeline/" + adjacent[currentIndex - 1].id } : undefined;
 const { Content } = await render(entry);
 ---
 
@@ -21,5 +26,6 @@ const { Content } = await render(entry);
     <time datetime={entry.data.date.toISOString()} class="mt-6 block font-mono text-xs uppercase tracking-[0.12em] text-neutral-600">{entry.data.date.toDateString()}</time>
   </header>
   <article class="prose prose-invert mt-12 max-w-3xl sm:mt-16"><Content /></article>
+  <ContentNavigation previous={previous} next={next} />
 </main>
 </Layout>
