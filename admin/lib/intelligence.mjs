@@ -303,7 +303,8 @@ export function serializeExport({ health, repository, runs, config = null, selec
       latestCommit: repository?.latestCommit || null,
     },
     records: records.map(({ source, metadata, ...record }) => ({ ...record, metadata })),
-    repositoryHealth: { totals: health.totals, workflowRuns: runs },\n    configuration: config,
+    repositoryHealth: { totals: health.totals, workflowRuns: runs },
+    configuration: config,
   };
 }
 
