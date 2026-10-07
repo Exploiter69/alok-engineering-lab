@@ -414,7 +414,6 @@ for (const [device, viewport] of Object.entries(viewports)) {
       }
 
       const navigationInteraction = await page.evaluate(() => {
-        const details = [...document.querySelectorAll("nav details")];
         const mobile = document.querySelector("[data-nav-mobile]");
         const desktop = document.querySelector("[data-nav-desktop] details");
         const result = { mobile: true, desktop: true };
