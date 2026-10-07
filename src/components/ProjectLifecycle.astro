@@ -26,10 +26,10 @@ const history = [...(project.data.lifecycleHistory ?? [])].sort(
       Lifecycle describes the engineering phase of the project; it is separate from publication status.
     </p>
   </div>
-  <div class="mt-6 grid gap-3 sm:grid-cols-3">
-    <div class="rounded-xl border border-neutral-900 p-4">
+  <div class="mt-6 grid gap-px border border-neutral-900 bg-neutral-900 sm:grid-cols-3">
+    <div class="bg-black p-4">
       <p class="font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-600">Current state</p>
-      <p class="mt-2 font-mono text-sm uppercase tracking-[0.12em] text-neutral-200">{project.data.lifecycle}</p>
+      <p class="mt-2 font-mono text-sm uppercase tracking-[0.12em] text-lime-300">{project.data.lifecycle}</p>
     </div>
     <div class="rounded-xl border border-neutral-900 p-4">
       <p class="font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-600">Baseline</p>
@@ -40,8 +40,8 @@ const history = [...(project.data.lifecycleHistory ?? [])].sort(
       <p class="mt-2 text-sm text-neutral-300">{history.length} historical record{history.length === 1 ? "" : "s"}</p>
     </div>
   </div>
-  <div class="mt-6 grid gap-6 sm:grid-cols-[auto_1fr] sm:items-start">
-    <div class="rounded-xl border border-neutral-800 px-4 py-3">
+  <div class="mt-8 grid gap-8 sm:grid-cols-[minmax(220px,0.6fr)_1fr] sm:items-start">
+    <div class="border-y border-neutral-900 py-4">
       <p class="font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-600">Archive chronology</p>
       <p class="mt-2 text-sm leading-6 text-neutral-400">The dated records below show the project’s documented engineering state over time. They are historical records, not live telemetry.</p>
     </div>
