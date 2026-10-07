@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     res.setHeader("Location", "/");
     res.setHeader("Set-Cookie", [cookie(SESSION_COOKIE, session, SESSION_TTL), clearCookie(OAUTH_COOKIE)]);
     res.end();
-  } catch (error) {
-    return text(res, 502, `GitHub authentication failed: ${error instanceof Error ? error.message : "unknown error"}`);
+  } catch {
+    return text(res, 502, "GitHub authentication failed. Please try again.");
   }
 }
