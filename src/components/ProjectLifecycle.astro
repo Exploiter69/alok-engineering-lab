@@ -1,0 +1,50 @@
+---
+interface LifecycleEvent {
+  state: string;
+  date: Date;
+  note: string;
+}
+
+interface ProjectData {
+  lifecycle: string;
+  lifecycleSince?: Date;
+  lifecycleHistory: LifecycleEvent[];
+}
+
+const { project } = Astro.props as { project: { data: ProjectData } };
+const history = [...project.data.lifecycleHistory].sort(
+  (a, b) => b.date.valueOf() - a.date.valueOf()
+);
+---
+<section class="mt-10 border-t border-neutral-900 pt-8" aria-labelledby="lifecycle-heading">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="lab-label">Lifecycle</p>
+      <h2 id="lifecycle-heading" class="mt-2 text-xl font-bold tracking-tight sm:text-2xl">Project state over time</h2>
+    </div>
+    <p class="max-w-md text-sm leading-6 text-neutral-500">
+      Lifecycle describes the engineering phase of the project; it is separate from publication status.
+    </p>
+  </div>
+  <div class="mt-6 grid gap-6 sm:grid-cols-[auto_1fr] sm:items-start">
+    <div class="rounded-xl border border-neutral-800 px-4 py-3">
+      <p class="font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-600">Current</p>
+      <p class="mt-2 font-mono text-sm uppercase tracking-[0.12em] text-neutral-200">{project.data.lifecycle}</p>
+      {project.data.lifecycleSince && <p class="mt-1 text-xs text-neutral-600">since {project.data.lifecycleSince.toDateString()}</p>}
+    </div>
+    {history.length > 0 ? (
+      <ol class="space-y-4 border-l border-neutral-900 pl-5">
+        {history.map(event => (
+          <li class="relative">
+            <span aria-hidden="true" class="absolute -left-[1.35rem] top-1.5 h-2 w-2 rounded-full border border-neutral-600 bg-black" />
+            <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <time datetime={event.date.toISOString()} class="font-mono text-xs uppercase tracking-[0.1em] text-neutral-600">{event.date.toDateString()}</time>
+              <span class="font-mono text-xs uppercase tracking-[0.12em] text-neutral-300">{event.state}</span>
+            </div>
+            <p class="mt-1 text-sm leading-6 text-neutral-500">{event.note}</p>
+          </li>
+        ))}
+      </ol>
+    ) : <p class="text-sm leading-6 text-neutral-600">No lifecycle transitions recorded yet.</p>}
+  </div>
+</section>
