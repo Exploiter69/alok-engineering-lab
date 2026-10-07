@@ -18,22 +18,21 @@ const staticRoutes = [
 
 export const GET: APIRoute = async ({ site }) => {
   const base = site ?? new URL("https://www.alokthakur.me");
-  const visible = (entry: { data: { status: string } }) => entry.data.status !== "draft";
   const entries = [
     ...staticRoutes,
-    ...(await getCollection("projects")).filter(visible).map((entry) => "/projects/" + entry.id + "/"),
-    ...(await getCollection("writing")).filter(visible).map((entry) => "/writing/" + entry.id + "/"),
-    ...(await getCollection("notes")).filter(visible).map((entry) => "/notes/" + entry.id + "/"),
-    ...(await getCollection("experiments")).filter(visible).map((entry) => "/experiments/" + entry.id + "/"),
-    ...(await getCollection("timeline")).filter(visible).map((entry) => "/timeline/" + entry.id + "/"),
-    ...(await getCollection("changelog")).filter(visible).map((entry) => "/changelog/" + entry.id + "/"),
-    ...(await getCollection("evidence")).filter(visible).map((entry) => "/evidence/" + entry.id + "/"),
+    ...(await getCollection("projects")).filter((entry) => entry.data.status !== "draft").map((entry) => "/projects/" + entry.id + "/"),
+    ...(await getCollection("writing")).filter((entry) => entry.data.status !== "draft").map((entry) => "/writing/" + entry.id + "/"),
+    ...(await getCollection("notes")).filter((entry) => entry.data.status !== "draft").map((entry) => "/notes/" + entry.id + "/"),
+    ...(await getCollection("experiments")).filter((entry) => entry.data.status !== "draft").map((entry) => "/experiments/" + entry.id + "/"),
+    ...(await getCollection("timeline")).filter((entry) => entry.data.status !== "draft").map((entry) => "/timeline/" + entry.id + "/"),
+    ...(await getCollection("changelog")).filter((entry) => entry.data.status !== "draft").map((entry) => "/changelog/" + entry.id + "/"),
+    ...(await getCollection("evidence")).filter((entry) => entry.data.status !== "draft").map((entry) => "/evidence/" + entry.id + "/"),
     ...[...new Set([
-      ...(await getCollection("notes")).filter(visible).flatMap(entry => entry.data.tags),
-      ...(await getCollection("writing")).filter(visible).flatMap(entry => entry.data.tags),
-      ...(await getCollection("experiments")).filter(visible).flatMap(entry => entry.data.tags),
-      ...(await getCollection("evidence")).filter(visible).flatMap(entry => entry.data.tags),
-    ])].map(topic => "/garden/topics/" + slugifyTopic(topic) + "/"),
+      ...(await getCollection("notes")).filter((entry) => entry.data.status !== "draft").flatMap((entry) => entry.data.tags),
+      ...(await getCollection("writing")).filter((entry) => entry.data.status !== "draft").flatMap((entry) => entry.data.tags),
+      ...(await getCollection("experiments")).filter((entry) => entry.data.status !== "draft").flatMap((entry) => entry.data.tags),
+      ...(await getCollection("evidence")).filter((entry) => entry.data.status !== "draft").flatMap((entry) => entry.data.tags),
+    ])].map((topic) => "/garden/topics/" + slugifyTopic(topic) + "/"),
   ];
 
   const urls = [...new Set(entries)].map((route) => new URL(route, base).href);
@@ -42,8 +41,7 @@ export const GET: APIRoute = async ({ site }) => {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ...urls.map((url) => "  <url><loc>" + url + "</loc></url>"),
     "</urlset>",
-  ].join("
-");
+  ].join("\n");
 
   return new Response(body, {
     headers: { "Content-Type": "application/xml; charset=utf-8" },
