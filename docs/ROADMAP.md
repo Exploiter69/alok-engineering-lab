@@ -55,7 +55,7 @@ Established the current Astro/Tailwind website foundation.
 ### CP5 — Product Quality / UX Hardening
 **Complete.** Repository-level hardening covers metadata/SEO, 404 indexing behavior, keyboard focus, semantic navigation labels, Garden anchor determinism, external-link safety and a free build-quality workflow. The current local production build passes.
 
-## CP6 — Release / Production Readiness
+### CP6 — Release / Production Readiness
 **Complete at repository and production-verification level.**
 
 Completed within CP6:
@@ -76,7 +76,7 @@ Confirmed:
 
 Operational release checkpoint not represented in the repository because the available GitHub connector cannot create tags; no branch is used as a fake tag.
 
-## CP7 — Long-Term Maintenance
+### CP7 — Long-Term Maintenance
 **Complete at the repository level.**
 
 Completed:
@@ -88,10 +88,18 @@ Completed:
 
 CP7 establishes the maintenance contract rather than adding infrastructure for its own sake.
 
-## CP8 — Continued Engineering Growth
-**Next.**
+### CP8 — Continued Engineering Growth
+**Complete at the repository level.**
 
-Grow the archive through real projects, experiments, writing, notes and milestones. Repeat the verification loop after meaningful structural changes and only add new system complexity when a demonstrated product need justifies it.
+Completed:
+- exposed documented project status in project cards and project detail pages
+- preserved the static/repository-backed architecture instead of introducing live status infrastructure
+- added a durable note defining documented status versus live operational truth
+- added an experiment validating repository-backed project status
+- added a CP8 timeline milestone and changelog entry
+- maintained the build-blocking relationship integrity gate and full generated-route browser audit
+
+CP8 makes the Lab more useful as a living engineering archive without adding a database, CMS, runtime API, analytics or paid service.
 
 ## Explicitly Not Needed Unless Proven Necessary
 
