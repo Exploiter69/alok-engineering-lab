@@ -4,250 +4,104 @@ import { SITE } from "../data/site";
 import { getCollection } from "astro:content";
 import ContentCard from "../components/ContentCard.astro";
 
-const featuredProjectIds = new Set([
-  "vajra",
-  "astra-userbot",
-  "vgu-signal",
-  "teldrive-lab",
-  "gemini-agent-bridge",
-]);
-
-const projects = (await getCollection("projects"))
-  .filter(item => item.data.status !== "draft")
-  .sort((a, b) => {
-    const aFeatured = featuredProjectIds.has(a.id);
-    const bFeatured = featuredProjectIds.has(b.id);
-
-    if (aFeatured !== bFeatured) return aFeatured ? -1 : 1;
-    return b.data.date.valueOf() - a.data.date.valueOf();
-  });
-
-const writing = (await getCollection("writing"))
-  .filter(item => item.data.status !== "draft")
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-const notes = (await getCollection("notes"))
-  .filter(item => item.data.status !== "draft")
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-const experiments = (await getCollection("experiments"))
-  .filter(item => item.data.status !== "draft")
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-const timeline = (await getCollection("timeline"))
-  .filter(item => item.data.status !== "draft")
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const featuredProjectIds = new Set(["vajra", "astra-userbot", "vgu-signal", "teldrive-lab", "gemini-agent-bridge"]);
+const projects = (await getCollection("projects")).filter(item => item.data.status !== "draft").sort((a, b) => {
+  const aFeatured = featuredProjectIds.has(a.id);
+  const bFeatured = featuredProjectIds.has(b.id);
+  if (aFeatured !== bFeatured) return aFeatured ? -1 : 1;
+  return b.data.date.valueOf() - a.data.date.valueOf();
+});
+const writing = (await getCollection("writing")).filter(item => item.data.status !== "draft").sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const notes = (await getCollection("notes")).filter(item => item.data.status !== "draft").sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const experiments = (await getCollection("experiments")).filter(item => item.data.status !== "draft").sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const timeline = (await getCollection("timeline")).filter(item => item.data.status !== "draft").sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const evidence = (await getCollection("evidence")).filter(item => item.data.status !== "draft").sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Layout>
-
 <main class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:py-24">
 
-  <section class="max-w-4xl">
-    <p class="lab-label mb-6">
-      ENGINEERING LAB / DIGITAL GARDEN
-    </p>
-
-    <h1 class="text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-      Building systems.
-      <br />
-      Exploring technology.
-      <br />
-      Documenting the journey.
-    </h1>
-
-    <p class="mt-8 max-w-2xl text-lg leading-8 text-neutral-400 sm:text-xl">
-      {SITE.tagline}
-    </p>
-
-    <div class="mt-8 flex flex-wrap gap-3">
-      <a
-        href="/projects"
-        class="inline-flex items-center rounded-full border border-white bg-white px-5 py-2.5 text-sm font-medium text-black transition hover:bg-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-      >
-        Explore the Lab →
-      </a>
-
-      <a
-        href="/about"
-        class="inline-flex items-center rounded-full border border-neutral-800 px-5 py-2.5 text-sm font-medium text-neutral-300 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-      >
-        About
-      </a>
-    </div>
-
-    <div class="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-neutral-900 pt-5 text-xs uppercase tracking-[0.16em] text-neutral-500">
-      <span><strong class="font-medium text-neutral-300">Status</strong> · Building</span>
-      <span><strong class="font-medium text-neutral-300">Focus</strong> · AI / Systems / Automation</span>
-    </div>
-  </section>
-
-  <section class="mt-20 border-y border-neutral-900 py-6 sm:mt-24">
-    <div class="grid gap-3 sm:grid-cols-[140px_1fr] sm:gap-8">
-      <p class="lab-label">Currently</p>
-      <p class="max-w-2xl text-neutral-300">
-        {SITE.currently}
-      </p>
-    </div>
-  </section>
-
-  <section class="mt-20 sm:mt-24">
-    <div class="flex items-end justify-between gap-4">
-      <div>
-        <p class="lab-label mb-2">01 / Build</p>
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
-          Selected Work
-        </h2>
-      </div>
-
-      <a href="/projects" class="hidden text-sm text-neutral-400 transition hover:text-white sm:block">
-        See all →
-      </a>
-    </div>
-
-    <div class="mt-8">
-      {
-        projects.slice(0, 1).map(project => (
-          <ContentCard
-            title={project.data.title}
-            description={project.data.description}
-            status={project.data.status}
-            meta={project.data.stack?.join(" • ")}
-            href={`/projects/${project.id}`}
-            eyebrow="PROJECT / 01"
-            featured
-          />
-        ))
-      }
-    </div>
-
-    <a href="/projects" class="mt-5 inline-block text-sm text-neutral-400 transition hover:text-white sm:hidden">
-      See all projects →
-    </a>
-  </section>
-
-  <section class="mt-20 sm:mt-24">
-    <div class="flex items-end justify-between gap-4">
-      <div>
-        <p class="lab-label mb-2">02 / Explore</p>
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
-          From the Lab
-        </h2>
-      </div>
-
-      <a href="/experiments" class="hidden text-sm text-neutral-400 transition hover:text-white sm:block">
-        See all →
-      </a>
-    </div>
-
-    <div class="mt-8 grid gap-4 md:grid-cols-2">
-      {
-        experiments.slice(0, 3).map((item, index) => (
-          <ContentCard
-            title={item.data.title}
-            description={item.data.description}
-            meta={item.data.tags.join(" • ")}
-            href={`/experiments/${item.id}`}
-            eyebrow={`EXPERIMENT / ${String(index + 1).padStart(2, "0")}`}
-          />
-        ))
-      }
-    </div>
-
-    <a href="/experiments" class="mt-5 inline-block text-sm text-neutral-400 transition hover:text-white sm:hidden">
-      See all experiments →
-    </a>
-  </section>
-
-  <section class="mt-20 sm:mt-24">
+  <section class="grid gap-10 border-b border-neutral-900 pb-16 lg:grid-cols-[1.3fr_0.7fr] lg:gap-16 lg:pb-20">
     <div>
-      <p class="lab-label mb-2">03 / Learn</p>
-      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
-        Knowledge
-      </h2>
-    </div>
-
-    <div class="mt-10">
-      <div class="flex items-baseline justify-between gap-4">
-        <p class="lab-label">Writing</p>
-        <a href="/writing" class="text-sm text-neutral-400 transition hover:text-white">
-          See all →
+      <p class="lab-label mb-6">Alok Thakur / Engineering Lab</p>
+      <h1 class="max-w-4xl text-5xl font-bold leading-[0.98] tracking-[-0.04em] sm:text-7xl lg:text-8xl">
+        Building systems.<br />Exploring technology.<br /><span class="text-neutral-500">Documenting the journey.</span>
+      </h1>
+      <p class="mt-8 max-w-2xl text-lg leading-8 text-neutral-300 sm:text-xl">{SITE.tagline}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/projects" class="inline-flex min-h-11 items-center rounded-full border border-white bg-white px-5 py-2.5 text-sm font-medium text-black transition hover:bg-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+          Explore the Lab <span aria-hidden="true" class="ml-2">→</span>
         </a>
-      </div>
-
-      <div class="mt-5 grid gap-4 md:grid-cols-2">
-        {
-          writing.slice(0, 3).map((item, index) => (
-            <ContentCard
-              title={item.data.title}
-              description={item.data.description}
-              meta={item.data.tags.join(" • ")}
-              href={`/writing/${item.id}`}
-              eyebrow={`WRITING / ${String(index + 1).padStart(2, "0")}`}
-            />
-          ))
-        }
+        <a href="/about" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-5 py-2.5 text-sm font-medium text-neutral-300 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+          About Alok
+        </a>
       </div>
     </div>
 
-    <div class="mt-12">
-      <div class="flex items-baseline justify-between gap-4">
-        <p class="lab-label">Notes</p>
-        <a href="/notes" class="text-sm text-neutral-400 transition hover:text-white">
-          See all →
-        </a>
-      </div>
+    <aside class="self-end border-t border-neutral-900 pt-6 lg:border-l lg:border-t-0 lg:pl-8">
+      <p class="lab-label">What this Lab is</p>
+      <p class="mt-3 text-sm leading-7 text-neutral-400">A public engineering record: projects, experiments, technical writing, notes, evidence and the decisions connecting them.</p>
+      <dl class="mt-7 space-y-4 border-t border-neutral-900 pt-5 text-sm">
+        <div class="flex justify-between gap-4"><dt class="text-neutral-600">Focus</dt><dd class="text-right text-neutral-300">AI · Systems · Automation</dd></div>
+        <div class="flex justify-between gap-4"><dt class="text-neutral-600">Model</dt><dd class="text-right text-neutral-300">Static · Repository-backed</dd></div>
+        <div class="flex justify-between gap-4"><dt class="text-neutral-600">Status</dt><dd class="text-right text-lime-300"><span aria-hidden="true">●</span> Building</dd></div>
+      </dl>
+    </aside>
+  </section>
 
-      <div class="mt-5 grid gap-4 md:grid-cols-2">
-        {
-          notes.slice(0, 3).map((item, index) => (
-            <ContentCard
-              title={item.data.title}
-              description={item.data.description}
-              meta={`${item.data.stage} • ${item.data.tags.join(" • ")}`}
-              href={`/notes/${item.id}`}
-              eyebrow={`NOTE / ${String(index + 1).padStart(2, "0")}`}
-            />
-          ))
-        }
-      </div>
+  <section class="border-b border-neutral-900 py-7 sm:py-8" aria-labelledby="currently-heading">
+    <div class="grid gap-3 sm:grid-cols-[140px_1fr] sm:gap-8">
+      <p id="currently-heading" class="lab-label">Currently</p>
+      <p class="max-w-3xl text-base leading-7 text-neutral-300 sm:text-lg">{SITE.currently}</p>
     </div>
   </section>
 
-  <section class="mt-20 sm:mt-24">
-    <div class="flex items-end justify-between gap-4">
-      <div>
-        <p class="lab-label mb-2">04 / Continue</p>
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
-          Journey
-        </h2>
-      </div>
-
-      <a href="/timeline" class="hidden text-sm text-neutral-400 transition hover:text-white sm:block">
-        See all →
-      </a>
+  <section class="mt-20 sm:mt-24" aria-labelledby="featured-heading">
+    <div class="flex items-end justify-between gap-4 border-b border-neutral-900 pb-5">
+      <div><p class="lab-label mb-2">01 / Build</p><h2 id="featured-heading" class="text-3xl font-bold tracking-tight sm:text-4xl">Featured Engineering</h2></div>
+      <a href="/projects" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">All projects →</a>
     </div>
-
-    <div class="mt-8 grid gap-4">
-      {
-        timeline.slice(0, 3).map((item, index) => (
-          <ContentCard
-            title={item.data.title}
-            description={item.data.description}
-            meta={item.data.date.toDateString()}
-            href={`/timeline/${item.id}`}
-            eyebrow={`MILESTONE / ${String(index + 1).padStart(2, "0")}`}
-            compact
-          />
-        ))
-      }
+    <div class="mt-2">
+      {projects.slice(0, 3).map((project, index) => (
+        <ContentCard title={project.data.title} description={project.data.description} status={project.data.lifecycle} meta={project.data.stack.join(" · ")} href={`/projects/${project.id}`} eyebrow={`PROJECT / ${String(index + 1).padStart(2, "0")}`} featured={index === 0} headingLevel="h2" />
+      ))}
     </div>
+    <a href="/projects" class="mt-5 inline-flex min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:hidden">See all projects →</a>
+  </section>
 
-    <a href="/timeline" class="mt-5 inline-block text-sm text-neutral-400 transition hover:text-white sm:hidden">
-      See the full timeline →
-    </a>
+  <section class="mt-20 sm:mt-24" aria-labelledby="lab-heading">
+    <div class="flex items-end justify-between gap-4 border-b border-neutral-900 pb-5">
+      <div><p class="lab-label mb-2">02 / Explore</p><h2 id="lab-heading" class="text-3xl font-bold tracking-tight sm:text-4xl">The Lab</h2></div>
+      <a href="/garden" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">Explore Garden →</a>
+    </div>
+    <div class="mt-2 grid gap-x-8 md:grid-cols-2">
+      <div class="border-b border-neutral-900 py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Experiments</p><span class="font-mono text-xs text-neutral-600">{experiments.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Tests, prototypes and boundary checks where ideas meet implementation.</p><a href="/experiments" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Browse experiments →</a></div>
+      <div class="border-b border-neutral-900 py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Evidence</p><span class="font-mono text-xs text-neutral-600">{evidence.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Verification, failures, benchmarks and observations supporting engineering claims.</p><a href="/evidence" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Inspect evidence →</a></div>
+      <div class="border-b border-neutral-900 py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Knowledge</p><span class="font-mono text-xs text-neutral-600">{writing.length + notes.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Writing and notes distilled from actual engineering work.</p><a href="/garden" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Explore knowledge →</a></div>
+      <div class="border-b border-neutral-900 py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Journey</p><span class="font-mono text-xs text-neutral-600">{timeline.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Milestones, turning points and durable project history.</p><a href="/timeline" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Follow the journey →</a></div>
+    </div>
+  </section>
+
+  <section class="mt-20 sm:mt-24" aria-labelledby="thinking-heading">
+    <div class="flex items-end justify-between gap-4 border-b border-neutral-900 pb-5">
+      <div><p class="lab-label mb-2">03 / Think</p><h2 id="thinking-heading" class="text-3xl font-bold tracking-tight sm:text-4xl">Recent Thinking</h2></div>
+      <a href="/writing" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">All writing →</a>
+    </div>
+    <div class="mt-2">
+      {writing.slice(0, 3).map((item, index) => (
+        <ContentCard title={item.data.title} description={item.data.description} meta={item.data.format + " · " + item.data.tags.join(" · ")} href={`/writing/${item.id}`} eyebrow={`WRITING / ${String(index + 1).padStart(2, "0")}`} headingLevel="h2" />
+      ))}
+    </div>
+  </section>
+
+  <section class="mt-20 border-t border-neutral-900 pt-8 sm:mt-24" aria-labelledby="journey-heading">
+    <div class="flex items-end justify-between gap-4"><div><p class="lab-label mb-2">04 / Continue</p><h2 id="journey-heading" class="text-3xl font-bold tracking-tight sm:text-4xl">Engineering Journey</h2></div><a href="/timeline" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">Full timeline →</a></div>
+    <div class="mt-6">
+      {timeline.slice(0, 3).map((item, index) => (
+        <ContentCard title={item.data.title} description={item.data.description} meta={item.data.date.toDateString()} href={`/timeline/${item.id}`} eyebrow={`MILESTONE / ${String(index + 1).padStart(2, "0")}`} compact />
+      ))}
+    </div>
   </section>
 
 </main>
-
 </Layout>
