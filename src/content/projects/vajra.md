@@ -15,6 +15,13 @@ stack:
   - Verification
   - Sandboxing
 objective: "Explore trustworthy autonomous engineering where durable state, deterministic policy, execution authority and independent verification remain above model reasoning."
+currentFocus: "Controlled self-improvement, durable autonomy, independent verification and production hardening."
+knownProblems:
+  - "Autonomous execution remains constrained by authority, recovery and independent proof requirements."
+  - "Self-improvement must never become self-authorizing."
+futureWork:
+  - "Continue bounded autonomy and long-run durability experiments."
+  - "Preserve human promotion and independent verification as hard boundaries."
 lifecycle: "building"
 lifecycleSince: 2026-10-06
 lifecycleHistory:
