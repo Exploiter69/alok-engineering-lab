@@ -29,7 +29,7 @@ const {
     <a
       href={href}
       class:list={[
-        "group block min-w-0 rounded-2xl border border-neutral-800 transition duration-200 hover:border-neutral-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white",
+        "group block min-w-0 rounded-2xl border border-neutral-800 transition duration-200 motion-reduce:transition-none hover:border-neutral-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white",
         featured ? "border-neutral-700 bg-neutral-950/40 p-7 sm:p-9 lg:p-10" : compact ? "p-5 sm:px-6" : "p-5 sm:p-6",
       ]}
     >
@@ -64,7 +64,7 @@ const {
 
         <span
           aria-hidden="true"
-          class="shrink-0 text-lg text-neutral-600 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-white"
+          class="shrink-0 text-lg text-neutral-600 transition-transform duration-200 motion-reduce:transition-none group-hover:translate-x-1 group-hover:text-white"
         >
           →
         </span>

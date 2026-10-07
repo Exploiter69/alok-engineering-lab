@@ -132,3 +132,22 @@ Confirmed:
 - Project detail pages distinguish current state, lifecycle baseline and recorded historical states.
 - Historical chronology is explicitly repository-backed rather than presented as live telemetry.
 - No new database, runtime service, analytics, paid infrastructure or framework migration was introduced.
+
+
+## CP18 status
+CP18 Performance & Accessibility Excellence is complete.
+
+Confirmed:
+- Shared layout provides skip navigation and reduced-motion support.
+- Desktop/mobile navigation is consistent and the duplicate Evidence entry is removed.
+- Project lifecycle filters expose their active state to assistive technology.
+- The browser audit checks language, skip navigation, duplicate visible navigation, external resources, overflow, headings, images, buttons and internal links across generated routes at desktop/mobile sizes.
+- No paid monitoring, third-party analytics or runtime infrastructure was introduced.
+
+## CP19 status
+CP19 Visual Evolution is complete.
+
+Confirmed:
+- Timeline, Changelog and Evidence archive surfaces use the current restrained engineering visual language.
+- Archive content remains typography-led, border-based and responsive.
+- No 3D/WebGL, particle system, visual framework or large client-side system was introduced.

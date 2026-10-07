@@ -37,7 +37,7 @@ const projects = (await getCollection("projects"))
   </header>
 
   <nav class="mt-8 flex flex-wrap gap-2" aria-label="Project lifecycle filters">
-    {["all", "exploring", "building", "maintaining", "archived"].map(state => <button type="button" data-project-filter={state} class="rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white">{state}</button>)}
+    {["all", "exploring", "building", "maintaining", "archived"].map(state => <button type="button" data-project-filter={state} aria-pressed={state === "all"} class="rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white">{state}</button>)}
   </nav>
 
   <label class="mt-5 block max-w-xl"><span class="sr-only">Search projects</span><input id="project-search" type="search" placeholder="Search projects, technology, lifecycle…" autocomplete="off" class="w-full rounded-xl border border-neutral-800 bg-black px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-600 focus:border-neutral-600 focus:ring-1 focus:ring-neutral-600" /></label>
@@ -55,7 +55,7 @@ const projects = (await getCollection("projects"))
       {["exploring", "building", "maintaining", "archived"].map(state => {
         const count = projects.filter(project => project.data.lifecycle === state).length;
         return (
-          <button type="button" data-project-filter={state} class="rounded-xl border border-neutral-900 p-4 text-left transition hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" aria-label={`Show ${count} ${state} projects`}>
+          <button type="button" data-project-filter={state} class="rounded-xl border border-neutral-900 p-4 text-left transition hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" aria-label={`Show ${count} ${state} projects`} aria-pressed="false">
             <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-600">{state}</span>
             <span class="mt-2 block text-2xl font-bold text-neutral-200">{count}</span>
           </button>
@@ -112,7 +112,11 @@ const projects = (await getCollection("projects"))
   };
   for (const item of items) item.dataset.search = `${item.textContent ?? ""}`.toLowerCase();
   search?.addEventListener("input", render);
-  for (const button of filters) button.addEventListener("click", () => { activeFilter = button.dataset.projectFilter ?? "all"; render(); });
+  for (const button of filters) button.addEventListener("click", () => {
+    activeFilter = button.dataset.projectFilter ?? "all";
+    for (const filter of filters) filter.setAttribute("aria-pressed", String(filter === button));
+    render();
+  });
 </script>
 
 </Layout>

@@ -96,3 +96,8 @@ Do not rewrite release history. Future work proceeds forward with new commits/re
 **Decision:** Long-term project history is presented from dated lifecycle and timeline records already stored in the repository; the Lab does not synthesize live activity or maintain a second historical database.
 **Status:** Active.
 **Reason:** The archive should remain trustworthy and durable as it grows while preserving the zero-cost, static architecture.
+
+## D-021 — Accessibility and performance are release gates
+**Decision:** Accessibility and browser-quality checks belong in the existing zero-cost route audit rather than as a separate runtime monitoring system.
+**Status:** Active.
+**Reason:** The Lab should continuously protect keyboard access, document semantics, responsive behavior and dependency discipline while remaining static and inexpensive.

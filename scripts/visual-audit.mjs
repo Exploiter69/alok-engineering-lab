@@ -86,6 +86,18 @@ for (const [device, viewport] of Object.entries(viewports)) {
       audit = await page.evaluate(() => {
         const root = document.documentElement;
 
+        const visibleNavLinks = [...document.querySelectorAll("nav a")].filter((link) => {
+          const style = getComputedStyle(link);
+          return style.display !== "none" && style.visibility !== "hidden";
+        });
+        const navKeys = visibleNavLinks.map((link) => link.getAttribute("href") + "|" + (link.textContent?.trim() || ""));
+        const duplicateNavLinks = navKeys.filter((value, index) => navKeys.indexOf(value) !== index);
+        const externalResources = [...performance.getEntriesByType("resource")]
+          .map((entry) => entry.name)
+          .filter((name) => {
+            try { return new URL(name).origin !== location.origin; } catch { return false; }
+          });
+
         const overflow = root.scrollWidth > root.clientWidth;
 
         const h1s = [...document.querySelectorAll("h1")];
@@ -147,6 +159,10 @@ for (const [device, viewport] of Object.entries(viewports)) {
             width: root.clientWidth,
             scrollWidth: root.scrollWidth,
           },
+          lang: root.getAttribute("lang") || "",
+          hasSkipLink: Boolean(document.querySelector('a[href="#main-content"]')),
+          duplicateNavLinks,
+          externalResources,
           title,
           description,
           canonical,
@@ -164,6 +180,11 @@ for (const [device, viewport] of Object.entries(viewports)) {
       });
 
       // Basic document structure checks.
+      if (!audit.lang) errors.push("document is missing a lang attribute");
+      if (!audit.hasSkipLink) errors.push("missing skip link to main content");
+      if (audit.duplicateNavLinks.length > 0) errors.push("duplicate visible navigation links: " + audit.duplicateNavLinks.join(", "));
+      if (audit.externalResources.length > 0) warnings.push("external resources detected: " + audit.externalResources.length);
+
       if (!audit.title) {
         errors.push("missing document title");
       }
@@ -282,6 +303,9 @@ for (const [device, viewport] of Object.entries(viewports)) {
         errors,
         warnings,
         checks: {
+          lang: Boolean(audit.lang),
+          skipLink: audit.hasSkipLink,
+          noDuplicateNavigation: audit.duplicateNavLinks.length === 0,
           title: Boolean(audit.title),
           description: Boolean(audit.description),
           canonical: Boolean(audit.canonical),
@@ -297,6 +321,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
             (button) => Boolean(button.text || button.ariaLabel)
           ),
           internalLinks: brokenLinks.length === 0,
+          noExternalResources: audit.externalResources.length === 0,
         },
       });
     } catch (error) {

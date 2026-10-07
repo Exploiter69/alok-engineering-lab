@@ -44,8 +44,9 @@ const resolvedOgImage = ogImage ? new URL(ogImage, site).href : undefined;
   {resolvedOgImage && <meta name="twitter:image" content={resolvedOgImage} />}
 </head>
 <body class="bg-black text-white">
+<a href="#main-content" class="sr-only z-[100] rounded-md bg-white px-4 py-2 text-sm font-medium text-black focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to main content</a>
 <Navbar />
-<slot />
+<div id="main-content"><slot /></div>
 <Footer />
 </body>
 </html>

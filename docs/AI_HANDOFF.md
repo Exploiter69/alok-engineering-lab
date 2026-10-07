@@ -129,4 +129,12 @@ The final batch is considered complete only after the latest GitHub Actions Qual
 After verification, sync the local checkout with:
 git pull --ff-only origin master
 
-CP17 Long-Term Archive is complete. CP18 Performance & Accessibility Excellence is the next approved checkpoint after CP17 verification.
+CP17 Long-Term Archive is complete.
+
+## CP18 status
+CP18 Performance & Accessibility Excellence is complete.
+
+## CP19 status
+CP19 Visual Evolution is complete.
+
+The next architectural checkpoint is CP20 Maturity / v2 Readiness, which is a decision gate rather than an automatic rewrite.
