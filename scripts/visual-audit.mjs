@@ -298,7 +298,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
         }
         for (const control of document.querySelectorAll("input,select,textarea")) {
           if (!control.id) continue;
-          const label = document.querySelector(`label[for="${CSS.escape(control.id)}"]`);
+          const label = document.querySelector(`label[for="${CSS.escape(control.id)}"]`) || control.closest("label");
           const labelled = control.getAttribute("aria-label") || control.getAttribute("aria-labelledby");
           if (!label && !labelled) issues.push("form control has no label: " + control.id);
         }
