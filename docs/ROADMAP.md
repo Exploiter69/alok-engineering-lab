@@ -14,7 +14,7 @@ Established the current Astro/Tailwind website foundation.
 **Complete.** Hierarchy, navigation, responsiveness, visual consistency and product direction audited.
 
 ### CP1 — Design System
-**Complete.** Established the restrained engineering aesthetic, typography-led hierarchy, black canvas, thin rules, technical labels, responsive spacing and minimal decoration.
+**Complete.** Established the restrained engineering aesthetic, typography-led hierarchy, black canvas, thin rules, technical labels, editorial spacing, responsive layouts and minimal decoration.
 
 ### CP2 — Information Architecture
 **Complete.** Established Projects, Writing, Notes, Experiments and Timeline as primary areas, with Garden, Changelog, Docs and About as supporting areas.
@@ -101,6 +101,15 @@ Completed:
 
 CP8 makes the Lab more useful as a living engineering archive without adding a database, CMS, runtime API, analytics or paid service.
 
+### CP9 — Knowledge Expansion
+**Complete.** Added reusable engineering knowledge derived from actual project architecture, constraints and verification, plus a traceable knowledge-extraction experiment and writing record.
+
+### CP10 — Project Intelligence
+**Complete.** Project records now include structured objectives, lifecycle, architecture summaries, decisions and lessons. Project detail pages expose linked knowledge and project-specific timeline records without introducing runtime infrastructure.
+
+### CP11 — Knowledge Provenance
+**Complete.** Knowledge detail pages now expose the project records connected to their ideas through the existing repository-backed relationship model. This makes the project ↔ knowledge graph bidirectional without introducing a second source of truth, runtime infrastructure or cost.
+
 ## Explicitly Not Needed Unless Proven Necessary
 
 - database/CMS
@@ -124,10 +133,3 @@ Preferred workflow:
 **inspect → implement → verify → review → checkpoint**
 
 The repository and current Git state remain the strongest sources of truth.
-
-
-### CP9 — Knowledge Expansion
-**Complete.** Added reusable engineering knowledge derived from actual project architecture, constraints and verification, plus a traceable knowledge-extraction experiment and writing record.
-
-### CP10 — Project Intelligence
-**Complete.** Project records now include structured objectives, lifecycle, architecture summaries, decisions and lessons. Project detail pages expose linked knowledge and project-specific timeline records without introducing runtime infrastructure.
