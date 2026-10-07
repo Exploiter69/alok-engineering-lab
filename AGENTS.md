@@ -88,3 +88,13 @@ Canonical project context:
 
 Inspect the repository before modifying it. Prefer:
 **inspect → implement → verify → review → checkpoint**.
+
+
+## Admin phase scope
+
+When continuing the admin platform:
+- Phase 4 means Git / CI / Deployment control.
+- Phase 5 means Engineering Intelligence and repository-backed operational reports.
+- Phase 6 means final security, accessibility, responsive, performance and failure/recovery hardening.
+- These scopes come from the original admin implementation specification and are now recorded in the canonical docs.
+- Never mark a phase complete before implementation, tests, CI, documentation and merge verification.
