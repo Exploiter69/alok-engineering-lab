@@ -5,10 +5,15 @@
   --background: #050505;
   --foreground: #fafafa;
   --muted: #888;
+  --border: #202020;
+  --border-strong: #343434;
+  --accent: #a3e635;
+  --accent-soft: rgba(163, 230, 53, 0.12);
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 1.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -22,6 +27,7 @@ html {
 }
 
 body {
+  min-width: 320px;
   background: var(--background);
   color: var(--foreground);
   font-family:
@@ -51,6 +57,28 @@ body {
   text-transform: uppercase;
   color: #737373;
 }
+
+.lab-accent { color: var(--accent); }
+
+.prose {
+  --tw-prose-body: #b8b8b8;
+  --tw-prose-headings: #fafafa;
+  --tw-prose-links: #d4d4d4;
+  --tw-prose-bold: #fafafa;
+  --tw-prose-code: #e5e5e5;
+  --tw-prose-quotes: #d4d4d4;
+  --tw-prose-quote-borders: #333;
+  --tw-prose-hr: #222;
+  --tw-prose-th-borders: #333;
+  --tw-prose-td-borders: #262626;
+}
+
+.prose a { text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.prose :where(pre):not(:where([class~="not-prose"] *)) { overflow-x: auto; border: 1px solid #222; background: #090909; }
+.prose :where(code):not(:where([class~="not-prose"] *))::before,
+.prose :where(code):not(:where([class~="not-prose"] *))::after { content: ""; }
+
+@media (max-width: 767px) { .prose { font-size: 1rem; line-height: 1.8; } }
 
 :focus-visible {
   outline: 2px solid #fff;
