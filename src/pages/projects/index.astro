@@ -89,7 +89,7 @@ const counts = ["exploring", "building", "maintaining", "archived"].map(state =>
   search?.addEventListener("input", render);
   for (const button of filters) button.addEventListener("click", () => {
     activeFilter = button.dataset.projectFilter ?? "all";
-    for (const filter of filters) { const active = filter === button; filter.setAttribute("aria-pressed", String(active)); filter.classList.toggle("bg-neutral-900", active); filter.classList.toggle("border-neutral-600", active); filter.classList.toggle("text-white", active); filter.classList.toggle("border-neutral-800", !active); filter.classList.toggle("text-neutral-500", !active); }
+    for (const filter of filters) { const active = filter === button; filter.setAttribute("aria-pressed", String(active)); filter.classList.toggle("bg-neutral-900", active); filter.classList.toggle("border-neutral-600", active); filter.classList.toggle("text-white", active); filter.classList.toggle("text-neutral-300", active); filter.classList.toggle("border-neutral-800", !active); filter.classList.toggle("text-neutral-500", !active); filter.classList.toggle("bg-black", !active); }
     render();
   });
 </script>
