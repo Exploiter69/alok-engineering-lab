@@ -1,7 +1,7 @@
 ---
 title: "Static Sites Can Record Live Work"
 description: "A static site can feel current without pretending to provide real-time operational truth."
-date: 2026-10-07
+date: "2026-10-07"
 tags: [Web Engineering, Documentation, Architecture]
 status: published
 stage: budding
