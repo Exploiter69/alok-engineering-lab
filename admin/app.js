@@ -31,7 +31,10 @@ function shell(body) {
     location.reload();
   });
   document.querySelector("#new-content")?.addEventListener("click", () => editor(state.collection || Object.keys(state.schema.collections)[0]));
-  document.querySelector("#intelligence")?.addEventListener("click", intelligence);\n  document.querySelector("#site-control")?.addEventListener("click", siteControl);\n  document.querySelector("#command")?.addEventListener("click", openCommandPalette);\n  installCommandShortcut();
+  document.querySelector("#intelligence")?.addEventListener("click", intelligence);
+  document.querySelector("#site-control")?.addEventListener("click", siteControl);
+  document.querySelector("#command")?.addEventListener("click", openCommandPalette);
+  installCommandShortcut();
   document.querySelector("#workflow")?.addEventListener("click", workflow);
 }
 
@@ -131,7 +134,9 @@ async function workflowBranch(branch) {
     <p class="muted">HEAD <code>${esc(data.branch.sha)}</code> · ${data.branch.ahead_by} ahead · ${data.branch.behind_by} behind · ${esc(data.branch.status)}</p>
     <div class="actions"><button id="create-pr" class="button">Create draft PR</button><button id="refresh-branch" class="button secondary">Refresh</button></div>
     <div class="validation"><strong>CI: ${esc(data.ci.state)}</strong> · ${data.runs?.length || 0} workflow runs</div>
-    <div class="card"><p class="eyebrow">SEMANTIC REVIEW</p>${(data.semanticDiff || []).map(file => `<article class="diff-file"><header><strong>${esc(file.filename)}</strong><span>${esc(file.category)} · +${file.additions ?? 0} / -${file.deletions ?? 0}</span></header>${file.metadata ? `<div class="semantic-changes">${file.metadata.map(change => `<p><strong>${esc(change.field)}</strong><br><span class="muted">${esc(JSON.stringify(change.before))} → ${esc(JSON.stringify(change.after))}</span></p>`).join("") || "<p class='muted'>No frontmatter changes.</p>"}</div><p class="tiny">Body: ${file.body?.added || 0} lines added · ${file.body?.removed || 0} lines removed</p>` : `<p class="muted">${esc(file.category)} change</p>`}</article>`).join("") || "<div class='empty'>No semantic changes available.</div>"}</div>\n    <div class="list-card">${files.map(file => `<article class="diff-file"><header><strong>${esc(file.filename)}</strong><span>${esc(diffLabel(file))} · +${file.additions} / -${file.deletions}</span></header><pre>${esc(file.patch || "Binary or unavailable patch")}</pre></article>`).join("") || "<div class='empty'>No changes relative to master.</div>"}</div>\n    ${data.runs?.length ? `<div class="list-card">${data.runs.map(run => `<article class="record"><span><strong>${esc(run.name)}</strong><small>${esc(run.status)} / ${esc(run.conclusion || "running")} · ${esc(run.sha.slice(0,12))}</small></span><div class="actions"><a class="button secondary" href="${esc(run.html_url)}" target="_blank" rel="noopener noreferrer">Actions</a>${run.conclusion === "failure" ? `<button class="button secondary" data-rerun="${run.id}">Rerun failed</button>` : ""}</div></article>`).join("")}</div>` : ""}
+    <div class="card"><p class="eyebrow">SEMANTIC REVIEW</p>${(data.semanticDiff || []).map(file => `<article class="diff-file"><header><strong>${esc(file.filename)}</strong><span>${esc(file.category)} · +${file.additions ?? 0} / -${file.deletions ?? 0}</span></header>${file.metadata ? `<div class="semantic-changes">${file.metadata.map(change => `<p><strong>${esc(change.field)}</strong><br><span class="muted">${esc(JSON.stringify(change.before))} → ${esc(JSON.stringify(change.after))}</span></p>`).join("") || "<p class='muted'>No frontmatter changes.</p>"}</div><p class="tiny">Body: ${file.body?.added || 0} lines added · ${file.body?.removed || 0} lines removed</p>` : `<p class="muted">${esc(file.category)} change</p>`}</article>`).join("") || "<div class='empty'>No semantic changes available.</div>"}</div>
+    <div class="list-card">${files.map(file => `<article class="diff-file"><header><strong>${esc(file.filename)}</strong><span>${esc(diffLabel(file))} · +${file.additions} / -${file.deletions}</span></header><pre>${esc(file.patch || "Binary or unavailable patch")}</pre></article>`).join("") || "<div class='empty'>No changes relative to master.</div>"}</div>
+    ${data.runs?.length ? `<div class="list-card">${data.runs.map(run => `<article class="record"><span><strong>${esc(run.name)}</strong><small>${esc(run.status)} / ${esc(run.conclusion || "running")} · ${esc(run.sha.slice(0,12))}</small></span><div class="actions"><a class="button secondary" href="${esc(run.html_url)}" target="_blank" rel="noopener noreferrer">Actions</a>${run.conclusion === "failure" ? `<button class="button secondary" data-rerun="${run.id}">Rerun failed</button>` : ""}</div></article>`).join("")}</div>` : ""}
     `;
   document.querySelector("#create-pr").addEventListener("click", async () => {
     const result = await api("/api/workflow", { method:"POST", body:JSON.stringify({action:"pr",branch,title:`Admin changes: ${branch}`,body:"Created from the Engineering Lab admin release control."}) });
@@ -178,10 +183,22 @@ function renderIntelligence(data) {
   document.querySelector("#export-json").addEventListener("click", () => downloadExport("json", [...selected]));
   document.querySelector("#export-md").addEventListener("click", () => downloadExport("markdown", [...selected]));
   document.querySelectorAll("[data-select-record]").forEach(box => box.addEventListener("change", () => box.checked ? selected.add(box.value) : selected.delete(box.value)));
-  document.querySelector("#bulk-run").addEventListener("click", () => runBulk(selected));\n  document.querySelector("#intelligence-search").addEventListener("input", event => filterIntelligenceRecords(event.target.value));
+  document.querySelector("#bulk-run").addEventListener("click", () => runBulk(selected));
+  document.querySelector("#intelligence-search").addEventListener("input", event => filterIntelligenceRecords(event.target.value));
 }
 
-function filterIntelligenceRecords(query) {\n  const needle=String(query||"").trim().toLowerCase();\n  document.querySelectorAll("[data-select-record]").forEach(box => { const row=box.closest(".record-select"); row.hidden=Boolean(needle && !row.textContent.toLowerCase().includes(needle)); });\n}\n\nfunction createAdminBranch() {\n  const branch=prompt("New admin branch name:", `admin/work-${Date.now().toString(36)}`);\n  if(!branch || !/^admin\\/[a-z0-9][a-z0-9._/-]{2,79}$/.test(branch)) return;\n  api("/api/content",{method:"POST",body:JSON.stringify({action:"branch",branch})}).then(()=>showGlobalMessage(`✓ Created ${branch}`)).catch(error=>showGlobalMessage(error.message));\n}\n\nfunction isStaleRecord(record) {
+function filterIntelligenceRecords(query) {
+  const needle=String(query||"").trim().toLowerCase();
+  document.querySelectorAll("[data-select-record]").forEach(box => { const row=box.closest(".record-select"); row.hidden=Boolean(needle && !row.textContent.toLowerCase().includes(needle)); });
+}
+
+function createAdminBranch() {
+  const branch=prompt("New admin branch name:", `admin/work-${Date.now().toString(36)}`);
+  if(!branch || !/^admin\\/[a-z0-9][a-z0-9._/-]{2,79}$/.test(branch)) return;
+  api("/api/content",{method:"POST",body:JSON.stringify({action:"branch",branch})}).then(()=>showGlobalMessage(`✓ Created ${branch}`)).catch(error=>showGlobalMessage(error.message));
+}
+
+function isStaleRecord(record) {
   const updated = new Date(record.updatedAt || record.date || 0).getTime();
   return Number.isFinite(updated) && Date.now() - updated >= 180 * 86400000;
 }
