@@ -20,13 +20,13 @@ const diagram = diagrams[projectId] ?? { nodes: ["Input", "Architecture", "Decis
     <desc id={projectId + "-architecture-desc"}>{diagram.caption}</desc>
     {diagram.nodes.map((node, index) => {
       const x = 20 + index * 225;
-      return <>
-        {index < diagram.nodes.length - 1 && <path d={`M ${x + 180} 105 H ${x + 212}`} stroke="var(--border-strong)" stroke-width="2" fill="none" />}
-        {index < diagram.nodes.length - 1 && <path d={`M ${x + 202} 99 L ${x + 212} 105 L ${x + 202} 111`} stroke="var(--accent)" stroke-width="2" fill="none" />}
+      return <g>
+        {index < diagram.nodes.length - 1 && <path d={"M " + (x + 180) + " 105 H " + (x + 212)} stroke="var(--border-strong)" stroke-width="2" fill="none" />}
+        {index < diagram.nodes.length - 1 && <path d={"M " + (x + 202) + " 99 L " + (x + 212) + " 105 L " + (x + 202) + " 111"} stroke="var(--accent)" stroke-width="2" fill="none" />}
         <rect x={x} y="55" width="180" height="100" rx="14" fill="var(--surface-2)" stroke={index === 0 ? "var(--accent)" : "var(--border-strong)"} />
         <text x={x + 90} y="100" text-anchor="middle" fill="var(--foreground)" font-size="14" font-family="var(--font-sans)">{node}</text>
         <text x={x + 90} y="125" text-anchor="middle" fill="var(--subtle)" font-size="10" font-family="var(--font-mono)">0{index + 1}</text>
-      </>;
+      </g>;
     })}
   </svg>
   <figcaption class="mt-3 max-w-3xl text-xs leading-5 text-subtle">{diagram.caption}. The nodes are a visual rendering of the repository's architectureSummary and decisions, not runtime telemetry.</figcaption>

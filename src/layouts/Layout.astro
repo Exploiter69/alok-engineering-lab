@@ -74,6 +74,39 @@ const resolvedOgImage = new URL(ogImage ?? "/og.png", site).href;
     progress?.remove();
   }
 </script>
+<script>
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const revealTargets = document.querySelectorAll<HTMLElement>("main section, main article.prose, main > header");
+  if (!reduceMotion && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-visible"); observer.unobserve(entry.target); }
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.08 });
+    revealTargets.forEach((element, index) => { if (!element.classList.contains("hero-surface")) { element.classList.add("reveal"); element.style.transitionDelay = Math.min(index * 25, 150) + "ms"; observer.observe(element); } });
+  }
+
+  const slugify = (value: string) => value.toLowerCase().trim().replace(/[^a-z0-9\\s-]/g, "").replace(/\\s+/g, "-").replace(/-+/g, "-");
+  for (const heading of document.querySelectorAll<HTMLElement>("article.prose h2, article.prose h3")) {
+    if (!heading.id) heading.id = slugify(heading.textContent ?? "section");
+    if (!heading.querySelector(".heading-anchor")) {
+      const anchor = document.createElement("a");
+      anchor.className = "heading-anchor"; anchor.href = "#" + heading.id; anchor.setAttribute("aria-label", "Link to this section"); anchor.textContent = "#";
+      heading.append(anchor);
+    }
+  }
+
+  for (const pre of document.querySelectorAll<HTMLElement>("article.prose pre")) {
+    if (pre.querySelector(".copy-code")) continue;
+    const button = document.createElement("button"); button.type = "button"; button.className = "copy-code"; button.textContent = "Copy";
+    button.addEventListener("click", async () => { const code = pre.querySelector("code")?.textContent ?? pre.textContent ?? ""; try { await navigator.clipboard.writeText(code); button.textContent = "Copied"; setTimeout(() => button.textContent = "Copy", 1400); } catch { button.textContent = "Unavailable"; setTimeout(() => button.textContent = "Copy", 1400); } });
+    pre.append(button);
+  }
+
+  for (const counter of document.querySelectorAll<HTMLElement>("[data-counter]")) {
+    const target = Number(counter.dataset.counter ?? "0");
+    if (reduceMotion || !("IntersectionObserver" in window)) { counter.textContent = String(target); continue; }
+    const observer = new IntersectionObserver(entries => { if (!entries[0]?.isIntersecting) return; const started = performance.now(); const tick = (now: number) => { const progress = Math.min(1, (now - started) / 700); counter.textContent = String(Math.round(target * (1 - Math.pow(1 - progress, 3)))); if (progress < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); observer.disconnect(); }, { threshold: .6 }); observer.observe(counter);
+  }
+</script>
 <Footer />
 </body>
 </html>
