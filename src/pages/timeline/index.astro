@@ -15,12 +15,12 @@ const entries = (await getCollection("timeline"))
     <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Timeline</h1>
     <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">A chronological record of engineering milestones, turning points and durable project history.</p>
   </header>
-  <section class="mt-10" aria-labelledby="timeline-archive-heading">
+  <section class="mt-12" aria-labelledby="timeline-archive-heading">
     <div class="mb-5 flex items-baseline justify-between gap-4">
       <p id="timeline-archive-heading" class="lab-label">Engineering chronology</p>
       <span class="font-mono text-xs text-neutral-600">{entries.length} records</span>
     </div>
-    <div class="grid gap-4 md:grid-cols-2">
+    <div>
       {entries.map((entry, index) => (
         <ContentCard
           title={entry.data.title}
