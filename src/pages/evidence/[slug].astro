@@ -18,21 +18,21 @@ const projectItems = relatedItems.filter(item => item.type === "Projects");
 <Layout title={entry.data.title} description={entry.data.description}>
 <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
   <a href="/evidence" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-neutral-500 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span aria-hidden="true">←</span>Evidence</a>
-  <header class="mt-12 max-w-3xl">
-    <p class="lab-label">Evidence / {entry.data.kind}</p>
+  <header class="mt-12 max-w-3xl border-b border-neutral-900 pb-10">
+    <p class="lab-label">Evidence / {entry.data.kind}</p><p class="mt-3 font-mono text-xs uppercase tracking-[0.12em] text-lime-300"><span aria-hidden="true">{entry.data.outcome === "confirmed" ? "✓" : entry.data.outcome === "failed" ? "×" : entry.data.outcome === "inconclusive" ? "?" : "·"}</span> {entry.data.outcome}</p>
     <h1 class="mt-5 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">{entry.data.title}</h1>
     <p class="mt-6 max-w-2xl text-lg leading-8 text-neutral-400">{entry.data.description}</p>
     <div class="mt-7 flex flex-wrap gap-x-5 gap-y-2 border-y border-neutral-900 py-4 font-mono text-xs text-neutral-500">
       <span>{entry.data.date.toDateString()}</span><span>{entry.data.outcome}</span>
     </div>
   </header>
-  <section class="mt-10 grid gap-6 border-y border-neutral-900 py-8 sm:grid-cols-2" aria-label="Evidence record">
+  <section class="mt-10 grid gap-8 border-y border-neutral-900 py-8 sm:grid-cols-2" aria-label="Evidence record">
     <div><p class="lab-label">Method</p><p class="mt-2 text-sm leading-6 text-neutral-400">{entry.data.method}</p></div>
     <div><p class="lab-label">Result</p><p class="mt-2 text-sm leading-6 text-neutral-400">{entry.data.result}</p></div>
     {entry.data.limitations.length > 0 && <div class="sm:col-span-2"><p class="lab-label">Limitations</p><ul class="mt-2 list-disc space-y-1 pl-5 text-sm leading-6 text-neutral-500">{entry.data.limitations.map(item => <li>{item}</li>)}</ul></div>}
   </section>
   <KnowledgeProvenance projectItems={projectItems} />
-  <article class="prose prose-invert mt-12 max-w-3xl sm:mt-16"><Content /></article>
+  <article class="prose prose-invert mt-12 max-w-3xl border-t border-neutral-900 pt-10 sm:mt-16 sm:pt-12"><Content /></article>
   <RelatedContent items={relatedItems} />
 </main>
 </Layout>
