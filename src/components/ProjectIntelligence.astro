@@ -4,6 +4,7 @@ interface RelatedItem { title: string; description: string; href: string; type: 
 interface ProjectData {
   objective?: string; lifecycle: string; architectureSummary?: string; stack: string[];
   status: string; repository?: string; decisions: string[]; lessons: string[];
+  currentFocus?: string; knownProblems: string[]; futureWork: string[];
 }
 const { project, relatedItems, timelineItems } = Astro.props as {
   project: { data: ProjectData }; relatedItems: RelatedItem[]; timelineItems: TimelineItem[];
