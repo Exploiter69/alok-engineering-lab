@@ -110,6 +110,21 @@ CP8 makes the Lab more useful as a living engineering archive without adding a d
 ### CP11 — Knowledge Provenance
 **Complete.** Knowledge detail pages now expose the project records connected to their ideas through the existing repository-backed relationship model. This makes the project ↔ knowledge graph bidirectional without introducing a second source of truth, runtime infrastructure or cost.
 
+### CP12 — Project Lifecycle System
+**Complete.** Project records now separate publication status from engineering lifecycle, record lifecycle baselines/history, and support browser-local lifecycle filtering.
+
+### CP13 — Discovery & Navigation
+**Complete.** The Garden now exposes stable static topic routes, while Projects has lightweight lifecycle filtering and search. No backend search infrastructure was introduced.
+
+### CP14 — Engineering Evidence
+**Complete.** Added a first-class Evidence collection with benchmark, failure, verification and observation records plus method/result/limitations fields and project provenance.
+
+### CP15 — Technical Writing System
+**Complete.** Writing records now declare a format, detail pages expose the writing metadata, and docs/WRITING.md defines a durable source-to-publication workflow.
+
+### CP16 — Lab Automation
+**Complete.** Metadata, relationship, lifecycle and writing validators now run before Astro diagnostics/build, and GitHub Actions runs the repository validation explicitly.
+
 ## Explicitly Not Needed Unless Proven Necessary
 
 - database/CMS
