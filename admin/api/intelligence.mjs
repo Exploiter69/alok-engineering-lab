@@ -5,7 +5,7 @@ import { readRecord, repositorySnapshot, repositoryRuns, contentHealth, auditFro
 import { tree, writeFile } from "../lib/content.mjs";
 import { validCollection, validSlug, parseDocument, validateMetadata } from "../lib/content.mjs";
 import { github } from "../lib/github.mjs";
-import { deployments } from "../lib/vercel.mjs";
+import { deployments } from "../lib/vercel.mjs";\nimport { readSiteControl } from "../lib/site-control.mjs";
 
 const OWNER = "Exploiter69";
 const REPO = "alok-engineering-lab";
@@ -130,7 +130,7 @@ export default async function handler(req, res) {
         const selection = Array.isArray(body.selection) ? body.selection : null;
         if (selection && !validateBulkSelection(selection).ok) return send(res, 400, { error: "invalid_selection" });
         const format = body.format === "markdown" ? "markdown" : "json";
-        const payload = format === "markdown" ? markdownArchive(health, selection) : JSON.stringify(serializeExport({ health, repository, runs, selection }), null, 2);
+        const payload = format === "markdown" ? markdownArchive(health, selection) : JSON.stringify(serializeExport({ health, repository, runs, config, selection }), null, 2);
         res.statusCode = 200;
         res.setHeader("Content-Type", format === "markdown" ? "text/markdown; charset=utf-8" : "application/json; charset=utf-8");
         res.setHeader("Content-Disposition", `attachment; filename="engineering-lab-${format === "markdown" ? "archive.md" : "export.json"}"`);
