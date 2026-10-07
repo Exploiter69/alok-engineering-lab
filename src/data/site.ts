@@ -1,11 +1,3 @@
-export const SITE = {
-  name: "Alok Engineering Lab",
-  tagline: "I build reliable automation and AI systems, and document what breaks.",
-  description: "A public engineering lab covering automation, AI systems, Linux, developer tooling and the reasoning behind the work.",
-  author: "Alok Thakur",
-  currently: "Building autonomous engineering systems, reliability-focused tools, and a connected technical knowledge archive.",
-  links: {
-    github: "https://github.com/Exploiter69",
-    linkedin: "",
-  },
-};
+import config from "./site-config.json";
+
+export const SITE = config;
