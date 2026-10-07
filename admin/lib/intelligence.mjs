@@ -322,6 +322,32 @@ export function markdownArchive(health, selection = null) {
   return sections.join("\n");
 }
 
+
+export async function contentAwareDiff(token, branch) {
+  const compare = await github(`${ROOT}/compare/master...${encodeURIComponent(branch)}`, {}, token);
+  const files = compare.files || [];
+  const result = [];
+  for (const file of files) {
+    const category = classifyDiffFile(file);
+    if (category !== "content") {
+      result.push({ ...file, category });
+      continue;
+    }
+    let oldSource = "", newSource = "";
+    const oldEncoded = encodeURIComponent(file.filename).replaceAll("%2F", "/");
+    try {
+      const oldFile = await github(`${ROOT}/contents/${oldEncoded}?ref=master`, {}, token);
+      oldSource = Buffer.from(String(oldFile.content || "").replaceAll("\n", ""), "base64").toString("utf8");
+    } catch {}
+    try {
+      const newFile = await github(`${ROOT}/contents/${oldEncoded}?ref=${encodeURIComponent(branch)}`, {}, token);
+      newSource = Buffer.from(String(newFile.content || "").replaceAll("\n", ""), "base64").toString("utf8");
+    } catch {}
+    result.push({ ...semanticDiff(file, oldSource, newSource), status: file.status, additions: file.additions, deletions: file.deletions });
+  }
+  return result;
+}
+
 export function validateBulkSelection(items) {
   if (!Array.isArray(items) || !items.length || items.length > 100) return { ok: false, error: "selection must contain 1–100 records" };
   const normalized = [];
