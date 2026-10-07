@@ -36,13 +36,14 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 <a href="/notes" class="rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white">Notes</a>
 <a href="/writing" class="rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white">Writing</a>
 <a href="/experiments" class="rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white">Experiments</a>
+<a href="/evidence" class="rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Evidence</a>
 </nav>
 
 <section class="mt-10 border-y border-neutral-900 py-7 sm:py-8" aria-labelledby="search-heading">
 <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 <div>
 <p id="search-heading" class="lab-label">Find in the Garden</p>
-<p class="mt-2 text-sm text-neutral-500">Search published notes, writing, experiments and evidence already present in the archive.</p>
+<p class="mt-2 text-sm text-neutral-500">Search the full text, titles, topics and content types across the published archive.</p>
 </div>
 <label class="block w-full sm:max-w-sm">
 <span class="sr-only">Search the Digital Garden</span>
@@ -72,7 +73,7 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 </div>
 <div id="garden-items">
 {gardenItems.map(item => (
-<article data-garden-item data-search={`${item.data.title} ${item.data.description} ${item.type} ${item.data.tags.join(" ")}`.toLowerCase()}>
+<article data-garden-item data-search={`${item.data.title} ${item.data.description} ${item.type} ${item.data.tags.join(" ")} ${item.body ?? ""}`.toLowerCase()}>
 <ContentCard title={item.data.title} description={item.data.description} meta={`${item.type} • ${item.data.tags.join(" • ")}`} href={item.href} headingLevel="h2" />
 </article>
 ))}
