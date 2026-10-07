@@ -1,7 +1,7 @@
 ---
 title: "CP9 — Knowledge Expansion"
 description: "Expanded the Lab's knowledge archive by extracting reusable engineering principles from real project work."
-date: 2026-10-07
+date: "2026-10-07"
 tags: [CP9, Knowledge, Engineering]
 status: published
 related:
