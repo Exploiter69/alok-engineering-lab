@@ -182,6 +182,28 @@ for (const [device, viewport] of Object.entries(viewports)) {
         };
       });
 
+      // Interaction target checks: primary controls should remain comfortably tappable.
+      const primaryTargets = await page.evaluate(() => [...document.querySelectorAll("nav a, nav summary, button, input")].map((element) => {
+        const rect = element.getBoundingClientRect();
+        return { tag: element.tagName, text: element.textContent?.trim() || "", width: rect.width, height: rect.height };
+      }));
+      for (const target of primaryTargets) {
+        if (target.width < 24 || target.height < 24) {
+          errors.push(`primary interactive target is smaller than 24px: ${target.tag} "${target.text}" (${target.width.toFixed(1)}×${target.height.toFixed(1)})`);
+        }
+      }
+
+      // Keyboard focus should land on a visible target.
+      await page.keyboard.press("Tab");
+      const focusState = await page.evaluate(() => {
+        const active = document.activeElement;
+        if (!(active instanceof HTMLElement)) return { focused: false, visible: false };
+        const rect = active.getBoundingClientRect();
+        const style = getComputedStyle(active);
+        return { focused: active !== document.body, visible: rect.width > 0 && rect.height > 0 && style.visibility !== "hidden" };
+      });
+      if (!focusState.focused || !focusState.visible) errors.push("keyboard focus did not land on a visible element");
+
       // Basic document structure checks.
       if (!audit.lang) errors.push("document is missing a lang attribute");
       if (!audit.hasSkipLink) errors.push("missing skip link to main content");
@@ -325,6 +347,8 @@ for (const [device, viewport] of Object.entries(viewports)) {
           ),
           internalLinks: brokenLinks.length === 0,
           noExternalResources: audit.externalResources.length === 0,
+          primaryTargetsMeetMinimum: primaryTargets.every((target) => target.width >= 24 && target.height >= 24),
+          keyboardFocusVisible: focusState.focused && focusState.visible,
         },
       });
     } catch (error) {
