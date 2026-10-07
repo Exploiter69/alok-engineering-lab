@@ -155,3 +155,22 @@ Confirmed:
 - no database, CMS, analytics, paid service, WebGL, 3D, particle system or framework migration was introduced
 
 The CP20 work preserves Astro and the ₹0 / $0 constraint. v1.0.0 history remains untouched.
+
+
+## CP21 status
+CP21 — UX Reliability & Interaction Excellence is complete at the implementation level and pending final Quality verification for the final master head.
+
+Implemented:
+- project lifecycle filters now expose visible active state as well as aria-pressed state
+- evidence outcomes use distinct semantic visual treatment for confirmed, failed, inconclusive and informational records
+- Garden search now includes record body text and Evidence is exposed in Garden view navigation
+- project search covers architecture summaries, decisions and lessons
+- long-form records expose subtle reading progress and adjacent archive navigation
+- 404 recovery matches the Lab visual language
+- related-content styling uses the same neutral token family
+- evidence archive exposes outcome counts
+- browser audit expanded from two viewports to 320/375/390/430/768/1024/1280/1440 widths
+- browser audit now checks full keyboard traversal, accessible names, form labels, focus appearance, contrast warnings, 44px primary targets, navigation interactions and project/Garden search behavior
+- internal-link HTTP validation is performed once per route set at a representative viewport to avoid redundant CI work
+
+No 3D/WebGL, database, CMS, analytics, paid service or framework migration was introduced.
