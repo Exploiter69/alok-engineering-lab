@@ -1,7 +1,7 @@
 ---
 title: "CP10 — Project Intelligence"
 description: "Upgraded project pages from descriptive case studies into structured technical records."
-date: 2026-10-07
+date: "2026-10-07"
 tags: [CP10, Projects, Architecture]
 status: published
 related:
