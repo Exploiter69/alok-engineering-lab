@@ -55,7 +55,7 @@ const counts = ["exploring", "building", "maintaining", "archived"].map(state =>
     <div class="mb-2 flex items-baseline justify-between gap-4"><p id="engineering-work-heading" class="lab-label">Engineering work</p><span class="font-mono text-xs text-neutral-600">{projects.length} records</span></div>
     <div>
       {projects.map((project, index) => (
-        <article data-project-item data-lifecycle={project.data.lifecycle} data-search={(project.data.title + " " + project.data.description + " " + project.data.lifecycle + " " + project.data.stack.join(" ")).toLowerCase()}>
+        <article data-project-item data-lifecycle={project.data.lifecycle} data-search={(project.data.title + " " + project.data.description + " " + project.data.lifecycle + " " + project.data.stack.join(" ") + " " + (project.data.architectureSummary ?? "") + " " + project.data.decisions.join(" ") + " " + project.data.lessons.join(" ")).toLowerCase()}>
           <ContentCard title={project.data.title} description={project.data.description} status={project.data.lifecycle} meta={project.data.stack.join(" · ")} href={`/projects/${project.id}`} eyebrow={`PROJECT / ${String(index + 1).padStart(2, "0")}`} featured={index === 0} headingLevel="h2" />
         </article>
       ))}
