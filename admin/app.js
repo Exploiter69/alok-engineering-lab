@@ -30,7 +30,7 @@ function shell(body) {
     await fetch("/api/auth/logout", { method: "POST", headers: { "X-CSRF-Token": event.currentTarget.querySelector("input").value }, credentials: "same-origin" });
     location.reload();
   });
-  document.querySelector("#new-content")?.addEventListener("click", () => editor());
+  document.querySelector("#new-content")?.addEventListener("click", () => editor(state.collection || Object.keys(state.schema.collections)[0]));
 }
 
 async function loadCollections() {
@@ -106,7 +106,7 @@ function defaultMetadata(def) {
   return metadata;
 }
 
-async function editor(name = state.collection, slug = null) {
+async function editor(name = state.collection || Object.keys(state.schema.collections)[0], slug = null) {
   state.collection = name;
   state.slug = slug;
   state.branch = null;
