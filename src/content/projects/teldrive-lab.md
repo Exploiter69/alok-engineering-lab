@@ -16,6 +16,11 @@ stack:
   - Local Storage
 objective: "Add cataloging, planning, verification and controlled maintenance around an existing TelDrive deployment without becoming a second storage authority."
 lifecycle: "maintaining"
+lifecycleSince: 2026-10-06
+lifecycleHistory:
+  - state: "maintaining"
+    date: 2026-10-06
+    note: "Lifecycle baseline recorded in the Engineering Lab."
 architectureSummary: "A local control plane derives catalogs, search, analytics and plans from the production storage while consequential mutation stays behind explicit authorization and verification boundaries."
 decisions:
   - "TelDrive remains the production storage authority."
