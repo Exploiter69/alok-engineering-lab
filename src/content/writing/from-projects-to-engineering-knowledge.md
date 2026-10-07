@@ -4,6 +4,7 @@ description: "The most durable knowledge in an Engineering Lab comes from extrac
 date: "2026-10-07"
 tags: [Engineering, Architecture, Learning]
 status: published
+format: "case-study"
 related:
   - projects:vajra
   - projects:astra-userbot
