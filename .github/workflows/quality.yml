@@ -49,9 +49,15 @@ jobs:
 
       - name: Performance quality audit
         run: npm run audit:performance
+
       - name: Lighthouse audit
         run: |
-          npx --yes lighthouse http://127.0.0.1:4321/             --chrome-flags="--headless --no-sandbox"             --preset=desktop             --only-categories=performance,accessibility,best-practices,seo             --output=json             --output-path=/tmp/lighthouse.json
+          npx --yes lighthouse http://127.0.0.1:4321/ \
+            --chrome-flags="--headless --no-sandbox" \
+            --preset=desktop \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json \
+            --output-path=/tmp/lighthouse.json
           node --input-type=module <<'NODE'
           import fs from "node:fs";
 
@@ -66,15 +72,75 @@ jobs:
           const failedScores = categories.filter((name) => scores[name] < 95);
           const lcp = report.audits["largest-contentful-paint"]?.numericValue ?? Infinity;
           const cls = report.audits["cumulative-layout-shift"]?.numericValue ?? Infinity;
-          const inp = report.audits["interaction-to-next-paint"]?.numericValue ?? Infinity;
 
           console.log(`LCP: ${Math.round(lcp)}ms`);
           console.log(`CLS: ${cls}`);
-          console.log(`INP: ${Math.round(inp)}ms`);
 
-          if (failedScores.length || lcp >= 1500 || cls > 0 || inp >= 200) {
+          if (failedScores.length || lcp >= 1500 || cls > 0) {
             console.error("Lighthouse target failed.");
             if (failedScores.length) console.error("Scores below 95:", failedScores.join(", "));
             process.exit(1);
+          }
+          NODE
+
+      - name: Interaction responsiveness audit
+        run: |
+          node --input-type=module <<'NODE'
+          import { chromium } from "playwright";
+
+          const browser = await chromium.launch({ headless: true });
+          const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+
+          await page.goto("http://127.0.0.1:4321/", { waitUntil: "networkidle" });
+
+          const supported = await page.evaluate(() =>
+            PerformanceObserver.supportedEntryTypes.includes("event")
+          );
+          if (!supported) {
+            throw new Error("PerformanceEventTiming is unavailable; cannot measure interaction responsiveness.");
+          }
+
+          await page.evaluate(() => {
+            window.__interactionDurations = [];
+            const observer = new PerformanceObserver((list) => {
+              for (const entry of list.getEntries()) {
+                if (entry.interactionId > 0) {
+                  window.__interactionDurations.push({
+                    name: entry.name,
+                    duration: entry.duration,
+                    interactionId: entry.interactionId,
+                  });
+                }
+              }
+            });
+            observer.observe({ type: "event", buffered: true, durationThreshold: 16 });
+            window.__interactionObserver = observer;
+          });
+
+          const menu = page.locator("nav[data-nav-mobile] summary");
+          await menu.click();
+          await page.waitForTimeout(150);
+
+          const search = page.locator("nav[data-nav-mobile] button[data-command-open]");
+          await search.click();
+          await page.waitForTimeout(150);
+
+          const durations = await page.evaluate(() => {
+            window.__interactionObserver.disconnect();
+            return window.__interactionDurations.map((entry) => entry.duration);
+          });
+
+          await browser.close();
+
+          if (!durations.length) {
+            throw new Error("No measurable user interactions were captured.");
+          }
+
+          const inp = Math.max(...durations);
+          console.log(`Lab INP: ${Math.round(inp)}ms`);
+          console.log(`Measured interactions: ${durations.length}`);
+
+          if (inp >= 200) {
+            throw new Error(`Interaction responsiveness target failed: ${Math.round(inp)}ms >= 200ms`);
           }
           NODE
