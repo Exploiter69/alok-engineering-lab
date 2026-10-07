@@ -8,6 +8,7 @@ const allItems = [
   ...(await getCollection("notes")).filter(item => item.data.status !== "draft").map(item => ({ ...item, href: "/notes/" + item.id, type: "Note" })),
   ...(await getCollection("writing")).filter(item => item.data.status !== "draft").map(item => ({ ...item, href: "/writing/" + item.id, type: "Writing" })),
   ...(await getCollection("experiments")).filter(item => item.data.status !== "draft").map(item => ({ ...item, href: "/experiments/" + item.id, type: "Experiment" })),
+  ...(await getCollection("evidence")).filter(item => item.data.status !== "draft").map(item => ({ ...item, href: "/evidence/" + item.id, type: "Evidence" })),
 ];
 
 const topics = [...new Set(allItems.flatMap(item => item.data.tags))];
@@ -16,6 +17,7 @@ export async function getStaticPaths() {
     ...(await getCollection("notes")).filter(item => item.data.status !== "draft"),
     ...(await getCollection("writing")).filter(item => item.data.status !== "draft"),
     ...(await getCollection("experiments")).filter(item => item.data.status !== "draft"),
+    ...(await getCollection("evidence")).filter(item => item.data.status !== "draft"),
   ];
   const topicMap = new Map<string, string>();
   for (const item of items) for (const tag of item.data.tags) topicMap.set(slugifyTopic(tag), tag);
