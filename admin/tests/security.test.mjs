@@ -26,4 +26,7 @@ test("security headers prevent indexing and framing", () => {
   assert.match(headers["Content-Security-Policy"], /frame-ancestors 'none'/);
   assert.equal(headers["X-Robots-Tag"], "noindex, nofollow, noarchive");
   assert.equal(headers["X-Frame-Options"], "DENY");
+});\n\ntest("malformed cookie encoding is ignored instead of throwing", () => {
+  assert.doesNotThrow(() => security.parseCookies("a=%E0%A4%A; b=safe"));
+  assert.equal(security.parseCookies("a=%E0%A4%A; b=safe").b, "safe");
 });
