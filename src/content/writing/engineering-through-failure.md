@@ -4,6 +4,7 @@ description: "How failures, regressions and discarded approaches become useful e
 date: 2026-10-06
 tags: [Engineering, Debugging, Learning]
 status: active
+format: "postmortem"
 related: [experiments:first-experiment, projects:vgu-signal, projects:astra-userbot]
 ---
 
