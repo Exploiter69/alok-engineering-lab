@@ -180,3 +180,7 @@ Verification:
 - 264 generated desktop/mobile browser cases passed
 - repository validation and production build passed
 - no paid or runtime infrastructure introduced
+
+
+## CP21 — UX Reliability & Interaction Excellence
+Complete the post-CP20 reliability pass before any future visual expansion. Scope includes interaction semantics, accessibility regression coverage, responsive validation, discovery improvements and long-form navigation. Future visual experimentation must preserve the restrained engineering identity and remain justified by UX value.
