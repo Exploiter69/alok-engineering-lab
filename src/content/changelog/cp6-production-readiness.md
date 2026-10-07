@@ -8,7 +8,7 @@ tags:
   - Quality
 status: published
 related:
-  - verification-is-a-boundary
+  - notes:verification-is-a-boundary
 ---
 
 ## What changed
