@@ -12,20 +12,21 @@ if (!routes.length) throw new Error("Performance audit found no sitemap routes."
 
 const failures = [];
 const observations = [];
+await page.addInitScript(() => {
+  window.__labVitals = { lcp: 0, cls: 0 };
+  new PerformanceObserver(list => {
+    for (const entry of list.getEntries()) window.__labVitals.lcp = entry.startTime;
+  }).observe({ type: "largest-contentful-paint", buffered: true });
+  new PerformanceObserver(list => {
+    for (const entry of list.getEntries()) {
+      if (!entry.hadRecentInput) window.__labVitals.cls += entry.value;
+    }
+  }).observe({ type: "layout-shift", buffered: true });
+});
+
 for (const route of routes) {
   let lcp = 0;
   let cls = 0;
-  await page.addInitScript(() => {
-    window.__labVitals = { lcp: 0, cls: 0 };
-    new PerformanceObserver(list => {
-      for (const entry of list.getEntries()) window.__labVitals.lcp = entry.startTime;
-    }).observe({ type: "largest-contentful-paint", buffered: true });
-    new PerformanceObserver(list => {
-      for (const entry of list.getEntries()) {
-        if (!entry.hadRecentInput) window.__labVitals.cls += entry.value;
-      }
-    }).observe({ type: "layout-shift", buffered: true });
-  });
   const started = Date.now();
   const result = await page.goto(base + route, { waitUntil: "networkidle" });
   if (!result?.ok()) {
