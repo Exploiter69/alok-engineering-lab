@@ -22,13 +22,13 @@ const experiments = (await getCollection("experiments"))
     </p>
   </header>
 
-  <section class="mt-10">
+  <section class="mt-12">
     <div class="mb-5 flex items-baseline justify-between gap-4">
       <p class="lab-label">Active explorations</p>
       <span class="font-mono text-xs text-neutral-600">{experiments.length} items</span>
     </div>
 
-    <div class="grid gap-4 md:grid-cols-2">
+    <div>
       {
         experiments.map((experiment, index) => (
           <ContentCard
