@@ -46,3 +46,8 @@ No workflow should assume willingness to pay later.
 **Decision:** Treat `v1.0.0` as a stable checkpoint.
 **Status:** Active.
 Do not rewrite release history. Future work proceeds forward with new commits/releases.
+
+## D-010 — Content relationship integrity
+**Decision:** Treat `related:` references as build-time integrity constraints.
+**Status:** Active.
+**Reason:** The knowledge archive depends on trustworthy connections. Missing, malformed, unknown or self-referential relationship targets should fail verification instead of silently disappearing from the interface.
