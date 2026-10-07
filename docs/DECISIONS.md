@@ -71,3 +71,23 @@ Do not rewrite release history. Future work proceeds forward with new commits/re
 **Decision:** Knowledge detail pages should expose the project records connected through their existing `related:` references, while project pages continue to expose derived knowledge.
 **Status:** Active.
 **Reason:** A connected engineering archive is more trustworthy and useful when readers can travel from project work to derived knowledge and back without introducing a second source of truth.
+
+## D-016 — Static discovery uses durable indexes
+**Decision:** Growing content should be discoverable through static topic routes, collection views and lightweight browser-local filters before introducing backend search.
+**Status:** Active.
+**Reason:** The archive can gain useful navigation paths without adding runtime infrastructure or cost.
+
+## D-017 — Engineering evidence is a first-class content type
+**Decision:** Benchmarks, failure modes, verification records and observations belong in a typed Evidence collection with explicit method, result and limitations.
+**Status:** Active.
+**Reason:** Compact evidence records make engineering claims easier to inspect without forcing every claim into a long article.
+
+## D-018 — Technical writing has an explicit workflow
+**Decision:** Deep writing follows source → frame → outline → draft → verify → publish → revisit, with format metadata and existing relationship provenance.
+**Status:** Active.
+**Reason:** Durable technical writing should remain traceable to the engineering work it explains.
+
+## D-019 — Maintenance rules are executable
+**Decision:** Content metadata, relationships, project lifecycle history and writing provenance are repository validation gates.
+**Status:** Active.
+**Reason:** A long-lived archive should enforce its documented integrity contracts automatically before production builds.
