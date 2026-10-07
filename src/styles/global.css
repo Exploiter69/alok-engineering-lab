@@ -91,3 +91,16 @@ body {
   background: white;
   color: black;
 }
+
+
+#reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: var(--reading-progress, 0%);
+  height: 2px;
+  pointer-events: none;
+  background: var(--accent);
+  transform-origin: left;
+}
