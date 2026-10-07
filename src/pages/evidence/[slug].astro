@@ -19,11 +19,18 @@ const projectItems = relatedItems.filter(item => item.type === "Projects");
 <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
   <a href="/evidence" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-neutral-500 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span aria-hidden="true">←</span>Evidence</a>
   <header class="mt-12 max-w-3xl border-b border-neutral-900 pb-10">
-    <p class="lab-label">Evidence / {entry.data.kind}</p><p class="mt-3 font-mono text-xs uppercase tracking-[0.12em] text-lime-300"><span aria-hidden="true">{entry.data.outcome === "confirmed" ? "✓" : entry.data.outcome === "failed" ? "×" : entry.data.outcome === "inconclusive" ? "?" : "·"}</span> {entry.data.outcome}</p>
+    <p class="lab-label">Evidence / {entry.data.kind}</p><p class:list={[
+  "mt-3 font-mono text-xs uppercase tracking-[0.12em]",
+  entry.data.outcome === "confirmed" && "text-lime-300",
+  entry.data.outcome === "failed" && "text-red-300",
+  entry.data.outcome === "inconclusive" && "text-amber-300",
+  entry.data.outcome === "informational" && "text-neutral-400",
+]}>
+<span aria-hidden="true">{entry.data.outcome === "confirmed" ? "✓" : entry.data.outcome === "failed" ? "×" : entry.data.outcome === "inconclusive" ? "?" : "·"}</span> {entry.data.outcome}</p>
     <h1 class="mt-5 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">{entry.data.title}</h1>
     <p class="mt-6 max-w-2xl text-lg leading-8 text-neutral-400">{entry.data.description}</p>
     <div class="mt-7 flex flex-wrap gap-x-5 gap-y-2 border-y border-neutral-900 py-4 font-mono text-xs text-neutral-500">
-      <span>{entry.data.date.toDateString()}</span><span>{entry.data.outcome}</span>
+      <span>{entry.data.date.toDateString()}</span><span class="sr-only">Outcome: </span><span>{entry.data.outcome}</span>
     </div>
   </header>
   <section class="mt-10 grid gap-8 border-y border-neutral-900 py-8 sm:grid-cols-2" aria-label="Evidence record">
