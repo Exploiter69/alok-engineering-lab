@@ -51,3 +51,8 @@ Do not rewrite release history. Future work proceeds forward with new commits/re
 **Decision:** Treat `related:` references as build-time integrity constraints.
 **Status:** Active.
 **Reason:** The knowledge archive depends on trustworthy connections. Missing, malformed, unknown or self-referential relationship targets should fail verification instead of silently disappearing from the interface.
+
+## D-011 — Documented project status boundary
+**Decision:** Project `status` is a repository-backed documentation signal, not a live operational health indicator.
+**Status:** Active.
+**Reason:** The static Lab should expose useful current-state context without introducing a runtime status service or implying real-time authority it does not have.
