@@ -16,6 +16,11 @@ stack:
   - Sandboxing
 objective: "Explore trustworthy autonomous engineering where durable state, deterministic policy, execution authority and independent verification remain above model reasoning."
 lifecycle: "building"
+lifecycleSince: 2026-10-06
+lifecycleHistory:
+  - state: "building"
+    date: 2026-10-06
+    note: "Lifecycle baseline recorded in the Engineering Lab."
 architectureSummary: "Local-first runtime separating objective/context/reasoning from policy, an execution broker, sandbox/workspace, artifacts and independent verification, with durable runs and disposable attempts/workers/models."
 decisions:
   - "Run, step and evidence state must survive disposable workers and attempts."
