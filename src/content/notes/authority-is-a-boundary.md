@@ -1,7 +1,7 @@
 ---
 title: "Authority Is a Boundary"
 description: "Systems become easier to trust when reasoning, capability and authority are kept separate."
-date: 2026-10-07
+date: "2026-10-07"
 tags: [Architecture, AI, Security]
 status: published
 stage: budding
