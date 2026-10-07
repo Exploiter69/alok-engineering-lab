@@ -68,4 +68,4 @@ pdf += "xref\n0 " + (objects.length + 1) + "\n0000000000 65535 f \n";
 for (let i = 1; i <= objects.length; i++) pdf += String(offsets[i]).padStart(10, "0") + " 00000 n \n";
 pdf += "trailer\n<< /Size " + (objects.length + 1) + " /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF";
 const bytes = Uint8Array.from(pdf, char => char.charCodeAt(0));
-return new Response(bytes, { headers: { "Content-Type": "application/pdf", "Content-Disposition": "inline; filename=\"alok-thakur-resume.pdf\"\" } });
+return new Response(bytes, { headers: { "Content-Type": "application/pdf", "Content-Disposition": 'inline; filename="alok-thakur-resume.pdf"' } });
