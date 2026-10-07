@@ -126,6 +126,12 @@ export default async function handler(req, res) {
         const selection = Array.isArray(body.selection) ? body.selection : null;
         if (selection && !validateBulkSelection(selection).ok) return send(res, 400, { error: "invalid_selection" });
         const format = body.format === "markdown" ? "markdown" : "json";
+        const siteControl = format === "json" ? await readSiteControl(session.token, exportRef) : null;
+        const config = siteControl ? {
+          site: siteControl.site.value,
+          navigation: siteControl.navigation.value,
+          redirects: siteControl.redirects.value,
+        } : null;
         const payload = format === "markdown" ? markdownArchive(health, selection) : JSON.stringify(serializeExport({ health, repository, runs, config, selection }), null, 2);
         res.statusCode = 200;
         res.setHeader("Content-Type", format === "markdown" ? "text/markdown; charset=utf-8" : "application/json; charset=utf-8");
