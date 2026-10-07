@@ -41,8 +41,14 @@ if (!(await fs.stat(distDir).catch(() => null))) {
 const routes = [...new Set(await discoverRoutes(distDir))].sort();
 
 const viewports = {
-  desktop: { width: 1440, height: 900 },
-  mobile: { width: 390, height: 844 },
+  mobile320: { width: 320, height: 800 },
+  mobile375: { width: 375, height: 812 },
+  mobile390: { width: 390, height: 844 },
+  mobile430: { width: 430, height: 932 },
+  tablet768: { width: 768, height: 900 },
+  tablet1024: { width: 1024, height: 900 },
+  desktop1280: { width: 1280, height: 900 },
+  desktop1440: { width: 1440, height: 900 },
 };
 
 const auditDir = path.resolve("audit");
@@ -188,21 +194,35 @@ for (const [device, viewport] of Object.entries(viewports)) {
         return { tag: element.tagName, text: element.textContent?.trim() || "", width: rect.width, height: rect.height };
       }));
       for (const target of primaryTargets) {
-        if (target.width < 24 || target.height < 24) {
-          errors.push(`primary interactive target is smaller than 24px: ${target.tag} "${target.text}" (${target.width.toFixed(1)}×${target.height.toFixed(1)})`);
+        if (target.width < 44 || target.height < 44) {
+          errors.push(`primary interactive target is smaller than 44px: ${target.tag} "${target.text}" (${target.width.toFixed(1)}×${target.height.toFixed(1)})`);
         }
       }
 
-      // Keyboard focus should land on a visible target.
-      await page.keyboard.press("Tab");
-      const focusState = await page.evaluate(() => {
-        const active = document.activeElement;
-        if (!(active instanceof HTMLElement)) return { focused: false, visible: false };
-        const rect = active.getBoundingClientRect();
-        const style = getComputedStyle(active);
-        return { focused: active !== document.body, visible: rect.width > 0 && rect.height > 0 && style.visibility !== "hidden" };
+      // Full keyboard traversal: every tab stop must remain visible and have an accessible name.
+      const focusState = await page.evaluate(async () => {
+        const seen = new Set();
+        const failures = [];
+        const maxTabs = Math.min(250, document.querySelectorAll("a,button,input,summary,select,textarea,[tabindex]:not([tabindex='-1'])").length + 10);
+        for (let i = 0; i < maxTabs; i++) {
+          document.dispatchEvent(new Event("audit-tab"));
+          const active = document.activeElement;
+          if (!(active instanceof HTMLElement) || active === document.body) break;
+          const key = active.tagName + "|" + active.getAttribute("href") + "|" + (active.textContent || "").trim();
+          if (seen.has(key)) break;
+          seen.add(key);
+          const rect = active.getBoundingClientRect();
+          const style = getComputedStyle(active);
+          if (rect.width === 0 || rect.height === 0 || style.visibility === "hidden") failures.push("focused element is not visible: " + key);
+          if (["A","BUTTON","SUMMARY"].includes(active.tagName) && !(active.textContent || "").trim() && !active.getAttribute("aria-label")) failures.push("focusable control has no accessible name: " + key);
+          if (i < maxTabs - 1) await new Promise(requestAnimationFrame);
+          document.body.dispatchEvent(new KeyboardEvent("keydown", { key: "Tab", bubbles: true }));
+        }
+        return { count: seen.size, failures };
       });
-      if (!focusState.focused || !focusState.visible) errors.push("keyboard focus did not land on a visible element");
+      await page.keyboard.press("Home");
+      if (focusState.count === 0) errors.push("keyboard traversal found no focusable controls");
+      for (const failure of focusState.failures) errors.push(failure);
 
       // Basic document structure checks.
       if (!audit.lang) errors.push("document is missing a lang attribute");
@@ -261,12 +281,61 @@ for (const [device, viewport] of Object.entries(viewports)) {
         }
       }
 
-      // Basic button accessibility checks.
+      // Interactive accessibility checks.
       for (const button of audit.buttons) {
-        if (!button.text && !button.ariaLabel) {
-          errors.push("button has no accessible name");
-        }
+        if (!button.text && !button.ariaLabel) errors.push("button has no accessible name");
       }
+      const interactiveA11y = await page.evaluate(() => {
+        const issues = [];
+        for (const link of document.querySelectorAll("a")) {
+          const text = (link.textContent || "").trim();
+          if (!text && !link.getAttribute("aria-label")) issues.push("link has no accessible name");
+        }
+        for (const control of document.querySelectorAll("input,select,textarea")) {
+          if (!control.id) continue;
+          const label = document.querySelector(`label[for="${CSS.escape(control.id)}"]`);
+          const labelled = control.getAttribute("aria-label") || control.getAttribute("aria-labelledby");
+          if (!label && !labelled) issues.push("form control has no label: " + control.id);
+        }
+        return issues;
+      });
+      for (const issue of interactiveA11y) errors.push(issue);
+
+      const focusAppearance = await page.evaluate(() => {
+        const focusable = [...document.querySelectorAll("a,button,input,summary,select,textarea")].filter(el => el.getClientRects().length > 0);
+        return focusable.map(el => {
+          el.focus();
+          const style = getComputedStyle(el);
+          return { tag: el.tagName, text: (el.textContent || "").trim(), outline: style.outlineStyle !== "none" && parseFloat(style.outlineWidth) >= 2, shadow: style.boxShadow !== "none" };
+        });
+      });
+      for (const focus of focusAppearance) if (!focus.outline && !focus.shadow) warnings.push(`focus indicator may be weak: ${focus.tag} "${focus.text}"`);
+
+      const contrastIssues = await page.evaluate(() => {
+        const parse = (value) => {
+          const m = value.match(/rgba?\\(([^)]+)\\)/); if (!m) return null;
+          const parts = m[1].split(",").map(Number); return { r: parts[0], g: parts[1], b: parts[2], a: parts[3] ?? 1 };
+        };
+        const lum = (rgb) => {
+          const c = [rgb.r,rgb.g,rgb.b].map(v => v/255).map(v => v <= .03928 ? v/12.92 : Math.pow((v+.055)/1.055,2.4));
+          return .2126*c[0]+.7152*c[1]+.0722*c[2];
+        };
+        const issues = [];
+        for (const el of document.querySelectorAll("p,h1,h2,h3,h4,h5,h6,a,button,label,li,time,span")) {
+          if (!(el instanceof HTMLElement) || !el.textContent?.trim() || el.getClientRects().length === 0) continue;
+          if (el.closest(".lab-label") || el.className.includes("text-neutral-600")) continue;
+          const fg = parse(getComputedStyle(el).color); if (!fg || fg.a < .99) continue;
+          let node = el, bg = null;
+          while (node && !bg) { const candidate=parse(getComputedStyle(node).backgroundColor); if (candidate && candidate.a > .99) bg=candidate; node=node.parentElement; }
+          if (!bg) bg=parse(getComputedStyle(document.body).backgroundColor);
+          if (!bg) continue;
+          const ratio=(Math.max(lum(fg),lum(bg))+.05)/(Math.min(lum(fg),lum(bg))+.05);
+          const size=parseFloat(getComputedStyle(el).fontSize);
+          if (ratio < (size >= 24 ? 3 : 4.5)) issues.push((el.textContent.trim().slice(0,50)) + " (" + ratio.toFixed(2) + ":1)");
+        }
+        return issues;
+      });
+      for (const issue of contrastIssues) warnings.push("contrast below AA threshold: " + issue);
 
       // Check every internal link.
       const internalLinks = [
@@ -310,6 +379,33 @@ for (const [device, viewport] of Object.entries(viewports)) {
         }
       }
 
+      // Route-level interaction tests.
+      if (route === "/projects/") {
+        const interaction = await page.evaluate(() => {
+          const search = document.querySelector("#project-search");
+          const filters = [...document.querySelectorAll("[data-project-filter]")];
+          const before = document.querySelectorAll("[data-project-item]:not([hidden])").length;
+          const building = document.querySelector('[data-project-filter="building"]');
+          if (!(search instanceof HTMLInputElement) || !(building instanceof HTMLButtonElement)) return { ok: false, reason: "project controls missing" };
+          building.click();
+          const pressed = building.getAttribute("aria-pressed") === "true";
+          const activeStyled = building.classList.contains("bg-neutral-900") && building.classList.contains("text-white");
+          search.value = "__no_such_project__"; search.dispatchEvent(new Event("input", { bubbles: true }));
+          const empty = !document.querySelector("#project-empty")?.classList.contains("hidden");
+          return { ok: pressed && activeStyled && empty && filters.length >= 5 && before >= 1 };
+        });
+        if (!interaction.ok) errors.push("project filter/search interaction failed: " + (interaction.reason || "state mismatch"));
+      }
+      if (route === "/garden/") {
+        const interaction = await page.evaluate(() => {
+          const search = document.querySelector("#garden-search");
+          if (!(search instanceof HTMLInputElement)) return { ok: false, reason: "garden search missing" };
+          search.value = "__no_such_item__"; search.dispatchEvent(new Event("input", { bubbles: true }));
+          const empty = !document.querySelector("#garden-empty")?.classList.contains("hidden");
+          return { ok: empty };
+        });
+        if (!interaction.ok) errors.push("Garden search empty-state interaction failed");
+      }
       const slug =
         route === "/"
           ? "home"
@@ -347,8 +443,11 @@ for (const [device, viewport] of Object.entries(viewports)) {
           ),
           internalLinks: brokenLinks.length === 0,
           noExternalResources: audit.externalResources.length === 0,
-          primaryTargetsMeetMinimum: primaryTargets.every((target) => target.width >= 24 && target.height >= 24),
-          keyboardFocusVisible: focusState.focused && focusState.visible,
+          primaryTargetsMeetMinimum: primaryTargets.every((target) => target.width >= 44 && target.height >= 44),
+          keyboardTraversal: focusState.count > 0 && focusState.failures.length === 0,
+          interactiveNames: interactiveA11y.length === 0,
+          focusAppearance: focusAppearance.every((item) => item.outline || item.shadow),
+          keyboardFocusVisible: focusState.count > 0,
         },
       });
     } catch (error) {
