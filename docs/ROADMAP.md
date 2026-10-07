@@ -56,7 +56,7 @@ Established the current Astro/Tailwind website foundation.
 **Complete.** Repository-level hardening covers metadata/SEO, 404 indexing behavior, keyboard focus, semantic navigation labels, Garden anchor determinism, external-link safety and a free build-quality workflow. The current local production build passes.
 
 ## CP6 — Release / Production Readiness
-**Implemented; final automated verification pending.**
+**Complete at repository and production-verification level.**
 
 Completed within CP6:
 - production build verification
@@ -68,15 +68,30 @@ Completed within CP6:
 - Git history review
 - Vercel deployment verification
 
-Final gates:
-- successful GitHub browser-audit run
-- final release checkpoint/tag
-- live custom-domain verification when the DNS endpoint is reachable from the verification environment
+Confirmed:
+- successful GitHub browser-audit run for the CP6 checkpoint
+- successful Vercel production deployment
+- verified custom domains
+- v1.0.0 history preserved
+
+Operational release checkpoint not represented in the repository because the available GitHub connector cannot create tags; no branch is used as a fake tag.
 
 ## CP7 — Long-Term Maintenance
-**Next after CP6.**
+**Complete at the repository level.**
 
-Continue adding projects, writing, notes, experiments, milestones, documentation and meaningful changelog entries while periodically repeating quality audits.
+Completed:
+- build-blocking content relationship validation
+- maintenance and release discipline documentation
+- durable content-integrity note
+- CP7 changelog entry
+- zero-cost verification preserved
+
+CP7 establishes the maintenance contract rather than adding infrastructure for its own sake.
+
+## CP8 — Continued Engineering Growth
+**Next.**
+
+Grow the archive through real projects, experiments, writing, notes and milestones. Repeat the verification loop after meaningful structural changes and only add new system complexity when a demonstrated product need justifies it.
 
 ## Explicitly Not Needed Unless Proven Necessary
 
