@@ -184,3 +184,42 @@ Verification:
 
 ## CP21 — UX Reliability & Interaction Excellence
 Complete the post-CP20 reliability pass before any future visual expansion. Scope includes interaction semantics, accessibility regression coverage, responsive validation, discovery improvements and long-form navigation. Future visual experimentation must preserve the restrained engineering identity and remain justified by UX value.
+
+
+## CP22 — Content & Knowledge Architecture
+**Complete at implementation level; final Quality verification pending.**
+- project case-study metadata now records current focus, known problems and future work
+- project intelligence renders those fields alongside architecture, decisions, lessons, linked knowledge and chronology
+- connected knowledge remains repository-backed through existing `related:` references
+
+## CP23 — Engineering Lab / Project Intelligence
+**Complete at implementation level; final Quality verification pending.**
+- project records now expose the full engineering record in one technical surface
+- lifecycle, status, stack, architecture, objective, decisions, lessons, current focus, known problems, future work, evidence and chronology are represented without a runtime database
+
+## CP24 — Discovery & Navigation
+**Complete at implementation level; final Quality verification pending.**
+- added `/explore` for full-text search across all published collections
+- added type and topic filters with accessible pressed-state semantics
+- added `/connections` for repository-backed knowledge hubs and connection-gap discovery
+- sitemap includes the new discovery surfaces
+
+## CP25 — Performance & Accessibility Excellence
+**Complete at implementation level; final Quality verification pending.**
+- existing 1120-case browser audit remains the primary interaction/accessibility gate
+- added Playwright performance audit for LCP, CLS, TTFB, runtime external resources, script count and image contracts
+- added structured WebSite metadata
+- preserved zero-runtime analytics/monitoring architecture
+
+## CP26 — Content Automation / Developer Workflow
+**Complete at implementation level; final Quality verification pending.**
+- added `npm run new:content -- <collection> <slug> --title "..."` scaffolding workflow
+- templates encode collection-specific frontmatter and durable content sections
+- validation, Astro diagnostics, build and browser/performance audits remain the publishing gate
+
+## CP27 — Visual Identity Refinement
+**Complete at implementation level; final Quality verification pending.**
+- new discovery/intelligence surfaces follow the existing restrained typography, borders, spacing and semantic-status language
+- no 3D/WebGL, particles, heavy animation, client framework, CMS or runtime visual system was introduced
+
+The combined CP22–CP27 checkpoint is not considered fully released until the final GitHub Actions Quality run passes and the resulting Vercel production deployment is READY.
