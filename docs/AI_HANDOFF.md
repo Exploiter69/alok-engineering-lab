@@ -158,7 +158,7 @@ The CP20 work preserves Astro and the ₹0 / $0 constraint. v1.0.0 history remai
 
 
 ## CP21 status
-CP21 — UX Reliability & Interaction Excellence is complete at the implementation level and pending final Quality verification for the final master head.
+CP21 — UX Reliability & Interaction Excellence is complete at the implementation level. Final combined verification remains the release gate.
 
 Implemented:
 - project lifecycle filters now expose visible active state as well as aria-pressed state
@@ -177,7 +177,7 @@ No 3D/WebGL, database, CMS, analytics, paid service or framework migration was i
 
 
 ## CP22–CP27 implementation status
-CP22 through CP27 are implemented as the next long-term Engineering Lab capability layer, pending final combined Quality verification.
+CP22 through CP27 are implemented as the next long-term Engineering Lab capability layer. Final combined Quality verification and production deployment remain the release gate.
 
 - CP22 Knowledge Architecture: project records expose current focus, known problems and future work; connected content remains repository-backed.
 - CP23 Engineering Lab Intelligence: project intelligence presents objective, lifecycle, architecture, stack, decisions, lessons, focus, risks, future work, linked knowledge and chronology.
@@ -185,3 +185,6 @@ CP22 through CP27 are implemented as the next long-term Engineering Lab capabili
 - CP25 Performance & Accessibility: browser quality remains a release gate; a zero-cost Playwright performance audit checks LCP, CLS, TTFB, runtime external resources, script count and image contracts.
 - CP26 Developer Workflow: `scripts/new-content.mjs` scaffolds repository-native content templates; validation/build/audit commands remain the publishing gate.
 - CP27 Visual Identity Refinement: new surfaces use the existing typography-first, border-led engineering language without decorative runtime systems.
+
+## Experience refinement checkpoint
+The Lab now has a more specific engineering proposition, repository-derived proof metrics, a static social preview, a simplified Projects / Writing / Lab / Journey / About / Contact navigation model, a keyboard command palette, technology filtering on Projects, a public Contact surface, and stronger homepage activity/provenance cues. Personal email, LinkedIn and resume credentials are not invented; only verified public destinations are surfaced.
