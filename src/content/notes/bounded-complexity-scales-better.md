@@ -1,7 +1,7 @@
 ---
 title: "Bounded Complexity Scales Better"
 description: "A system can grow substantially without becoming unbounded when each new capability enters through explicit ownership and failure boundaries."
-date: 2026-10-07
+date: "2026-10-07"
 tags: [Architecture, Systems, Python]
 status: published
 stage: budding
