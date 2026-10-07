@@ -116,3 +116,19 @@ Do not rewrite release history. Future work proceeds forward with new commits/re
 
 ## CP21 — UX reliability over visual spectacle
 The Lab should improve through explicit interaction states, accessible semantics, responsive reliability and repository-backed discovery rather than decorative complexity. 44px primary interaction targets are preferred, accessibility checks should be automated where practical, and 3D/WebGL remains out of scope unless a future engineering visualization has a concrete explanatory purpose.
+
+
+## D-024 — Repository-native publishing workflow
+**Decision:** Content creation should remain a Git-native workflow with generated templates, build-time validation and browser/performance gates.
+**Status:** Active.
+**Reason:** The repository is the Lab's source of truth; a CMS or runtime publishing service would add complexity and cost without improving authority.
+
+## D-025 — Unified static discovery
+**Decision:** Provide one static full-text discovery surface across published collections and a separate readable relationship view before considering backend search.
+**Status:** Active.
+**Reason:** Astro content collections expose raw entry bodies at build time, allowing useful search and graph-like discovery without runtime infrastructure.
+
+## D-026 — Performance as a release contract
+**Decision:** Track LCP, CLS, TTFB, runtime external resources, script count and image contracts in the existing browser-based CI gate.
+**Status:** Active.
+**Reason:** The Lab is content-heavy and static; inexpensive build-time/browser checks protect performance without introducing monitoring infrastructure.
