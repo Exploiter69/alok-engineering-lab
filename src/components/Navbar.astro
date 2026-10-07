@@ -56,6 +56,9 @@ const gardenLinks = [
             ))}
           </div>
         </details>
+        <button type="button" data-command-open class="hidden min-h-11 items-center gap-2 rounded-lg border border-neutral-800 px-3 text-sm text-neutral-500 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:inline-flex" aria-label="Open command palette">
+          <span aria-hidden="true">⌕</span><span>Search</span><kbd class="rounded border border-neutral-800 px-1.5 py-0.5 font-mono text-[10px] text-neutral-600">⌘K</kbd>
+        </button>
       </div>
 
       <details data-nav-mobile class="relative md:hidden">
@@ -83,3 +86,50 @@ const gardenLinks = [
     </div>
   </div>
 </nav>
+
+<dialog id="command-palette" class="fixed left-1/2 top-[12vh] m-0 w-[min(92vw,640px)] -translate-x-1/2 rounded-2xl border border-neutral-800 bg-neutral-950 p-0 text-white shadow-2xl backdrop:bg-black/70 backdrop:backdrop-blur-sm">
+  <form method="dialog" class="border-b border-neutral-900 p-3">
+    <label class="sr-only" for="command-search">Search the Lab</label>
+    <input id="command-search" type="search" autocomplete="off" placeholder="Search projects, writing, notes…" class="min-h-11 w-full bg-transparent px-3 text-base text-white outline-none placeholder:text-neutral-600" />
+  </form>
+  <div id="command-results" class="max-h-[60vh] overflow-y-auto p-2" role="listbox" aria-label="Search results">
+    {commandEntries.map((entry, index) => (
+      <a data-command-item href={entry.href} data-search={entry.title.toLowerCase()} class:list={["flex min-h-11 items-center justify-between gap-4 rounded-lg px-3 py-2 text-sm hover:bg-neutral-900 focus-visible:bg-neutral-900 focus-visible:outline-none", index > 8 ? "hidden" : ""]}>
+        <span>{entry.title}</span><span class="font-mono text-[10px] uppercase tracking-wider text-neutral-600">{entry.type}</span>
+      </a>
+    ))}
+    <p id="command-empty" class="hidden px-3 py-6 text-sm text-neutral-500">No matching records.</p>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("#command-palette");
+  const openers = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-command-open]"));
+  const input = document.querySelector<HTMLInputElement>("#command-search");
+  const items = Array.from(document.querySelectorAll<HTMLElement>("[data-command-item]"));
+  const empty = document.querySelector<HTMLElement>("#command-empty");
+  const render = () => {
+    const query = input?.value.trim().toLowerCase() ?? "";
+    let visible = 0;
+    for (const item of items) {
+      const matches = !query || (item.dataset.search ?? "").includes(query);
+      item.hidden = !matches;
+      if (matches) visible += 1;
+    }
+    empty?.classList.toggle("hidden", visible !== 0);
+  };
+  const openPalette = () => {
+    if (!dialog) return;
+    dialog.showModal();
+    render();
+    requestAnimationFrame(() => input?.focus());
+  };
+  for (const opener of openers) opener.addEventListener("click", openPalette);
+  input?.addEventListener("input", render);
+  document.addEventListener("keydown", event => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      if (dialog?.open) dialog.close(); else openPalette();
+    }
+  });
+</script>
