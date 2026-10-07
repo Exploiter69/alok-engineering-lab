@@ -16,6 +16,11 @@ stack:
   - Asyncio
 objective: "Provide a local OpenAI-compatible reasoning boundary while keeping filesystem, shell and Git execution authority in the downstream coding agent."
 lifecycle: "building"
+lifecycleSince: 2026-10-06
+lifecycleHistory:
+  - state: "building"
+    date: 2026-10-06
+    note: "Lifecycle baseline recorded in the Engineering Lab."
 architectureSummary: "A local Python bridge normalizes OpenAI-compatible requests and Gemini Web reasoning while tool proposals return to the downstream agent for execution and observation."
 decisions:
   - "The bridge never executes arbitrary downstream tools for the model."
