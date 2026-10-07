@@ -30,6 +30,7 @@ img, svg { max-width: 100%; }
 
 body {
   min-width: 320px;
+  text-rendering: optimizeLegibility;
   overflow-wrap: anywhere;
   background: var(--background);
   color: var(--foreground);
@@ -62,6 +63,10 @@ body {
 }
 
 .lab-accent { color: var(--accent); }
+
+.hero-surface { position: relative; isolation: isolate; }
+.hero-surface::before { content: ""; position: absolute; inset: -3rem 15% auto -10%; height: 18rem; z-index: -1; pointer-events: none; background: radial-gradient(circle, var(--accent-soft) 0, transparent 68%); opacity: 0.7; }
+@media (prefers-reduced-motion: reduce) { .hero-surface::before { opacity: 0.4; } }
 
 .prose {
   --tw-prose-body: #b8b8b8;
