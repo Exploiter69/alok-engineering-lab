@@ -112,3 +112,7 @@ Do not rewrite release history. Future work proceeds forward with new commits/re
 **Decision:** The generated-route audit must verify visible primary interaction targets and visible keyboard focus in addition to route, metadata, link, structure and responsive checks.
 **Status:** Active.
 **Reason:** Accessibility and UX quality should remain executable release constraints rather than manual aspirations.
+
+
+## CP21 — UX reliability over visual spectacle
+The Lab should improve through explicit interaction states, accessible semantics, responsive reliability and repository-backed discovery rather than decorative complexity. 44px primary interaction targets are preferred, accessibility checks should be automated where practical, and 3D/WebGL remains out of scope unless a future engineering visualization has a concrete explanatory purpose.
