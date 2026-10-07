@@ -56,7 +56,7 @@ const auditDir = path.resolve("audit");
 await fs.rm(auditDir, { recursive: true, force: true });
 await fs.mkdir(auditDir, { recursive: true });
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({ timeout: 15000 });
 const results = [];
 
 for (const [device, viewport] of Object.entries(viewports)) {
@@ -68,6 +68,8 @@ for (const [device, viewport] of Object.entries(viewports)) {
     const warnings = [];
 
     const page = await browser.newPage({ viewport });
+    page.setDefaultTimeout(5000);
+    page.setDefaultNavigationTimeout(15000);
 
     page.on("pageerror", (error) => {
       errors.push(`pageerror: ${error.message}`);
@@ -83,8 +85,11 @@ for (const [device, viewport] of Object.entries(viewports)) {
     let audit = {};
 
     try {
+      // This is a static site audit: DOM readiness is the meaningful gate.
+      // Waiting for networkidle can hang on harmless browser/runtime activity.
       const response = await page.goto(`${baseURL}${route}`, {
-        waitUntil: "networkidle",
+        waitUntil: "domcontentloaded",
+        timeout: 15000,
       });
 
       status = response?.status() ?? "no response";
@@ -360,7 +365,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
 
       for (const href of internalLinks) {
         try {
-          const linkResponse = await page.request.get(href);
+          const linkResponse = await page.request.get(href, { timeout: 5000 });
 
           if (linkResponse.status() >= 400) {
             brokenLinks.push({
