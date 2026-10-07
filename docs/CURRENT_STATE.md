@@ -151,3 +151,21 @@ Confirmed:
 - Timeline, Changelog and Evidence archive/index surfaces use the current restrained engineering visual language.
 - Archive content remains typography-led, border-based and responsive.
 - No 3D/WebGL, particle system, visual framework or large client-side system was introduced.
+
+
+## CP20 status
+CP20 — Experience Excellence is complete and verified.
+
+The current experience now includes:
+- a stronger personal identity and homepage hierarchy
+- featured engineering presented as the primary product surface
+- reduced primary navigation with Garden grouping
+- typography-first project archive rows and explicit project case-study navigation
+- clearer lifecycle and evidence status language
+- Garden topic discovery and editorial provenance surfaces
+- improved long-form reading metadata and rhythm
+- stronger footer identity and internal navigation
+- responsive viewport/media protections
+- visible-control target and keyboard-focus checks in the generated-route browser audit
+
+The final Quality workflow passed repository validation, Astro build and the full browser audit for 264 desktop/mobile cases.
