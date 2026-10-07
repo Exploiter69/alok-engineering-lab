@@ -173,3 +173,17 @@ The final Quality workflow passed repository validation, Astro build and the ful
 
 ## CP21 — UX Reliability & Interaction Excellence
 The interface has received a reliability-focused UX pass covering interaction semantics, accessibility, responsive controls, Garden/project discovery, long-form reading, evidence summaries and 404 recovery. The browser audit now covers eight responsive viewport classes and interaction-level checks in addition to route-level validation.
+
+
+## CP22–CP27 — Engineering Lab Expansion
+Implemented as the next capability layer after CP21:
+- Project records expose current focus, known problems and future work.
+- Project intelligence presents the full repository-backed technical record.
+- /explore provides static full-text search across all published collections with type/topic filters.
+- /connections provides a readable repository-backed relationship view and connection-gap signal.
+- A repository-native content generator provides collection-aware draft templates.
+- Browser quality remains the interaction/accessibility gate, with a new Playwright performance gate covering LCP, CLS, TTFB, runtime external resources, script count and image contracts.
+- Structured WebSite metadata and a public content workflow guide strengthen the publishing contract.
+- No database, CMS, analytics, paid service, framework migration, WebGL or 3D system was introduced.
+
+Final release status remains pending until the combined GitHub Actions Quality run passes and the resulting Vercel deployment is READY.
