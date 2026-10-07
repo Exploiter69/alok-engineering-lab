@@ -1,4 +1,5 @@
 import { send, text } from "../lib/response.mjs";
+import { requireSameOrigin } from "../lib/security.mjs";
 import { requireSession } from "../lib/session.mjs";
 import { collection } from "../lib/schema.mjs";
 import { validCollection, validSlug, parseDocument, validateMetadata, tree, readFile, createBranch, writeFile, deleteFile } from "../lib/content.mjs";
@@ -44,6 +45,7 @@ export default async function handler(req,res) {
     }
 
     if (req.method === "POST") {
+      if (!requireSameOrigin(req)) return send(res,403,{error:"cross_origin_request"});
       const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body || {};
       const action = body.action || "save";
       if (action === "branch") {
@@ -62,6 +64,7 @@ export default async function handler(req,res) {
     }
 
     if (req.method === "DELETE") {
+      if (!requireSameOrigin(req)) return send(res,403,{error:"cross_origin_request"});
       if (!validCollection(name) || !validSlug(slug) || !branchName(url.searchParams.get("branch"))) return send(res,400,{error:"invalid_target"});
       const branch = url.searchParams.get("branch"), sha = url.searchParams.get("sha"), path = url.searchParams.get("path");
       if (!sha || !path || !path.startsWith(`src/content/${name}/`)) return send(res,400,{error:"invalid_file"});
