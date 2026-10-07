@@ -15,6 +15,13 @@ stack:
   - Gemini Web
   - Asyncio
 objective: "Provide a local OpenAI-compatible reasoning boundary while keeping filesystem, shell and Git execution authority in the downstream coding agent."
+currentFocus: "Release hardening of the local compatibility boundary, streaming behavior, security boundaries and real-client validation."
+knownProblems:
+  - "Upstream streaming failures can create duplicate side-effect risk after output begins."
+  - "Provider transport behavior can change independently of the compatibility surface."
+futureWork:
+  - "Keep client compatibility verified against real consumers."
+  - "Continue tightening bounded request, image and streaming behavior."
 lifecycle: "building"
 lifecycleSince: 2026-10-06
 lifecycleHistory:
