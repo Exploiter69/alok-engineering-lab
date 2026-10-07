@@ -11,7 +11,8 @@
 - **Framework:** Astro
 - **Deployment:** Vercel
 - **Content:** Astro content collections / MDX-oriented engineering content
-- **Current release:** `v1.0.0`
+- **Stable release baseline:** `v1.0.0`
+- **Repository state:** post-v1.0.0; current master continues forward from the preserved baseline.
 
 ## Vision
 
