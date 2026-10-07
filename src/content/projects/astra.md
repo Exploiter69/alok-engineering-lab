@@ -15,6 +15,11 @@ stack:
   - Automation
 objective: "Evolve an established automation and QA engine through incremental modularization without losing behavior users already depend on."
 lifecycle: "building"
+lifecycleSince: 2026-10-06
+lifecycleHistory:
+  - state: "building"
+    date: 2026-10-06
+    note: "Lifecycle baseline recorded in the Engineering Lab."
 architectureSummary: "A modular Python architecture separates infrastructure from detection, parsing, planning, execution, validation, recovery, automation, models and plugins while retaining a tested legacy behavior anchor."
 decisions:
   - "Use replacement behind stable boundaries instead of a full rewrite."
