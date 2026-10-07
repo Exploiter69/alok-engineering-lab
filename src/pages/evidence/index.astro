@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ContentCard from "../../components/ContentCard.astro";
+import { getCollection } from "astro:content";
+
+const evidence = (await getCollection("evidence"))
+  .filter(item => item.data.status !== "draft")
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Layout title="Evidence">
+<main class="mx-auto min-h-screen max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
+  <header class="max-w-3xl border-b border-neutral-900 pb-10">
+    <p class="lab-label mb-4">05 / Prove</p>
+    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Engineering Evidence</h1>
+    <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">Benchmarks, failures, verification records and observations that support the Lab's engineering claims.</p>
+  </header>
+  <section class="mt-10">
+    <div class="mb-5 flex items-baseline justify-between gap-4">
+      <p class="lab-label">Evidence archive</p>
+      <span class="font-mono text-xs text-neutral-600">{evidence.length} records</span>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+      {evidence.map((item, index) => (
+        <ContentCard title={item.data.title} description={item.data.description} status={item.data.kind} meta={item.data.outcome + " • " + item.data.tags.join(" • ")} href={"/evidence/" + item.id} eyebrow={"EVIDENCE / " + String(index + 1).padStart(2, "0")} headingLevel="h2" />
+      ))}
+    </div>
+  </section>
+</main>
+</Layout>
