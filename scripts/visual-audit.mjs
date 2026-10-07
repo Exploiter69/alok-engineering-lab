@@ -439,7 +439,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
         });
         const gardenArea = /^\/(garden|writing|notes|experiments|evidence)(\/|$)/.test(pathname);
         const gardenActive = document.querySelector("nav summary")?.classList.contains("bg-neutral-900") ?? false;
-        return pathname === "/" ? current.length === 0 || current.some(link => link.getAttribute("href") === "/") : current.length >= 1 || (gardenArea && gardenActive);
+        return pathname === "/" ? current.length === 0 || current.some(link => link.getAttribute("href") === "/") : current.length >= 1 || [...document.querySelectorAll("nav a[aria-current='page']")].some(link => { try { const hrefPath = new URL(link.href).pathname.replace(/\/$/, "") || "/"; return pathname.startsWith(hrefPath + "/"); } catch { return false; } }) || (gardenArea && gardenActive);
       });
       if (!currentNavigation) warnings.push("current navigation state may not match the current route");
       const slug =
