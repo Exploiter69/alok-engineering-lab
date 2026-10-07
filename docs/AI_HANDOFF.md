@@ -36,19 +36,20 @@ CP5 Product Quality / UX Hardening is complete at the repository level and has p
 Hardening includes shared metadata, explicit 404 noindex behavior, removal of favicon as an implicit social image, keyboard focus visibility, labelled navigation, deterministic Garden anchors, safer external links and a zero-cost build workflow.
 
 ## CP6 status
-CP6 — Release / Production Readiness is implemented and undergoing final automated verification.
+CP6 — Release / Production Readiness is complete at the repository and production-verification level.
 
-Current CP6 work includes:
+Confirmed:
 - production route generation and validation
 - full generated-route browser audit coverage
 - browser audit execution in GitHub Actions
 - generated XML sitemap
 - explicit robots.txt
 - production changelog entry
-- Vercel deployment verification
-- preservation of the v1.0.0 history
+- Vercel production deployment for commit bd356f9 verified READY
+- custom domains alokthakur.me and www.alokthakur.me verified in Vercel
+- v1.0.0 history preserved
 
-Do not mark CP6 fully closed until the new GitHub browser-audit run is confirmed successful and the release checkpoint is recorded.
+The latest GitHub Actions Quality run for bd356f9 completed successfully, including the browser audit. The only remaining release checkpoint is recording a CP6 Git tag; the available GitHub connector does not provide tag/release write access, so do not fake a tag with a branch.
 
 ## Visual direction
 Preserve the restrained engineering aesthetic: black canvas, strong typography, thin borders/rules, monospace technical labels, editorial spacing, responsive layouts and minimal decoration.
