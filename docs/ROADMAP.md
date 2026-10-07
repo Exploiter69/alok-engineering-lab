@@ -41,41 +41,40 @@ Established the current Astro/Tailwind website foundation.
 **Complete.** Added meaningful milestones for archive curation, knowledge-archive growth and verification as a recurring engineering theme.
 
 ### CP4.7 — Garden / Discovery
-**Complete.** Garden now exposes content by type and provides a topic index over the knowledge archive without requiring a database or client-side search system.
+**Complete.** Garden exposes content by type and provides a topic index over the knowledge archive without a database or client-side search system.
 
 ### CP4.8 — Documentation Surface
-**Complete.** /docs now explains the Lab's purpose, content model, engineering principles, technology and maintenance workflow.
+**Complete.** /docs explains the Lab's purpose, content model, engineering principles, technology and maintenance workflow.
 
 ### CP4.9 — Changelog / Release History
-**Complete.** Added a meaningful CP4 release entry describing the archive's evolution rather than logging individual commits.
+**Complete.** Added meaningful release entries describing the archive's evolution rather than logging individual commits.
 
 ### CP4.10 — About / Identity
-**Complete.** About now explains what the Lab is, what is explored, how engineering decisions are approached and where the Lab is heading. Current homepage identity text was also refreshed.
-
-## Next Product Phases
+**Complete.** About explains what the Lab is, what is explored, how engineering decisions are approached and where the Lab is heading.
 
 ### CP5 — Product Quality / UX Hardening
-**Implemented; verification pending.**
+**Complete.** Repository-level hardening covers metadata/SEO, 404 indexing behavior, keyboard focus, semantic navigation labels, Garden anchor determinism, external-link safety and a free build-quality workflow. The current local production build passes.
 
-Repository-level hardening covers metadata/SEO, 404 indexing behavior, keyboard focus, semantic navigation labels, Garden anchor determinism, external-link safety and a free build-quality workflow.
+## CP6 — Release / Production Readiness
+**Implemented; final automated verification pending.**
 
-Fresh build/browser verification must pass before marking CP5 complete.
-
-### CP6 — Release / Production Readiness
-**Planned.**
-
-- full production build
-- route/content validation
-- browser audit
-- broken-link check
-- Git diff/history review
+Completed within CP6:
+- production build verification
+- generated-route coverage in the browser audit
+- browser audit wired into the zero-cost GitHub Actions workflow
+- generated XML sitemap
+- explicit robots.txt
+- production changelog/release note
+- Git history review
 - Vercel deployment verification
-- custom-domain verification
-- release notes
-- Git tag/checkpoint
 
-### CP7 — Long-Term Maintenance
-**Ongoing after CP6.**
+Final gates:
+- successful GitHub browser-audit run
+- final release checkpoint/tag
+- live custom-domain verification when the DNS endpoint is reachable from the verification environment
+
+## CP7 — Long-Term Maintenance
+**Next after CP6.**
 
 Continue adding projects, writing, notes, experiments, milestones, documentation and meaningful changelog entries while periodically repeating quality audits.
 
