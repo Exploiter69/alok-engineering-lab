@@ -80,3 +80,10 @@ The repository contains a Playwright-based visual/quality audit. CP6 upgrades it
 - Use Git checkpoints.
 - Keep the project at ₹0 / $0.
 - Treat current repository/Git state as the strongest source of truth.
+
+
+## CP9 status
+CP9 Knowledge Expansion is complete. The archive now contains reusable engineering principles extracted from actual projects, with explicit project relationships and provenance.
+
+## CP10 status
+CP10 Project Intelligence is complete. Every project now has structured objective, lifecycle, architecture summary, decisions and lessons metadata, and project detail pages expose linked knowledge and project-specific timeline records.
