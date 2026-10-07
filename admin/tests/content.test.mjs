@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseDocument, validateMetadata, validSlug } from "../lib/content.mjs";
+import { contentPath, parseDocument, validateMetadata, validSlug } from "../lib/content.mjs";
 
 test("parses repository frontmatter and preserves the body", () => {
   const source = `---
