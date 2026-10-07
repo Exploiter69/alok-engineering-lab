@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import RelatedContent from "../../components/RelatedContent.astro";
+import ContentNavigation from "../../components/ContentNavigation.astro";
 import KnowledgeProvenance from "../../components/KnowledgeProvenance.astro";
 import { resolveRelated } from "../../lib/related";
 import { getCollection, render } from "astro:content";
@@ -16,6 +17,10 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+const adjacent = (await getCollection("writing")).filter(entry => entry.data.status !== "draft").sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const currentIndex = adjacent.findIndex(entry => entry.id === post.id);
+const previous = currentIndex >= 0 && currentIndex < adjacent.length - 1 ? { title: adjacent[currentIndex + 1].data.title, href: "/writing/" + adjacent[currentIndex + 1].id } : undefined;
+const next = currentIndex > 0 ? { title: adjacent[currentIndex - 1].data.title, href: "/writing/" + adjacent[currentIndex - 1].id } : undefined;
 const { Content } = await render(post);
 const relatedItems = await resolveRelated(post.data.related);
 const projectItems = relatedItems.filter(item => item.type === "Projects");
@@ -60,6 +65,7 @@ const readingMinutes = Math.max(1, Math.ceil((post.body ?? "").split(/\s+/).filt
   </article>
 
   <RelatedContent items={relatedItems} />
+  <ContentNavigation previous={previous} next={next} />
 
 </main>
 
