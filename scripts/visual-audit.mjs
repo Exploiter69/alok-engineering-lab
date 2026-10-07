@@ -405,6 +405,35 @@ for (const [device, viewport] of Object.entries(viewports)) {
         });
         if (!interaction.ok) errors.push("Garden search empty-state interaction failed");
       }
+
+      const navigationInteraction = await page.evaluate(() => {
+        const details = [...document.querySelectorAll("nav details")];
+        const mobile = document.querySelector("[data-nav-mobile]");
+        const desktop = document.querySelector("[data-nav-desktop] details");
+        const result = { mobile: true, desktop: true };
+        if (mobile instanceof HTMLDetailsElement && window.matchMedia("(max-width: 767px)").matches) {
+          mobile.open = false;
+          mobile.querySelector("summary")?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+          result.mobile = mobile.open && mobile.querySelectorAll("a").length >= 8;
+        }
+        if (desktop instanceof HTMLDetailsElement && window.matchMedia("(min-width: 768px)").matches) {
+          desktop.open = false;
+          desktop.querySelector("summary")?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+          result.desktop = desktop.open && desktop.querySelectorAll("a").length >= 4;
+        }
+        return result;
+      });
+      if (!navigationInteraction.mobile) errors.push("mobile navigation open interaction failed");
+      if (!navigationInteraction.desktop) errors.push("desktop Garden dropdown interaction failed");
+
+      const currentNavigation = await page.evaluate(() => {
+        const pathname = location.pathname.replace(/\/$/, "") || "/";
+        const current = [...document.querySelectorAll("nav a[aria-current='page']")].filter(link => {
+          try { return new URL(link.href).pathname.replace(/\/$/, "") === pathname; } catch { return false; }
+        });
+        return pathname === "/" ? current.length === 0 || current.some(link => link.getAttribute("href") === "/") : current.length >= 1;
+      });
+      if (!currentNavigation) warnings.push("current navigation state may not match the current route");
       const slug =
         route === "/"
           ? "home"
