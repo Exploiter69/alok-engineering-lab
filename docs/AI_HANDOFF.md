@@ -138,3 +138,20 @@ CP18 Performance & Accessibility Excellence is complete.
 CP19 Visual Evolution is complete.
 
 The next architectural checkpoint is CP20 Maturity / v2 Readiness, which is a decision gate rather than an automatic rewrite.
+
+## CP20 status
+CP20 — Experience Excellence is complete at the repository verification level.
+
+Confirmed:
+- homepage hierarchy now establishes Alok → Engineering Lab identity, current work, featured engineering, Lab discovery, recent thinking and journey
+- primary navigation is simplified to Projects, Garden, Journey and About, with knowledge surfaces grouped under Garden
+- project archives use typography-first engineering rows and project detail pages expose case-study navigation, technical records and repository-backed chronology
+- lifecycle and evidence records have explicit text/status cues rather than relying on color alone
+- Garden topic/index surfaces and knowledge provenance are more discovery-oriented
+- long-form writing, notes and experiments expose reading-time context and improved reading rhythm
+- responsive viewport metadata and media bounds were strengthened
+- browser audit now checks visible interaction target minimums and keyboard focus visibility in addition to existing route, link, structure and overflow checks
+- final GitHub Actions Quality run 37583092301 passed all validation/build/browser-audit stages across 264 desktop/mobile cases
+- no database, CMS, analytics, paid service, WebGL, 3D, particle system or framework migration was introduced
+
+The CP20 work preserves Astro and the ₹0 / $0 constraint. v1.0.0 history remains untouched.
