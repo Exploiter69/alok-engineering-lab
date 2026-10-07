@@ -230,3 +230,27 @@ Verified on Phase 5 HEAD:
 - production viewport audit passed
 
 Phase 5 remains intentionally unmerged because Phase 4 PR #8 has not yet completed its required Vercel deployment gate. Do not merge Phase 5 until Phase 4 is legitimately merged and the Phase 5 branch is safely reconciled with the resulting master state.
+
+
+## Phase 6 independent hardening
+
+Phase 6 independent hardening is implemented and quality-verified on branch `admin/phase-6-hardening`.
+
+Verified independently:
+- explicit `ADMIN_BASE_URL` OAuth callback construction
+- `__Host-` session/OAuth cookies
+- bounded JSON mutation parsing and controlled malformed-body responses
+- GitHub request timeouts and sanitized upstream failures
+- strict `.md` / `.mdx` content path matching
+- engineering-intelligence export configuration wiring
+- command-palette modal focus containment and restoration
+- GitHub failure regression coverage
+
+Quality run: GitHub Actions run `37656763756` — admin-security PASS; repository validation/build/browser/performance/Lighthouse/interaction/viewport checks PASS.
+
+Phase boundary remains:
+- Phase 4 Vercel gate: blocked
+- Phase 4 merge: blocked
+- Phase 5 merge: blocked
+- Phase 6 final integration: blocked
+- production verification: blocked
