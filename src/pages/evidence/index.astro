@@ -14,6 +14,12 @@ const evidence = (await getCollection("evidence"))
     <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Engineering Evidence</h1>
     <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">Benchmarks, failures, verification records and observations that support the Lab's engineering claims.</p><p class="mt-4 max-w-2xl text-sm leading-6 text-neutral-600">Evidence is intentionally compact: method, result and limitations stay inspectable without turning every record into a long article.</p>
   </header>
+  <section class="mt-10 grid gap-3 sm:grid-cols-4" aria-label="Evidence outcomes">
+    {(["confirmed", "failed", "inconclusive", "informational"] as const).map(outcome => {
+      const count = evidence.filter(item => item.data.outcome === outcome).length;
+      return <div class="rounded-xl border border-neutral-900 p-4"><p class="font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-600">{outcome}</p><p class="mt-1 text-2xl font-bold text-neutral-200">{count}</p></div>;
+    })}
+  </section>
   <section class="mt-10" aria-labelledby="evidence-archive-heading">
     <div class="mb-5 flex items-baseline justify-between gap-4">
       <p id="evidence-archive-heading" class="lab-label">Evidence archive</p>
