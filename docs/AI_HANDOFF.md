@@ -174,3 +174,14 @@ Implemented:
 - internal-link HTTP validation is performed once per route set at a representative viewport to avoid redundant CI work
 
 No 3D/WebGL, database, CMS, analytics, paid service or framework migration was introduced.
+
+
+## CP22–CP27 implementation status
+CP22 through CP27 are implemented as the next long-term Engineering Lab capability layer, pending final combined Quality verification.
+
+- CP22 Knowledge Architecture: project records expose current focus, known problems and future work; connected content remains repository-backed.
+- CP23 Engineering Lab Intelligence: project intelligence presents objective, lifecycle, architecture, stack, decisions, lessons, focus, risks, future work, linked knowledge and chronology.
+- CP24 Discovery & Navigation: `/explore` searches full text across published collections with type/topic filters; `/connections` exposes repository-backed hubs and connection gaps.
+- CP25 Performance & Accessibility: browser quality remains a release gate; a zero-cost Playwright performance audit checks LCP, CLS, TTFB, runtime external resources, script count and image contracts.
+- CP26 Developer Workflow: `scripts/new-content.mjs` scaffolds repository-native content templates; validation/build/audit commands remain the publishing gate.
+- CP27 Visual Identity Refinement: new surfaces use the existing typography-first, border-led engineering language without decorative runtime systems.
