@@ -15,6 +15,13 @@ stack:
   - D1
   - Telegram
 objective: "Reduce the cost of finding trustworthy university information while preserving source authority, evidence, provenance and correction history."
+currentFocus: "Production reliability of acquisition, verification and student-facing delivery while preserving official-source authority."
+knownProblems:
+  - "University information can change, conflict or become stale across multiple official surfaces."
+  - "Delivery failures must not weaken the underlying trust model."
+futureWork:
+  - "Improve production acquisition and delivery reliability."
+  - "Continue expanding useful student workflows without introducing a second authority."
 lifecycle: "building"
 lifecycleSince: 2026-10-06
 lifecycleHistory:
