@@ -215,6 +215,7 @@ export async function contentHealth(token, ref = "master", now = Date.now(), inc
       updatedAt: commit?.date || null,
       commitSha: commit?.sha || null,
       metadata,
+      body: includeBody ? record.body : undefined,
       validationErrors,
       validationStatus: validationErrors.length ? STATUS.failed : STATUS.healthy,
     };
