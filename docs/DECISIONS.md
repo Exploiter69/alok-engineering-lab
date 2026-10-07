@@ -56,3 +56,14 @@ Do not rewrite release history. Future work proceeds forward with new commits/re
 **Decision:** Project `status` is a repository-backed documentation signal, not a live operational health indicator.
 **Status:** Active.
 **Reason:** The static Lab should expose useful current-state context without introducing a runtime status service or implying real-time authority it does not have.
+
+
+## D-012 — Project intelligence is repository-backed
+**Decision:** Project technical records should be derived from structured repository metadata and linked content, not a runtime project database.
+**Status:** Active.
+**Reason:** The Lab needs richer project context without introducing a second source of truth, runtime infrastructure or cost.
+
+## D-013 — Knowledge must trace back to engineering work
+**Decision:** Durable knowledge should be extracted from demonstrated project decisions, constraints, failures and verification rather than published to satisfy a content quota.
+**Status:** Active.
+**Reason:** The Lab is an engineering record, so reusable principles are valuable when their provenance remains visible.
