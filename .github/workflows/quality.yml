@@ -49,3 +49,32 @@ jobs:
 
       - name: Performance quality audit
         run: npm run audit:performance
+      - name: Lighthouse audit
+        run: |
+          npx --yes lighthouse http://127.0.0.1:4321/             --chrome-flags="--headless --no-sandbox"             --preset=desktop             --only-categories=performance,accessibility,best-practices,seo             --output=json             --output-path=/tmp/lighthouse.json
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+
+          const report = JSON.parse(fs.readFileSync("/tmp/lighthouse.json", "utf8"));
+          const categories = ["performance", "accessibility", "best-practices", "seo"];
+          const scores = Object.fromEntries(
+            categories.map((name) => [name, Math.round(report.categories[name].score * 100)]),
+          );
+
+          console.log("Lighthouse scores:", scores);
+
+          const failedScores = categories.filter((name) => scores[name] < 95);
+          const lcp = report.audits["largest-contentful-paint"]?.numericValue ?? Infinity;
+          const cls = report.audits["cumulative-layout-shift"]?.numericValue ?? Infinity;
+          const inp = report.audits["interaction-to-next-paint"]?.numericValue ?? Infinity;
+
+          console.log(`LCP: ${Math.round(lcp)}ms`);
+          console.log(`CLS: ${cls}`);
+          console.log(`INP: ${Math.round(inp)}ms`);
+
+          if (failedScores.length || lcp >= 1500 || cls > 0 || inp >= 200) {
+            console.error("Lighthouse target failed.");
+            if (failedScores.length) console.error("Scores below 95:", failedScores.join(", "));
+            process.exit(1);
+          }
+          NODE
