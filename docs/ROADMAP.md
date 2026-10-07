@@ -273,3 +273,27 @@ The repository-backed admin control plane follows the original implementation sp
 - complete documentation and production verification
 
 These phases extend, rather than replace, the completed Phase 0–3 admin implementation. Master remains protected by GitHub review/CI; the public Astro site remains static and Git remains the source of truth.
+
+
+## Phase 6 independent hardening
+
+Phase 6 independent hardening is implemented and quality-verified on branch `admin/phase-6-hardening`.
+
+Verified independently:
+- explicit `ADMIN_BASE_URL` OAuth callback construction
+- `__Host-` session/OAuth cookies
+- bounded JSON mutation parsing and controlled malformed-body responses
+- GitHub request timeouts and sanitized upstream failures
+- strict `.md` / `.mdx` content path matching
+- engineering-intelligence export configuration wiring
+- command-palette modal focus containment and restoration
+- GitHub failure regression coverage
+
+Quality run: GitHub Actions run `37656763756` — admin-security PASS; repository validation/build/browser/performance/Lighthouse/interaction/viewport checks PASS.
+
+Phase boundary remains:
+- Phase 4 Vercel gate: blocked
+- Phase 4 merge: blocked
+- Phase 5 merge: blocked
+- Phase 6 final integration: blocked
+- production verification: blocked
