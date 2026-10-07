@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import RelatedContent from "../../components/RelatedContent.astro";
+import ProjectIntelligence from "../../components/ProjectIntelligence.astro";
 import { resolveRelated } from "../../lib/related";
 import { getCollection, render } from "astro:content";
 export async function getStaticPaths() {
@@ -10,26 +11,25 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { Content } = await render(project);
 const relatedItems = await resolveRelated(project.data.related);
+const timelineItems = (await getCollection("timeline"))
+  .filter(item => item.data.status !== "draft" && item.data.related.includes(`projects:${project.id}`))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .map(item => ({ title: item.data.title, description: item.data.description, date: item.data.date, href: `/timeline/${item.id}` }));
 ---
 <Layout title={project.data.title} description={project.data.description}>
 <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
-  <a href="/projects" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-neutral-500 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-    <span aria-hidden="true">←</span>
-    Projects
-  </a>
+  <a href="/projects" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-neutral-500 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span aria-hidden="true">←</span>Projects</a>
   <header class="mt-12 max-w-3xl">
     <p class="lab-label">Project / Engineering Work</p>
     <h1 class="mt-5 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">{project.data.title}</h1>
     <p class="mt-6 max-w-2xl text-lg leading-8 text-neutral-400">{project.data.description}</p>
     <div class="mt-7 flex flex-wrap gap-x-5 gap-y-2 border-y border-neutral-900 py-4 font-mono text-xs text-neutral-500">
-      <span>Documented {project.data.date.toDateString()}</span>
-      <span class="rounded-full border border-neutral-800 px-2.5 py-1 uppercase tracking-[0.12em]">{project.data.status}</span>
+      <span>Documented {project.data.date.toDateString()}</span><span class="rounded-full border border-neutral-800 px-2.5 py-1 uppercase tracking-[0.12em]">{project.data.status}</span><span class="rounded-full border border-neutral-800 px-2.5 py-1 uppercase tracking-[0.12em]">{project.data.lifecycle}</span>
       {project.data.stack?.length > 0 && <span>{project.data.stack.join(" • ")}</span>}
-      {project.data.repository && (
-        <a href={project.data.repository} target="_blank" rel="noopener noreferrer" class="transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">GitHub ↗</a>
-      )}
+      {project.data.repository && <a href={project.data.repository} target="_blank" rel="noopener noreferrer" class="transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">GitHub ↗</a>}
     </div>
   </header>
+  <ProjectIntelligence project={project} relatedItems={relatedItems} timelineItems={timelineItems} />
   <article class="prose prose-invert mt-12 max-w-3xl sm:mt-16"><Content /></article>
   <RelatedContent items={relatedItems} />
 </main>
