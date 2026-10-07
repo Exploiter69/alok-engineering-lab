@@ -157,3 +157,26 @@ Preferred workflow:
 **inspect → implement → verify → review → checkpoint**
 
 The repository and current Git state remain the strongest sources of truth.
+
+
+### CP20 — Experience Excellence
+**Complete.**
+
+CP20 transformed the Lab from a polished archive toward a clearer engineering product without changing the Astro architecture.
+
+Completed:
+- homepage identity and information hierarchy
+- project archive and case-study presentation
+- reduced primary navigation with Garden grouping
+- lifecycle/evidence visual language
+- Garden discovery and provenance polish
+- long-form reading improvements
+- footer and internal navigation polish
+- responsive metadata/media safeguards
+- browser audit checks for visible interaction targets and keyboard focus
+
+Verification:
+- GitHub Actions Quality run 37583092301 passed
+- 264 generated desktop/mobile browser cases passed
+- repository validation and production build passed
+- no paid or runtime infrastructure introduced
