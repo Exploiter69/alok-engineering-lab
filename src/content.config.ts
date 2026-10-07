@@ -19,6 +19,12 @@ export const collections = {
       repository: z.string().url().optional(),
       objective: z.string().optional(),
       lifecycle: z.enum(["exploring", "building", "maintaining", "archived"]).default("exploring"),
+      lifecycleSince: z.coerce.date().optional(),
+      lifecycleHistory: z.array(z.object({
+        state: z.enum(["exploring", "building", "maintaining", "archived"]),
+        date: z.coerce.date(),
+        note: z.string(),
+      })).default([]),
       architectureSummary: z.string().optional(),
       decisions: z.array(z.string()).default([]),
       lessons: z.array(z.string()).default([]),
