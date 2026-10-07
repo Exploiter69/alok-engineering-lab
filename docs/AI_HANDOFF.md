@@ -61,6 +61,17 @@ Confirmed:
 - CP7 has a changelog entry
 - zero-cost architecture and Astro remain unchanged
 
+## CP8 status
+CP8 — Continued Engineering Growth is complete at the repository level.
+
+Confirmed:
+- project status is now visible on project archive cards and project detail pages
+- status is documented archive state, not live operational health
+- CP8 added durable knowledge and experiment coverage for that boundary
+- CP8 added timeline and changelog records
+- no database, CMS, analytics, runtime API or paid service was introduced
+- existing content relationship validation and full-route browser auditing remain in place
+
 ## Visual direction
 Preserve the restrained engineering aesthetic: black canvas, strong typography, thin borders/rules, monospace technical labels, editorial spacing, responsive layouts and minimal decoration.
 
@@ -83,3 +94,5 @@ When continuing:
 5. verify
 6. checkpoint
 7. update durable docs
+
+CP9 should begin from a newly demonstrated product or knowledge gap rather than automatically adding infrastructure.
