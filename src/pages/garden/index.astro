@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
+import { slugifyTopic } from "../../lib/topics";
 
 const [notes, writing, experiments] = await Promise.all([
   getCollection("notes"),
@@ -62,7 +63,7 @@ const topicAnchors = new Map(
 </div>
 <div class="flex flex-wrap gap-2">
 {topics.map(topic => (
-<a href={`#${topicAnchors.get(topic)}`} class="rounded-full border border-neutral-900 px-3 py-1.5 text-xs text-neutral-500 hover:border-neutral-600 hover:text-white">{topic}</a>
+<a href={"/garden/topics/" + topicSlugs.get(topic)} class="rounded-full border border-neutral-900 px-3 py-1.5 text-xs text-neutral-500 hover:border-neutral-600 hover:text-white">{topic}</a>
 ))}
 </div>
 </section>
@@ -89,10 +90,10 @@ const topicAnchors = new Map(
   const slug = topicAnchors.get(topic)!;
   const matches = gardenItems.filter(item => item.data.tags.includes(topic));
   return (
-    <div id={slug} class="scroll-mt-24 rounded-xl border border-neutral-900 p-4">
+    <a href={"/garden/topics/" + slug} class="block rounded-xl border border-neutral-900 p-4 transition hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
       <p class="font-mono text-xs uppercase tracking-wider text-neutral-500">{topic}</p>
       <p class="mt-2 text-sm text-neutral-400">{matches.length} item{matches.length === 1 ? "" : "s"}</p>
-    </div>
+    </a>
   );
 })}
 </div>
