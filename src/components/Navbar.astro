@@ -135,7 +135,7 @@ const gardenLinks = [
     }
   });
   const closeMenus = () => {
-    for (const menu of document.querySelectorAll("nav details")) menu.open = false;
+    for (const menu of document.querySelectorAll<HTMLDetailsElement>("nav details")) menu.open = false;
   };
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") closeMenus();
