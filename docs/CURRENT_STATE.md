@@ -28,28 +28,29 @@ CP5 Product Quality / UX Hardening is complete at the repository level.
 
 Current hardening covers metadata/canonical handling, favicon/social-preview behavior, robots/noindex behavior, keyboard focus visibility, semantic navigation labels, deterministic Garden anchors, external-link safety and a zero-cost build gate.
 
-Fresh local verification against the current tree passed: `npm run build` completed with 0 errors and generated 41 pages. The only diagnostic was one non-blocking Zod deprecation hint for `z.string().url()`.
+Fresh local verification against the pre-CP6 current tree passed: npm run build completed with 0 errors and generated 41 pages. The only diagnostic was one non-blocking Zod deprecation hint for z.string().url().
 
 ## CP6 status
-CP6 Release / Production Readiness is implemented and in final automated verification.
+CP6 Release / Production Readiness is complete at the repository and production-verification level.
 
-Implemented:
+Confirmed:
 - browser audit discovers every generated HTML route instead of a fixed sample list
 - GitHub Actions runs build plus Chromium browser audit
-- generated XML sitemap at `/sitemap.xml`
-- explicit `robots.txt`
+- the latest Quality run for commit bd356f9 completed successfully
+- generated XML sitemap at /sitemap.xml
+- explicit robots.txt
 - production changelog entry
-- Vercel deployment for the current checkpoint verified successful
+- Vercel production deployment dpl_Fp4srrAGy1ri2jnx4ecduK1ktJgy is READY for commit bd356f9
+- alokthakur.me and www.alokthakur.me are verified Vercel project domains
+- v1.0.0 history remains preserved
 
-Remaining release gate:
-- confirm the new GitHub browser-audit run passes
-- record the final release checkpoint/tag
+The remaining release checkpoint is a Git tag. The available GitHub connector has no tag/release write operation, so this is not represented by a fake branch.
 
 ## Deployment
-Production is configured for Vercel with `www.alokthakur.me` as the canonical site URL and Namecheap as the registrar/DNS provider. The repository's current Vercel deployment status is successful; live DNS/domain probing is not available from the current execution environment.
+Production is configured for Vercel with www.alokthakur.me as the canonical site URL and Namecheap as the registrar/DNS provider. Vercel currently reports both custom domains as verified.
 
 ## Verification baseline
-The repository already contains a Playwright-based visual/quality audit. CP6 upgrades it to cover every generated HTML route and run automatically after the production build.
+The repository contains a Playwright-based visual/quality audit. CP6 upgrades it to cover every generated HTML route and run automatically after the production build.
 
 ## Development rules
 - Inspect before modifying.
