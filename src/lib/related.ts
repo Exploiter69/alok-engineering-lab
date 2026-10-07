@@ -7,6 +7,7 @@ const collections = [
   "experiments",
   "timeline",
   "changelog",
+  "evidence",
 ] as const;
 
 const routes = {
@@ -16,6 +17,7 @@ const routes = {
   experiments: "/experiments",
   timeline: "/timeline",
   changelog: "/changelog",
+  evidence: "/evidence",
 } as const;
 
 export async function resolveRelated(related: string[] = []) {
