@@ -7,14 +7,19 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/validate-content-links.mjs && astro check && astro build",
+    "build": "npm run validate && astro check && astro build",
     "audit": "node scripts/visual-audit.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "dev:clean": "./scripts/dev.sh",
     "stop-dev": "npx astro dev stop",
     "clean-dev": "./scripts/clean-dev.sh",
-    "start": "npm run clean-dev && npm run dev"
+    "start": "npm run clean-dev && npm run dev",
+    "validate": "npm run validate:metadata && npm run validate:links && npm run validate:lifecycle && npm run validate:writing",
+    "validate:metadata": "node scripts/validate-content-metadata.mjs",
+    "validate:links": "node scripts/validate-content-links.mjs",
+    "validate:lifecycle": "node scripts/validate-project-lifecycle.mjs",
+    "validate:writing": "node scripts/validate-writing.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.8",
