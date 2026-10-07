@@ -212,7 +212,7 @@ async function runBulk(selected) {
   const action = document.querySelector("#bulk-action").value, value = document.querySelector("#bulk-value").value.trim();
   if (["archive","restore"].includes(action) && !confirm(`Apply ${action} to ${selected.size} record(s) on an admin branch?`)) return;
   const branch = prompt("Admin branch for this Git-backed bulk operation:", `admin/bulk-${Date.now().toString(36)}`);
-  if (!branch || !/^admin\\/[a-z0-9][a-z0-9._/-]{2,79}$/.test(branch)) return showGlobalMessage("Invalid admin branch.");
+  if (!branch || !/^admin\/[a-z0-9][a-z0-9._/-]{2,79}$/.test(branch)) return showGlobalMessage("Invalid admin branch.");
   try {
     await api("/api/content",{method:"POST",body:JSON.stringify({action:"branch",branch})});
     const items=[...selected].map(ref => { const [collection,slug]=ref.split(":"); return {collection,slug}; });
