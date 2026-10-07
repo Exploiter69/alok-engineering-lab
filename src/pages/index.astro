@@ -79,7 +79,7 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
     <div class="mt-2">
       {projects.slice(0, 3).map((project, index) => (
         <div class="border-b border-lab py-7 sm:py-9">
-          <ProjectArchitecture projectId={project.id} title={project.data.title} />
+          <ProjectArchitecture projectId={project.id} title={project.data.title} architectureSummary={project.data.architectureSummary} decisions={project.data.decisions} />
           <ContentCard title={project.data.title} description={project.data.objective ?? project.data.description} status={project.data.lifecycle} meta="" href={`/projects/${project.id}`} eyebrow={`PROJECT / ${String(index + 1).padStart(2, "0")}`} featured={index === 0} headingLevel="h2" />
         </div>
       ))}

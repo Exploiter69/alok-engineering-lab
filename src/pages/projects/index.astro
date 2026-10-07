@@ -63,23 +63,40 @@ const counts = ["exploring", "building", "maintaining", "archived"].map(state =>
 
   <section class="mt-10" aria-labelledby="engineering-work-heading">
     <div class="mb-2 flex items-baseline justify-between gap-4"><p id="engineering-work-heading" class="lab-label">Engineering work</p><span class="font-mono text-xs text-faint">{projects.length} records</span></div>
-    <div class="grid gap-8">
-      {projects.map((project, index) => (
+    {projects.length > 0 && (
+      <article data-project-item data-lifecycle={projects[0].data.lifecycle} data-stack={projects[0].data.stack.join("|")} data-search={(projects[0].data.title + " " + projects[0].data.description + " " + projects[0].data.lifecycle + " " + projects[0].data.stack.join(" ") + " " + (projects[0].data.architectureSummary ?? "") + " " + projects[0].data.decisions.join(" ") + " " + projects[0].data.lessons.join(" ")).toLowerCase()}>
+        <div class="surface-1 rounded-[var(--radius-lg)] border border-lab p-5 shadow-[var(--shadow-2)] sm:p-7">
+          <ProjectArchitecture projectId={projects[0].id} title={projects[0].data.title} architectureSummary={projects[0].data.architectureSummary} decisions={projects[0].data.decisions} />
+          <div class="mt-6">
+            <p class="lab-label">FEATURED / 01</p>
+            <h2 class="mt-3 text-3xl font-bold tracking-tight sm:text-5xl"><a href={"/projects/" + projects[0].id} class="transition hover:text-lime-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]">{projects[0].data.title}</a></h2>
+            <p class="mt-4 max-w-3xl text-sm leading-7 text-muted sm:text-base">{projects[0].data.description}</p>
+            <div class="mt-5"><TechChips stack={projects[0].data.stack} /></div>
+            <div class="mt-5 flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-[0.12em] text-subtle"><span class="text-lime-300">● {projects[0].data.lifecycle}</span><a href={"/projects/" + projects[0].id} class="text-muted hover:text-white">Read case study →</a></div>
+          </div>
+        </div>
+      </article>
+    )}
+    <div class="mt-8 grid gap-8 md:grid-cols-2">
+      {projects.slice(1, featuredProjectIds.size).map((project, index) => (
         <article data-project-item data-lifecycle={project.data.lifecycle} data-stack={project.data.stack.join("|")} data-search={(project.data.title + " " + project.data.description + " " + project.data.lifecycle + " " + project.data.stack.join(" ") + " " + (project.data.architectureSummary ?? "") + " " + project.data.decisions.join(" ") + " " + project.data.lessons.join(" ")).toLowerCase()}>
-          {index < featuredProjectIds.size ? (
-            <div class={index === 0 ? "surface-1 rounded-[var(--radius-lg)] border border-lab p-5 sm:p-7" : "surface-1 rounded-[var(--radius-lg)] border border-lab p-5 sm:p-6"}>
-              <ProjectArchitecture projectId={project.id} title={project.data.title} />
-              <div class="mt-6">
-                <p class="lab-label">PROJECT / {String(index + 1).padStart(2, "0")}</p>
-                <h2 class={index === 0 ? "mt-3 text-3xl font-bold tracking-tight sm:text-5xl" : "mt-3 text-2xl font-bold tracking-tight sm:text-3xl"}><a href={`/projects/${project.id}`} class="transition hover:text-lime-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]">{project.data.title}</a></h2>
-                <p class="mt-4 max-w-3xl text-sm leading-7 text-muted sm:text-base">{project.data.description}</p>
-                <div class="mt-5"><TechChips stack={project.data.stack} /></div>
-                <div class="mt-5 flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-[0.12em] text-subtle"><span class="text-lime-300">● {project.data.lifecycle}</span><a href={`/projects/${project.id}`} class="text-muted hover:text-white">Read case study →</a></div>
-              </div>
+          <div class="surface-1 h-full rounded-[var(--radius-lg)] border border-lab p-5 sm:p-6">
+            <ProjectArchitecture projectId={project.id} title={project.data.title} architectureSummary={project.data.architectureSummary} decisions={project.data.decisions} />
+            <div class="mt-6">
+              <p class="lab-label">FEATURED / {String(index + 2).padStart(2, "0")}</p>
+              <h2 class="mt-3 text-2xl font-bold tracking-tight sm:text-3xl"><a href={"/projects/" + project.id} class="transition hover:text-lime-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]">{project.data.title}</a></h2>
+              <p class="mt-4 text-sm leading-7 text-muted">{project.data.description}</p>
+              <div class="mt-5"><TechChips stack={project.data.stack} /></div>
+              <div class="mt-5 flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-[0.12em] text-subtle"><span class="text-lime-300">● {project.data.lifecycle}</span><a href={"/projects/" + project.id} class="text-muted hover:text-white">Read case study →</a></div>
             </div>
-          ) : (
-            <ContentCard title={project.data.title} description={project.data.description} status={project.data.lifecycle} meta={project.data.stack.join(" · ")} href={`/projects/${project.id}`} eyebrow={`PROJECT / ${String(index + 1).padStart(2, "0")}`} headingLevel="h2" />
-          )}
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="mt-8 grid gap-8">
+      {projects.slice(featuredProjectIds.size).map((project, index) => (
+        <article data-project-item data-lifecycle={project.data.lifecycle} data-stack={project.data.stack.join("|")} data-search={(project.data.title + " " + project.data.description + " " + project.data.lifecycle + " " + project.data.stack.join(" ") + " " + (project.data.architectureSummary ?? "") + " " + project.data.decisions.join(" ") + " " + project.data.lessons.join(" ")).toLowerCase()}>
+          <ContentCard title={project.data.title} description={project.data.description} status={project.data.lifecycle} meta={project.data.stack.join(" · ")} href={"/projects/" + project.id} eyebrow={"PROJECT / " + String(index + featuredProjectIds.size + 1).padStart(2, "0")} headingLevel="h2" />
         </article>
       ))}
     </div>

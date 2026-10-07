@@ -1,33 +1,31 @@
 ---
-interface Props { projectId: string; title: string; }
-const { projectId, title } = Astro.props;
-const diagrams: Record<string, { nodes: string[]; caption: string }> = {
-  vajra: { nodes: ["Goal / controller", "Policy + execution", "Verification", "Evidence"], caption: "Controller → policy/execution → verification → evidence" },
-  "astra-userbot": { nodes: ["Telegram / Telethon", "ApplicationContext + jobs", "SQLite / WAL", "Plugins"], caption: "Telegram edge → platform core → durable state → plugin surface" },
-  "vgu-signal": { nodes: ["Official VGU sources", "Acquire + preserve evidence", "Verify / deduplicate", "Telegram delivery"], caption: "Official sources → evidence → verification → student delivery" },
-  "teldrive-lab": { nodes: ["TelDrive authority", "Observe + catalog", "Plan + authorize", "Verify + record"], caption: "Production storage → derived views → controlled action → evidence" },
-  "gemini-agent-bridge": { nodes: ["Coding agent", "OpenAI-compatible bridge", "Gemini Web", "Agent executes tools"], caption: "Agent → reasoning bridge → Gemini Web; tool authority returns to agent" },
-};
-const diagram = diagrams[projectId] ?? { nodes: ["Input", "Architecture", "Decision boundary", "Output"], caption: "Repository-backed architecture summary" };
+interface Props { projectId: string; title: string; architectureSummary?: string; decisions?: string[]; }
+const { projectId, title, architectureSummary = "", decisions = [] } = Astro.props;
+const raw = architectureSummary.replace(/\s+/g, " ").trim();
+const fromSummary = raw.split(/\s*(?:→|->|=>)\s*/).map(item => item.trim()).filter(Boolean);
+const fromDecisions = decisions.flatMap(item => item.split(/\s*(?:→|->|=>)\s*/).map(part => part.trim())).filter(Boolean);
+const nodes = [...new Set([...fromSummary, ...fromDecisions])].slice(0, 4);
+while (nodes.length < 4) nodes.push(["Input", "Architecture", "Decision boundary", "Output"][nodes.length]);
+const caption = fromSummary.length > 1 ? fromSummary.join(" → ") : "Repository-backed architecture derived from the project record.";
 ---
 <figure class="surface-1 overflow-hidden rounded-[var(--radius-lg)] border border-lab p-5 sm:p-6" aria-label={title + " architecture diagram"}>
   <div class="flex items-center justify-between gap-4">
-    <p class="lab-label">Architecture / derived from project record</p>
+    <p class="lab-label">Architecture / repository record</p>
     <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">SVG</span>
   </div>
   <svg viewBox="0 0 920 210" role="img" aria-labelledby={projectId + "-architecture-title " + projectId + "-architecture-desc"} class="mt-5 h-auto w-full">
     <title id={projectId + "-architecture-title"}>{title} architecture</title>
-    <desc id={projectId + "-architecture-desc"}>{diagram.caption}</desc>
-    {diagram.nodes.map((node, index) => {
+    <desc id={projectId + "-architecture-desc"}>{caption}</desc>
+    {nodes.map((node, index) => {
       const x = 20 + index * 225;
-      return <g>
-        {index < diagram.nodes.length - 1 && <path d={"M " + (x + 180) + " 105 H " + (x + 212)} stroke="var(--border-strong)" stroke-width="2" fill="none" />}
-        {index < diagram.nodes.length - 1 && <path d={"M " + (x + 202) + " 99 L " + (x + 212) + " 105 L " + (x + 202) + " 111"} stroke="var(--accent)" stroke-width="2" fill="none" />}
+      return <>
+        {index < nodes.length - 1 && <path d={"M " + (x + 180) + " 105 H " + (x + 212)} stroke="var(--border-strong)" stroke-width="2" fill="none" />}
+        {index < nodes.length - 1 && <path d={"M " + (x + 202) + " 99 L " + (x + 212) + " 105 L " + (x + 202) + " 111"} stroke="var(--accent)" stroke-width="2" fill="none" />}
         <rect x={x} y="55" width="180" height="100" rx="14" fill="var(--surface-2)" stroke={index === 0 ? "var(--accent)" : "var(--border-strong)"} />
-        <text x={x + 90} y="100" text-anchor="middle" fill="var(--foreground)" font-size="14" font-family="var(--font-sans)">{node}</text>
+        <text x={x + 90} y="100" text-anchor="middle" fill="var(--foreground)" font-size="14" font-family="var(--font-sans)">{node.slice(0, 28)}</text>
         <text x={x + 90} y="125" text-anchor="middle" fill="var(--subtle)" font-size="10" font-family="var(--font-mono)">0{index + 1}</text>
-      </g>;
+      </>;
     })}
   </svg>
-  <figcaption class="mt-3 max-w-3xl text-xs leading-5 text-subtle">{diagram.caption}. The nodes are a visual rendering of the repository's architectureSummary and decisions, not runtime telemetry.</figcaption>
+  <figcaption class="mt-3 max-w-3xl text-xs leading-5 text-subtle">{caption}</figcaption>
 </figure>
