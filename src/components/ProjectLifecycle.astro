@@ -26,7 +26,7 @@ const history = [...(project.data.lifecycleHistory ?? [])].sort(
       Lifecycle describes the engineering phase of the project; it is separate from publication status.
     </p>
   </div>
-  <div class="mt-6 grid gap-px border border-neutral-900 bg-neutral-900 sm:grid-cols-3">
+  <div class="mt-6 grid gap-px overflow-hidden rounded-xl border border-neutral-900 bg-neutral-900 sm:grid-cols-3">
     <div class="bg-black p-4">
       <p class="font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-600">Current state</p>
       <p class="mt-2 font-mono text-sm uppercase tracking-[0.12em] text-lime-300">{project.data.lifecycle}</p>
