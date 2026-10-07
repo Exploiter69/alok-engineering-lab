@@ -148,6 +148,6 @@ Confirmed:
 CP19 Visual Evolution is complete.
 
 Confirmed:
-- Timeline, Changelog and Evidence archive surfaces use the current restrained engineering visual language.
+- Timeline, Changelog and Evidence archive/index surfaces use the current restrained engineering visual language.
 - Archive content remains typography-led, border-based and responsive.
 - No 3D/WebGL, particle system, visual framework or large client-side system was introduced.

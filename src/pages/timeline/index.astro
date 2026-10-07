@@ -1,39 +1,38 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getCollection } from "astro:content";
 import ContentCard from "../../components/ContentCard.astro";
+import { getCollection } from "astro:content";
 
-const timeline = (await getCollection("timeline")).filter(item => item.data.status !== "draft").sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
+const entries = (await getCollection("timeline"))
+  .filter(item => item.data.status !== "draft")
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Layout title="Timeline">
-
-<main class="min-h-screen max-w-6xl mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
-
-<h1 class="text-3xl font-bold sm:text-4xl">
-Timeline
-</h1>
-
-<p class="mt-4 text-gray-400">
-A chronological record of engineering milestones and turning points.
-</p>
-
-<div class="mt-8 grid gap-5 sm:gap-6">
-
-{
-timeline.map(item => (
-<ContentCard
-title={item.data.title}
-description={item.data.description}
-meta={item.data.date.toDateString()}
-headingLevel="h2"
-href={`/timeline/${item.id}`}
-/>
-))
-}
-
-</div>
-
+<main class="mx-auto min-h-screen max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+  <header class="max-w-3xl border-b border-neutral-900 pb-10">
+    <p class="lab-label mb-4">06 / Continue</p>
+    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Timeline</h1>
+    <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">A chronological record of engineering milestones, turning points and durable project history.</p>
+  </header>
+  <section class="mt-10" aria-labelledby="timeline-archive-heading">
+    <div class="mb-5 flex items-baseline justify-between gap-4">
+      <p id="timeline-archive-heading" class="lab-label">Engineering chronology</p>
+      <span class="font-mono text-xs text-neutral-600">{entries.length} records</span>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+      {entries.map((entry, index) => (
+        <ContentCard
+          title={entry.data.title}
+          description={entry.data.description}
+          meta={entry.data.date.toDateString()}
+          href={`/timeline/${entry.id}`}
+          eyebrow={`MILESTONE / ${String(index + 1).padStart(2, "0")}`}
+          headingLevel="h2"
+          compact
+        />
+      ))}
+    </div>
+  </section>
 </main>
-
 </Layout>

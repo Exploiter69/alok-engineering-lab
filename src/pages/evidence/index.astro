@@ -14,10 +14,10 @@ const evidence = (await getCollection("evidence"))
     <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Engineering Evidence</h1>
     <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">Benchmarks, failures, verification records and observations that support the Lab's engineering claims.</p>
   </header>
-  <section class="mt-10">
+  <section class="mt-10" aria-labelledby="evidence-archive-heading">
     <div class="mb-5 flex items-baseline justify-between gap-4">
-      <p class="lab-label">Evidence archive</p>
-      <span class="font-mono text-xs text-neutral-600">{evidence.length} records</span>
+      <p id="evidence-archive-heading" class="lab-label">Evidence archive</p>
+      <span class="font-mono text-xs text-neutral-600">{evidence.length} records / {new Set(evidence.map(item => item.data.kind)).size} kinds</span>
     </div>
     <div class="grid gap-4 md:grid-cols-2">
       {evidence.map((item, index) => (

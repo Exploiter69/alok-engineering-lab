@@ -3,35 +3,36 @@ import Layout from "../../layouts/Layout.astro";
 import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
 
-const changelog = (await getCollection("changelog"))
+const entries = (await getCollection("changelog"))
   .filter(item => item.data.status !== "draft")
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Layout title="Changelog">
-
-<main class="min-h-screen max-w-6xl mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
-
-<h1 class="text-3xl font-bold sm:text-4xl">Changelog</h1>
-
-<p class="mt-4 text-gray-400">
-The evolution of Alok Engineering Lab and its releases.
-</p>
-
-<div class="mt-8 grid gap-5 sm:gap-6">
-
-{changelog.map(entry => (
-<ContentCard
-title={entry.data.title}
-description={entry.data.description}
-meta={entry.data.date.toDateString()}
-href={`/changelog/${entry.id}`}
-headingLevel="h2"
-/>
-))}
-
-</div>
-
+<main class="mx-auto min-h-screen max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+  <header class="max-w-3xl border-b border-neutral-900 pb-10">
+    <p class="lab-label mb-4">07 / Record</p>
+    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Changelog</h1>
+    <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">The evolution of Alok Engineering Lab through meaningful releases and engineering checkpoints.</p>
+  </header>
+  <section class="mt-10" aria-labelledby="changelog-archive-heading">
+    <div class="mb-5 flex items-baseline justify-between gap-4">
+      <p id="changelog-archive-heading" class="lab-label">Archive history</p>
+      <span class="font-mono text-xs text-neutral-600">{entries.length} records</span>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+      {entries.map((entry, index) => (
+        <ContentCard
+          title={entry.data.title}
+          description={entry.data.description}
+          meta={entry.data.date.toDateString()}
+          href={`/changelog/${entry.id}`}
+          eyebrow={`RELEASE / ${String(index + 1).padStart(2, "0")}`}
+          headingLevel="h2"
+          compact
+        />
+      ))}
+    </div>
+  </section>
 </main>
-
 </Layout>

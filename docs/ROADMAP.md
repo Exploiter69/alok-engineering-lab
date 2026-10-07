@@ -132,7 +132,7 @@ CP8 makes the Lab more useful as a living engineering archive without adding a d
 **Complete.** The shared layout now provides a skip link and reduced-motion behavior, navigation is deduplicated and keyboard-oriented controls expose state. The browser audit now checks document language, skip navigation, visible navigation duplicates and external resources across every generated route and both target viewports.
 
 ### CP19 — Visual Evolution
-**Complete.** Archive-facing surfaces were visually aligned with the current engineering design language after CP17/CP18 stabilization, without introducing decorative systems or a framework change.
+**Complete.** Archive-facing surfaces were visually aligned with the current engineering design language after CP17/CP18 stabilization, including Timeline, Changelog and Evidence indexes/detail records. The evolution remains typography-led, border-based and responsive without introducing decorative systems or a framework change.
 
 ## Explicitly Not Needed Unless Proven Necessary
 
