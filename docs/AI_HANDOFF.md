@@ -30,45 +30,25 @@ v1.0.0 is preserved. Do not rewrite its history.
 ## CP4 status
 CP4.1 through CP4.10 are complete.
 
-Completed scope includes:
-- six deep engineering project case studies
-- substantive Writing, Notes and Experiments
-- project/content cross-linking
-- meaningful Timeline milestones
-- Garden topic discovery
-- useful public Docs
-- meaningful Changelog entry
-- stronger About/identity
-- refreshed current-direction homepage copy
-
 ## CP5 status
-The repository-level CP5 hardening pass is implemented.
+CP5 Product Quality / UX Hardening is complete at the repository level and has passed the current local production build. Vercel reports a successful deployment for the CP5 checkpoint.
 
-It now includes:
-- stronger shared SEO metadata
-- explicit 404 noindex behavior
-- removal of the favicon as a default social-preview image
-- consistent keyboard focus visibility
-- labelled primary/secondary navigation
-- deterministic Garden topic anchors
-- safer external repository links
-- a zero-cost GitHub Actions build gate
+Hardening includes shared metadata, explicit 404 noindex behavior, removal of favicon as an implicit social image, keyboard focus visibility, labelled navigation, deterministic Garden anchors, safer external links and a zero-cost build workflow.
 
-Do not declare CP5 fully closed until the current tree has passed fresh build/browser verification.
+## CP6 status
+CP6 — Release / Production Readiness is implemented and undergoing final automated verification.
 
-## Next phase
-CP6 — Production / Release Readiness after CP5 verification.
-
-CP6 should cover:
-- full production build
-- route/content validation
-- browser audit
-- broken-link check
-- Git diff/history review
+Current CP6 work includes:
+- production route generation and validation
+- full generated-route browser audit coverage
+- browser audit execution in GitHub Actions
+- generated XML sitemap
+- explicit robots.txt
+- production changelog entry
 - Vercel deployment verification
-- custom-domain verification
-- release notes
-- Git tag/checkpoint
+- preservation of the v1.0.0 history
+
+Do not mark CP6 fully closed until the new GitHub browser-audit run is confirmed successful and the release checkpoint is recorded.
 
 ## Visual direction
 Preserve the restrained engineering aesthetic: black canvas, strong typography, thin borders/rules, monospace technical labels, editorial spacing, responsive layouts and minimal decoration.
