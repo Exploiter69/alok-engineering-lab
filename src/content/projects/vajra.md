@@ -14,6 +14,17 @@ stack:
   - Autonomous Systems
   - Verification
   - Sandboxing
+objective: "Explore trustworthy autonomous engineering where durable state, deterministic policy, execution authority and independent verification remain above model reasoning."
+lifecycle: "building"
+architectureSummary: "Local-first runtime separating objective/context/reasoning from policy, an execution broker, sandbox/workspace, artifacts and independent verification, with durable runs and disposable attempts/workers/models."
+decisions:
+  - "Run, step and evidence state must survive disposable workers and attempts."
+  - "The model proposes intent but policy and the execution broker own authority."
+  - "Self-improvement must pass isolation, tests, independent verification, security verification and human promotion."
+lessons:
+  - "Autonomy becomes safer when authority is separated from reasoning."
+  - "Recovery is an engineering state transition, not simply another model attempt."
+  - "Proof of an artifact should be produced by a boundary independent of the worker that created it."
 ---
 
 ## Problem
