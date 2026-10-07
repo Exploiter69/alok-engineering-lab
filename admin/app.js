@@ -20,7 +20,7 @@ function shell(body) {
       <aside class="sidebar">
         <a class="brand" href="/">Alok / Engineering Lab <span>Admin</span></a>
         <nav id="collections" aria-label="Collections"></nav>
-        <button id="new-content" class="button secondary full">+ New content</button><button id="site-control" class="button secondary full">Site control</button>
+        <button id="new-content" class="button secondary full">+ New content</button><button id="site-control" class="button secondary full">Site control</button><button id="workflow" class="button secondary full">Git / CI / Deploy</button>
         <form id="logout"><input type="hidden" value="${esc(state.session.csrf)}"><button class="link-button" type="submit">Log out</button></form>
       </aside>
       <main class="workspace">${body}</main>
@@ -32,6 +32,7 @@ function shell(body) {
   });
   document.querySelector("#new-content")?.addEventListener("click", () => editor(state.collection || Object.keys(state.schema.collections)[0]));
   document.querySelector("#site-control")?.addEventListener("click", siteControl);
+  document.querySelector("#workflow")?.addEventListener("click", workflow);
 }
 
 async function loadCollections() {
@@ -91,6 +92,58 @@ async function siteControl() {
     }
   });
   document.querySelector("#site-back").addEventListener("click", dashboard);
+}
+
+
+function diffLabel(file) {
+  if (file.filename.endsWith(".md") || file.filename.endsWith(".mdx")) return "content / frontmatter + body";
+  if (file.filename.includes("site-config") || file.filename.includes("navigation") || file.filename.includes("redirect")) return "configuration";
+  if (/\\.(png|jpe?g|webp|svg|gif)$/i.test(file.filename)) return "asset";
+  return "source";
+}
+
+async function workflow() {
+  const data = await api("/api/workflow");
+  shell(`
+    <header class="page-head"><p class="eyebrow">GIT / CI / DEPLOYMENT</p><h1>Release control</h1><p class="muted">Every release stays on a branch, goes through CI and is merged through GitHub. No direct master writes.</p></header>
+    <section class="cards">
+      <button class="stat-card" id="workflow-refresh"><strong>${data.prs.length}</strong><span>Open pull requests</span></button>
+      <button class="stat-card" id="workflow-branches"><strong>${data.branches.filter(x => x.name.startsWith("admin/")).length}</strong><span>Admin branches</span></button>
+      <button class="stat-card"><strong>${data.deployments?.available === false ? "—" : (data.deployments?.length || 0)}</strong><span>Vercel deployments</span></button>
+      <button class="stat-card"><strong>${data.deployments?.available === false ? "OFF" : "ON"}</strong><span>Deployment integration</span></button>
+    </section>
+    <section class="card"><p class="eyebrow">BRANCHES</p><div id="branch-list" class="list-card">${data.branches.filter(x => x.name.startsWith("admin/")).map(x => `<button class="record" data-workflow-branch="${esc(x.name)}"><span>${esc(x.name)}</span><small>${esc(x.sha.slice(0,12))}</small></button>`).join("") || "<div class='empty'>No admin branches.</div>"}</div></section>
+    <section class="card"><p class="eyebrow">PULL REQUESTS</p><div class="list-card">${data.prs.map(pr => `<article class="record"><span><strong>#${pr.number} ${esc(pr.title)}</strong><small>${esc(pr.head.branch)} → ${esc(pr.base.branch)} · ${pr.mergeable_state || "checking"}</small></span><a class="button secondary" href="${esc(pr.html_url)}" target="_blank" rel="noopener noreferrer">GitHub</a></article>`).join("") || "<div class='empty'>No open pull requests.</div>"}</div></section>
+    <section class="card"><p class="eyebrow">DEPLOYMENTS</p>${data.deployments?.available === false ? `<p class="muted">${esc(data.deployments.message)}. Set VERCEL_TOKEN and VERCEL_PROJECT_ID only on the server if this integration is desired.</p>` : `<div class="list-card">${(data.deployments || []).map(d => `<article class="record"><span><strong>${esc(d.state || "unknown")}</strong><small>${esc(d.branch || "unknown")} · ${esc(d.commit?.slice(0,12) || "no commit")}</small></span>${d.url ? `<a class="button secondary" href="${esc(d.url)}" target="_blank" rel="noopener noreferrer">Open</a>` : ""}</article>`).join("")}</div>`}</section>
+    <section id="branch-detail" class="card" hidden></section>`);
+  loadCollections();
+  document.querySelectorAll("[data-workflow-branch]").forEach(el => el.addEventListener("click", () => workflowBranch(el.dataset.workflowBranch)));
+}
+
+async function workflowBranch(branch) {
+  const detail = document.querySelector("#branch-detail");
+  detail.hidden = false;
+  detail.innerHTML = "<p class='muted'>Loading branch state…</p>";
+  const data = await api(`/api/workflow?branch=${encodeURIComponent(branch)}`);
+  const files = data.branch.files || [];
+  detail.innerHTML = `
+    <p class="eyebrow">BRANCH REVIEW</p><h2>${esc(branch)}</h2>
+    <p class="muted">HEAD <code>${esc(data.branch.sha)}</code> · ${data.branch.ahead_by} ahead · ${data.branch.behind_by} behind · ${esc(data.branch.status)}</p>
+    <div class="actions"><button id="create-pr" class="button">Create draft PR</button><button id="refresh-branch" class="button secondary">Refresh</button></div>
+    <div class="validation"><strong>CI: ${esc(data.ci.state)}</strong> · ${data.runs?.length || 0} workflow runs</div>
+    <div class="list-card">${files.map(file => `<article class="diff-file"><header><strong>${esc(file.filename)}</strong><span>${esc(diffLabel(file))} · +${file.additions} / -${file.deletions}</span></header><pre>${esc(file.patch || "Binary or unavailable patch")}</pre></article>`).join("") || "<div class='empty'>No changes relative to master.</div>"}</div>
+    ${data.runs?.length ? `<div class="list-card">${data.runs.map(run => `<article class="record"><span><strong>${esc(run.name)}</strong><small>${esc(run.status)} / ${esc(run.conclusion || "running")} · ${esc(run.sha.slice(0,12))}</small></span><div class="actions"><a class="button secondary" href="${esc(run.html_url)}" target="_blank" rel="noopener noreferrer">Actions</a>${run.conclusion === "failure" ? `<button class="button secondary" data-rerun="${run.id}">Rerun failed</button>` : ""}</div></article>`).join("")}</div>` : ""}
+    `;
+  document.querySelector("#create-pr").addEventListener("click", async () => {
+    const result = await api("/api/workflow", { method:"POST", body:JSON.stringify({action:"pr",branch,title:`Admin changes: ${branch}`,body:"Created from the Engineering Lab admin release control."}) });
+    detail.querySelector("#create-pr").textContent = `PR #${result.number} created`;
+    await workflow();
+  });
+  document.querySelector("#refresh-branch").addEventListener("click", () => workflowBranch(branch));
+  document.querySelectorAll("[data-rerun]").forEach(button => button.addEventListener("click", async () => {
+    await api("/api/workflow", {method:"POST",body:JSON.stringify({action:"rerun",runId:Number(button.dataset.rerun)})});
+    await workflowBranch(branch);
+  }));
 }
 
 async function dashboard() {
