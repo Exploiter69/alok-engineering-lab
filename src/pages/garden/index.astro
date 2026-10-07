@@ -38,7 +38,7 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 <a href="/experiments" class="rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white">Experiments</a>
 </nav>
 
-<section class="mt-10 rounded-2xl border border-neutral-900 p-5 sm:p-6" aria-labelledby="search-heading">
+<section class="mt-10 border-y border-neutral-900 py-7 sm:py-8" aria-labelledby="search-heading">
 <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 <div>
 <p id="search-heading" class="lab-label">Find in the Garden</p>
@@ -53,24 +53,24 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 <p id="garden-search-status" class="mt-3 font-mono text-xs text-neutral-600" aria-live="polite">{gardenItems.length} items</p>
 </section>
 
-<section class="mt-10" aria-labelledby="topics-heading">
+<section class="mt-12" aria-labelledby="topics-heading">
 <div class="mb-5 flex items-baseline justify-between gap-4">
 <p id="topics-heading" class="lab-label">Topics</p>
 <span class="font-mono text-xs text-neutral-600">{topics.length} topics</span>
 </div>
 <div class="flex flex-wrap gap-2">
 {topics.map(topic => (
-<a href={"/garden/topics/" + topicSlugs.get(topic)} class="rounded-full border border-neutral-900 px-3 py-1.5 text-xs text-neutral-500 hover:border-neutral-600 hover:text-white">{topic}</a>
+<a href={"/garden/topics/" + topicSlugs.get(topic)} class="inline-flex min-h-11 items-center rounded-full border border-neutral-900 px-4 text-xs text-neutral-500 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{topic}</a>
 ))}
 </div>
 </section>
 
-<section class="mt-12" aria-labelledby="latest-heading">
+<section class="mt-14" aria-labelledby="latest-heading">
 <div class="mb-5 flex items-baseline justify-between gap-4">
 <p id="latest-heading" class="lab-label">Latest across the Lab</p>
 <span class="font-mono text-xs text-neutral-600">{gardenItems.length} items</span>
 </div>
-<div id="garden-items" class="grid gap-4 md:grid-cols-2">
+<div id="garden-items">
 {gardenItems.map(item => (
 <article data-garden-item data-search={`${item.data.title} ${item.data.description} ${item.type} ${item.data.tags.join(" ")}`.toLowerCase()}>
 <ContentCard title={item.data.title} description={item.data.description} meta={`${item.type} • ${item.data.tags.join(" • ")}`} href={item.href} headingLevel="h2" />
@@ -80,14 +80,14 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 <p id="garden-empty" class="hidden border border-dashed border-neutral-900 p-6 text-sm text-neutral-500">No published Garden items match that search.</p>
 </section>
 
-<section class="mt-12 border-t border-neutral-900 pt-8" aria-labelledby="topic-index-heading">
+<section class="mt-14 border-t border-neutral-900 pt-8" aria-labelledby="topic-index-heading">
 <p id="topic-index-heading" class="lab-label mb-5">Topic Index</p>
 <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 {topics.map(topic => {
   const slug = topicSlugs.get(topic)!;
   const matches = gardenItems.filter(item => item.data.tags.includes(topic));
   return (
-    <a href={"/garden/topics/" + slug} class="block rounded-xl border border-neutral-900 p-4 transition hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+    <a href={"/garden/topics/" + slug} class="block min-h-24 border-b border-neutral-900 py-5 transition hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
       <p class="font-mono text-xs uppercase tracking-wider text-neutral-500">{topic}</p>
       <p class="mt-2 text-sm text-neutral-400">{matches.length} item{matches.length === 1 ? "" : "s"}</p>
     </a>
