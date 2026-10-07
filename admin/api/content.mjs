@@ -1,5 +1,5 @@
 import { send, text } from "../lib/response.mjs";
-import { requireSameOrigin } from "../lib/security.mjs";
+import { parseJsonBody, requireSameOrigin } from "../lib/security.mjs";
 import { requireSession } from "../lib/session.mjs";
 import { collection } from "../lib/schema.mjs";
 import { validCollection, validSlug, parseDocument, validateMetadata, tree, readFile, createBranch, writeFile, deleteFile } from "../lib/content.mjs";
@@ -46,7 +46,8 @@ export default async function handler(req,res) {
 
     if (req.method === "POST") {
       if (!requireSameOrigin(req)) return send(res,403,{error:"cross_origin_request"});
-      const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body || {};
+      let body;
+    try { body = parseJsonBody(req); } catch (error) { return send(res, error.status || 400, { error: error.message }); }
       const action = body.action || "save";
       if (action === "branch") {
         const branch = body.branch;
