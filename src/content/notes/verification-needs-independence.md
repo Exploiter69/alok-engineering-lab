@@ -1,7 +1,7 @@
 ---
 title: "Verification Needs Independence"
 description: "Producing an artifact and proving the artifact correct are different responsibilities."
-date: 2026-10-07
+date: "2026-10-07"
 tags: [Verification, Reliability, AI]
 status: published
 stage: budding
