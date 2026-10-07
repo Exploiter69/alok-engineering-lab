@@ -1,4 +1,4 @@
-import { clearCookie, cookie, decrypt, OAUTH_COOKIE, parseCookies, randomToken, SESSION_COOKIE, SESSION_TTL } from "../../lib/security.mjs";
+import { clearCookie, cookie, decrypt, encrypt, OAUTH_COOKIE, parseCookies, randomToken, SESSION_COOKIE, SESSION_TTL } from "../../lib/security.mjs";
 import { exchangeCode, currentUser } from "../../lib/github.mjs";
 import { text } from "../../lib/response.mjs";
 
