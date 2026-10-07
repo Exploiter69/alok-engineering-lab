@@ -92,7 +92,7 @@ body {
 
 @font-face {
   font-family: "Lab Sans";
-  src: local("Inter");
+  src: url("/fonts/Inter-Variable.woff2") format("woff2");
   font-display: swap;
   font-style: normal;
   font-weight: 100 900;
@@ -100,10 +100,10 @@ body {
 
 @font-face {
   font-family: "Lab Mono";
-  src: local("JetBrains Mono"), local("DejaVu Sans Mono");
+  src: url("/fonts/JetBrainsMono-Variable.woff2") format("woff2");
   font-display: swap;
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 100 800;
 }
 
  .hero-surface { position: relative; isolation: isolate; }
