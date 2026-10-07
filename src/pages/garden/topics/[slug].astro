@@ -36,14 +36,14 @@ const items = allItems
   <header class="mt-12 max-w-3xl border-b border-neutral-900 pb-10">
     <p class="lab-label mb-4">Garden / Topic</p>
     <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">{topic}</h1>
-    <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">{items.length} connected archive item{items.length === 1 ? "" : "s"}.</p>
+    <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">{items.length} connected archive item{items.length === 1 ? "" : "s"}.</p><p class="mt-4 text-sm leading-6 text-neutral-600">This topic is an index into the same repository-backed records used throughout the Garden.</p>
   </header>
   <section class="mt-10" aria-labelledby="topic-items-heading">
     <div class="mb-5 flex items-baseline justify-between gap-4">
       <p id="topic-items-heading" class="lab-label">Connected knowledge</p>
       <span class="font-mono text-xs text-neutral-600">{topics.length} total topics</span>
     </div>
-    <div class="grid gap-4 md:grid-cols-2">
+    <div>
       {items.map((item, index) => (
         <ContentCard title={item.data.title} description={item.data.description} meta={item.type + " • " + item.data.tags.join(" • ")} href={item.href} eyebrow={item.type.toUpperCase() + " / " + String(index + 1).padStart(2, "0")} headingLevel="h2" />
       ))}
