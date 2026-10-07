@@ -63,6 +63,7 @@ const readingMinutes = Math.max(1, Math.ceil((post.body ?? "").split(/\s+/).filt
   </article>
 
   <RelatedContent items={relatedItems} />
+  <ContentNavigation previous={previous} next={next} />
 
 </main>
 
