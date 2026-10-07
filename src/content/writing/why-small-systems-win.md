@@ -4,6 +4,7 @@ description: "A practical case for keeping personal engineering systems simple, 
 date: 2026-10-06
 tags: [Architecture, Simplicity, Systems]
 status: active
+format: "essay"
 related: [projects:astra-userbot, projects:teldrive-lab, notes:complexity-budget]
 ---
 
