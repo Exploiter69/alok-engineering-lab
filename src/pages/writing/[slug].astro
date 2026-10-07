@@ -46,6 +46,8 @@ const projectItems = relatedItems.filter(item => item.type === "Projects");
 
     <div class="mt-7 flex flex-wrap gap-x-5 gap-y-2 border-y border-neutral-900 py-4 font-mono text-xs text-neutral-500">
       <span>{post.data.date.toDateString()}</span>
+      <span>{post.data.format}</span>
+      {post.data.audience && <span>{post.data.audience}</span>}
       <span>{post.data.tags.join(" • ")}</span>
     </div>
   </header>
