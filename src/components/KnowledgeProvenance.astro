@@ -1,0 +1,29 @@
+---
+interface ProjectItem {
+  title: string;
+  description: string;
+  href: string;
+}
+
+const { projectItems } = Astro.props as { projectItems: ProjectItem[] };
+---
+
+{projectItems.length > 0 && (
+  <section class="mt-12 border-y border-neutral-900 py-8 sm:mt-14" aria-labelledby="provenance-heading">
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="lab-label">Engineering provenance</p>
+        <h2 id="provenance-heading" class="mt-2 text-xl font-bold tracking-tight sm:text-2xl">Derived from project work</h2>
+      </div>
+      <p class="max-w-md text-sm leading-6 text-neutral-500">This knowledge is connected to project records in the Lab, keeping ideas traceable to engineering work.</p>
+    </div>
+    <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+      {projectItems.map(item => (
+        <li class="rounded-xl border border-neutral-900 p-4">
+          <a href={item.href} class="font-medium text-neutral-300 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{item.title} ↗</a>
+          <p class="mt-2 text-sm leading-6 text-neutral-500">{item.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
