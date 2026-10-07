@@ -12,18 +12,21 @@ const staticRoutes = [
   "/projects/",
   "/timeline/",
   "/writing/",
+  "/evidence/",
 ];
 
 export const GET: APIRoute = async ({ site }) => {
   const base = site ?? new URL("https://www.alokthakur.me");
+  const visible = (entry: { data: { status: string } }) => entry.data.status !== "draft";
   const entries = [
     ...staticRoutes,
-    ...(await getCollection("projects")).map((entry) => "/projects/" + entry.id + "/"),
-    ...(await getCollection("writing")).map((entry) => "/writing/" + entry.id + "/"),
-    ...(await getCollection("notes")).map((entry) => "/notes/" + entry.id + "/"),
-    ...(await getCollection("experiments")).map((entry) => "/experiments/" + entry.id + "/"),
-    ...(await getCollection("timeline")).map((entry) => "/timeline/" + entry.id + "/"),
-    ...(await getCollection("changelog")).map((entry) => "/changelog/" + entry.id + "/"),
+    ...(await getCollection("projects")).filter(visible).map((entry) => "/projects/" + entry.id + "/"),
+    ...(await getCollection("writing")).filter(visible).map((entry) => "/writing/" + entry.id + "/"),
+    ...(await getCollection("notes")).filter(visible).map((entry) => "/notes/" + entry.id + "/"),
+    ...(await getCollection("experiments")).filter(visible).map((entry) => "/experiments/" + entry.id + "/"),
+    ...(await getCollection("timeline")).filter(visible).map((entry) => "/timeline/" + entry.id + "/"),
+    ...(await getCollection("changelog")).filter(visible).map((entry) => "/changelog/" + entry.id + "/"),
+    ...(await getCollection("evidence")).filter(visible).map((entry) => "/evidence/" + entry.id + "/"),
   ];
 
   const urls = [...new Set(entries)].map((route) => new URL(route, base).href);
