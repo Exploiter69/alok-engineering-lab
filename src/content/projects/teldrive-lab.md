@@ -15,6 +15,13 @@ stack:
   - rclone
   - Local Storage
 objective: "Add cataloging, planning, verification and controlled maintenance around an existing TelDrive deployment without becoming a second storage authority."
+currentFocus: "Cataloging, search, analytics, verification and controlled maintenance around the production TelDrive authority."
+knownProblems:
+  - "The surrounding corpus is large enough that derived indexes must remain rebuildable and trustworthy."
+  - "Mutation paths require stronger controls than read-only observation."
+futureWork:
+  - "Expand safe reporting and restore planning."
+  - "Keep consequential mutation behind authorization, execution and verification evidence."
 lifecycle: "maintaining"
 lifecycleSince: 2026-10-06
 lifecycleHistory:
