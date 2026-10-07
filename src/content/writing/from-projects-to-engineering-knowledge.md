@@ -1,7 +1,7 @@
 ---
 title: "From Projects to Engineering Knowledge"
 description: "The most durable knowledge in an Engineering Lab comes from extracting reusable principles from real systems, failures and decisions."
-date: 2026-10-07
+date: "2026-10-07"
 tags: [Engineering, Architecture, Learning]
 status: published
 related:
