@@ -43,8 +43,7 @@ function relatedReferences(source) {
   }
 
   const block = [];
-  const lines = source.split("
-");
+  const lines = source.split("\n");
   const start = lines.findIndex((line) => /^related:\s*$/.test(line));
 
   if (start === -1) return [];
@@ -90,6 +89,7 @@ for (const collection of collections) {
         continue;
       }
       seenReferences.add(reference);
+
 
       const separator = reference.indexOf(":");
 
