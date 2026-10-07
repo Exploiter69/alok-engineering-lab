@@ -21,13 +21,13 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
 <Layout>
 <main class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:py-24">
 
-  <section class="hero-surface grid gap-10 border-b border-neutral-900 pb-16 lg:grid-cols-[1.3fr_0.7fr] lg:gap-16 lg:pb-20">
-    <div>
+  <section class="hero-surface grid gap-10 border-b border-lab pb-16 lg:grid-cols-[1.3fr_0.7fr] lg:gap-16 lg:pb-20">
+    <div class="hero-stagger">
       <p class="lab-label mb-6">Alok Thakur / Engineering Lab</p>
-      <h1 class="max-w-4xl text-5xl font-bold leading-[0.98] tracking-[-0.04em] sm:text-7xl lg:text-8xl">
-        I build reliable<br />automation and AI systems,<br /><span class="text-neutral-500">and document what breaks.</span>
+      <h1 class="type-display max-w-4xl font-bold text-balance">
+        I build reliable automation and AI systems, <span class="text-subtle">and document what breaks.</span>
       </h1>
-      <p class="mt-8 max-w-2xl text-lg leading-8 text-neutral-300 sm:text-xl">{SITE.tagline} Python · asyncio · Linux · AI agents.</p>
+      <p class="mt-8 max-w-2xl type-body-lg text-muted">{SITE.tagline} Python · asyncio · Linux · AI agents.</p>
       <div class="mt-8 flex flex-wrap gap-3">
         <a href="/projects" class="inline-flex min-h-11 items-center rounded-full border border-white bg-white px-5 py-2.5 text-sm font-medium text-black transition hover:bg-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
           View projects <span aria-hidden="true" class="ml-2">→</span>
@@ -38,31 +38,32 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
       </div>
     </div>
 
-    <aside class="self-end border-t border-neutral-900 pt-6 lg:border-l lg:border-t-0 lg:pl-8">
-      <p class="lab-label">What this Lab is</p>
-      <p class="mt-3 text-sm leading-7 text-neutral-400">A public engineering record: projects, experiments, technical writing, notes, evidence and the decisions connecting them.</p>
-      <dl class="mt-7 space-y-4 border-t border-neutral-900 pt-5 text-sm">
-        <div class="flex justify-between gap-4"><dt class="text-neutral-600">Focus</dt><dd class="text-right text-neutral-300">AI · Systems · Automation</dd></div>
-        <div class="flex justify-between gap-4"><dt class="text-neutral-600">Model</dt><dd class="text-right text-neutral-300">Static · Repository-backed</dd></div>
-        <div class="flex justify-between gap-4"><dt class="text-neutral-600">Status</dt><dd class="text-right text-lime-300"><span aria-hidden="true">●</span> Building</dd></div>
+    <aside class="surface-1 self-end rounded-[var(--radius-lg)] border border-lab p-6 shadow-[var(--shadow-2)] lg:p-7">
+      <p class="lab-label">System status</p>
+      <div class="mt-4 flex items-center gap-3"><span class="h-2.5 w-2.5 rounded-full bg-lime-400 shadow-[0_0_0_4px_var(--accent-soft)]" aria-hidden="true"></span><span class="font-mono text-sm uppercase tracking-[0.14em] text-accent">Building</span></div>
+      <p class="mt-3 text-sm leading-7 text-muted">Static by design. Content is generated from repository-backed records; there is no runtime database or telemetry layer.</p>
+      <dl class="mt-6 space-y-3 border-t border-lab pt-5 text-sm">
+        <div class="flex justify-between gap-4"><dt class="text-faint">Runtime</dt><dd class="text-right text-muted">None</dd></div>
+        <div class="flex justify-between gap-4"><dt class="text-faint">Data</dt><dd class="text-right text-muted">Git + MDX</dd></div>
+        <div class="flex justify-between gap-4"><dt class="text-faint">Delivery</dt><dd class="text-right text-muted">Static HTML</dd></div>
       </dl>
     </aside>
   </section>
 
-  <section class="border-b border-neutral-900 py-7" aria-labelledby="proof-heading">
+  <section class="border-b border-lab/g py-7" aria-labelledby="proof-heading">
     <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
       <div><p class="lab-label mb-2">Proof / Archive</p><h2 id="proof-heading" class="text-2xl font-bold tracking-tight sm:text-3xl">The work is the evidence.</h2></div>
       <a href="/explore" class="inline-flex min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Search the archive →</a>
     </div>
     <div class="mt-6 grid grid-cols-2 gap-px overflow-hidden border border-neutral-900 bg-neutral-900 sm:grid-cols-4">
-      <div class="bg-black p-5"><p class="font-mono text-2xl font-bold text-white">{projects.length}</p><p class="mt-1 text-xs text-neutral-500">engineering projects</p></div>
-      <div class="bg-black p-5"><p class="font-mono text-2xl font-bold text-white">{evidence.length}</p><p class="mt-1 text-xs text-neutral-500">evidence records</p></div>
-      <div class="bg-black p-5"><p class="font-mono text-2xl font-bold text-white">{writing.length + notes.length}</p><p class="mt-1 text-xs text-neutral-500">published knowledge records</p></div>
-      <div class="bg-black p-5"><p class="font-mono text-2xl font-bold text-white">{experiments.length}</p><p class="mt-1 text-xs text-neutral-500">experiments</p></div>
+      <div class="bg-black p-5"><p class="font-mono text-2xl font-bold text-white" data-counter={projects.length}>{projects.length}</p><p class="mt-1 text-xs text-neutral-500">engineering projects</p></div>
+      <div class="bg-black p-5"><p class="font-mono text-2xl font-bold text-white" data-counter={evidence.length}>{evidence.length}</p><p class="mt-1 text-xs text-neutral-500">evidence records</p></div>
+      <div class="bg-black p-5"><p class="font-mono text-2xl font-bold text-white" data-counter={writing.length + notes.length}>{writing.length + notes.length}</p><p class="mt-1 text-xs text-neutral-500">published knowledge records</p></div>
+      <div class="bg-black p-5"><p class="font-mono text-2xl font-bold text-white" data-counter={experiments.length}>{experiments.length}</p><p class="mt-1 text-xs text-neutral-500">experiments</p></div>
     </div>
   </section>
 
-  <section class="border-b border-neutral-900 py-7 sm:py-8" aria-labelledby="currently-heading">
+  <section class="border-b border-lab/g py-7 sm:py-8" aria-labelledby="currently-heading">
     <div class="grid gap-3 sm:grid-cols-[140px_1fr] sm:gap-8">
       <p id="currently-heading" class="lab-label">Currently</p>
       <p class="max-w-3xl text-base leading-7 text-neutral-300 sm:text-lg">{SITE.currently}</p>
@@ -88,10 +89,10 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
       <a href="/garden" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">Explore Lab →</a>
     </div>
     <div class="mt-2 grid gap-x-8 md:grid-cols-2">
-      <div class="border-b border-neutral-900 py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Experiments</p><span class="font-mono text-xs text-neutral-600">{experiments.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Tests, prototypes and boundary checks where ideas meet implementation.</p><a href="/experiments" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Browse experiments →</a></div>
-      <div class="border-b border-neutral-900 py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Evidence</p><span class="font-mono text-xs text-neutral-600">{evidence.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Verification, failures, benchmarks and observations supporting engineering claims.</p><a href="/evidence" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Inspect evidence →</a></div>
-      <div class="border-b border-neutral-900 py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Knowledge</p><span class="font-mono text-xs text-neutral-600">{writing.length + notes.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Writing and notes distilled from actual engineering work.</p><a href="/garden" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Explore knowledge →</a></div>
-      <div class="border-b border-neutral-900 py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Journey</p><span class="font-mono text-xs text-neutral-600">{timeline.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Milestones, turning points and durable project history.</p><a href="/timeline" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Follow the journey →</a></div>
+      <div class="border-b border-lab/g py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Experiments</p><span class="font-mono text-xs text-neutral-600">{experiments.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Tests, prototypes and boundary checks where ideas meet implementation.</p><a href="/experiments" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Browse experiments →</a></div>
+      <div class="border-b border-lab/g py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Evidence</p><span class="font-mono text-xs text-neutral-600">{evidence.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Verification, failures, benchmarks and observations supporting engineering claims.</p><a href="/evidence" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Inspect evidence →</a></div>
+      <div class="border-b border-lab/g py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Knowledge</p><span class="font-mono text-xs text-neutral-600">{writing.length + notes.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Writing and notes distilled from actual engineering work.</p><a href="/garden" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Explore knowledge →</a></div>
+      <div class="border-b border-lab/g py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Journey</p><span class="font-mono text-xs text-neutral-600">{timeline.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Milestones, turning points and durable project history.</p><a href="/timeline" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Follow the journey →</a></div>
     </div>
   </section>
 

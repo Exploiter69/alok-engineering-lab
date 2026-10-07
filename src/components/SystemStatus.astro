@@ -1,0 +1,19 @@
+---
+interface Props { projects: number; evidence: number; }
+const { projects, evidence } = Astro.props;
+---
+<aside class="surface-1 rounded-[var(--radius-lg)] border border-lab p-6 shadow-[var(--shadow-2)]" aria-label="Engineering Lab system status">
+  <div class="flex items-center justify-between gap-4">
+    <p class="lab-label">System status</p>
+    <span class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-lime-300"><span class="h-2 w-2 rounded-full bg-lime-400" aria-hidden="true"></span>Building</span>
+  </div>
+  <div class="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-lab bg-[var(--border)]">
+    <div class="bg-[var(--surface-0)] p-4"><p class="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">Projects</p><p class="mt-2 text-xl font-bold">{projects}</p></div>
+    <div class="bg-[var(--surface-0)] p-4"><p class="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">Evidence</p><p class="mt-2 text-xl font-bold">{evidence}</p></div>
+  </div>
+  <dl class="mt-5 space-y-3 border-t border-lab pt-5 text-sm">
+    <div class="flex justify-between gap-4"><dt class="text-faint">Runtime</dt><dd class="text-muted">Static</dd></div>
+    <div class="flex justify-between gap-4"><dt class="text-faint">Source</dt><dd class="text-muted">Git + MDX</dd></div>
+    <div class="flex justify-between gap-4"><dt class="text-faint">Cost</dt><dd class="text-muted">₹0 / $0</dd></div>
+  </dl>
+</aside>
