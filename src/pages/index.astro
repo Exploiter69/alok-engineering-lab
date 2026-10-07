@@ -43,7 +43,6 @@ const timeline = (await getCollection("timeline"))
 
 <main class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:py-24">
 
-  <!-- Identity -->
   <section class="max-w-4xl">
     <p class="lab-label mb-6">
       ENGINEERING LAB / DIGITAL GARDEN
@@ -83,22 +82,16 @@ const timeline = (await getCollection("timeline"))
     </div>
   </section>
 
-
-  <!-- Currently -->
   <section class="mt-20 border-y border-neutral-900 py-6 sm:mt-24">
     <div class="grid gap-3 sm:grid-cols-[140px_1fr] sm:gap-8">
       <p class="lab-label">Currently</p>
-
       <p class="max-w-2xl text-neutral-300">
         {SITE.currently}
       </p>
     </div>
   </section>
 
-
-  <!-- Selected Work -->
   <section class="mt-20 sm:mt-24">
-
     <div class="flex items-end justify-between gap-4">
       <div>
         <p class="lab-label mb-2">01 / Build</p>
@@ -107,10 +100,7 @@ const timeline = (await getCollection("timeline"))
         </h2>
       </div>
 
-      <a
-        href="/projects"
-        class="hidden text-sm text-neutral-400 transition hover:text-white sm:block"
-      >
+      <a href="/projects" class="hidden text-sm text-neutral-400 transition hover:text-white sm:block">
         See all →
       </a>
     </div>
@@ -121,6 +111,7 @@ const timeline = (await getCollection("timeline"))
           <ContentCard
             title={project.data.title}
             description={project.data.description}
+            status={project.data.status}
             meta={project.data.stack?.join(" • ")}
             href={`/projects/${project.id}`}
             eyebrow="PROJECT / 01"
@@ -130,19 +121,12 @@ const timeline = (await getCollection("timeline"))
       }
     </div>
 
-    <a
-      href="/projects"
-      class="mt-5 inline-block text-sm text-neutral-400 transition hover:text-white sm:hidden"
-    >
+    <a href="/projects" class="mt-5 inline-block text-sm text-neutral-400 transition hover:text-white sm:hidden">
       See all projects →
     </a>
-
   </section>
 
-
-  <!-- From the Lab -->
   <section class="mt-20 sm:mt-24">
-
     <div class="flex items-end justify-between gap-4">
       <div>
         <p class="lab-label mb-2">02 / Explore</p>
@@ -151,10 +135,7 @@ const timeline = (await getCollection("timeline"))
         </h2>
       </div>
 
-      <a
-        href="/experiments"
-        class="hidden text-sm text-neutral-400 transition hover:text-white sm:block"
-      >
+      <a href="/experiments" class="hidden text-sm text-neutral-400 transition hover:text-white sm:block">
         See all →
       </a>
     </div>
@@ -173,19 +154,12 @@ const timeline = (await getCollection("timeline"))
       }
     </div>
 
-    <a
-      href="/experiments"
-      class="mt-5 inline-block text-sm text-neutral-400 transition hover:text-white sm:hidden"
-    >
+    <a href="/experiments" class="mt-5 inline-block text-sm text-neutral-400 transition hover:text-white sm:hidden">
       See all experiments →
     </a>
-
   </section>
 
-
-  <!-- Knowledge -->
   <section class="mt-20 sm:mt-24">
-
     <div>
       <p class="lab-label mb-2">03 / Learn</p>
       <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
@@ -194,7 +168,6 @@ const timeline = (await getCollection("timeline"))
     </div>
 
     <div class="mt-10">
-
       <div class="flex items-baseline justify-between gap-4">
         <p class="lab-label">Writing</p>
         <a href="/writing" class="text-sm text-neutral-400 transition hover:text-white">
@@ -215,11 +188,9 @@ const timeline = (await getCollection("timeline"))
           ))
         }
       </div>
-
     </div>
 
     <div class="mt-12">
-
       <div class="flex items-baseline justify-between gap-4">
         <p class="lab-label">Notes</p>
         <a href="/notes" class="text-sm text-neutral-400 transition hover:text-white">
@@ -240,15 +211,10 @@ const timeline = (await getCollection("timeline"))
           ))
         }
       </div>
-
     </div>
-
   </section>
 
-
-  <!-- Journey -->
   <section class="mt-20 sm:mt-24">
-
     <div class="flex items-end justify-between gap-4">
       <div>
         <p class="lab-label mb-2">04 / Continue</p>
@@ -257,10 +223,7 @@ const timeline = (await getCollection("timeline"))
         </h2>
       </div>
 
-      <a
-        href="/timeline"
-        class="hidden text-sm text-neutral-400 transition hover:text-white sm:block"
-      >
+      <a href="/timeline" class="hidden text-sm text-neutral-400 transition hover:text-white sm:block">
         See all →
       </a>
     </div>
@@ -280,13 +243,9 @@ const timeline = (await getCollection("timeline"))
       }
     </div>
 
-    <a
-      href="/timeline"
-      class="mt-5 inline-block text-sm text-neutral-400 transition hover:text-white sm:hidden"
-    >
+    <a href="/timeline" class="mt-5 inline-block text-sm text-neutral-400 transition hover:text-white sm:hidden">
       See the full timeline →
     </a>
-
   </section>
 
 </main>
