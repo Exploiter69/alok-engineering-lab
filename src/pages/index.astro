@@ -21,16 +21,16 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
 <Layout>
 <main class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:py-24">
 
-  <section class="grid gap-10 border-b border-neutral-900 pb-16 lg:grid-cols-[1.3fr_0.7fr] lg:gap-16 lg:pb-20">
+  <section class="hero-surface grid gap-10 border-b border-neutral-900 pb-16 lg:grid-cols-[1.3fr_0.7fr] lg:gap-16 lg:pb-20">
     <div>
       <p class="lab-label mb-6">Alok Thakur / Engineering Lab</p>
       <h1 class="max-w-4xl text-5xl font-bold leading-[0.98] tracking-[-0.04em] sm:text-7xl lg:text-8xl">
-        Building systems.<br />Exploring technology.<br /><span class="text-neutral-500">Documenting the journey.</span>
+        I build reliable<br />automation and AI systems,<br /><span class="text-neutral-500">and document what breaks.</span>
       </h1>
-      <p class="mt-8 max-w-2xl text-lg leading-8 text-neutral-300 sm:text-xl">{SITE.tagline}</p>
+      <p class="mt-8 max-w-2xl text-lg leading-8 text-neutral-300 sm:text-xl">{SITE.tagline} Python · asyncio · Linux · AI agents.</p>
       <div class="mt-8 flex flex-wrap gap-3">
         <a href="/projects" class="inline-flex min-h-11 items-center rounded-full border border-white bg-white px-5 py-2.5 text-sm font-medium text-black transition hover:bg-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-          Explore the Lab <span aria-hidden="true" class="ml-2">→</span>
+          View projects <span aria-hidden="true" class="ml-2">→</span>
         </a>
         <a href="/about" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-5 py-2.5 text-sm font-medium text-neutral-300 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
           About Alok
@@ -49,7 +49,20 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
     </aside>
   </section>
 
-  <section class="border-b border-neutral-900 py-7 sm:py-8" aria-labelledby="currently-heading">
+  <section class="border-b border-neutral-900 py-7" aria-labelledby="proof-heading">
+    <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+      <div><p class="lab-label mb-2">Proof / Archive</p><h2 id="proof-heading" class="text-2xl font-bold tracking-tight sm:text-3xl">The work is the evidence.</h2></div>
+      <a href="/explore" class="inline-flex min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Search the archive →</a>
+    </div>
+    <div class="mt-6 grid grid-cols-2 gap-px overflow-hidden border border-neutral-900 bg-neutral-900 sm:grid-cols-4">
+      <div class="bg-black p-5"><p class="font-mono text-2xl font-bold text-white">{projects.length}</p><p class="mt-1 text-xs text-neutral-500">engineering projects</p></div>
+      <div class="bg-black p-5"><p class="font-mono text-2xl font-bold text-white">{evidence.length}</p><p class="mt-1 text-xs text-neutral-500">evidence records</p></div>
+      <div class="bg-black p-5"><p class="font-mono text-2xl font-bold text-white">{writing.length + notes.length}</p><p class="mt-1 text-xs text-neutral-500">published knowledge records</p></div>
+      <div class="bg-black p-5"><p class="font-mono text-2xl font-bold text-white">{experiments.length}</p><p class="mt-1 text-xs text-neutral-500">experiments</p></div>
+    </div>
+  </section>
+
+  <section class="border-b sm:py-8" aria-labelledby="currently-heading">
     <div class="grid gap-3 sm:grid-cols-[140px_1fr] sm:gap-8">
       <p id="currently-heading" class="lab-label">Currently</p>
       <p class="max-w-3xl text-base leading-7 text-neutral-300 sm:text-lg">{SITE.currently}</p>
@@ -72,7 +85,7 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
   <section class="mt-20 sm:mt-24" aria-labelledby="lab-heading">
     <div class="flex items-end justify-between gap-4 border-b border-neutral-900 pb-5">
       <div><p class="lab-label mb-2">02 / Explore</p><h2 id="lab-heading" class="text-3xl font-bold tracking-tight sm:text-4xl">The Lab</h2></div>
-      <a href="/garden" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">Explore Garden →</a>
+      <a href="/garden" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">Explore Lab →</a>
     </div>
     <div class="mt-2 grid gap-x-8 md:grid-cols-2">
       <div class="border-b border-neutral-900 py-8"><div class="flex items-baseline justify-between gap-4"><p class="lab-label">Experiments</p><span class="font-mono text-xs text-neutral-600">{experiments.length}</span></div><p class="mt-3 max-w-lg text-sm leading-6 text-neutral-500">Tests, prototypes and boundary checks where ideas meet implementation.</p><a href="/experiments" class="mt-4 inline-flex min-h-11 items-center text-sm text-neutral-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Browse experiments →</a></div>
@@ -94,12 +107,28 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
     </div>
   </section>
 
+  <section class="mt-20 sm:mt-24" aria-labelledby="activity-heading">
+    <div class="flex items-end justify-between gap-4 border-b border-neutral-900 pb-5"><div><p class="lab-label mb-2">04 / Activity</p><h2 id="activity-heading" class="text-3xl font-bold tracking-tight sm:text-4xl">Recent work</h2></div><a href="/explore" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">Explore everything →</a></div>
+    <div class="mt-2">
+      {writing.slice(0, 3).map((item, index) => (
+        <ContentCard title={item.data.title} description={item.data.description} meta={"Writing · " + item.data.date.toDateString()} href={"/writing/" + item.id} eyebrow={"ACTIVITY / " + String(index + 1).padStart(2, "0")} compact />
+      ))}
+    </div>
+  </section>
+
   <section class="mt-20 border-t border-neutral-900 pt-8 sm:mt-24" aria-labelledby="journey-heading">
     <div class="flex items-end justify-between gap-4"><div><p class="lab-label mb-2">04 / Continue</p><h2 id="journey-heading" class="text-3xl font-bold tracking-tight sm:text-4xl">Engineering Journey</h2></div><a href="/timeline" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">Full timeline →</a></div>
     <div class="mt-6">
       {timeline.slice(0, 3).map((item, index) => (
         <ContentCard title={item.data.title} description={item.data.description} meta={item.data.date.toDateString()} href={`/timeline/${item.id}`} eyebrow={`MILESTONE / ${String(index + 1).padStart(2, "0")}`} compact />
       ))}
+    </div>
+  </section>
+
+  <section class="mt-20 border-t border-neutral-900 pt-10 sm:mt-24" aria-labelledby="contact-heading">
+    <div class="grid gap-6 sm:grid-cols-[1fr_auto] sm:items-end">
+      <div><p class="lab-label mb-2">05 / Connect</p><h2 id="contact-heading" class="text-3xl font-bold tracking-tight sm:text-4xl">Build something worth documenting.</h2><p class="mt-3 max-w-2xl text-base leading-7 text-neutral-400">The Lab is public by design. For collaboration, technical discussion or project feedback, start with GitHub.</p></div>
+      <a href={SITE.links.github} rel="me external" target="_blank" class="inline-flex min-h-11 items-center justify-center rounded-full border border-white px-5 py-2.5 text-sm font-medium text-white transition hover:bg-white hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">GitHub <span aria-hidden="true" class="ml-2">↗</span></a>
     </div>
   </section>
 
