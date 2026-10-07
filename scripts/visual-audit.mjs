@@ -51,6 +51,11 @@ const viewports = {
   desktop1440: { width: 1440, height: 900 },
 };
 
+const ciViewportNames = new Set(["mobile320", "mobile390", "tablet768", "desktop1440"]);
+const auditViewports = process.env.CI
+  ? Object.fromEntries(Object.entries(viewports).filter(([name]) => ciViewportNames.has(name)))
+  : viewports;
+
 const auditDir = path.resolve("audit");
 const screenshotRoutes = new Set(["/", "/projects/", "/explore/", "/garden/", "/about/", "/contact/"]);
 
@@ -60,7 +65,7 @@ await fs.mkdir(auditDir, { recursive: true });
 const browser = await chromium.launch({ timeout: 15000 });
 const results = [];
 
-for (const [device, viewport] of Object.entries(viewports)) {
+for (const [device, viewport] of Object.entries(auditViewports)) {
   const deviceDir = path.join(auditDir, device);
   await fs.mkdir(deviceDir, { recursive: true });
 
