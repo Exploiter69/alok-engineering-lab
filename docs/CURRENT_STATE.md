@@ -44,7 +44,17 @@ Confirmed:
 - alokthakur.me and www.alokthakur.me are verified Vercel project domains
 - v1.0.0 history remains preserved
 
-The remaining release checkpoint is a Git tag. The available GitHub connector has no tag/release write operation, so this is not represented by a fake branch.
+The release tag is not represented in the repository because the available GitHub connector cannot create tags; no branch is used as a fake tag.
+
+## CP7 status
+CP7 Long-Term Maintenance is complete at the repository level.
+
+Confirmed:
+- build now blocks on invalid content relationships
+- maintenance and release discipline are documented
+- content integrity is captured as a durable note
+- CP7 changelog entry is published
+- no new paid service or infrastructure was introduced
 
 ## Deployment
 Production is configured for Vercel with www.alokthakur.me as the canonical site URL and Namecheap as the registrar/DNS provider. Vercel currently reports both custom domains as verified.
