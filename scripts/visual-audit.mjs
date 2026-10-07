@@ -417,7 +417,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
         const interaction = await page.evaluate(() => {
           const search = document.querySelector("#explore-search");
           const all = document.querySelector('[data-type="all"]');
-          const projects = document.querySelector('[data-type="Projects"]');
+          const projects = document.querySelector('button[data-type="Projects"]');
           const items = [...document.querySelectorAll("[data-explore-item]")];
           if (!(search instanceof HTMLInputElement) || !(projects instanceof HTMLButtonElement)) return { ok: false, reason: "Explore controls missing" };
           const before = items.filter(item => !item.hidden).length;
