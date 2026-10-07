@@ -17,9 +17,9 @@ const { projectItems } = Astro.props as { projectItems: ProjectItem[] };
       </div>
       <p class="max-w-md text-sm leading-6 text-neutral-500">This knowledge is connected to project records in the Lab, keeping ideas traceable to engineering work.</p>
     </div>
-    <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+    <ul class="mt-6 divide-y divide-neutral-900 border-y border-neutral-900">
       {projectItems.map(item => (
-        <li class="rounded-xl border border-neutral-900 p-4">
+        <li class="py-5">
           <a href={item.href} class="font-medium text-neutral-300 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{item.title} ↗</a>
           <p class="mt-2 text-sm leading-6 text-neutral-500">{item.description}</p>
         </li>
