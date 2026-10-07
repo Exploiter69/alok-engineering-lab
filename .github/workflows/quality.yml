@@ -46,3 +46,6 @@ jobs:
 
       - name: Browser quality audit
         run: npm run audit
+
+      - name: Performance quality audit
+        run: npm run audit:performance
