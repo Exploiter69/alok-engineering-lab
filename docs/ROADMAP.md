@@ -124,3 +124,10 @@ Preferred workflow:
 **inspect → implement → verify → review → checkpoint**
 
 The repository and current Git state remain the strongest sources of truth.
+
+
+### CP9 — Knowledge Expansion
+**Complete.** Added reusable engineering knowledge derived from actual project architecture, constraints and verification, plus a traceable knowledge-extraction experiment and writing record.
+
+### CP10 — Project Intelligence
+**Complete.** Project records now include structured objectives, lifecycle, architecture summaries, decisions and lessons. Project detail pages expose linked knowledge and project-specific timeline records without introducing runtime infrastructure.
