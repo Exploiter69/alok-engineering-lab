@@ -90,9 +90,9 @@ const initialData = JSON.stringify(records).replaceAll("<", "\\u003c");
   const searchInput = document.getElementById("explore-search");
   const status = document.getElementById("explore-status");
   const empty = document.getElementById("explore-empty");
-  const items = Array.from(document.querySelectorAll("[data-explore-item]"));
-  const typeButtons = Array.from(document.querySelectorAll("[data-type]"));
-  const topicButtons = Array.from(document.querySelectorAll("[data-topic]"));
+  const items = Array.from(document.querySelectorAll<HTMLElement>("[data-explore-item]"));
+  const typeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-type]"));
+  const topicButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-topic]"));
   let activeType = "all";
   let activeTopic = "";
 
