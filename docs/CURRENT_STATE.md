@@ -65,11 +65,34 @@ Confirmed:
 - the repository remains the source of truth
 - no database, CMS, analytics, runtime API or paid service was introduced
 
-## Deployment
-Production is configured for Vercel with www.alokthakur.me as the canonical site URL and Namecheap as the registrar/DNS provider. Vercel currently reports both custom domains as verified.
+## CP9 status
+CP9 Knowledge Expansion is complete. The archive contains reusable engineering principles extracted from actual project architecture, constraints and verification.
+
+## CP10 status
+CP10 Project Intelligence is complete. Every project has structured objective, lifecycle, architecture summary, decisions and lessons metadata, and project detail pages expose linked knowledge and project-specific timeline records.
+
+## Post-CP10 stabilization
+The first post-CP10 audit is now closed.
+
+Completed:
+- Garden is part of the primary desktop and mobile navigation.
+- Primary navigation exposes active-route context with `aria-current`.
+- Garden has lightweight in-browser search over published notes, writing and experiments.
+- Garden topic anchors use deterministic, working targets.
+- Additional project-derived knowledge was added as notes, writing and an experiment.
+- Changelog and timeline records document this stabilization pass.
+- No database, search service, analytics, runtime API, framework migration or paid service was introduced.
 
 ## Verification baseline
-The repository contains a Playwright-based visual/quality audit. CP6 upgrades it to cover every generated HTML route and run automatically after the production build.
+The repository contains a Playwright-based visual/quality audit covering every generated HTML route at desktop and mobile viewports.
+
+Latest confirmed verification for the stabilization work:
+- GitHub Actions Quality run for `e39163d`: success
+- Vercel production deployment for `e39163d`: READY
+- build completed successfully before the browser audit
+
+## Deployment
+Production is configured for Vercel with www.alokthakur.me as the canonical site URL and Namecheap as the registrar/DNS provider. Vercel currently reports both custom domains as verified.
 
 ## Development rules
 - Inspect before modifying.
@@ -80,10 +103,3 @@ The repository contains a Playwright-based visual/quality audit. CP6 upgrades it
 - Use Git checkpoints.
 - Keep the project at ₹0 / $0.
 - Treat current repository/Git state as the strongest source of truth.
-
-
-## CP9 status
-CP9 Knowledge Expansion is complete. The archive now contains reusable engineering principles extracted from actual projects, with explicit project relationships and provenance.
-
-## CP10 status
-CP10 Project Intelligence is complete. Every project now has structured objective, lifecycle, architecture summary, decisions and lessons metadata, and project detail pages expose linked knowledge and project-specific timeline records.
