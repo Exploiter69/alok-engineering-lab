@@ -35,9 +35,10 @@ for (const collection of collections) {
     const fm = frontmatter(source, file);
     if (!fm) continue;
 
-    for (const key of ["title", "description", "date", "tags", "status"]) {
+    for (const key of ["title", "description", "date", "status"]) {
       if (!value(fm, key)) errors.push(file + ": missing required metadata " + key);
     }
+    if (!/^tags:\s*.*$/m.test(fm)) errors.push(file + ": missing required metadata tags");
 
     const status = value(fm, "status");
     if (status && !["draft", "active", "archived", "published"].includes(status)) {
