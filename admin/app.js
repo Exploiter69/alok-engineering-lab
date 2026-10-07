@@ -20,7 +20,7 @@ function shell(body) {
       <aside class="sidebar">
         <a class="brand" href="/">Alok / Engineering Lab <span>Admin</span></a>
         <nav id="collections" aria-label="Collections"></nav>
-        <button id="new-content" class="button secondary full">+ New content</button>
+        <button id="new-content" class="button secondary full">+ New content</button><button id="site-control" class="button secondary full">Site control</button>
         <form id="logout"><input type="hidden" value="${esc(state.session.csrf)}"><button class="link-button" type="submit">Log out</button></form>
       </aside>
       <main class="workspace">${body}</main>
@@ -31,6 +31,7 @@ function shell(body) {
     location.reload();
   });
   document.querySelector("#new-content")?.addEventListener("click", () => editor(state.collection || Object.keys(state.schema.collections)[0]));
+  document.querySelector("#site-control")?.addEventListener("click", siteControl);
 }
 
 async function loadCollections() {
@@ -44,6 +45,52 @@ async function loadCollections() {
     button.addEventListener("click", () => list(name));
     nav.appendChild(button);
   }
+}
+
+
+async function siteControl() {
+  const data = await api("/api/site-control");
+  shell(`
+    <header class="page-head"><p class="eyebrow">SITE CONTROL</p><h1>Site configuration</h1><p class="muted">Edit repository-backed identity, navigation and redirects. Save only to an admin branch.</p></header>
+    <section class="editor-grid">
+      <div class="card">
+        <label for="site-json">Site identity / SEO
+          <textarea id="site-json" class="body-editor" rows="22">${esc(JSON.stringify(data.site, null, 2))}</textarea>
+        </label>
+        <label for="nav-json">Navigation
+          <textarea id="nav-json" class="body-editor" rows="18">${esc(JSON.stringify(data.navigation, null, 2))}</textarea>
+        </label>
+      </div>
+      <div class="card">
+        <label for="redirects-json">Redirects
+          <textarea id="redirects-json" class="body-editor" rows="18">${esc(JSON.stringify(data.redirects, null, 2))}</textarea>
+        </label>
+        <label for="site-branch">Admin branch
+          <input id="site-branch" placeholder="admin/site-control-${Date.now().toString(36)}">
+        </label>
+        <div class="actions"><button id="site-save" class="button" type="button">Validate & save</button><button id="site-back" class="button secondary" type="button">Dashboard</button></div>
+        <div id="site-validation" class="validation" aria-live="polite"><strong>Ready.</strong> The server validates all three files before committing.</div>
+      </div>
+    </section>`);
+  loadCollections();
+  document.querySelector("#site-save").addEventListener("click", async () => {
+    const validation = document.querySelector("#site-validation");
+    try {
+      const values = {
+        site: JSON.parse(document.querySelector("#site-json").value),
+        navigation: JSON.parse(document.querySelector("#nav-json").value),
+        redirects: JSON.parse(document.querySelector("#redirects-json").value),
+      };
+      const branchName = document.querySelector("#site-branch").value.trim() || `admin/site-control-${Date.now().toString(36)}`;
+      document.querySelector("#site-branch").value = branchName;
+      await api("/api/content", { method: "POST", body: JSON.stringify({ action: "branch", branch: branchName }) });
+      const result = await api("/api/site-control", { method: "POST", body: JSON.stringify({ branch: branchName, values }) });
+      validation.innerHTML = `<strong>✓ Saved to branch</strong><pre>${esc(JSON.stringify(result.commits, null, 2))}</pre>`;
+    } catch (error) {
+      validation.innerHTML = `<strong>Action failed</strong><pre>${esc(error.message)}</pre>`;
+    }
+  });
+  document.querySelector("#site-back").addEventListener("click", dashboard);
 }
 
 async function dashboard() {

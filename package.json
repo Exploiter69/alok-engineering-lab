@@ -15,14 +15,15 @@
     "stop-dev": "npx astro dev stop",
     "clean-dev": "./scripts/clean-dev.sh",
     "start": "npm run clean-dev && npm run dev",
-    "validate": "npm run validate:metadata && npm run validate:links && npm run validate:lifecycle && npm run validate:writing",
+    "validate": "npm run validate:site-control && npm run validate:metadata && npm run validate:links && npm run validate:lifecycle && npm run validate:writing",
     "validate:metadata": "node scripts/validate-content-metadata.mjs",
     "validate:links": "node scripts/validate-content-links.mjs",
     "validate:lifecycle": "node scripts/validate-project-lifecycle.mjs",
     "validate:writing": "node scripts/validate-writing.mjs",
     "audit:performance": "node scripts/performance-audit.mjs",
     "new:content": "node scripts/new-content.mjs",
-    "check": "npm run validate && astro check && astro build && npm run audit"
+    "check": "npm run validate && astro check && astro build && npm run audit",
+    "validate:site-control": "node scripts/validate-site-control.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.8",

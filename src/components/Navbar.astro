@@ -1,15 +1,9 @@
 ---
 import { getCollection } from "astro:content";
+import { NAVIGATION } from "../data/navigation";
 const currentPath = Astro.url.pathname;
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(`${href}/`);
-const primaryLinks = [
-  { href: "/projects", label: "Projects" },
-  { href: "/writing", label: "Writing" },
-  { href: "/garden", label: "Lab" },
-  { href: "/contact", label: "Contact" },
-  { href: "/timeline", label: "Journey" },
-  { href: "/about", label: "About" },
-];
+const primaryLinks = NAVIGATION.primary;
 const commandEntries = [
   ...(await getCollection("projects")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Project", href: "/projects/" + item.id })),
   ...(await getCollection("writing")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Writing", href: "/writing/" + item.id })),
@@ -22,11 +16,7 @@ const commandEntries = [
   { title: "About", type: "Page", href: "/about" },
   { title: "Contact", type: "Page", href: "/contact" },
 ];
-const gardenLinks = [
-  { href: "/notes", label: "Notes" },
-  { href: "/experiments", label: "Experiments" },
-  { href: "/evidence", label: "Evidence" },
-];
+const gardenLinks = NAVIGATION.lab;
 ---
 
 <nav class="sticky top-0 z-50 border-b border-lab-strong bg-black/95 px-4 py-3 backdrop-blur sm:px-6 sm:py-4" aria-label="Primary navigation">

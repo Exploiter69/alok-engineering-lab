@@ -15,7 +15,7 @@ const { title = SITE.name, description = SITE.description, ogImage, noindex = fa
 const site = Astro.site ?? new URL("https://www.alokthakur.me");
 const canonicalURL = new URL(Astro.url.pathname, site);
 const pageTitle = title === SITE.name ? SITE.name : title + " — " + SITE.name;
-const resolvedOgImage = new URL(ogImage ?? "/og.png", site).href;
+const resolvedOgImage = new URL(ogImage ?? SITE.seo.ogImage, site).href;
 ---
 
 <!doctype html>
@@ -27,7 +27,7 @@ const resolvedOgImage = new URL(ogImage ?? "/og.png", site).href;
   <meta name="description" content={description} />
   <meta name="author" content={SITE.author} />
   <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
-  <meta name="theme-color" content="#050505" />
+  <meta name="theme-color" content={SITE.seo.themeColor} />
   <link rel="canonical" href={canonicalURL} />
   <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -37,7 +37,7 @@ const resolvedOgImage = new URL(ogImage ?? "/og.png", site).href;
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalURL} />
-  <meta property="og:locale" content="en_IN" />
+  <meta property="og:locale" content={SITE.seo.locale} />
   <meta property="og:image" content={resolvedOgImage} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />

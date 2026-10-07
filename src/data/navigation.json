@@ -1,0 +1,15 @@
+{
+  "primary": [
+    { "href": "/projects", "label": "Projects" },
+    { "href": "/writing", "label": "Writing" },
+    { "href": "/garden", "label": "Lab" },
+    { "href": "/contact", "label": "Contact" },
+    { "href": "/timeline", "label": "Journey" },
+    { "href": "/about", "label": "About" }
+  ],
+  "lab": [
+    { "href": "/notes", "label": "Notes" },
+    { "href": "/experiments", "label": "Experiments" },
+    { "href": "/evidence", "label": "Evidence" }
+  ]
+}
