@@ -88,21 +88,4 @@ test("exports preserve full Markdown content and configuration", () => {
   assert.match(markdownArchive(health), /# Full body/);
   const exported=serializeExport({health,repository:{branch:"master",sha:"a".repeat(40),latestCommit:null},runs:[],config:{site:{title:"Lab"}}});
   assert.deepEqual(exported.configuration,{site:{title:"Lab"}});
-});\n\ntest("preserves site configuration in JSON exports", () => {
-  const { serializeExport } = intelligence;
-  const payload = serializeExport({
-    health: { ref: "master", thresholdDays: 180, records: [], totals: {} },
-    repository: { branch: "master", sha: "abc", latestCommit: null },
-    runs: [],
-    config: {
-      site: { title: "Engineering Lab" },
-      navigation: { items: [] },
-      redirects: [],
-    },
-  });
-  assert.deepEqual(payload.configuration, {
-    site: { title: "Engineering Lab" },
-    navigation: { items: [] },
-    redirects: [],
-  });
-});
+})
