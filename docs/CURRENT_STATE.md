@@ -101,6 +101,17 @@ The CP11 implementation should be considered verified when the GitHub Actions Qu
 ## Deployment
 Production is configured for Vercel with www.alokthakur.me as the canonical site URL and Namecheap as the registrar/DNS provider. Vercel currently reports both custom domains as verified.
 
+## Current repository checkpoint
+The current master HEAD is `2918e914` (`test: audit production viewports in CI`). The repository has moved beyond the older CP22–CP27 release-pending wording in earlier handoff notes.
+
+Phase 0 admin foundation is being developed on `admin/phase-0-foundation`. The public site remains static and repository-backed.
+
+The seven current collections are projects, writing, notes, experiments, evidence, timeline and changelog. A typed management descriptor now exists at `src/content/schema-metadata.ts` while `src/content.config.ts` remains the validation authority.
+
+Timeline chronology was audited against the Git history for CP10, CP11, CP13–CP17, CP20–CP22/27 and post-CP10 stabilization. The CP records inspected were created/updated on 2026-10-07, so the repeated date is real rather than a fabricated ordering error.
+
+The implementation uses `www.alokthakur.me` as its canonical URL. Both apex and www are referenced by existing production documentation, but Vercel account-level verification is not available in this execution environment.
+
 ## Development rules
 - Inspect before modifying.
 - Preserve Astro architecture.

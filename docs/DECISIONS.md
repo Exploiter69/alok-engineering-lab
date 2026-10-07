@@ -23,9 +23,10 @@
 **Status:** Active.
 
 ## D-005 — Custom domain
-**Decision:** Use `alokthakur.me` as the public domain.
+**Decision:** Use `www.alokthakur.me` as the canonical public URL; keep `alokthakur.me` as the alternate custom domain.
 **Status:** Active.
-**Pending:** Live DNS verification remains an operational check rather than a repository architecture concern; use the Vercel domain verification tooling when the environment has access to the live DNS endpoint.
+**Reason:** The current Astro configuration, canonical metadata, sitemap and robots configuration use the www hostname consistently.
+**Pending:** Confirm the apex → www routing and both Vercel domain states with live Vercel access before treating domain operations as fully verified.
 
 ## D-006 — Visual direction
 **Decision:** Modern engineering aesthetic with restrained technical/hacker character.
@@ -132,3 +133,9 @@ The Lab should improve through explicit interaction states, accessible semantics
 **Decision:** Track LCP, CLS, TTFB, runtime external resources, script count and image contracts in the existing browser-based CI gate.
 **Status:** Active.
 **Reason:** The Lab is content-heavy and static; inexpensive build-time/browser checks protect performance without introducing monitoring infrastructure.
+
+
+## D-027 — Repository-backed admin control plane
+**Decision:** Build the admin as a separate, server-side management application that operates on Git branches, commits and pull requests while leaving the public Astro site static.
+**Status:** Active.
+**Reason:** The admin should improve repository maintenance without creating a second source of truth, runtime CMS or paid infrastructure. Master remains protected by the normal CI/review path.
