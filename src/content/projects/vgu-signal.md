@@ -14,6 +14,17 @@ stack:
   - Cloudflare Worker
   - D1
   - Telegram
+objective: "Reduce the cost of finding trustworthy university information while preserving source authority, evidence, provenance and correction history."
+lifecycle: "building"
+architectureSummary: "A deterministic acquisition and evidence pipeline feeds structured verification and personalization, with Cloudflare Worker/D1 and Telegram providing the delivery/control layer."
+decisions:
+  - "Official VGU sources remain authoritative; student reports remain signals rather than authority."
+  - "Evidence and provenance are preserved before information is personalized or delivered."
+  - "Deterministic acquisition, extraction and verification come before AI-heavy augmentation."
+lessons:
+  - "Information systems are trust systems before they are notification systems."
+  - "Provenance makes corrections and stale information manageable."
+  - "Personalization should change delivery, not the authority or meaning of source information."
 ---
 
 ## Problem
