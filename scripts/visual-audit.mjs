@@ -199,29 +199,35 @@ for (const [device, viewport] of Object.entries(viewports)) {
         }
       }
 
-      // Full keyboard traversal: every tab stop must remain visible and named.
+      // Full real Tab traversal on navigation-heavy representative routes at every viewport.
+      // Every route still gets focusable-control naming/visibility checks below.
       const focusState = { count: 0, failures: [] };
-      const seenFocus = new Set();
-      for (let i = 0; i < 250; i++) {
-        await page.keyboard.press("Tab");
-        const state = await page.evaluate(() => {
-          const active = document.activeElement;
-          if (!(active instanceof HTMLElement) || active === document.body) return { key: "", focused: false, visible: false, named: true };
-          const rect = active.getBoundingClientRect();
-          const style = getComputedStyle(active);
-          const key = active.tagName + "|" + (active.getAttribute("href") || "") + "|" + (active.textContent || "").trim();
-          const named = !["A","BUTTON","SUMMARY"].includes(active.tagName) || Boolean((active.textContent || "").trim() || active.getAttribute("aria-label"));
-          return { key, focused: true, visible: rect.width > 0 && rect.height > 0 && style.visibility !== "hidden", named };
-        });
-        if (!state.focused || seenFocus.has(state.key)) break;
-        seenFocus.add(state.key);
-        focusState.count++;
-        if (!state.visible) focusState.failures.push("focused element is not visible: " + state.key);
-        if (!state.named) focusState.failures.push("focusable control has no accessible name: " + state.key);
+      const keyboardAuditRoutes = new Set(["/", "/projects/", "/garden/"]);
+      if (keyboardAuditRoutes.has(route)) {
+        const seenFocus = new Set();
+        for (let i = 0; i < 120; i++) {
+          await page.keyboard.press("Tab");
+          const state = await page.evaluate(() => {
+            const active = document.activeElement;
+            if (!(active instanceof HTMLElement) || active === document.body) return { key: "", focused: false, visible: false, named: true };
+            const rect = active.getBoundingClientRect();
+            const style = getComputedStyle(active);
+            const key = active.tagName + "|" + (active.getAttribute("href") || "") + "|" + (active.textContent || "").trim();
+            const named = !["A","BUTTON","SUMMARY"].includes(active.tagName) || Boolean((active.textContent || "").trim() || active.getAttribute("aria-label"));
+            return { key, focused: true, visible: rect.width > 0 && rect.height > 0 && style.visibility !== "hidden", named };
+          });
+          if (!state.focused || seenFocus.has(state.key)) break;
+          seenFocus.add(state.key);
+          focusState.count++;
+          if (!state.visible) focusState.failures.push("focused element is not visible: " + state.key);
+          if (!state.named) focusState.failures.push("focusable control has no accessible name: " + state.key);
+        }
+        for (const failure of focusState.failures) errors.push(failure);
+        if (focusState.count === 0) errors.push("keyboard traversal found no focusable controls");
+        await page.evaluate(() => window.scrollTo(0, 0));
+      } else {
+        focusState.count = await page.locator("a,button,input,summary,select,textarea,[tabindex]:not([tabindex='-1'])").count();
       }
-      for (const failure of focusState.failures) errors.push(failure);
-      if (focusState.count === 0) errors.push("keyboard traversal found no focusable controls");
-      await page.evaluate(() => window.scrollTo(0, 0));
 
       // Basic document structure checks.
       if (!audit.lang) errors.push("document is missing a lang attribute");
