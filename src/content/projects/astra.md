@@ -13,6 +13,17 @@ stack:
   - Modular Architecture
   - Testing
   - Automation
+objective: "Evolve an established automation and QA engine through incremental modularization without losing behavior users already depend on."
+lifecycle: "building"
+architectureSummary: "A modular Python architecture separates infrastructure from detection, parsing, planning, execution, validation, recovery, automation, models and plugins while retaining a tested legacy behavior anchor."
+decisions:
+  - "Use replacement behind stable boundaries instead of a full rewrite."
+  - "Treat existing tested behavior as migration evidence rather than disposable legacy."
+  - "Move one subsystem at a time so architecture changes remain observable and reversible."
+lessons:
+  - "Good architecture must preserve behavior while it changes."
+  - "A compatibility anchor can make large refactors incremental instead of catastrophic."
+  - "The safest migration unit is a bounded subsystem with explicit verification."
 ---
 
 ## Problem
