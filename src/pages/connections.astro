@@ -1,0 +1,69 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ContentCard from "../components/ContentCard.astro";
+import { getCollection } from "astro:content";
+
+const names = ["projects","writing","notes","experiments","evidence","timeline","changelog"] as const;
+const labels = { projects:"Projects", writing:"Writing", notes:"Notes", experiments:"Experiments", evidence:"Evidence", timeline:"Timeline", changelog:"Changelog" } as const;
+const routes = { projects:"/projects", writing:"/writing", notes:"/notes", experiments:"/experiments", evidence:"/evidence", timeline:"/timeline", changelog:"/changelog" } as const;
+const entries = (await Promise.all(names.map(async collection => ({ collection, items: await getCollection(collection) })))).flatMap(({collection,items}) =>
+  items.filter(item => item.data.status !== "draft").map(item => ({
+    key: `${collection}:${item.id}`,
+    collection,
+    title: item.data.title,
+    description: item.data.description,
+    href: `${routes[collection]}/${item.id}`,
+    related: item.data.related,
+  }))
+);
+const published = new Map(entries.map(item => [item.key, item]));
+const inbound = new Map(entries.map(item => [item.key, [] as string[]]));
+for (const source of entries) {
+  for (const target of source.related) {
+    if (published.has(target)) inbound.get(target)?.push(source.key);
+  }
+}
+const hubs = [...entries]
+  .map(item => ({...item, connections: (item.related.filter(target => published.has(target)).length + (inbound.get(item.key)?.length ?? 0))}))
+  .sort((a,b) => b.connections - a.connections)
+  .slice(0, 12);
+const orphanCandidates = entries.filter(item =>
+  ["writing","notes","experiments","evidence"].includes(item.collection) &&
+  item.related.filter(target => published.has(target)).length === 0 &&
+  (inbound.get(item.key)?.length ?? 0) === 0
+);
+---
+<Layout title="Connections" description="Repository-backed connections between the Engineering Lab's projects and knowledge.">
+<main class="mx-auto min-h-screen max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+  <header class="max-w-3xl border-b border-neutral-900 pb-10">
+    <p class="lab-label mb-4">Archive / Graph</p>
+    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Connections</h1>
+    <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">A readable view of the Lab's knowledge graph. Every connection is backed by a repository <code>related:</code> reference; there is no separate graph database.</p>
+  </header>
+
+  <section class="mt-12" aria-labelledby="hubs-heading">
+    <div class="mb-5 flex items-baseline justify-between gap-4">
+      <p id="hubs-heading" class="lab-label">Connected hubs</p>
+      <span class="font-mono text-xs text-neutral-600">{entries.length} published records</span>
+    </div>
+    <div class="grid gap-3 sm:grid-cols-2">
+      {hubs.map((item, index) => (
+        <ContentCard title={item.title} description={item.description} meta={`${labels[item.collection]} • ${item.connections} connections`} href={item.href} eyebrow={`HUB / ${String(index + 1).padStart(2,"0")}`} compact />
+      ))}
+    </div>
+  </section>
+
+  <section class="mt-14 border-t border-neutral-900 pt-8" aria-labelledby="orphan-heading">
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+      <p id="orphan-heading" class="lab-label">Needs a connection</p>
+      <span class="font-mono text-xs text-neutral-600">{orphanCandidates.length} candidates</span>
+    </div>
+    <p class="mt-3 max-w-2xl text-sm leading-6 text-neutral-500">These knowledge records currently have no published relationship in either direction. This is a discovery signal, not a build failure.</p>
+    {orphanCandidates.length > 0 ? (
+      <div class="mt-5 grid gap-3 sm:grid-cols-2">
+        {orphanCandidates.map(item => <ContentCard title={item.title} description={item.description} meta={labels[item.collection]} href={item.href} compact />)}
+      </div>
+    ) : <p class="mt-5 text-sm text-neutral-600">No orphan knowledge records detected.</p>}
+  </section>
+</main>
+</Layout>
