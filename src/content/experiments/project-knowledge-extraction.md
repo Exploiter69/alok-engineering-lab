@@ -1,7 +1,7 @@
 ---
 title: "Project Knowledge Extraction"
 description: "Experiment: can recurring engineering principles be extracted from real projects without turning the Lab into generic tutorial content?"
-date: 2026-10-07
+date: "2026-10-07"
 tags: [Knowledge, Architecture, Documentation]
 status: published
 related:
