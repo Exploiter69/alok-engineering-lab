@@ -143,7 +143,7 @@ const gardenLinks = [
   document.addEventListener("click", event => {
     const target = event.target;
     if (!(target instanceof Node)) return;
-    for (const menu of document.querySelectorAll("nav details")) {
+    for (const menu of document.querySelectorAll<HTMLDetailsElement>("nav details")) {
       if (!menu.contains(target)) menu.open = false;
     }
   });
