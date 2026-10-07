@@ -11,7 +11,10 @@ test("encrypted payload round-trips without exposing plaintext", () => {
 });
 test("tampered encrypted payload is rejected", () => {
   const encrypted = security.encrypt({ value: "safe" });
-  const tampered = `${encrypted.slice(0, -1)}${encrypted.endsWith("A") ? "B" : "A"}`;
+  const [iv, ciphertext, tag] = encrypted.split(".");
+  const bytes = Buffer.from(ciphertext, "base64url");
+  bytes[0] ^= 1;
+  const tampered = [iv, bytes.toString("base64url"), tag].join(".");
   assert.equal(security.decrypt(tampered), null);
 });
 test("cookies are HttpOnly, Secure and SameSite=Lax", () => {
