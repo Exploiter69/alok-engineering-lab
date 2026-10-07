@@ -20,44 +20,36 @@ The v1.0.0 history remains preserved and must not be rewritten.
 ## CP4 status
 CP4.1 through CP4.10 are complete.
 
-### Project archive
-Six deep case studies: VAJRA, AstraUserbot, VGU Signal, TelDrive Lab, GeminiAgentBridge and Astra.
-
-### Knowledge archive
-Three technical essays, five durable notes and five focused experiments now form a substantive non-project knowledge layer.
-
-### Journey and product surfaces
-Timeline has meaningful CP4 milestones. Changelog records the CP4 checkpoint. Docs explains the Lab structure and engineering conventions. About explains identity and direction. Garden now provides type views and a topic index.
-
-### Cross-linking
-Projects, writing, notes and experiments use related-content metadata so the archive behaves as a connected system rather than isolated collections.
+### Archive and knowledge surfaces
+Six deep project case studies, substantive Writing/Notes/Experiments, project/content cross-linking, meaningful Timeline milestones, Garden discovery, public Docs, Changelog history and About/identity are established.
 
 ## CP5 status
-CP5 Product Quality / UX Hardening is implemented at the repository level.
+CP5 Product Quality / UX Hardening is complete at the repository level.
 
-The hardening pass covered:
-- shared metadata and canonical handling
-- removal of the favicon as an implicit social-preview image
-- explicit robots behavior with 404 noindex
-- keyboard focus visibility across primary and related navigation
-- semantic navigation labels
-- deterministic Garden topic anchors
-- consistent external-link security attributes
-- current-direction About copy
-- a zero-cost GitHub Actions build gate
+Current hardening covers metadata/canonical handling, favicon/social-preview behavior, robots/noindex behavior, keyboard focus visibility, semantic navigation labels, deterministic Garden anchors, external-link safety and a zero-cost build gate.
 
-A fresh local/browser validation against the current tree remains the final verification step before CP5 is declared fully closed.
+Fresh local verification against the current tree passed: `npm run build` completed with 0 errors and generated 41 pages. The only diagnostic was one non-blocking Zod deprecation hint for `z.string().url()`.
 
-## Next priorities
-1. Finish CP5 verification against the current tree
-2. CP6 — Release / Production Readiness
-3. CP7 — Long-Term Maintenance
+## CP6 status
+CP6 Release / Production Readiness is implemented and in final automated verification.
 
-## Verification baseline
-Previously confirmed local verification includes npm install, npm run build, Astro diagnostics with 0 errors/warnings/hints, 20 generated pages, and a 30/30 desktop/mobile browser audit. Earlier local verification covered the pre-CP5 tree. Current CP5 changes now have a repository CI build gate; the latest Vercel deployment check is still pending.
+Implemented:
+- browser audit discovers every generated HTML route instead of a fixed sample list
+- GitHub Actions runs build plus Chromium browser audit
+- generated XML sitemap at `/sitemap.xml`
+- explicit `robots.txt`
+- production changelog entry
+- Vercel deployment for the current checkpoint verified successful
+
+Remaining release gate:
+- confirm the new GitHub browser-audit run passes
+- record the final release checkpoint/tag
 
 ## Deployment
-Production uses Vercel at alokthakur.me; DNS is managed through Namecheap.
+Production is configured for Vercel with `www.alokthakur.me` as the canonical site URL and Namecheap as the registrar/DNS provider. The repository's current Vercel deployment status is successful; live DNS/domain probing is not available from the current execution environment.
+
+## Verification baseline
+The repository already contains a Playwright-based visual/quality audit. CP6 upgrades it to cover every generated HTML route and run automatically after the production build.
 
 ## Development rules
 - Inspect before modifying.
