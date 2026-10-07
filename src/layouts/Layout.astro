@@ -42,6 +42,14 @@ const resolvedOgImage = ogImage ? new URL(ogImage, site).href : undefined;
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={description} />
   {resolvedOgImage && <meta name="twitter:image" content={resolvedOgImage} />}
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE.name,
+    description: SITE.description,
+    url: site.href,
+    author: { "@type": "Person", name: SITE.author, url: site.href },
+  })} />
 </head>
 <body class="bg-black text-white">
 <a href="#main-content" class="sr-only z-[100] rounded-md bg-white px-4 py-2 text-sm font-medium text-black focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to main content</a>
