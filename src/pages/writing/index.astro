@@ -34,7 +34,7 @@ const posts = (await getCollection("writing"))
           <ContentCard
             title={post.data.title}
             description={post.data.description}
-            meta={post.data.tags.join(" • ")}
+            meta={post.data.format + " • " + post.data.tags.join(" • ")}
             href={`/writing/${post.id}`}
             eyebrow={`WRITING / ${String(index + 1).padStart(2, "0")}`}
             headingLevel="h2"
