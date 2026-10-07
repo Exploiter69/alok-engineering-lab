@@ -1,6 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import ContentCard from "../../components/ContentCard.astro";
+import ProjectArchitecture from "../../components/ProjectArchitecture.astro";
+import TechChips from "../../components/TechChips.astro";
 import { getCollection } from "astro:content";
 
 const featuredProjectIds = new Set(["vajra", "astra-userbot", "vgu-signal", "teldrive-lab", "gemini-agent-bridge"]);
@@ -60,15 +62,28 @@ const counts = ["exploring", "building", "maintaining", "archived"].map(state =>
   </section>
 
   <section class="mt-10" aria-labelledby="engineering-work-heading">
-    <div class="mb-2 flex items-baseline justify-between gap-4"><p id="engineering-work-heading" class="lab-label">Engineering work</p><span class="font-mono text-xs text-neutral-600">{projects.length} records</span></div>
-    <div>
+    <div class="mb-2 flex items-baseline justify-between gap-4"><p id="engineering-work-heading" class="lab-label">Engineering work</p><span class="font-mono text-xs text-faint">{projects.length} records</span></div>
+    <div class="grid gap-8">
       {projects.map((project, index) => (
         <article data-project-item data-lifecycle={project.data.lifecycle} data-stack={project.data.stack.join("|")} data-search={(project.data.title + " " + project.data.description + " " + project.data.lifecycle + " " + project.data.stack.join(" ") + " " + (project.data.architectureSummary ?? "") + " " + project.data.decisions.join(" ") + " " + project.data.lessons.join(" ")).toLowerCase()}>
-          <ContentCard title={project.data.title} description={project.data.description} status={project.data.lifecycle} meta={project.data.stack.join(" · ")} href={`/projects/${project.id}`} eyebrow={`PROJECT / ${String(index + 1).padStart(2, "0")}`} featured={index === 0} headingLevel="h2" />
+          {index < featuredProjectIds.size ? (
+            <div class={index === 0 ? "surface-1 rounded-[var(--radius-lg)] border border-lab p-5 sm:p-7" : "surface-1 rounded-[var(--radius-lg)] border border-lab p-5 sm:p-6"}>
+              <ProjectArchitecture projectId={project.id} title={project.data.title} />
+              <div class="mt-6">
+                <p class="lab-label">PROJECT / {String(index + 1).padStart(2, "0")}</p>
+                <h2 class={index === 0 ? "mt-3 text-3xl font-bold tracking-tight sm:text-5xl" : "mt-3 text-2xl font-bold tracking-tight sm:text-3xl"}><a href={`/projects/${project.id}`} class="transition hover:text-lime-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]">{project.data.title}</a></h2>
+                <p class="mt-4 max-w-3xl text-sm leading-7 text-muted sm:text-base">{project.data.description}</p>
+                <div class="mt-5"><TechChips stack={project.data.stack} /></div>
+                <div class="mt-5 flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-[0.12em] text-subtle"><span class="text-lime-300">● {project.data.lifecycle}</span><a href={`/projects/${project.id}`} class="text-muted hover:text-white">Read case study →</a></div>
+              </div>
+            </div>
+          ) : (
+            <ContentCard title={project.data.title} description={project.data.description} status={project.data.lifecycle} meta={project.data.stack.join(" · ")} href={`/projects/${project.id}`} eyebrow={`PROJECT / ${String(index + 1).padStart(2, "0")}`} headingLevel="h2" />
+          )}
         </article>
       ))}
     </div>
-    <p id="project-empty" class="hidden border-b border-neutral-900 py-8 text-sm text-neutral-500">No projects match the current filter.</p>
+    <p id="project-empty" class="hidden border-b border-lab py-8 text-sm text-subtle">No projects match the current filter.</p>
   </section>
 </main>
 

@@ -1,0 +1,7 @@
+---
+interface Props { stack: string[]; }
+const { stack } = Astro.props;
+---
+<ul class="flex flex-wrap gap-2" aria-label="Technology stack">
+  {stack.map(item => <li class="rounded-full border border-lab-strong bg-[var(--surface-1)] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.08em] text-muted">{item}</li>)}
+</ul>

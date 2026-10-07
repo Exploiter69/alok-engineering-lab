@@ -3,6 +3,8 @@ import Layout from "../../layouts/Layout.astro";
 import RelatedContent from "../../components/RelatedContent.astro";
 import ProjectIntelligence from "../../components/ProjectIntelligence.astro";
 import ProjectLifecycle from "../../components/ProjectLifecycle.astro";
+import ProjectArchitecture from "../../components/ProjectArchitecture.astro";
+import TechChips from "../../components/TechChips.astro";
 import { resolveRelated } from "../../lib/related";
 import { getCollection, render } from "astro:content";
 export async function getStaticPaths() {
@@ -24,12 +26,13 @@ const timelineItems = (await getCollection("timeline"))
     <p class="lab-label">Project / Engineering Case Study</p>
     <h1 class="mt-5 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">{project.data.title}</h1>
     <p class="mt-6 max-w-2xl text-lg leading-8 text-neutral-400">{project.data.description}</p>
-    <div class="mt-7 flex flex-wrap gap-x-5 gap-y-2 border-t border-neutral-900 pt-4 font-mono text-xs text-neutral-500">
+    <div class="mt-7 border-t border-neutral-900 pt-4">
       <span>Documented {project.data.date.toDateString()}</span><span class="rounded-full border border-neutral-800 px-2.5 py-1 uppercase tracking-[0.12em]">{project.data.status}</span><span class="rounded-full border border-neutral-800 px-2.5 py-1 uppercase tracking-[0.12em]">{project.data.lifecycle}</span>
       {project.data.stack?.length > 0 && <span>{project.data.stack.join(" • ")}</span>}
       {project.data.repository && <a href={project.data.repository} target="_blank" rel="noopener noreferrer" class="transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">GitHub ↗</a>}
     </div>
   </header>
+  <div class="mt-10"><ProjectArchitecture projectId={project.id} title={project.data.title} /></div>
   <section class="mt-10 grid gap-4 border-b border-neutral-900 pb-10 sm:grid-cols-3" aria-label="Case study navigation"><a href="#technical-record" class="min-h-11 border border-neutral-900 p-4 transition hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span class="lab-label">01</span><span class="mt-2 block text-sm font-medium text-neutral-300">Technical record</span></a><a href="#project-history" class="min-h-11 border border-neutral-900 p-4 transition hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span class="lab-label">02</span><span class="mt-2 block text-sm font-medium text-neutral-300">History & evidence</span></a><a href="#case-study" class="min-h-11 border border-neutral-900 p-4 transition hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span class="lab-label">03</span><span class="mt-2 block text-sm font-medium text-neutral-300">Case study</span></a></section>
   <div id="technical-record"><ProjectIntelligence project={project} relatedItems={relatedItems} timelineItems={timelineItems} /></div>
   <div id="project-history"><ProjectLifecycle project={project} /></div>
