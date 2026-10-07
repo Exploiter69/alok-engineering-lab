@@ -4,7 +4,7 @@ import path from "node:path";
 const [collection, slug, ...args] = process.argv.slice(2);
 const allowed = new Set(["projects", "writing", "notes", "experiments", "evidence", "timeline", "changelog"]);
 if (!collection || !slug || !allowed.has(collection)) {
-  console.error("Usage: node scripts/new-content.mjs <collection> <slug> --title "Title"");
+  console.error('Usage: node scripts/new-content.mjs <collection> <slug> --title "Title"');
   console.error("Collections: " + [...allowed].join(", "));
   process.exit(1);
 }
