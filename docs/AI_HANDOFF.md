@@ -46,7 +46,7 @@ Confirmed:
 - explicit robots.txt
 - production changelog entry
 - Vercel production deployment for commit bd356f9 verified READY
-- custom domains alokthakur.me and www.alokthakur.me verified in Vercel
+- custom domains alokthakur.me and www.alokthakur.me verified
 - v1.0.0 history preserved
 
 The latest GitHub Actions Quality run for bd356f9 completed successfully, including the browser audit. Vercel also verified the production deployment and custom domains. A Git tag is not represented because the available GitHub connector cannot create tags; do not fake a tag with a branch.
@@ -91,19 +91,6 @@ CP9 Knowledge Expansion is complete. Knowledge content is derived from real proj
 ## CP10 status
 CP10 Project Intelligence is complete. Project records now expose structured objective, lifecycle, architecture summary, decisions, lessons, linked knowledge and linked timeline entries.
 
-## Continuation
-When continuing:
-1. inspect current GitHub state
-2. read this file and relevant canonical docs
-3. identify the actual product problem
-4. implement only the required scope
-5. verify
-6. checkpoint
-7. update durable docs
-
-CP9 should begin from a newly demonstrated product or knowledge gap rather than automatically adding infrastructure.
-
-
 ## Post-CP10 stabilization
 The first post-CP10 audit is closed. The Lab now has:
 - Garden in primary desktop/mobile navigation
@@ -115,4 +102,14 @@ The first post-CP10 audit is closed. The Lab now has:
 
 Latest stabilization commit `e39163d` passed the GitHub Actions Quality workflow and has a READY Vercel production deployment.
 
-Do not invent a new phase from these changes. Continue from the actual repository state and only create the next phase when a real product or engineering gap is demonstrated.
+## CP11 status
+CP11 Knowledge Provenance is complete at the repository level.
+
+Confirmed:
+- notes, writing and experiment detail pages expose related project records as engineering provenance
+- project pages continue to expose linked knowledge
+- provenance reuses the existing `related:` graph instead of adding a second metadata system
+- a durable note, changelog and timeline record document the checkpoint
+- no database, runtime API, analytics, paid service or framework migration was introduced
+
+Do not invent CP12 automatically. The next phase should begin only after a real product or engineering gap is demonstrated.
