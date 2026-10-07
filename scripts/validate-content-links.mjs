@@ -10,6 +10,7 @@ const collections = [
   "experiments",
   "timeline",
   "changelog",
+  "evidence",
 ];
 
 const errors = [];
