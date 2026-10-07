@@ -26,6 +26,8 @@ html {
   }
 }
 
+img, svg { max-width: 100%; }
+
 body {
   min-width: 320px;
   background: var(--background);
