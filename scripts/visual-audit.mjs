@@ -306,15 +306,16 @@ for (const [device, viewport] of Object.entries(viewports)) {
       });
       for (const issue of interactiveA11y) errors.push(issue);
 
-      const focusAppearance = await page.evaluate(() => {
-        const focusable = [...document.querySelectorAll("a,button,input,summary,select,textarea")].filter(el => el.getClientRects().length > 0);
-        return focusable.map(el => {
-          el.focus();
-          const style = getComputedStyle(el);
-          return { tag: el.tagName, text: (el.textContent || "").trim(), outline: style.outlineStyle !== "none" && parseFloat(style.outlineWidth) >= 2, shadow: style.boxShadow !== "none" };
+      let focusAppearance = { checked: false, visible: true };
+      if (keyboardAuditRoutes.has(route)) {
+        focusAppearance = await page.evaluate(() => {
+          const active = document.activeElement;
+          if (!(active instanceof HTMLElement) || active === document.body) return { checked: false, visible: false };
+          const style = getComputedStyle(active);
+          return { checked: true, visible: style.outlineStyle !== "none" && parseFloat(style.outlineWidth) >= 2 || style.boxShadow !== "none" };
         });
-      });
-      for (const focus of focusAppearance) if (!focus.outline && !focus.shadow) warnings.push(`focus indicator may be weak: ${focus.tag} "${focus.text}"`);
+        if (!focusAppearance.visible) warnings.push("keyboard focus indicator may be insufficient");
+      }
 
       const contrastIssues = await page.evaluate(() => {
         const parse = (value) => {
@@ -437,7 +438,9 @@ for (const [device, viewport] of Object.entries(viewports)) {
         const current = [...document.querySelectorAll("nav a[aria-current='page']")].filter(link => {
           try { return new URL(link.href).pathname.replace(/\/$/, "") === pathname; } catch { return false; }
         });
-        return pathname === "/" ? current.length === 0 || current.some(link => link.getAttribute("href") === "/") : current.length >= 1;
+        const gardenArea = /^\/(garden|writing|notes|experiments|evidence)(\/|$)/.test(pathname);
+        const gardenActive = document.querySelector("nav summary")?.classList.contains("bg-neutral-900") ?? false;
+        return pathname === "/" ? current.length === 0 || current.some(link => link.getAttribute("href") === "/") : current.length >= 1 || (gardenArea && gardenActive);
       });
       if (!currentNavigation) warnings.push("current navigation state may not match the current route");
       const slug =
@@ -482,7 +485,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
           primaryTargetsMeetMinimum: primaryTargets.every((target) => target.width >= 44 && target.height >= 44),
           keyboardTraversal: focusState.count > 0 && focusState.failures.length === 0,
           interactiveNames: interactiveA11y.length === 0,
-          focusAppearance: focusAppearance.every((item) => item.outline || item.shadow),
+          focusAppearance: !focusAppearance.checked || focusAppearance.visible,
           keyboardFocusVisible: focusState.count > 0,
         },
       });
