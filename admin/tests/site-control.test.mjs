@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { validateNavigation, validateRedirects, validateSiteConfig } from "../lib/site-control.mjs";
+import { validateNavigation, validateRedirects, validateSiteConfig } from "../../scripts/site-control-contract.mjs";
 
 const site = {
   name: "Alok Engineering Lab",
