@@ -4,9 +4,9 @@ interface Props {
   extra?: { title: string; id: string; depth?: number }[];
 }
 const { source = "", extra = [] } = Astro.props;
-const slugify = (value: string) => value.toLowerCase().trim().replace(/[^a-z0-9\\s-]/g, "").replace(/\\s+/g, "-").replace(/-+/g, "-");
+const slugify = (value: string) => value.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-");
 const parsed = source.split("\n").flatMap(line => {
-  const match = line.match(/^(#{2,3})\\s+(.+?)\\s*$/);
+  const match = line.match(/^(#{2,3})\s+(.+?)\s*$/);
   if (!match) return [];
   const title = match[2].replace(/[`*_~]/g, "").trim();
   return [{ title, id: slugify(title), depth: match[1].length }];
