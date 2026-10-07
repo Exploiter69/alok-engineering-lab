@@ -188,3 +188,18 @@ CP22 through CP27 are implemented as the next long-term Engineering Lab capabili
 
 ## Experience refinement checkpoint
 The Lab now has a more specific engineering proposition, repository-derived proof metrics, a static social preview, a simplified Projects / Writing / Lab / Journey / About / Contact navigation model, a keyboard command palette, technology filtering on Projects, a public Contact surface, and stronger homepage activity/provenance cues. Personal email, LinkedIn and resume credentials are not invented; only verified public destinations are surfaced.
+
+
+## Admin platform checkpoint
+Phase 0 foundation for the repository-backed admin control plane has started on branch `admin/phase-0-foundation`.
+
+The repository currently has seven content collections:
+projects, writing, notes, experiments, evidence, timeline and changelog.
+
+The typed management descriptor lives at `src/content/schema-metadata.ts` and is derived from the authoritative `src/content.config.ts`. It exists for tooling; it does not replace build-time Zod validation.
+
+Current production implementation uses `www.alokthakur.me` as the canonical URL. The apex domain remains an alternate configured domain; live Vercel/DNS verification requires Vercel account access.
+
+Timeline CP records dated 2026-10-07 were checked against Git history. The relevant CP commits genuinely occurred on the same calendar date, so no artificial dates were introduced.
+
+Admin architecture remains separate from the public static site and must preserve Git as the source of truth.
