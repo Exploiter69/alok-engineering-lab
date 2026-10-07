@@ -8,12 +8,14 @@ const [notes, writing, experiments] = await Promise.all([
   getCollection("notes"),
   getCollection("writing"),
   getCollection("experiments"),
+  getCollection("evidence"),
 ]);
 
 const gardenItems = [
   ...notes.filter(item => item.data.status !== "draft").map(item => ({ ...item, href: `/notes/${item.id}`, type: "Note" })),
   ...writing.filter(item => item.data.status !== "draft").map(item => ({ ...item, href: `/writing/${item.id}`, type: "Writing" })),
   ...experiments.filter(item => item.data.status !== "draft").map(item => ({ ...item, href: `/experiments/${item.id}`, type: "Experiment" })),
+  ...evidence.filter(item => item.data.status !== "draft").map(item => ({ ...item, href: `/evidence/${item.id}`, type: "Evidence" })),
 ].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const topics = [...new Set(gardenItems.flatMap(item => item.data.tags))].sort();
@@ -45,7 +47,7 @@ const topicAnchors = new Map(
 <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 <div>
 <p id="search-heading" class="lab-label">Find in the Garden</p>
-<p class="mt-2 text-sm text-neutral-500">Search published notes, writing and experiments already present in the archive.</p>
+<p class="mt-2 text-sm text-neutral-500">Search published notes, writing, experiments and evidence already present in the archive.</p>
 </div>
 <label class="block w-full sm:max-w-sm">
 <span class="sr-only">Search the Digital Garden</span>
