@@ -113,3 +113,8 @@ body {
   background: var(--accent);
   transform-origin: left;
 }
+
+.nav-menu-panel { transform-origin: top right; transition: opacity .18s ease, transform .18s ease; }
+nav details:not([open]) .nav-menu-panel { opacity: 0; transform: translateY(-5px) scale(.98); pointer-events: none; }
+nav details[open] .nav-menu-panel { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .nav-menu-panel { transition: none; } }

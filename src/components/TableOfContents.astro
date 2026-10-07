@@ -1,0 +1,27 @@
+---
+interface Props {
+  source?: string;
+  extra?: { title: string; id: string; depth?: number }[];
+}
+const { source = "", extra = [] } = Astro.props;
+const slugify = (value: string) => value.toLowerCase().trim().replace(/[^a-z0-9\\s-]/g, "").replace(/\\s+/g, "-").replace(/-+/g, "-");
+const parsed = source.split("\n").flatMap(line => {
+  const match = line.match(/^(#{2,3})\\s+(.+?)\\s*$/);
+  if (!match) return [];
+  const title = match[2].replace(/[`*_~]/g, "").trim();
+  return [{ title, id: slugify(title), depth: match[1].length }];
+});
+const items = [...extra, ...parsed.filter(item => !extra.some(entry => entry.id === item.id))];
+---
+{items.length > 0 && (
+  <aside class="hidden lg:block" aria-label="Table of contents">
+    <div class="sticky top-24">
+      <p class="lab-label">On this page</p>
+      <nav class="mt-4 border-l border-lab pl-4">
+        <ol class="space-y-2">
+          {items.map(item => <li class={item.depth === 3 ? "pl-3" : ""}><a href={"#" + item.id} class="block text-xs leading-5 text-subtle transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]">{item.title}</a></li>)}
+        </ol>
+      </nav>
+    </div>
+  </aside>
+)}

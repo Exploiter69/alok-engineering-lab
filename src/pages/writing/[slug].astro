@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import RelatedContent from "../../components/RelatedContent.astro";
 import ContentNavigation from "../../components/ContentNavigation.astro";
 import KnowledgeProvenance from "../../components/KnowledgeProvenance.astro";
+import TableOfContents from "../../components/TableOfContents.astro";
 import { resolveRelated } from "../../lib/related";
 import { getCollection, render } from "astro:content";
 
@@ -60,9 +61,12 @@ const readingMinutes = Math.max(1, Math.ceil((post.body ?? "").split(/\s+/).filt
 
   <KnowledgeProvenance projectItems={projectItems} />
 
-  <article class="prose prose-invert mt-12 max-w-3xl border-t border-neutral-900 pt-10 sm:mt-16 sm:pt-12">
-    <Content />
-  </article>
+  <div class="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_220px] sm:mt-16">
+    <article class="prose prose-invert max-w-3xl border-t border-neutral-900 pt-10 sm:pt-12">
+      <Content />
+    </article>
+    <TableOfContents source={post.body} />
+  </div>
 
   <RelatedContent items={relatedItems} />
   <ContentNavigation previous={previous} next={next} />
