@@ -194,7 +194,7 @@ function filterIntelligenceRecords(query) {
 
 function createAdminBranch() {
   const branch=prompt("New admin branch name:", `admin/work-${Date.now().toString(36)}`);
-  if(!branch || !/^admin\\/[a-z0-9][a-z0-9._/-]{2,79}$/.test(branch)) return;
+  if(!branch || !/^admin\/[a-z0-9][a-z0-9._/-]{2,79}$/.test(branch)) return;
   api("/api/content",{method:"POST",body:JSON.stringify({action:"branch",branch})}).then(()=>showGlobalMessage(`✓ Created ${branch}`)).catch(error=>showGlobalMessage(error.message));
 }
 
