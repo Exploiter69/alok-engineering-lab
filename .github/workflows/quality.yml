@@ -144,3 +144,81 @@ jobs:
             throw new Error(`Interaction responsiveness target failed: ${Math.round(inp)}ms >= 200ms`);
           }
           NODE
+
+      - name: Production viewport audit
+        run: |
+          node --input-type=module <<'NODE'
+          import { chromium } from "playwright";
+
+          const baseUrl = "https://alokthakur.me/";
+          const viewports = [320, 390, 768, 1440];
+          const browser = await chromium.launch({ headless: true });
+          const page = await browser.newPage();
+          const errors = [];
+
+          page.on("pageerror", (error) => errors.push(`pageerror: ${error.message}`));
+          page.on("console", (message) => {
+            if (message.type() === "error") errors.push(`console: ${message.text()}`);
+          });
+
+          for (const width of viewports) {
+            await page.setViewportSize({ width, height: 900 });
+            let response;
+
+            for (let attempt = 1; attempt <= 6; attempt += 1) {
+              try {
+                response = await page.goto(baseUrl, {
+                  waitUntil: "domcontentloaded",
+                  timeout: 15000,
+                });
+                if (response?.ok()) break;
+              } catch (error) {
+                if (attempt === 6) throw error;
+              }
+              await page.waitForTimeout(5000);
+            }
+
+            if (!response?.ok()) {
+              throw new Error(`Production returned HTTP ${response?.status() ?? "no response"} at ${width}px`);
+            }
+
+            const checks = await page.evaluate(() => ({
+              title: document.title,
+              main: Boolean(document.querySelector("main")),
+              horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
+              nav: Boolean(document.querySelector("nav")),
+            }));
+
+            if (!checks.title || !checks.main || !checks.nav) {
+              throw new Error(`Production structure check failed at ${width}px: ${JSON.stringify(checks)}`);
+            }
+
+            if (checks.horizontalOverflow) {
+              throw new Error(`Horizontal overflow detected at ${width}px`);
+            }
+
+            if (width < 768) {
+              const menu = page.locator("nav details[data-nav-mobile]");
+              if (!(await menu.isVisible())) {
+                throw new Error(`Mobile navigation is not visible at ${width}px`);
+              }
+              await menu.locator("summary").click();
+              if (!(await menu.locator(".nav-menu-panel").isVisible())) {
+                throw new Error(`Mobile navigation panel did not open at ${width}px`);
+              }
+            } else {
+              const desktop = page.locator("nav [data-nav-desktop]");
+              if (!(await desktop.isVisible())) {
+                throw new Error(`Desktop navigation is not visible at ${width}px`);
+              }
+            }
+
+            console.log(`Production viewport ${width}px: passed`);
+          }
+
+          await browser.close();
+
+          if (errors.length) {
+            throw new Error(`Production browser errors: ${errors.join(" | ")}`);
+          }
+          NODE
