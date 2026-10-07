@@ -101,3 +101,14 @@ Do not rewrite release history. Future work proceeds forward with new commits/re
 **Decision:** Accessibility and browser-quality checks belong in the existing zero-cost route audit rather than as a separate runtime monitoring system.
 **Status:** Active.
 **Reason:** The Lab should continuously protect keyboard access, document semantics, responsive behavior and dependency discipline while remaining static and inexpensive.
+
+
+## D-022 — Experience excellence favors hierarchy over spectacle
+**Decision:** Improve the Lab through information hierarchy, typography, proof, connected discovery, readable long-form content and restrained interaction rather than decorative visual systems.
+**Status:** Active.
+**Reason:** The Lab's primary product is the engineering record. Visual effects should support comprehension, not compete with it.
+
+## D-023 — Interaction quality is part of the browser gate
+**Decision:** The generated-route audit must verify visible primary interaction targets and visible keyboard focus in addition to route, metadata, link, structure and responsive checks.
+**Status:** Active.
+**Reason:** Accessibility and UX quality should remain executable release constraints rather than manual aspirations.
