@@ -1,7 +1,7 @@
 ---
 title: "Durable State Outlives Workers"
 description: "Long-lived engineering systems should preserve meaningful state independently of the process currently performing the work."
-date: 2026-10-07
+date: "2026-10-07"
 tags: [Systems, Reliability, Databases]
 status: published
 stage: budding
