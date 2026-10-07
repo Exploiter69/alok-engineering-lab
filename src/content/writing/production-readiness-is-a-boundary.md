@@ -4,6 +4,7 @@ description: "A release becomes trustworthy when the important boundaries have b
 date: 2026-10-07
 tags: [Verification, Reliability, Testing, Maintainability]
 status: published
+format: "essay"
 related:
   - projects:vajra
   - projects:vgu-signal
