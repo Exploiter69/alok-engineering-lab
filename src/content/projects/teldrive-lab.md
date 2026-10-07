@@ -14,6 +14,17 @@ stack:
   - PostgreSQL
   - rclone
   - Local Storage
+objective: "Add cataloging, planning, verification and controlled maintenance around an existing TelDrive deployment without becoming a second storage authority."
+lifecycle: "maintaining"
+architectureSummary: "A local control plane derives catalogs, search, analytics and plans from the production storage while consequential mutation stays behind explicit authorization and verification boundaries."
+decisions:
+  - "TelDrive remains the production storage authority."
+  - "Derived indexes and catalogs are disposable views rather than canonical data stores."
+  - "Consequential mutation requires explicit policy, controlled execution and evidence recording."
+lessons:
+  - "Control planes should observe before they mutate."
+  - "Derived intelligence is safer when the production system remains authoritative."
+  - "A sidecar can add operational capability without duplicating the responsibility of the system it surrounds."
 ---
 
 ## Problem
