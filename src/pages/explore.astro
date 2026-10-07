@@ -86,9 +86,9 @@ const initialData = JSON.stringify(records).replaceAll("<", "\\u003c");
 
 <script define:vars={{ initialData }}>
   const records = JSON.parse(initialData);
-  const input = document.querySelector<HTMLInputElement>("#explore-search");
-  const status = document.querySelector<HTMLElement>("#explore-status");
-  const empty = document.querySelector<HTMLElement>("#explore-empty");
+  const searchInput = document.getElementById("explore-search");
+  const status = document.getElementById("explore-status");
+  const empty = document.getElementById("explore-empty");
   const items = Array.from(document.querySelectorAll<HTMLElement>("[data-explore-item]"));
   const typeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-type]"));
   const topicButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-topic]"));
@@ -96,7 +96,7 @@ const initialData = JSON.stringify(records).replaceAll("<", "\\u003c");
   let activeTopic = "";
 
   function paint() {
-    const query = input?.value.trim().toLowerCase() ?? "";
+    const query = searchInput instanceof HTMLInputElement ? searchInput.value.trim().toLowerCase() : "";
     let visible = 0;
     for (const item of items) {
       const matchesQuery = !query || (item.dataset.search ?? "").includes(query);
@@ -111,7 +111,7 @@ const initialData = JSON.stringify(records).replaceAll("<", "\\u003c");
     empty?.classList.toggle("hidden", visible !== 0);
   }
 
-  input?.addEventListener("input", paint);
+  if (searchInput instanceof HTMLInputElement) searchInput.addEventListener("input", paint);
   for (const button of typeButtons) button.addEventListener("click", () => {
     activeType = button.dataset.type ?? "all";
     for (const candidate of typeButtons) {
