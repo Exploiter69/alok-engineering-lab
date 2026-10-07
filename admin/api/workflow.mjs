@@ -1,6 +1,6 @@
 import { send } from "../lib/response.mjs";
 import { requireSession } from "../lib/session.mjs";
-import { parseJsonBody, requireSameOrigin } from "../lib/security.mjs";
+import { parseJsonBody, requireCsrf, requireSameOrigin } from "../lib/security.mjs";
 import { branches, branchStatus, commitStatus, createPullRequest, mergePullRequest, pullRequests, rerunFailed, workflowRuns } from "../lib/git-workflow.mjs";
 import { deployments } from "../lib/vercel.mjs";
 import { contentAwareDiff } from "../lib/intelligence.mjs";
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
       return send(res, 200, payload);
     }
     if (req.method !== "POST") return send(res, 405, { error: "method_not_allowed" });
-    if (!requireSameOrigin(req)) return send(res, 403, { error: "cross_origin_request" });
+    if (!requireSameOrigin(req) || !requireCsrf(req, session)) return send(res, 403, { error: "csrf_validation_failed" });
     let body;
     try { body = parseJsonBody(req); } catch (error) { return send(res, error.status || 400, { error: error.message }); }
     if (body.action === "pr") {
