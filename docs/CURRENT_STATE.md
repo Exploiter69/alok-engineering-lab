@@ -59,7 +59,7 @@ CP8 Continued Engineering Growth is complete at the repository level.
 
 Confirmed:
 - documented project status is visible on project archive cards and project detail pages
-- the distinction between documented status and live operational health is recorded
+- the distinction between documented status and live operational truth is recorded
 - CP8 includes a durable note, experiment, timeline milestone and changelog entry
 - Astro remains the architecture
 - the repository remains the source of truth
@@ -83,13 +83,20 @@ Completed:
 - Changelog and timeline records document this stabilization pass.
 - No database, search service, analytics, runtime API, framework migration or paid service was introduced.
 
+## CP11 status
+CP11 Knowledge Provenance is complete.
+
+Completed:
+- knowledge detail pages expose their related project records as explicit engineering provenance
+- project detail pages continue to expose linked Writing/Notes/Experiments
+- provenance uses the existing repository-backed `related:` relationship model
+- durable note, changelog and timeline records document the phase
+- no second source of truth, database, runtime service or paid infrastructure was introduced
+
 ## Verification baseline
 The repository contains a Playwright-based visual/quality audit covering every generated HTML route at desktop and mobile viewports.
 
-Latest confirmed verification for the stabilization work:
-- GitHub Actions Quality run for `e39163d`: success
-- Vercel production deployment for `e39163d`: READY
-- build completed successfully before the browser audit
+The CP11 implementation should be considered verified when the GitHub Actions Quality workflow for the final CP11 docs commit passes.
 
 ## Deployment
 Production is configured for Vercel with www.alokthakur.me as the canonical site URL and Namecheap as the registrar/DNS provider. Vercel currently reports both custom domains as verified.
