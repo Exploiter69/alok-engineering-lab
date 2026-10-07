@@ -8,11 +8,11 @@ interface LifecycleEvent {
 interface ProjectData {
   lifecycle: string;
   lifecycleSince?: Date;
-  lifecycleHistory: LifecycleEvent[];
+  lifecycleHistory?: LifecycleEvent[];
 }
 
 const { project } = Astro.props as { project: { data: ProjectData } };
-const history = [...project.data.lifecycleHistory].sort(
+const history = [...(project.data.lifecycleHistory ?? [])].sort(
   (a, b) => b.date.valueOf() - a.date.valueOf()
 );
 ---
