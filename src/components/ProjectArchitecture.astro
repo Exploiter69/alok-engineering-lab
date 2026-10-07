@@ -7,6 +7,20 @@ const fromDecisions = decisions.flatMap(item => item.split(/\s*(?:→|->|=>)\s*/
 const nodes = [...new Set([...fromSummary, ...fromDecisions])].slice(0, 4);
 while (nodes.length < 4) nodes.push(["Input", "Architecture", "Decision boundary", "Output"][nodes.length]);
 const caption = fromSummary.length > 1 ? fromSummary.join(" → ") : "Repository-backed architecture derived from the project record.";
+const splitLabel = (value: string) => {
+  const clean = value.replace(/\s+/g, " ").trim();
+  if (clean.length <= 18) return [clean];
+  const words = clean.split(" ");
+  const lines: string[] = [];
+  let current = "";
+  for (const word of words) {
+    if ((current + " " + word).trim().length <= 18) current = (current + " " + word).trim();
+    else if (current) { lines.push(current); current = word; }
+    else { lines.push(word.slice(0, 18)); current = word.slice(18); }
+  }
+  if (current) lines.push(current);
+  return lines.slice(0, 2);
+};
 ---
 <figure class="surface-1 overflow-hidden rounded-[var(--radius-lg)] border border-lab p-5 sm:p-6" aria-label={title + " architecture diagram"}>
   <div class="flex items-center justify-between gap-4">
@@ -22,8 +36,10 @@ const caption = fromSummary.length > 1 ? fromSummary.join(" → ") : "Repository
         {index < nodes.length - 1 && <path d={"M " + (x + 180) + " 105 H " + (x + 212)} stroke="var(--border-strong)" stroke-width="2" fill="none" />}
         {index < nodes.length - 1 && <path d={"M " + (x + 202) + " 99 L " + (x + 212) + " 105 L " + (x + 202) + " 111"} stroke="var(--accent)" stroke-width="2" fill="none" />}
         <rect x={x} y="55" width="180" height="100" rx="14" fill="var(--surface-2)" stroke={index === 0 ? "var(--accent)" : "var(--border-strong)"} />
-        <text x={x + 90} y="100" text-anchor="middle" fill="var(--foreground)" font-size="14" font-family="var(--font-sans)">{node.slice(0, 28)}</text>
-        <text x={x + 90} y="125" text-anchor="middle" fill="var(--subtle)" font-size="10" font-family="var(--font-mono)">0{index + 1}</text>
+        {splitLabel(node).map((line, lineIndex) => (
+          <text x={x + 90} y={lineIndex === 0 ? "96" : "116"} text-anchor="middle" fill="var(--foreground)" font-size="13" font-family="var(--font-sans)">{line}</text>
+        ))}
+        <text x={x + 90} y="140" text-anchor="middle" fill="var(--subtle)" font-size="10" font-family="var(--font-mono)">0{index + 1}</text>
       </>;
     })}
   </svg>
