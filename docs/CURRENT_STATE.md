@@ -110,3 +110,15 @@ Production is configured for Vercel with www.alokthakur.me as the canonical site
 - Use Git checkpoints.
 - Keep the project at ₹0 / $0.
 - Treat current repository/Git state as the strongest source of truth.
+
+## CP12–CP16 status
+The CP12–CP16 batch is implemented on master.
+
+Confirmed repository capabilities:
+- CP12: explicit project lifecycle baselines/history and lifecycle-aware project discovery
+- CP13: static Garden topic pages plus browser-local project search/filtering
+- CP14: first-class Evidence collection and evidence-aware project/content graph
+- CP15: explicit writing formats, provenance rules and docs/WRITING.md workflow
+- CP16: metadata, relationship, lifecycle and writing validation gates wired into build and CI
+- sitemap includes published evidence and static Garden topic routes while excluding draft content
+- Astro, Vercel and the ₹0 / $0 architecture remain unchanged
