@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 
-export const SESSION_COOKIE = "ael_admin_session";
-export const OAUTH_COOKIE = "ael_admin_oauth";
+export const SESSION_COOKIE = "__Host-ael_admin_session";
+export const OAUTH_COOKIE = "__Host-ael_admin_oauth";
 export const SESSION_TTL = 8 * 60 * 60;
 
 function secret() {
@@ -60,4 +60,26 @@ export function requireSameOrigin(req) {
   const origin = req.headers.origin, host = req.headers.host;
   if (!origin || !host) return false;
   try { return new URL(origin).host === host; } catch { return false; }
+}
+
+
+export function adminBaseUrl() {
+  const raw = process.env.ADMIN_BASE_URL;
+  if (!raw) throw new Error("ADMIN_BASE_URL must be configured");
+  const url = new URL(raw);
+  if (!["https:", "http:"].includes(url.protocol)) throw new Error("ADMIN_BASE_URL must use HTTP(S)");
+  if (url.protocol === "http:" && process.env.NODE_ENV === "production") throw new Error("ADMIN_BASE_URL must use HTTPS in production");
+  if (url.pathname !== "/" || url.search || url.hash) throw new Error("ADMIN_BASE_URL must be an origin");
+  return url.origin;
+}
+
+export function parseJsonBody(req) {
+  if (req.body && typeof req.body === "object") return req.body;
+  const raw = String(req.body ?? "");
+  if (Buffer.byteLength(raw, "utf8") > 1_000_000) {
+    const error = new Error("request body too large"); error.status = 413; throw error;
+  }
+  if (!raw.trim()) return {};
+  try { return JSON.parse(raw); }
+  catch { const error = new Error("invalid JSON body"); error.status = 400; throw error; }
 }
