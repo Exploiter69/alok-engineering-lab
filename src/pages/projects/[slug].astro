@@ -22,7 +22,8 @@ const relatedItems = await resolveRelated(project.data.related);
     <h1 class="mt-5 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">{project.data.title}</h1>
     <p class="mt-6 max-w-2xl text-lg leading-8 text-neutral-400">{project.data.description}</p>
     <div class="mt-7 flex flex-wrap gap-x-5 gap-y-2 border-y border-neutral-900 py-4 font-mono text-xs text-neutral-500">
-      <span>{project.data.date.toDateString()}</span>
+      <span>Documented {project.data.date.toDateString()}</span>
+      <span class="rounded-full border border-neutral-800 px-2.5 py-1 uppercase tracking-[0.12em]">{project.data.status}</span>
       {project.data.stack?.length > 0 && <span>{project.data.stack.join(" • ")}</span>}
       {project.data.repository && (
         <a href={project.data.repository} target="_blank" rel="noopener noreferrer" class="transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">GitHub ↗</a>
