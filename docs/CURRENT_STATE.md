@@ -186,4 +186,6 @@ Implemented as the next capability layer after CP21:
 - Structured WebSite metadata and a public content workflow guide strengthen the publishing contract.
 - No database, CMS, analytics, paid service, framework migration, WebGL or 3D system was introduced.
 
+Experience refinement after CP27 adds clearer positioning, repository-derived proof metrics, simplified navigation, static command search, technology filtering, contact/discovery surfaces and a static social preview. Personal contact credentials are only added when verified public destinations exist.
+
 Final release status remains pending until the combined GitHub Actions Quality run passes and the resulting Vercel deployment is READY.
