@@ -112,4 +112,21 @@ Confirmed:
 - a durable note, changelog and timeline record document the checkpoint
 - no database, runtime API, analytics, paid service or framework migration was introduced
 
-Do not invent CP12 automatically. The next phase should begin only after a real product or engineering gap is demonstrated.
+## CP12–CP16 status
+CP12 through CP16 are complete as a single growth batch.
+
+- CP12 Project Lifecycle System: explicit lifecycle baseline/history and lifecycle-aware project discovery.
+- CP13 Discovery & Navigation: static Garden topic routes plus project-local search/filtering.
+- CP14 Engineering Evidence: typed Evidence collection with benchmark, failure, verification and observation records.
+- CP15 Technical Writing System: explicit writing formats and docs/WRITING.md workflow.
+- CP16 Lab Automation: metadata, relationship, lifecycle and writing validators run before production build and are also called explicitly by GitHub Actions.
+
+The batch remains static, repository-backed and ₹0 / $0. No database, runtime search service, analytics, paid infrastructure or framework migration was introduced.
+
+## Verification
+The final batch is considered complete only after the latest GitHub Actions Quality run passes on master. Vercel production should also report READY for the final verified commit.
+
+After verification, sync the local checkout with:
+git pull --ff-only origin master
+
+Do not invent CP17 automatically. The next phase should begin only after a new real product or engineering gap is demonstrated.
