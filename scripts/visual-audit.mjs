@@ -439,10 +439,12 @@ for (const [device, viewport] of Object.entries(viewports)) {
           ? "home"
           : route.replace(/^\/|\/$/g, "").replaceAll("/", "-");
 
-      await page.screenshot({
-        path: path.join(deviceDir, `${slug}.png`),
-        fullPage: true,
-      });
+      if (device === "mobile390" || device === "desktop1440") {
+        await page.screenshot({
+          path: path.join(deviceDir, `${slug}.png`),
+          fullPage: true,
+        });
+      }
 
       results.push({
         device,
