@@ -6,8 +6,11 @@ The Lab is intended to remain small, durable and inspectable over many years.
 
 Every meaningful content or structural change should pass these layers:
 
-1. content relationship validation
-2. Astro diagnostics
+1. repository metadata validation
+2. content relationship validation
+3. project lifecycle validation
+4. technical writing workflow validation
+5. Astro diagnostics
 3. production build
 4. generated-route browser audit
 5. Git checkpoint
@@ -15,6 +18,7 @@ Every meaningful content or structural change should pass these layers:
 The normal local gate is:
 
 ```text
+npm run validate
 npm run build
 npm run audit
 ```
@@ -48,6 +52,10 @@ Prefer durable engineering value over volume.
 - Add a note when a principle or observation is worth retaining independently.
 - Add an experiment when there is a real question, setup, observation and result.
 - Add timeline or changelog entries for meaningful milestones rather than individual commits.
+
+## Technical writing
+
+Deep writing should use `docs/WRITING.md`. Published case studies and postmortems must retain provenance through the existing `related:` graph.
 
 ## Complexity rule
 
