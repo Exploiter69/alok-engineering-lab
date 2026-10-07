@@ -107,15 +107,6 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
     </div>
   </section>
 
-  <section class="mt-20 sm:mt-24" aria-labelledby="activity-heading">
-    <div class="flex items-end justify-between gap-4 border-b border-neutral-900 pb-5"><div><p class="lab-label mb-2">04 / Activity</p><h2 id="activity-heading" class="text-3xl font-bold tracking-tight sm:text-4xl">Recent work</h2></div><a href="/explore" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">Explore everything →</a></div>
-    <div class="mt-2">
-      {writing.slice(0, 3).map((item, index) => (
-        <ContentCard title={item.data.title} description={item.data.description} meta={"Writing · " + item.data.date.toDateString()} href={"/writing/" + item.id} eyebrow={"ACTIVITY / " + String(index + 1).padStart(2, "0")} compact />
-      ))}
-    </div>
-  </section>
-
   <section class="mt-20 border-t border-neutral-900 pt-8 sm:mt-24" aria-labelledby="journey-heading">
     <div class="flex items-end justify-between gap-4"><div><p class="lab-label mb-2">04 / Continue</p><h2 id="journey-heading" class="text-3xl font-bold tracking-tight sm:text-4xl">Engineering Journey</h2></div><a href="/timeline" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">Full timeline →</a></div>
     <div class="mt-6">

@@ -134,4 +134,18 @@ const gardenLinks = [
       if (dialog?.open) dialog.close(); else openPalette();
     }
   });
+  const closeMenus = () => {
+    for (const menu of document.querySelectorAll("nav details")) menu.open = false;
+  };
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeMenus();
+  });
+  document.addEventListener("click", event => {
+    const target = event.target;
+    if (!(target instanceof Node)) return;
+    for (const menu of document.querySelectorAll("nav details")) {
+      if (!menu.contains(target)) menu.open = false;
+    }
+  });
+  for (const link of document.querySelectorAll("nav a")) link.addEventListener("click", closeMenus);
 </script>

@@ -15,7 +15,7 @@ const { title = SITE.name, description = SITE.description, ogImage, noindex = fa
 const site = Astro.site ?? new URL("https://www.alokthakur.me");
 const canonicalURL = new URL(Astro.url.pathname, site);
 const pageTitle = title === SITE.name ? SITE.name : title + " — " + SITE.name;
-const resolvedOgImage = new URL(ogImage ?? "/og.svg", site).href;
+const resolvedOgImage = new URL(ogImage ?? "/og.png", site).href;
 ---
 
 <!doctype html>

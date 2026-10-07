@@ -22,15 +22,15 @@ const topics = [...new Set(gardenItems.flatMap(item => item.data.tags))].sort();
 const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 ---
 
-<Layout title="Digital Garden">
+<Layout title="Lab">
 <main class="mx-auto min-h-screen max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
 <header class="max-w-3xl border-b border-neutral-900 pb-10">
-<p class="lab-label mb-4">Knowledge / Explore</p>
-<h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Digital Garden</h1>
+<p class="lab-label mb-4">Lab / Explore</p>
+<h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Lab</h1>
 <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">A connected layer for ideas, notes, writing and experiments growing through the Lab.</p>
 </header>
 
-<nav class="mt-8 flex flex-wrap items-center gap-2" aria-label="Garden content views">
+<nav class="mt-8 flex flex-wrap items-center gap-2" aria-label="Lab content views">
 <span class="mr-2 lab-label">View</span>
 <a href="/garden" aria-current="page" class="inline-flex min-h-11 items-center rounded-full border border-neutral-600 px-4 font-mono text-xs uppercase tracking-wider text-white">All</a>
 <a href="/notes" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-4 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white">Notes</a>
@@ -46,7 +46,7 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 <p class="mt-2 text-sm text-neutral-500">Search the full text, titles, topics and content types across the published archive.</p>
 </div>
 <label class="block w-full sm:max-w-sm">
-<span class="sr-only">Search the Digital Garden</span>
+<span class="sr-only">Search the Lab</span>
 <input id="garden-search" type="search" placeholder="Search title, topic, or text…" autocomplete="off"
   class="w-full rounded-xl border border-neutral-800 bg-black px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-600 focus:border-neutral-600 focus:ring-1 focus:ring-neutral-600" />
 </label>
@@ -79,7 +79,7 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 </article>
 ))}
 </div>
-<p id="garden-empty" class="hidden border border-dashed border-neutral-900 p-6 text-sm text-neutral-500">No published Garden items match that search.</p>
+<p id="garden-empty" class="hidden border border-dashed border-neutral-900 p-6 text-sm text-neutral-500">No published Lab items match that search.</p>
 </section>
 
 <section class="mt-14 border-t border-neutral-900 pt-8" aria-labelledby="topic-index-heading">
