@@ -1,15 +1,11 @@
 import { send } from "../lib/response.mjs";
 import { requireSameOrigin } from "../lib/security.mjs";
 import { requireSession } from "../lib/session.mjs";
-import { readRecord, repositorySnapshot, repositoryRuns, contentHealth, auditFromHealth, serializeExport, markdownArchive, validateBulkSelection, bulkMetadata, contentPath, serializeMetadata } from "../lib/intelligence.mjs";
+import { readRecord, repositorySnapshot, repositoryRuns, contentHealth, auditFromHealth, serializeExport, markdownArchive, validateBulkSelection, bulkMetadata, serializeMetadata } from "../lib/intelligence.mjs";
 import { tree, writeFile } from "../lib/content.mjs";
-import { validCollection, validSlug, parseDocument, validateMetadata } from "../lib/content.mjs";
-import { github } from "../lib/github.mjs";
-import { deployments } from "../lib/vercel.mjs";\nimport { readSiteControl } from "../lib/site-control.mjs";
-
-const OWNER = "Exploiter69";
-const REPO = "alok-engineering-lab";
-const ROOT = `/repos/${OWNER}/${REPO}`;
+import { validateMetadata } from "../lib/content.mjs";
+import { deployments } from "../lib/vercel.mjs";
+import { readSiteControl } from "../lib/site-control.mjs";
 
 function branchName(value) {
   return /^admin\/[a-z0-9][a-z0-9._/-]{2,79}$/.test(value || "");
