@@ -27,3 +27,28 @@ test("security headers prevent indexing and framing", () => {
   assert.equal(headers["X-Robots-Tag"], "noindex, nofollow, noarchive");
   assert.equal(headers["X-Frame-Options"], "DENY");
 });
+
+
+test("admin base URL is explicit and production-safe", () => {
+  delete process.env.ADMIN_BASE_URL;
+  assert.throws(() => security.adminBaseUrl(), /must be configured/);
+  process.env.ADMIN_BASE_URL = "https://admin.example.test";
+  process.env.NODE_ENV = "production";
+  assert.equal(security.adminBaseUrl(), "https://admin.example.test");
+  process.env.ADMIN_BASE_URL = "https://admin.example.test/path";
+  assert.throws(() => security.adminBaseUrl(), /must be an origin/);
+  process.env.ADMIN_BASE_URL = "http://admin.example.test";
+  assert.throws(() => security.adminBaseUrl(), /HTTPS in production/);
+  delete process.env.ADMIN_BASE_URL;
+});
+
+test("admin mutation bodies are bounded and reject malformed JSON", () => {
+  assert.deepEqual(security.parseJsonBody({ body: '{"ok":true}' }), { ok: true });
+  assert.throws(() => security.parseJsonBody({ body: "{" }), /invalid JSON body/);
+  assert.throws(() => security.parseJsonBody({ body: "x".repeat(1_000_001) }), /request body too large/);
+});
+
+test("session cookies use host-only prefixes", () => {
+  assert.match(security.cookie(security.SESSION_COOKIE, "abc", 3600), /^__Host-ael_admin_session=/);
+  assert.match(security.cookie(security.OAUTH_COOKIE, "abc", 600), /^__Host-ael_admin_oauth=/);
+});
