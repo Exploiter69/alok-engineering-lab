@@ -4,7 +4,7 @@ description: "Metadata, relationship, lifecycle and writing checks now run as ex
 date: 2026-10-07
 tags: [Release, CP16, Automation, Maintenance]
 status: published
-related: [notes:content-integrity, docs:maintenance]
+related: [notes:content-integrity]
 ---
 
 CP16 turns the Lab's maintenance rules into executable zero-cost checks.
