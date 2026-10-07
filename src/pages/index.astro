@@ -101,6 +101,7 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
       <a href="/writing" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">All writing →</a>
     </div>
     <div class="mt-2">
+      {writing.slice(0, 3).map((item, index) => (
         <ContentCard title={item.data.title} description={item.data.description} meta={item.data.format + " · " + item.data.tags.join(" · ")} href={`/writing/${item.id}`} eyebrow={`WRITING / ${String(index + 1).padStart(2, "0")}`} headingLevel="h2" />
       ))}
     </div>
