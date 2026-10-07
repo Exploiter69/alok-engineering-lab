@@ -337,7 +337,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
       for (const issue of contrastIssues) warnings.push("contrast below AA threshold: " + issue);
 
       // Check every internal link.
-      const internalLinks = [
+      const internalLinks = device === "desktop1440" ? [
         ...new Set(
           audit.links
             .map((link) => link.href)
@@ -347,7 +347,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
               return `${url.origin}${url.pathname}`;
             })
         ),
-      ];
+      ] : [];
 
       const brokenLinks = [];
 
