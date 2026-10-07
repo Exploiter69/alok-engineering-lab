@@ -88,7 +88,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
 
         const visibleNavLinks = [...document.querySelectorAll("nav a")].filter((link) => {
           const style = getComputedStyle(link);
-          return style.display !== "none" && style.visibility !== "hidden";
+          return link.getClientRects().length > 0 && style.display !== "none" && style.visibility !== "hidden";
         });
         const navKeys = visibleNavLinks.map((link) => link.getAttribute("href") + "|" + (link.textContent?.trim() || ""));
         const duplicateNavLinks = navKeys.filter((value, index) => navKeys.indexOf(value) !== index);
