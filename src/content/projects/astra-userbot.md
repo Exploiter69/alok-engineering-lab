@@ -16,6 +16,11 @@ stack:
   - SQLite/WAL
 objective: "Harden a long-lived Telegram automation platform so feature growth does not reduce reliability, ownership clarity or recoverability."
 lifecycle: "building"
+lifecycleSince: 2026-10-06
+lifecycleHistory:
+  - state: "building"
+    date: 2026-10-06
+    note: "Lifecycle baseline recorded in the Engineering Lab."
 architectureSummary: "Single-process Python/asyncio modular monolith with Telethon at the edge, ApplicationContext and supervised services around a SQLite/WAL source of truth."
 decisions:
   - "Keep durable state in SQLite/WAL instead of introducing a distributed data layer."
