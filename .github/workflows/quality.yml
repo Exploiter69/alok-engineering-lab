@@ -22,6 +22,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Repository validation
+        run: npm run validate
+
       - name: Build
         run: npm run build
 
