@@ -214,3 +214,27 @@ The remaining admin roadmap is explicitly recorded here so future sessions do no
 - Phase 6 — Hardening / Final Verification: security, public-site security, accessibility, responsive behavior, performance, failure/recovery and final production verification.
 
 Phase 0–3 remain complete checkpoints. Do not claim Phase 4–6 complete until each phase is implemented, tested, documented, committed, merged to master and independently verified.
+
+
+## Phase 6 independent hardening
+
+Phase 6 independent hardening is implemented and quality-verified on branch `admin/phase-6-hardening`.
+
+Verified independently:
+- explicit `ADMIN_BASE_URL` OAuth callback construction
+- `__Host-` session/OAuth cookies
+- bounded JSON mutation parsing and controlled malformed-body responses
+- GitHub request timeouts and sanitized upstream failures
+- strict `.md` / `.mdx` content path matching
+- engineering-intelligence export configuration wiring
+- command-palette modal focus containment and restoration
+- GitHub failure regression coverage
+
+Quality run: GitHub Actions run `37656763756` — admin-security PASS; repository validation/build/browser/performance/Lighthouse/interaction/viewport checks PASS.
+
+Phase boundary remains:
+- Phase 4 Vercel gate: blocked
+- Phase 4 merge: blocked
+- Phase 5 merge: blocked
+- Phase 6 final integration: blocked
+- production verification: blocked
