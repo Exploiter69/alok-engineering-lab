@@ -1,0 +1,33 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+<Layout title="Content Workflow" description="The Git-native publishing workflow for Alok Engineering Lab.">
+<main class="mx-auto min-h-screen max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+  <a href="/docs" class="inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-[0.14em] text-neutral-500 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">← Documentation</a>
+  <header class="mt-10 max-w-3xl border-b border-neutral-900 pb-10">
+    <p class="lab-label mb-4">Reference / Publishing</p>
+    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Content Workflow</h1>
+    <p class="mt-5 text-lg leading-8 text-neutral-400">The repository is the publishing system. Content is created, verified and released through Git.</p>
+  </header>
+  <article class="prose prose-invert mt-12 max-w-3xl">
+    <h2>Create</h2>
+    <pre><code>npm run new:content -- projects my-project --title "My Project"
+npm run new:content -- notes durable-boundary --title "A Durable Boundary"
+npm run new:content -- writing technical-essay --title "A Technical Essay"</code></pre>
+    <p>The generator creates collection-specific draft metadata and durable section structure.</p>
+    <h2>Verify</h2>
+    <pre><code>npm run validate
+astro check
+npm run build
+npm run audit
+npm run audit:performance</code></pre>
+    <p>The GitHub Quality workflow runs the repository, build, browser and performance gates automatically.</p>
+    <h2>Connect</h2>
+    <p>Use the existing <code>related:</code> model for project, knowledge, evidence and chronology relationships. Do not create a second graph database or manual index.</p>
+    <h2>Publish</h2>
+    <p>Move from draft to a published state only after the content is complete and verified. A normal release is draft → review → validation → build → browser audit → performance audit → Git checkpoint → GitHub → Vercel.</p>
+    <h2>Long-term rule</h2>
+    <p>Do not add a CMS, database, paid API or runtime search service merely to make publishing easier. Git already provides history, review, rollback and provenance.</p>
+  </article>
+</main>
+</Layout>
