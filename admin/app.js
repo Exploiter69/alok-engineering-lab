@@ -153,31 +153,31 @@ async function workflowBranch(branch) {
 
 function statusBadge(status) {
   const safe = ["healthy","warning","failed","unknown"].includes(status) ? status : "unknown";
-  return \`<span class="health-badge \${safe}">\${esc(safe)}</span>\`;
+  return `<span class="health-badge ${safe}">${esc(safe)}</span>`;
 }
 
 async function intelligence() {
-  shell(\`<header class="page-head"><p class="eyebrow">ENGINEERING INTELLIGENCE</p><h1>Health, provenance & repository reports</h1><p class="muted">Repository-derived health only. Unknown remains unknown when external data is unavailable.</p></header><div id="intelligence-root"><div class="card"><p class="muted">Loading repository intelligence…</p></div></div>\`);
+  shell(`<header class="page-head"><p class="eyebrow">ENGINEERING INTELLIGENCE</p><h1>Health, provenance & repository reports</h1><p class="muted">Repository-derived health only. Unknown remains unknown when external data is unavailable.</p></header><div id="intelligence-root"><div class="card"><p class="muted">Loading repository intelligence…</p></div></div>`);
   loadCollections();
   try { const data = await api("/api/intelligence"); document.__aelHealth = data.health; renderIntelligence(data); }
-  catch (error) { document.querySelector("#intelligence-root").innerHTML = \`<div class="card"><strong>Health center unavailable</strong><p class="muted">\${esc(error.message)}</p></div>\`; }
+  catch (error) { document.querySelector("#intelligence-root").innerHTML = `<div class="card"><strong>Health center unavailable</strong><p class="muted">${esc(error.message)}</p></div>`; }
 }
 
 function renderIntelligence(data) {
   const root = document.querySelector("#intelligence-root"), h = data.health, r = data.repository, selected = new Set();
-  root.innerHTML = \`
-    <section class="cards"><div class="stat-card"><strong>\${h.totals.records}</strong><span>Content records</span></div><div class="stat-card"><strong>\${h.totals.validationFailures}</strong><span>Validation failures</span></div><div class="stat-card"><strong>\${h.totals.orphans}</strong><span>Orphans</span></div><div class="stat-card"><strong>\${h.totals.stale}</strong><span>Stale</span></div></section>
-    <section class="card"><div class="actions"><button class="button" id="export-json">Export JSON</button><button class="button secondary" id="export-md">Export Markdown archive</button><button class="button secondary" id="refresh-intelligence">Refresh</button><button class="button secondary" id="evidence-only">Evidence / provenance</button></div><p class="tiny">Stale rule: \${esc(data.staleRule.description)}</p></section>
-    <section class="card"><p class="eyebrow">REPOSITORY HEALTH</p><h2>\${esc(r.branch)} @ <code>\${esc(r.shortSha)}</code></h2><p class="muted">\${esc(r.latestCommit.message)} · \${esc(r.latestCommit.date || "unknown")} · ahead \${r.ahead} / behind \${r.behind}</p><div class="health-grid">\${data.audits.map(item => \`<article class="health-row"><span>\${esc(item.label)}</span>\${statusBadge(item.status)}<small>\${esc(item.detail)}</small></article>\`).join("")}</div></section>
-    <section class="card"><p class="eyebrow">HISTORICAL HEALTH</p><div class="list-card">\${data.runs.length ? data.runs.map(run => \`<article class="record"><span><strong>\${esc(run.name)}</strong><small>\${esc(run.branch)} · \${esc(run.sha.slice(0,12))} · \${esc(run.createdAt || "")}</small></span>\${statusBadge(run.conclusion || run.status)}<a class="button secondary" href="\${esc(run.url)}" target="_blank" rel="noopener noreferrer">Actions</a></article>\`).join("") : "<div class='empty'>No workflow history available.</div>"}</div></section>
-    <section class="card"><p class="eyebrow">AUDIT REPORT</p><div class="list-card">\${data.audits.map(item => \`<article class="record"><span><strong>\${esc(item.label)}</strong><small>\${esc(item.detail)}</small></span>\${statusBadge(item.status)}</article>\`).join("")}</div><p class="tiny">Validation, accessibility, performance and SEO states are derived from actual repository results; unavailable checks are never fabricated as PASS.</p></section>
-    <section class="card"><div class="bulk-head"><div><p class="eyebrow">CONTENT / BULK OPERATIONS</p><h2>Content health records</h2><label for="intelligence-search">Search content <input id="intelligence-search" type="search" placeholder="Title, collection, tag or slug" autocomplete="off"></label></div><div class="bulk-controls"><select id="bulk-action" aria-label="Bulk action"><option value="archive">Archive</option><option value="restore">Restore</option><option value="add-tag">Add tag</option><option value="remove-tag">Remove tag</option><option value="add-related">Add relationship</option><option value="remove-related">Remove relationship</option></select><span id="bulk-value-wrap"><input id="bulk-value" placeholder="Tag or collection:slug" aria-label="Bulk value"></span><button id="bulk-run" class="button secondary">Apply on branch</button></div></div><div class="list-card">\${h.records.map(record => \`<label class="record record-select"><input type="checkbox" data-select-record value="\${esc(record.collection+":"+record.slug)}"><span><strong>\${esc(record.title)}</strong><small>\${esc(record.collection)} · \${esc(record.slug)} · updated \${esc(record.updatedAt || record.date || "unknown")}</small></span><span>\${statusBadge(record.validationStatus)} \${isStaleRecord(record) ? statusBadge("warning") : ""}</span></label>\`).join("")}</div></section>
-    <section class="card"><p class="eyebrow">RELATIONSHIP EXPLORER</p><h2>Repository knowledge graph</h2><div class="list-card">\${h.graph.map(node => \`<article class="record"><span><strong>\${esc(node.title)}</strong><small>\${esc(node.id)} · outgoing \${node.outgoing.length} · incoming \${node.incoming.length}</small></span><span class="tiny">\${esc(node.incoming.slice(0,4).join(", ") || "no inbound")}</span></article>\`).join("")}</div></section>
-    \${reportSection("ORPHANS","Orphan content",h.orphans,"No inbound or outbound relationship where one is expected.")}
-    \${reportSection("STALE CONTENT","Stale content",h.stale,\`No meaningful repository update for at least \${h.thresholdDays} days.\`)}
-    \${reportSection("BROKEN REFERENCES","Broken relationships",h.brokenReferences,"Referenced target does not exist.")}
-    \${reportSection("MISSING RELATIONSHIPS","Missing relationships",h.missingRelationships,"Active/published content has no outgoing relationship under the health rule.")}
-  \`;
+  root.innerHTML = `
+    <section class="cards"><div class="stat-card"><strong>${h.totals.records}</strong><span>Content records</span></div><div class="stat-card"><strong>${h.totals.validationFailures}</strong><span>Validation failures</span></div><div class="stat-card"><strong>${h.totals.orphans}</strong><span>Orphans</span></div><div class="stat-card"><strong>${h.totals.stale}</strong><span>Stale</span></div></section>
+    <section class="card"><div class="actions"><button class="button" id="export-json">Export JSON</button><button class="button secondary" id="export-md">Export Markdown archive</button><button class="button secondary" id="refresh-intelligence">Refresh</button><button class="button secondary" id="evidence-only">Evidence / provenance</button></div><p class="tiny">Stale rule: ${esc(data.staleRule.description)}</p></section>
+    <section class="card"><p class="eyebrow">REPOSITORY HEALTH</p><h2>${esc(r.branch)} @ <code>${esc(r.shortSha)}</code></h2><p class="muted">${esc(r.latestCommit.message)} · ${esc(r.latestCommit.date || "unknown")} · ahead ${r.ahead} / behind ${r.behind}</p><div class="health-grid">${data.audits.map(item => `<article class="health-row"><span>${esc(item.label)}</span>${statusBadge(item.status)}<small>${esc(item.detail)}</small></article>`).join("")}</div></section>
+    <section class="card"><p class="eyebrow">HISTORICAL HEALTH</p><div class="list-card">${data.runs.length ? data.runs.map(run => `<article class="record"><span><strong>${esc(run.name)}</strong><small>${esc(run.branch)} · ${esc(run.sha.slice(0,12))} · ${esc(run.createdAt || "")}</small></span>${statusBadge(run.conclusion || run.status)}<a class="button secondary" href="${esc(run.url)}" target="_blank" rel="noopener noreferrer">Actions</a></article>`).join("") : "<div class='empty'>No workflow history available.</div>"}</div></section>
+    <section class="card"><p class="eyebrow">AUDIT REPORT</p><div class="list-card">${data.audits.map(item => `<article class="record"><span><strong>${esc(item.label)}</strong><small>${esc(item.detail)}</small></span>${statusBadge(item.status)}</article>`).join("")}</div><p class="tiny">Validation, accessibility, performance and SEO states are derived from actual repository results; unavailable checks are never fabricated as PASS.</p></section>
+    <section class="card"><div class="bulk-head"><div><p class="eyebrow">CONTENT / BULK OPERATIONS</p><h2>Content health records</h2><label for="intelligence-search">Search content <input id="intelligence-search" type="search" placeholder="Title, collection, tag or slug" autocomplete="off"></label></div><div class="bulk-controls"><select id="bulk-action" aria-label="Bulk action"><option value="archive">Archive</option><option value="restore">Restore</option><option value="add-tag">Add tag</option><option value="remove-tag">Remove tag</option><option value="add-related">Add relationship</option><option value="remove-related">Remove relationship</option></select><span id="bulk-value-wrap"><input id="bulk-value" placeholder="Tag or collection:slug" aria-label="Bulk value"></span><button id="bulk-run" class="button secondary">Apply on branch</button></div></div><div class="list-card">${h.records.map(record => `<label class="record record-select"><input type="checkbox" data-select-record value="${esc(record.collection+":"+record.slug)}"><span><strong>${esc(record.title)}</strong><small>${esc(record.collection)} · ${esc(record.slug)} · updated ${esc(record.updatedAt || record.date || "unknown")}</small></span><span>${statusBadge(record.validationStatus)} ${isStaleRecord(record) ? statusBadge("warning") : ""}</span></label>`).join("")}</div></section>
+    <section class="card"><p class="eyebrow">RELATIONSHIP EXPLORER</p><h2>Repository knowledge graph</h2><div class="list-card">${h.graph.map(node => `<article class="record"><span><strong>${esc(node.title)}</strong><small>${esc(node.id)} · outgoing ${node.outgoing.length} · incoming ${node.incoming.length}</small></span><span class="tiny">${esc(node.incoming.slice(0,4).join(", ") || "no inbound")}</span></article>`).join("")}</div></section>
+    ${reportSection("ORPHANS","Orphan content",h.orphans,"No inbound or outbound relationship where one is expected.")}
+    ${reportSection("STALE CONTENT","Stale content",h.stale,`No meaningful repository update for at least ${h.thresholdDays} days.`)}
+    ${reportSection("BROKEN REFERENCES","Broken relationships",h.brokenReferences,"Referenced target does not exist.")}
+    ${reportSection("MISSING RELATIONSHIPS","Missing relationships",h.missingRelationships,"Active/published content has no outgoing relationship under the health rule.")}
+  `;
   document.querySelector("#refresh-intelligence").addEventListener("click", intelligence);
   document.querySelector("#evidence-only").addEventListener("click", () => evidenceManager(document.__aelHealth));
   document.querySelector("#export-json").addEventListener("click", () => downloadExport("json", [...selected]));
@@ -204,27 +204,27 @@ function isStaleRecord(record) {
 }
 
 function reportSection(eyebrow,title,items,reason) {
-  return \`<section class="card"><p class="eyebrow">\${esc(eyebrow)}</p><h2>\${esc(title)}</h2>\${items.length ? \`<div class="list-card">\${items.map(item => \`<article class="record"><span><strong>\${esc(item.title || item.source || "record")}</strong><small>\${esc(item.slug || item.target || item.staleReason?.basis || reason)}</small></span></article>\`).join("")}</div>\` : \`<p class="muted">No findings.</p>\`}</section>\`;
+  return `<section class="card"><p class="eyebrow">${esc(eyebrow)}</p><h2>${esc(title)}</h2>${items.length ? `<div class="list-card">${items.map(item => `<article class="record"><span><strong>${esc(item.title || item.source || "record")}</strong><small>${esc(item.slug || item.target || item.staleReason?.basis || reason)}</small></span></article>`).join("")}</div>` : `<p class="muted">No findings.</p>`}</section>`;
 }
 
 async function runBulk(selected) {
   if (!selected.size) return showGlobalMessage("Select at least one record.");
   const action = document.querySelector("#bulk-action").value, value = document.querySelector("#bulk-value").value.trim();
-  if (["archive","restore"].includes(action) && !confirm(\`Apply \${action} to \${selected.size} record(s) on an admin branch?\`)) return;
-  const branch = prompt("Admin branch for this Git-backed bulk operation:", \`admin/bulk-\${Date.now().toString(36)}\`);
+  if (["archive","restore"].includes(action) && !confirm(`Apply ${action} to ${selected.size} record(s) on an admin branch?`)) return;
+  const branch = prompt("Admin branch for this Git-backed bulk operation:", `admin/bulk-${Date.now().toString(36)}`);
   if (!branch || !/^admin\\/[a-z0-9][a-z0-9._/-]{2,79}$/.test(branch)) return showGlobalMessage("Invalid admin branch.");
   try {
     await api("/api/content",{method:"POST",body:JSON.stringify({action:"branch",branch})});
     const items=[...selected].map(ref => { const [collection,slug]=ref.split(":"); return {collection,slug}; });
     const result=await api("/api/intelligence",{method:"POST",body:JSON.stringify({action:"bulk",items,branch,action,value})});
-    showGlobalMessage(\`✓ Updated \${result.count} record(s) on \${branch}.\`);
+    showGlobalMessage(`✓ Updated ${result.count} record(s) on ${branch}.`);
     await intelligence();
   } catch(error) { showGlobalMessage(error.message); }
 }
 
 async function evidenceManager(health) {
   const evidence=(health?.records || []).filter(record => record.collection === "evidence");
-  shell(\`<header class="page-head"><p class="eyebrow">EVIDENCE / PROVENANCE</p><h1>What proves this claim?</h1><p class="muted">Evidence remains repository-backed. Method, result, limitations and relationships are displayed exactly from content records.</p></header><section class="cards"><div class="stat-card"><strong>\${evidence.length}</strong><span>Evidence records</span></div><div class="stat-card"><strong>\${evidence.filter(x=>x.metadata.outcome==="confirmed").length}</strong><span>Confirmed</span></div><div class="stat-card"><strong>\${evidence.filter(x=>x.metadata.outcome==="failed").length}</strong><span>Failed</span></div><div class="stat-card"><strong>\${evidence.filter(x=>x.validationErrors.length).length}</strong><span>Validation failures</span></div></section><section class="list-card">\${evidence.length ? evidence.map(item=>\`<article class="evidence-card"><p class="eyebrow">\${esc(item.metadata.kind || "evidence")} · \${esc(item.metadata.outcome || "unknown")}</p><h2>\${esc(item.title)}</h2><p>\${esc(item.description)}</p><dl><dt>Method</dt><dd>\${esc(item.metadata.method || "—")}</dd><dt>Result</dt><dd>\${esc(item.metadata.result || "—")}</dd><dt>Limitations</dt><dd>\${esc((item.metadata.limitations||[]).join(", ") || "None recorded")}</dd><dt>Provenance</dt><dd>\${esc(item.related.join(", ") || "No related content")}</dd></dl><div class="actions"><button class="button secondary" data-open-evidence="\${esc(item.slug)}">Open record</button></div></article>\`).join("") : "<div class='empty'>No evidence records.</div>"}</section><div class="actions"><button id="evidence-back" class="button secondary">Back to intelligence</button><button id="evidence-create" class="button">Create evidence</button></div>\`);
+  shell(`<header class="page-head"><p class="eyebrow">EVIDENCE / PROVENANCE</p><h1>What proves this claim?</h1><p class="muted">Evidence remains repository-backed. Method, result, limitations and relationships are displayed exactly from content records.</p></header><section class="cards"><div class="stat-card"><strong>${evidence.length}</strong><span>Evidence records</span></div><div class="stat-card"><strong>${evidence.filter(x=>x.metadata.outcome==="confirmed").length}</strong><span>Confirmed</span></div><div class="stat-card"><strong>${evidence.filter(x=>x.metadata.outcome==="failed").length}</strong><span>Failed</span></div><div class="stat-card"><strong>${evidence.filter(x=>x.validationErrors.length).length}</strong><span>Validation failures</span></div></section><section class="list-card">${evidence.length ? evidence.map(item=>`<article class="evidence-card"><p class="eyebrow">${esc(item.metadata.kind || "evidence")} · ${esc(item.metadata.outcome || "unknown")}</p><h2>${esc(item.title)}</h2><p>${esc(item.description)}</p><dl><dt>Method</dt><dd>${esc(item.metadata.method || "—")}</dd><dt>Result</dt><dd>${esc(item.metadata.result || "—")}</dd><dt>Limitations</dt><dd>${esc((item.metadata.limitations||[]).join(", ") || "None recorded")}</dd><dt>Provenance</dt><dd>${esc(item.related.join(", ") || "No related content")}</dd></dl><div class="actions"><button class="button secondary" data-open-evidence="${esc(item.slug)}">Open record</button></div></article>`).join("") : "<div class='empty'>No evidence records.</div>"}</section><div class="actions"><button id="evidence-back" class="button secondary">Back to intelligence</button><button id="evidence-create" class="button">Create evidence</button></div>`);
   loadCollections();
   document.querySelector("#evidence-back").addEventListener("click", intelligence);
   document.querySelector("#evidence-create").addEventListener("click", () => editor("evidence"));
@@ -234,7 +234,7 @@ async function evidenceManager(health) {
 async function downloadExport(format, selection) {
   try {
     const response=await fetch("/api/intelligence",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"export",format,selection:selection.length?selection:null})});
-    if(!response.ok){const data=await response.json().catch(()=>({}));throw new Error(data.message||data.error||\`Export failed: \${response.status}\`);}
+    if(!response.ok){const data=await response.json().catch(()=>({}));throw new Error(data.message||data.error||`Export failed: ${response.status}`);}
     const blob=await response.blob(), url=URL.createObjectURL(blob), anchor=document.createElement("a");
     anchor.href=url; anchor.download=format==="markdown"?"engineering-lab-archive.md":"engineering-lab-export.json"; anchor.click(); URL.revokeObjectURL(url);
   } catch(error) { showGlobalMessage(error.message); }
@@ -254,13 +254,13 @@ function openCommandPalette() {
   if(document.querySelector("#command-palette")) return;
   const commands=commandDefinitions(), overlay=document.createElement("div");
   overlay.id="command-palette"; overlay.className="command-overlay";
-  overlay.innerHTML=\`<div class="command-dialog" role="dialog" aria-modal="true" aria-labelledby="command-title"><div class="command-head"><h2 id="command-title">Command palette</h2><kbd>Esc</kbd></div><input id="command-search" aria-label="Search commands" placeholder="Search commands…" autocomplete="off"><div id="command-list" role="listbox"></div><p class="tiny">↑ ↓ navigate · Enter run · Escape close</p></div>\`;
+  overlay.innerHTML=`<div class="command-dialog" role="dialog" aria-modal="true" aria-labelledby="command-title"><div class="command-head"><h2 id="command-title">Command palette</h2><kbd>Esc</kbd></div><input id="command-search" aria-label="Search commands" placeholder="Search commands…" autocomplete="off"><div id="command-list" role="listbox"></div><p class="tiny">↑ ↓ navigate · Enter run · Escape close</p></div>`;
   document.body.appendChild(overlay);
   const input=overlay.querySelector("#command-search"), listNode=overlay.querySelector("#command-list"); let index=0;
   function render(filter="") {
     const filtered=commands.filter(([label])=>label.toLowerCase().includes(filter.toLowerCase()));
     index=Math.min(index,Math.max(filtered.length-1,0));
-    listNode.innerHTML=filtered.length?filtered.map(([label],i)=>\`<button class="command-item \${i===index?"active":""}" role="option" aria-selected="\${i===index}">\${esc(label)}</button>\`).join(""):"<div class='empty'>No commands match.</div>";
+    listNode.innerHTML=filtered.length?filtered.map(([label],i)=>`<button class="command-item ${i===index?"active":""}" role="option" aria-selected="${i===index}">${esc(label)}</button>`).join(""):"<div class='empty'>No commands match.</div>";
     listNode.querySelectorAll(".command-item").forEach((button,i)=>button.addEventListener("click",()=>{filtered[i][1]();overlay.remove();}));
     return filtered;
   }
