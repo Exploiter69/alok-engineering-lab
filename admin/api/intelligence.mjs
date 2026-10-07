@@ -124,6 +124,7 @@ export default async function handler(req, res) {
         const health = await contentHealth(session.token, exportRef);
         const repository = await repositorySnapshot(session.token, exportRef);
         const runs = await repositoryRuns(session.token, exportRef, 12);
+        const config = await readSiteControl(session.token, exportRef).catch(() => null);
         const selection = Array.isArray(body.selection) ? body.selection : null;
         if (selection && !validateBulkSelection(selection).ok) return send(res, 400, { error: "invalid_selection" });
         const format = body.format === "markdown" ? "markdown" : "json";
