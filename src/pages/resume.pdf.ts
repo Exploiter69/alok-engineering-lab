@@ -1,5 +1,4 @@
 export const prerender = true;
-}
 
 const lines = [
   ["Alok Thakur", 18, true],
@@ -71,3 +70,5 @@ pdf += "trailer\n<< /Size " + (objects.length + 1) + " /Root 1 0 R >>\nstartxref
 const bytes = Uint8Array.from(pdf, char => char.charCodeAt(0));
 export async function GET() {
   return new Response(bytes, { headers: { "Content-Type": "application/pdf", "Content-Disposition": 'inline; filename="alok-thakur-resume.pdf"' } });
+
+}
