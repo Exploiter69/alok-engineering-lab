@@ -48,6 +48,7 @@ const projects = (await getCollection("projects"))
           <ContentCard
             title={project.data.title}
             description={project.data.description}
+            status={project.data.status}
             meta={project.data.stack?.join(" • ")}
             href={`/projects/${project.id}`}
             eyebrow={`PROJECT / ${String(index + 1).padStart(2, "0")}`}
