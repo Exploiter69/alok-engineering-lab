@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   STALE_DAYS, isStale, staleReason, classifyDiffFile, semanticDiff,
-  validateBulkSelection, bulkMetadata, auditFromHealth, parseReference,
+  validateBulkSelection, bulkMetadata, auditFromHealth, parseReference, markdownArchive, serializeExport,
 } from "../lib/intelligence.mjs";
 
 test("stale detection uses the explicit 180-day rule", () => {
@@ -75,4 +75,17 @@ test("audit states never promote unavailable data to healthy", () => {
   assert.equal(audits.find(item => item.id === "deployment").status, "unknown");
   assert.equal(audits.find(item => item.id === "ci").status, "unknown");
   assert.equal(audits.find(item => item.id === "metadata").status, "healthy");
+});
+
+
+test("exports preserve full Markdown content and configuration", () => {
+  const health = {
+    ref: "master",
+    thresholdDays: 180,
+    records: [{ title:"Example", path:"src/content/notes/example.md", collection:"notes", slug:"example", status:"published", date:"2026-10-07", updatedAt:"2026-10-07", related:[], metadata:{title:"Example",status:"published"}, body:"# Full body" }],
+    totals:{records:1,validationFailures:0,brokenReferences:0,missingRelationships:0,orphans:0,stale:0},
+  };
+  assert.match(markdownArchive(health), /# Full body/);
+  const exported=serializeExport({health,repository:{branch:"master",sha:"a".repeat(40),latestCommit:null},runs:[],config:{site:{title:"Lab"}}});
+  assert.deepEqual(exported.configuration,{site:{title:"Lab"}});
 });
