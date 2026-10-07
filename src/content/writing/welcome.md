@@ -7,6 +7,7 @@ tags:
   - Learning
   - Systems
 status: active
+format: "essay"
 related:
   - projects:astra
   - notes:engineering-philosophy
