@@ -4,23 +4,41 @@ import path from "node:path";
 
 const baseURL = "http://localhost:4321";
 
-const routes = [
-  "/",
-  "/about",
-  "/projects",
-  "/projects/astra",
-  "/writing",
-  "/writing/welcome",
-  "/notes",
-  "/notes/engineering-philosophy",
-  "/experiments",
-  "/experiments/first-experiment",
-  "/timeline",
-  "/timeline/start",
-  "/garden",
-  "/changelog",
-  "/docs",
-];
+const distDir = path.resolve("dist");
+
+async function discoverRoutes(directory, prefix = "") {
+  const entries = await fs.readdir(directory, { withFileTypes: true });
+  const routes = [];
+
+  for (const entry of entries) {
+    const fullPath = path.join(directory, entry.name);
+    const routePath = path.join(prefix, entry.name);
+
+    if (entry.isDirectory()) {
+      routes.push(...(await discoverRoutes(fullPath, routePath)));
+      continue;
+    }
+
+    if (entry.name !== "index.html" && entry.name.endsWith(".html")) {
+      if (routePath === "404.html") continue;
+      routes.push("/" + routePath.replace(/\\.html$/, ""));
+      continue;
+    }
+
+    if (entry.name === "index.html") {
+      const route = prefix ? "/" + prefix + "/" : "/";
+      routes.push(route.replaceAll("//", "/"));
+    }
+  }
+
+  return routes;
+}
+
+if (!(await fs.stat(distDir).catch(() => null))) {
+  throw new Error("dist/ is missing. Run npm run build before npm run audit.");
+}
+
+const routes = [...new Set(await discoverRoutes(distDir))].sort();
 
 const viewports = {
   desktop: { width: 1440, height: 900 },
