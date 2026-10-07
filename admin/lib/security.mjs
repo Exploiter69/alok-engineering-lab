@@ -32,10 +32,20 @@ export function decrypt(value) {
 }
 
 export function parseCookies(header = "") {
-  return Object.fromEntries(header.split(";").map((part) => part.trim()).filter(Boolean).map((part) => {
-    const index = part.indexOf("=");
-    return index === -1 ? [part, ""] : [part.slice(0, index), decodeURIComponent(part.slice(index + 1))];
-  }));
+  const cookies = {};
+  for (const part of String(header || "").split(";")) {
+    const trimmed = part.trim();
+    if (!trimmed) continue;
+    const index = trimmed.indexOf("=");
+    const name = index === -1 ? trimmed : trimmed.slice(0, index);
+    const rawValue = index === -1 ? "" : trimmed.slice(index + 1);
+    try {
+      cookies[name] = decodeURIComponent(rawValue);
+    } catch {
+      cookies[name] = "";
+    }
+  }
+  return cookies;
 }
 
 export function cookie(name, value, maxAge, extra = "") {
