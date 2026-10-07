@@ -14,6 +14,13 @@ stack:
   - Testing
   - Automation
 objective: "Evolve an established automation and QA engine through incremental modularization without losing behavior users already depend on."
+currentFocus: "Incremental subsystem replacement while preserving the tested legacy behavior anchor."
+knownProblems:
+  - "A mature legacy core still carries behavior that new modules must preserve."
+  - "Large architectural moves can create compatibility drift if verification is too coarse."
+futureWork:
+  - "Migrate bounded subsystems behind explicit contracts."
+  - "Expand compatibility coverage before retiring the legacy anchor."
 lifecycle: "building"
 lifecycleSince: 2026-10-06
 lifecycleHistory:
