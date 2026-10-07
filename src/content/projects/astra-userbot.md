@@ -15,6 +15,13 @@ stack:
   - Telethon
   - SQLite/WAL
 objective: "Harden a long-lived Telegram automation platform so feature growth does not reduce reliability, ownership clarity or recoverability."
+currentFocus: "Reliability hardening across plugin lifecycle, supervised background work, durable jobs, storage recovery, media boundaries and release acceptance."
+knownProblems:
+  - "Large plugin surfaces increase lifecycle and ownership risk."
+  - "Legacy AI modules remain intentionally quarantined while compatibility is preserved."
+futureWork:
+  - "Continue release acceptance hardening."
+  - "Keep plugin ownership, recovery and storage boundaries explicit as features grow."
 lifecycle: "building"
 lifecycleSince: 2026-10-06
 lifecycleHistory:
