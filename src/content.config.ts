@@ -11,6 +11,17 @@ const commonSchema = z.object({
   status: z.enum(["draft", "active", "archived", "published"]).default("draft"),
 });
 
+const evidenceCollection = defineCollection({
+    loader: glob({ base: "./src/content/evidence", pattern: "**/*.(md|mdx)" }),
+    schema: commonSchema.extend({
+      kind: z.enum(["benchmark", "failure", "verification", "observation"]),
+      outcome: z.enum(["confirmed", "failed", "inconclusive", "informational"]),
+      method: z.string(),
+      result: z.string(),
+      limitations: z.array(z.string()).default([]),
+    }),
+  });
+
 export const collections = {
   projects: defineCollection({
     loader: glob({ base: "./src/content/projects", pattern: "**/*.(md|mdx)" }),
@@ -48,6 +59,7 @@ export const collections = {
     loader: glob({ base: "./src/content/timeline", pattern: "**/*.(md|mdx)" }),
     schema: commonSchema,
   }),
+  evidence: evidenceCollection,
   changelog: defineCollection({
     loader: glob({ base: "./src/content/changelog", pattern: "**/*.(md|mdx)" }),
     schema: commonSchema,
