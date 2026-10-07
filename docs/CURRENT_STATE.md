@@ -239,3 +239,5 @@ A targeted post-implementation audit found and corrected three concrete issues w
 - Malformed percent-encoded cookies are rejected safely instead of throwing during session parsing.
 
 Regression coverage was added for configuration export and malformed-cookie handling. Phase 5 remains unmerged and dependency-blocked by Phase 4.
+
+Phase 5 verification note: the first post-audit Quality run exposed only test-file newline escaping introduced by the regression-test append; those test files were corrected. A fresh Quality run is required before Phase 5 can be called verified after these changes.
