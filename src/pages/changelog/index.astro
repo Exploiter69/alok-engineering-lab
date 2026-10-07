@@ -15,12 +15,12 @@ const entries = (await getCollection("changelog"))
     <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Changelog</h1>
     <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">The evolution of Alok Engineering Lab through meaningful releases and engineering checkpoints.</p>
   </header>
-  <section class="mt-10" aria-labelledby="changelog-archive-heading">
+  <section class="mt-12" aria-labelledby="changelog-archive-heading">
     <div class="mb-5 flex items-baseline justify-between gap-4">
       <p id="changelog-archive-heading" class="lab-label">Archive history</p>
       <span class="font-mono text-xs text-neutral-600">{entries.length} records</span>
     </div>
-    <div class="grid gap-4 md:grid-cols-2">
+    <div>
       {entries.map((entry, index) => (
         <ContentCard
           title={entry.data.title}
