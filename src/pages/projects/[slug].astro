@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import RelatedContent from "../../components/RelatedContent.astro";
 import ProjectIntelligence from "../../components/ProjectIntelligence.astro";
+import ProjectLifecycle from "../../components/ProjectLifecycle.astro";
 import { resolveRelated } from "../../lib/related";
 import { getCollection, render } from "astro:content";
 export async function getStaticPaths() {
@@ -30,6 +31,7 @@ const timelineItems = (await getCollection("timeline"))
     </div>
   </header>
   <ProjectIntelligence project={project} relatedItems={relatedItems} timelineItems={timelineItems} />
+  <ProjectLifecycle project={project} />
   <article class="prose prose-invert mt-12 max-w-3xl sm:mt-16"><Content /></article>
   <RelatedContent items={relatedItems} />
 </main>
