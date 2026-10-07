@@ -3,8 +3,9 @@ const currentPath = Astro.url.pathname;
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(`${href}/`);
 const primaryLinks = [
   { href: "/projects", label: "Projects" },
-  { href: "/garden", label: "Garden" },
-  { href: "/explore", label: "Explore" },
+  { href: "/writing", label: "Writing" },
+  { href: "/garden", label: "Lab" },
+  { href: "/contact", label: "Contact" },
   { href: "/timeline", label: "Journey" },
   { href: "/about", label: "About" },
 ];
@@ -31,8 +32,8 @@ const gardenLinks = [
           ]}>{link.label}</a>
         ))}
         <details class="relative">
-          <summary aria-label="Open Garden navigation" class:list={["inline-flex min-h-11 cursor-pointer list-none items-center rounded-lg px-3 text-sm transition-colors hover:bg-neutral-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white", gardenLinks.some(link => isActive(link.href)) || isActive("/garden") ? "bg-neutral-900 text-white" : "text-neutral-400"]}>
-            Garden +
+          <summary aria-label="Open Lab navigation" class:list={["inline-flex min-h-11 cursor-pointer list-none items-center rounded-lg px-3 text-sm transition-colors hover:bg-neutral-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white", gardenLinks.some(link => isActive(link.href)) || isActive("/garden") ? "bg-neutral-900 text-white" : "text-neutral-400"]}>
+            Lab +
           </summary>
           <div class="absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-neutral-800 bg-black p-2 shadow-2xl">
             {gardenLinks.map(link => (
@@ -57,7 +58,7 @@ const gardenLinks = [
             ]}>{link.label}</a>
           ))}
           <div class="my-2 border-t border-neutral-900 pt-2">
-            <p class="px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-600">Garden</p>
+            <p class="px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-600">Lab</p>
             {gardenLinks.map(link => (
               <a href={link.href} aria-current={isActive(link.href) ? "page" : undefined} class:list={[
                 "flex min-h-11 items-center rounded-lg px-3 text-sm hover:bg-neutral-900 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
