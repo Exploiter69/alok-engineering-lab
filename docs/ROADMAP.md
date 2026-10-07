@@ -223,3 +223,20 @@ Complete the post-CP20 reliability pass before any future visual expansion. Scop
 - no 3D/WebGL, particles, heavy animation, client framework, CMS or runtime visual system was introduced
 
 The combined CP22–CP27 checkpoint is not considered fully released until the final GitHub Actions Quality run passes and the resulting Vercel production deployment is READY.
+
+
+### Experience refinement checkpoint — implementation complete
+
+The post-CP27 refinement pass implements the actionable parts of the external UX review without changing the architecture:
+- specific engineering positioning and clearer homepage story
+- repository-derived proof metrics
+- simplified navigation terminology: Projects, Writing, Lab, Journey, About, Contact
+- static keyboard command palette over published records
+- project technology filtering alongside lifecycle/search filtering
+- sticky navigation with preserved 44px interaction targets
+- public contact surface using only verified GitHub identity
+- static social-preview artwork and default Open Graph/Twitter image metadata
+- homepage project problem framing, recent-work activity and stronger connection CTA
+- contact added to sitemap
+
+Not invented: email, LinkedIn, education, internship claims, personal metrics, testimonials or a fabricated resume credential set. The repository remains the source of truth and the site remains ₹0 / $0.
