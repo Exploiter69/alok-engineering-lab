@@ -183,7 +183,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
       });
 
       // Interaction target checks: primary controls should remain comfortably tappable.
-      const primaryTargets = await page.evaluate(() => [...document.querySelectorAll("nav a, nav summary, button, input")].map((element) => {
+      const primaryTargets = await page.evaluate(() => [...document.querySelectorAll("nav a, nav summary, button, input")].filter((element) => element.getClientRects().length > 0 && getComputedStyle(element).visibility !== "hidden").map((element) => {
         const rect = element.getBoundingClientRect();
         return { tag: element.tagName, text: element.textContent?.trim() || "", width: rect.width, height: rect.height };
       }));
