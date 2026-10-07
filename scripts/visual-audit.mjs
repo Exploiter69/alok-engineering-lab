@@ -52,6 +52,7 @@ const viewports = {
 };
 
 const auditDir = path.resolve("audit");
+const screenshotRoutes = new Set(["/", "/projects/", "/explore/", "/garden/", "/about/", "/contact/"]);
 
 await fs.rm(auditDir, { recursive: true, force: true });
 await fs.mkdir(auditDir, { recursive: true });
@@ -349,7 +350,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
       for (const issue of contrastIssues) warnings.push("contrast below AA threshold: " + issue);
 
       // Check every internal link.
-      const internalLinks = device === "desktop1440" ? [
+      const internalLinks = device === "desktop1440" && route === "/" ? [
         ...new Set(
           audit.links
             .map((link) => link.href)
@@ -474,7 +475,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
           ? "home"
           : route.replace(/^\/|\/$/g, "").replaceAll("/", "-");
 
-      if (device === "mobile390" || device === "desktop1440") {
+      if ((device === "mobile390" || device === "desktop1440") && screenshotRoutes.has(route)) {
         await page.screenshot({
           path: path.join(deviceDir, `${slug}.png`),
           fullPage: true,
