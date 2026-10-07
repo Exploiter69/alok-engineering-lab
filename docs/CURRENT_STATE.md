@@ -169,3 +169,7 @@ The current experience now includes:
 - visible-control target and keyboard-focus checks in the generated-route browser audit
 
 The final Quality workflow passed repository validation, Astro build and the full browser audit for 264 desktop/mobile cases.
+
+
+## CP21 — UX Reliability & Interaction Excellence
+The interface has received a reliability-focused UX pass covering interaction semantics, accessibility, responsive controls, Garden/project discovery, long-form reading, evidence summaries and 404 recovery. The browser audit now covers eight responsive viewport classes and interaction-level checks in addition to route-level validation.
