@@ -8,7 +8,9 @@ const esc = (value) => {
 };
 
 async function api(path, options = {}) {
-  const response = await fetch(path, { credentials: "same-origin", ...options, headers: { "Content-Type": "application/json", ...(options.headers || {}) } });
+  const method = String(options.method || "GET").toUpperCase();
+  const csrf = method === "GET" || method === "HEAD" ? {} : { "X-CSRF-Token": state.session?.csrf || "" };
+  const response = await fetch(path, { credentials: "same-origin", ...options, headers: { "Content-Type": "application/json", ...csrf, ...(options.headers || {}) } });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.errors?.join("\n") || data.message || data.error || `Request failed: ${response.status}`);
   return data;
@@ -233,7 +235,7 @@ async function evidenceManager(health) {
 
 async function downloadExport(format, selection) {
   try {
-    const response=await fetch("/api/intelligence",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"export",format,selection:selection.length?selection:null})});
+    const response=await fetch("/api/intelligence",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json","X-CSRF-Token":state.session?.csrf || ""},body:JSON.stringify({action:"export",format,selection:selection.length?selection:null})});
     if(!response.ok){const data=await response.json().catch(()=>({}));throw new Error(data.message||data.error||`Export failed: ${response.status}`);}
     const blob=await response.blob(), url=URL.createObjectURL(blob), anchor=document.createElement("a");
     anchor.href=url; anchor.download=format==="markdown"?"engineering-lab-archive.md":"engineering-lab-export.json"; anchor.click(); URL.revokeObjectURL(url);
