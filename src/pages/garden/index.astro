@@ -4,7 +4,7 @@ import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
 import { slugifyTopic } from "../../lib/topics";
 
-const [notes, writing, experiments] = await Promise.all([
+const [notes, writing, experiments, evidence] = await Promise.all([
   getCollection("notes"),
   getCollection("writing"),
   getCollection("experiments"),
@@ -89,7 +89,7 @@ const topicAnchors = new Map(
 <p id="topic-index-heading" class="lab-label mb-5">Topic Index</p>
 <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 {topics.map(topic => {
-  const slug = topicAnchors.get(topic)!;
+  const slug = topicSlugs.get(topic)!;
   const matches = gardenItems.filter(item => item.data.tags.includes(topic));
   return (
     <a href={"/garden/topics/" + slug} class="block rounded-xl border border-neutral-900 p-4 transition hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
