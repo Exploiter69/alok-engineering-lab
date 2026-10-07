@@ -1,5 +1,9 @@
 const app = document.querySelector("#app");
-const esc = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", """: "&quot;", "'": "&#39;" }[c]));
+const esc = (value) => {
+  const node = document.createElement("span");
+  node.textContent = String(value);
+  return node.innerHTML;
+};
 
 async function load() {
   try {
@@ -7,6 +11,7 @@ async function load() {
     if (!response.ok) return;
     const session = await response.json();
     if (!session.authenticated) return;
+
     app.innerHTML = `
       <div class="card"><p class="eyebrow">CONTROL PLANE</p><h1>Engineering Lab Admin</h1>
       <p class="muted">Signed in as <strong>${esc(session.user.login)}</strong>.</p>
@@ -15,12 +20,18 @@ async function load() {
       <form id="logout" method="post" action="/api/auth/logout"><input type="hidden" name="csrf" value="${esc(session.csrf)}">
       <button class="button secondary" type="submit">Log out</button></form>
       <p class="tiny">Phase 1 shell: content management is intentionally not exposed until its Git workflow is implemented and tested.</p></div>`;
+
     document.querySelector("#logout").addEventListener("submit", async (event) => {
       event.preventDefault();
       const csrf = event.currentTarget.querySelector("input").value;
-      await fetch("/api/auth/logout", { method: "POST", headers: { "X-CSRF-Token": csrf }, credentials: "same-origin" });
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        headers: { "X-CSRF-Token": csrf },
+        credentials: "same-origin",
+      });
       location.reload();
     });
   } catch {}
 }
+
 load();
