@@ -15,3 +15,4 @@ result: "The final run completed successfully across 264 desktop/mobile cases, i
 limitations:
   - "This is automated browser-quality verification, not a manual assistive-technology audit."
   - "The production domain was not used as the test server; the audit validates the generated site through the repository's preview server."
+
