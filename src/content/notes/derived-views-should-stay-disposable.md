@@ -1,7 +1,7 @@
 ---
 title: "Derived Views Should Stay Disposable"
 description: "Indexes, catalogs and summaries are useful precisely because they can be rebuilt from authoritative state."
-date: 2026-10-07
+date: "2026-10-07"
 tags: [Databases, Systems, Architecture]
 status: published
 stage: budding
