@@ -19,6 +19,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const relatedItems = await resolveRelated(post.data.related);
 const projectItems = relatedItems.filter(item => item.type === "Projects");
+const readingMinutes = Math.max(1, Math.ceil((post.body ?? "").split(/\s+/).filter(Boolean).length / 220));
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
@@ -33,7 +34,7 @@ const projectItems = relatedItems.filter(item => item.type === "Projects");
     Experiments
   </a>
 
-  <header class="mt-12 max-w-3xl">
+  <header class="mt-12 max-w-3xl border-b border-neutral-900 pb-10">
     <p class="lab-label">Experiment / Exploration</p>
 
     <h1 class="mt-5 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
@@ -44,15 +45,15 @@ const projectItems = relatedItems.filter(item => item.type === "Projects");
       {post.data.description}
     </p>
 
-    <div class="mt-7 flex flex-wrap gap-x-5 gap-y-2 border-y border-neutral-900 py-4 font-mono text-xs text-neutral-500">
-      <span>{post.data.date.toDateString()}</span>
+    <div class="mt-7 flex flex-wrap gap-x-5 gap-y-2 border-t border-neutral-900 pt-4 font-mono text-xs text-neutral-500">
+      <span>{post.data.date.toDateString()}</span><span>{readingMinutes} min read</span>
       <span>{post.data.tags.join(" • ")}</span>
     </div>
   </header>
 
   <KnowledgeProvenance projectItems={projectItems} />
 
-  <article class="prose prose-invert mt-12 max-w-3xl sm:mt-16">
+  <article class="prose prose-invert mt-12 max-w-3xl border-t border-neutral-900 pt-10 sm:mt-16 sm:pt-12">
     <Content />
   </article>
 
