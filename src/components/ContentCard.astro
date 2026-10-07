@@ -3,6 +3,7 @@ interface Props {
   title: string;
   description: string;
   meta?: string;
+  status?: string;
   href?: string;
   eyebrow?: string;
   featured?: boolean;
@@ -14,6 +15,7 @@ const {
   title,
   description,
   meta,
+  status,
   href,
   eyebrow,
   featured = false,
@@ -75,10 +77,15 @@ const {
         {description}
       </p>
 
-      {meta && (
-        <p class="mt-5 break-words font-mono text-xs leading-5 text-neutral-500 transition-colors group-hover:text-neutral-400">
-          {meta}
-        </p>
+      {(status || meta) && (
+        <div class="mt-5 flex flex-wrap items-center gap-2 font-mono text-xs leading-5 text-neutral-500">
+          {status && (
+            <span class="rounded-full border border-neutral-800 px-2.5 py-1 uppercase tracking-[0.12em]">
+              {status}
+            </span>
+          )}
+          {meta && <span>{meta}</span>}
+        </div>
       )}
     </a>
   ) : (
@@ -120,10 +127,15 @@ const {
         {description}
       </p>
 
-      {meta && (
-        <p class="mt-5 break-words font-mono text-xs leading-5 text-neutral-500">
-          {meta}
-        </p>
+      {(status || meta) && (
+        <div class="mt-5 flex flex-wrap items-center gap-2 font-mono text-xs leading-5 text-neutral-500">
+          {status && (
+            <span class="rounded-full border border-neutral-800 px-2.5 py-1 uppercase tracking-[0.12em]">
+              {status}
+            </span>
+          )}
+          {meta && <span>{meta}</span>}
+        </div>
       )}
     </div>
   )
