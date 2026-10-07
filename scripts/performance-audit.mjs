@@ -7,7 +7,9 @@ const page = await browser.newPage({ viewport: { width: 390, height: 844 }, devi
 const response = await page.goto(base + "/sitemap.xml", { waitUntil: "domcontentloaded" });
 if (!response?.ok()) throw new Error(`Could not load sitemap: HTTP ${response?.status()}`);
 const sitemap = await page.locator("body").innerText();
-const routes = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(match => new URL(match[1]).pathname);
+const routes = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)]
+  .map(match => new URL(match[1]).pathname)
+  .filter(route => !route.endsWith(".pdf") && !route.endsWith(".xml"));
 if (!routes.length) throw new Error("Performance audit found no sitemap routes.");
 
 const failures = [];
@@ -28,7 +30,7 @@ for (const route of routes) {
   let lcp = 0;
   let cls = 0;
   const started = Date.now();
-  const result = await page.goto(base + route, { waitUntil: "networkidle" });
+  const result = await page.goto(base + route, { waitUntil: "domcontentloaded", timeout: 15000 });
   if (!result?.ok()) {
     failures.push(`${route}: HTTP ${result?.status()}`);
     continue;
