@@ -80,8 +80,8 @@ for (const collection of collections) {
       .replaceAll(path.sep, "/")
       .replace(/\.(md|mdx)$/, "")}`;
 
-    for (const reference of relatedReferences(source)) {
-      const separator = reference.indexOf(":");
+    const references = relatedReferences(source);\n    const seenReferences = new Set();\n\n    for (const reference of references) {
+      if (seenReferences.has(reference)) {\n        errors.push(`${sourceId}: duplicate related reference "${reference}"`);\n        continue;\n      }\n      seenReferences.add(reference);\n\n      const separator = reference.indexOf(":");
 
       if (separator <= 0 || separator === reference.length - 1) {
         errors.push(`${sourceId}: invalid related reference "${reference}"`);
