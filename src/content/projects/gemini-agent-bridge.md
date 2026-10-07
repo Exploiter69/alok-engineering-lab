@@ -14,6 +14,17 @@ stack:
   - OpenAI-compatible API
   - Gemini Web
   - Asyncio
+objective: "Provide a local OpenAI-compatible reasoning boundary while keeping filesystem, shell and Git execution authority in the downstream coding agent."
+lifecycle: "building"
+architectureSummary: "A local Python bridge normalizes OpenAI-compatible requests and Gemini Web reasoning while tool proposals return to the downstream agent for execution and observation."
+decisions:
+  - "The bridge never executes arbitrary downstream tools for the model."
+  - "Loopback operation is the default; non-loopback access requires explicit authentication."
+  - "Streaming and request/image handling are bounded to preserve predictable failure behavior."
+lessons:
+  - "The most valuable abstraction is often an authority boundary, not a provider adapter."
+  - "Compatibility APIs can decouple clients from provider-specific reasoning backends."
+  - "Once output crosses a streaming boundary, retry behavior must account for duplicate side effects."
 ---
 
 ## Problem
