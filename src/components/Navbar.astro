@@ -8,7 +8,7 @@ const isActive = (href: string) =>
   <div class="max-w-6xl mx-auto">
     <div class="flex items-center justify-between gap-4">
       <a href="/" class="min-w-0 font-bold text-lg sm:text-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Alok Engineering Lab</a>
-      <div class="hidden md:flex items-center gap-5 text-sm">
+      <div data-nav-desktop class="hidden md:flex items-center gap-5 text-sm">
         <a href="/projects" aria-current={isActive("/projects") ? "page" : undefined} class:list={["focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white transition", isActive("/projects") ? "text-white" : "text-gray-400 hover:text-white"]}>Projects</a>
         <a href="/garden" aria-current={isActive("/garden") ? "page" : undefined} class:list={["focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white transition", isActive("/garden") ? "text-white" : "text-gray-400 hover:text-white"]}>Garden</a>
         <a href="/writing" aria-current={isActive("/writing") ? "page" : undefined} class:list={["focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white transition", isActive("/writing") ? "text-white" : "text-gray-400 hover:text-white"]}>Writing</a>
@@ -17,7 +17,7 @@ const isActive = (href: string) =>
           <a href="/experiments" aria-current={isActive("/experiments") ? "page" : undefined} class:list={["focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white transition", isActive("/experiments") ? "text-white" : "text-gray-400 hover:text-white"]}>Experiments</a>
         <a href="/timeline" aria-current={isActive("/timeline") ? "page" : undefined} class:list={["focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white transition", isActive("/timeline") ? "text-white" : "text-gray-400 hover:text-white"]}>Timeline</a>
       </div>
-      <details class="relative md:hidden">
+      <details data-nav-mobile class="relative md:hidden">
         <summary class="cursor-pointer list-none rounded-lg border border-gray-800 px-3 py-2 text-sm text-gray-300 hover:border-gray-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
           Menu
         </summary>

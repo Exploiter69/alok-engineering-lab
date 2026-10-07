@@ -86,9 +86,12 @@ for (const [device, viewport] of Object.entries(viewports)) {
       audit = await page.evaluate(() => {
         const root = document.documentElement;
 
-        const visibleNavLinks = [...document.querySelectorAll("nav a")].filter((link) => {
+        const mobileMenu = document.querySelector("[data-nav-mobile]");
+        if (window.matchMedia("(max-width: 767px)").matches && mobileMenu instanceof HTMLDetailsElement) mobileMenu.open = true;
+        const navScope = window.matchMedia("(min-width: 768px)").matches ? "[data-nav-desktop] a" : "[data-nav-mobile][open] a";
+        const visibleNavLinks = [...document.querySelectorAll(navScope)].filter((link) => {
           const style = getComputedStyle(link);
-          return !link.closest("details:not([open])") && link.getClientRects().length > 0 && style.display !== "none" && style.visibility !== "hidden";
+          return link.getClientRects().length > 0 && style.display !== "none" && style.visibility !== "hidden";
         });
         const navKeys = visibleNavLinks.map((link) => link.getAttribute("href") + "|" + (link.textContent?.trim() || ""));
         const duplicateNavLinks = navKeys.filter((value, index) => navKeys.indexOf(value) !== index);
