@@ -39,6 +39,9 @@ export const collections = {
       architectureSummary: z.string().optional(),
       decisions: z.array(z.string()).default([]),
       lessons: z.array(z.string()).default([]),
+      currentFocus: z.string().optional(),
+      knownProblems: z.array(z.string()).default([]),
+      futureWork: z.array(z.string()).default([]),
     }),
   }),
   writing: defineCollection({
