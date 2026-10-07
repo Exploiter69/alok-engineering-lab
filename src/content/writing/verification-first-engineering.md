@@ -4,6 +4,7 @@ description: "Why autonomous engineering systems need evidence and independent v
 date: 2026-10-06
 tags: [AI, Verification, Systems, Architecture]
 status: active
+format: "essay"
 related: [projects:vajra, projects:astra, notes:verification-is-a-boundary]
 ---
 
