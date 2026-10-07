@@ -33,7 +33,7 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
           View projects <span aria-hidden="true" class="ml-2">→</span>
         </a>
         <a href="/about" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-5 py-2.5 text-sm font-medium text-neutral-300 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-          About Alok
+          How I work
         </a>
       </div>
     </div>
@@ -62,7 +62,7 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
     </div>
   </section>
 
-  <section class="border-b sm:py-8" aria-labelledby="currently-heading">
+  <section class="border-b border-neutral-900 py-7 sm:py-8" aria-labelledby="currently-heading">
     <div class="grid gap-3 sm:grid-cols-[140px_1fr] sm:gap-8">
       <p id="currently-heading" class="lab-label">Currently</p>
       <p class="max-w-3xl text-base leading-7 text-neutral-300 sm:text-lg">{SITE.currently}</p>
@@ -76,7 +76,7 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
     </div>
     <div class="mt-2">
       {projects.slice(0, 3).map((project, index) => (
-        <ContentCard title={project.data.title} description={project.data.description} status={project.data.lifecycle} meta={project.data.stack.join(" · ")} href={`/projects/${project.id}`} eyebrow={`PROJECT / ${String(index + 1).padStart(2, "0")}`} featured={index === 0} headingLevel="h2" />
+        <ContentCard title={project.data.title} description={project.data.objective ?? project.data.description} status={project.data.lifecycle} meta={project.data.stack.join(" · ")} href={`/projects/${project.id}`} eyebrow={`PROJECT / ${String(index + 1).padStart(2, "0")}`} featured={index === 0} headingLevel="h2" />
       ))}
     </div>
     <a href="/projects" class="mt-5 inline-flex min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:hidden">See all projects →</a>
@@ -101,7 +101,6 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
       <a href="/writing" class="hidden min-h-11 items-center text-sm text-neutral-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:inline-flex">All writing →</a>
     </div>
     <div class="mt-2">
-      {writing.slice(0, 3).map((item, index) => (
         <ContentCard title={item.data.title} description={item.data.description} meta={item.data.format + " · " + item.data.tags.join(" · ")} href={`/writing/${item.id}`} eyebrow={`WRITING / ${String(index + 1).padStart(2, "0")}`} headingLevel="h2" />
       ))}
     </div>
