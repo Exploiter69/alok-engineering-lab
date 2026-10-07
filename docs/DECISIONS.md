@@ -57,7 +57,6 @@ Do not rewrite release history. Future work proceeds forward with new commits/re
 **Status:** Active.
 **Reason:** The static Lab should expose useful current-state context without introducing a runtime status service or implying real-time authority it does not have.
 
-
 ## D-012 — Project intelligence is repository-backed
 **Decision:** Project technical records should be derived from structured repository metadata and linked content, not a runtime project database.
 **Status:** Active.
@@ -67,3 +66,8 @@ Do not rewrite release history. Future work proceeds forward with new commits/re
 **Decision:** Durable knowledge should be extracted from demonstrated project decisions, constraints, failures and verification rather than published to satisfy a content quota.
 **Status:** Active.
 **Reason:** The Lab is an engineering record, so reusable principles are valuable when their provenance remains visible.
+
+## D-014 — Knowledge provenance is bidirectional
+**Decision:** Knowledge detail pages should expose the project records connected through their existing `related:` references, while project pages continue to expose derived knowledge.
+**Status:** Active.
+**Reason:** A connected engineering archive is more trustworthy and useful when readers can travel from project work to derived knowledge and back without introducing a second source of truth.
