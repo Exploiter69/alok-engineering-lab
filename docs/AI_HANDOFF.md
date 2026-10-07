@@ -49,7 +49,17 @@ Confirmed:
 - custom domains alokthakur.me and www.alokthakur.me verified in Vercel
 - v1.0.0 history preserved
 
-The latest GitHub Actions Quality run for bd356f9 completed successfully, including the browser audit. The only remaining release checkpoint is recording a CP6 Git tag; the available GitHub connector does not provide tag/release write access, so do not fake a tag with a branch.
+The latest GitHub Actions Quality run for bd356f9 completed successfully, including the browser audit. Vercel also verified the production deployment and custom domains. A Git tag is not represented because the available GitHub connector cannot create tags; do not fake a tag with a branch.
+
+## CP7 status
+CP7 — Long-Term Maintenance is complete at the repository level.
+
+Confirmed:
+- content relationship validation is now a build-blocking gate
+- maintenance/release discipline is documented in docs/MAINTENANCE.md
+- content integrity is captured as durable knowledge
+- CP7 has a changelog entry
+- zero-cost architecture and Astro remain unchanged
 
 ## Visual direction
 Preserve the restrained engineering aesthetic: black canvas, strong typography, thin borders/rules, monospace technical labels, editorial spacing, responsive layouts and minimal decoration.
