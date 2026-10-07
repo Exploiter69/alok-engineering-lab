@@ -15,9 +15,12 @@ function value(fm, key) {
 }
 
 function hasRelated(fm) {
-  const match = fm.match(/^related:\s*([^\n]*)/m);
-  if (match && match[1].trim()) return true;
-  return /^related:\s*$[\s\S]*?(?=^\S|$)/m.test(fm) && /^\s+-\s+/.test(fm.split(/^related:\s*$/m)[1] || "");
+  const lines = fm.split("\n");
+  const index = lines.findIndex(line => /^related:\s*/.test(line));
+  if (index === -1) return false;
+  const inline = lines[index].replace(/^related:\s*/, "").trim();
+  if (inline) return true;
+  return lines.slice(index + 1).some(line => /^\s+-\s+/.test(line));
 }
 
 for (const file of files) {
