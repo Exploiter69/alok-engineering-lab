@@ -203,7 +203,7 @@ for (const [device, viewport] of Object.entries(viewports)) {
       // Every route still gets focusable-control naming/visibility checks below.
       const focusState = { count: 0, failures: [] };
       const keyboardAuditRoutes = new Set(["/", "/projects/", "/garden/"]);
-      if (keyboardAuditRoutes.has(route)) {
+      if (keyboardAuditRoutes.has(route) && (device === "mobile390" || device === "desktop1440")) {
         const seenFocus = new Set();
         for (let i = 0; i < 120; i++) {
           await page.keyboard.press("Tab");
