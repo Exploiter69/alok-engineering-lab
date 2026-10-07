@@ -1,4 +1,5 @@
 ---
+import { getCollection } from "astro:content";
 const currentPath = Astro.url.pathname;
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(`${href}/`);
 const primaryLinks = [
@@ -9,6 +10,17 @@ const primaryLinks = [
   { href: "/timeline", label: "Journey" },
   { href: "/about", label: "About" },
 ];
+const commandEntries = [
+  ...(await getCollection("projects")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Project", href: "/projects/" + item.id })),
+  ...(await getCollection("writing")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Writing", href: "/writing/" + item.id })),
+  ...(await getCollection("notes")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Note", href: "/notes/" + item.id })),
+  ...(await getCollection("experiments")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Experiment", href: "/experiments/" + item.id })),
+  { title: "Projects", type: "Page", href: "/projects" },
+  { title: "Lab", type: "Page", href: "/garden" },
+  { title: "Journey", type: "Page", href: "/timeline" },
+  { title: "About", type: "Page", href: "/about" },
+  { title: "Contact", type: "Page", href: "/contact" },
+];
 const gardenLinks = [
   { href: "/writing", label: "Writing" },
   { href: "/notes", label: "Notes" },
@@ -17,7 +29,7 @@ const gardenLinks = [
 ];
 ---
 
-<nav class="border-b border-neutral-800 px-4 py-4 sm:px-6 sm:py-5" aria-label="Primary navigation">
+<nav class="sticky top-0 z-50 border-b border-neutral-800 bg-black/95 px-4 py-3 backdrop-blur sm:px-6 sm:py-4" aria-label="Primary navigation">
   <div class="mx-auto max-w-6xl">
     <div class="flex items-center justify-between gap-6">
       <a href="/" class="inline-flex h-11 min-h-11 min-w-0 items-center font-bold tracking-tight text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:text-lg">
