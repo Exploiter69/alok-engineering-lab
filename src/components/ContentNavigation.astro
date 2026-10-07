@@ -1,0 +1,24 @@
+---
+interface NavItem {
+  title: string;
+  href: string;
+}
+const { previous, next } = Astro.props as { previous?: NavItem; next?: NavItem };
+---
+
+{(previous || next) && (
+  <nav class="mt-14 grid gap-3 border-t border-neutral-900 pt-8 sm:grid-cols-2" aria-label="Adjacent archive records">
+    {previous ? (
+      <a href={previous.href} class="group min-h-20 rounded-xl border border-neutral-900 p-5 transition hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+        <span class="lab-label">← Previous</span>
+        <span class="mt-2 block text-sm font-medium text-neutral-300 group-hover:text-white">{previous.title}</span>
+      </a>
+    ) : <div class="hidden sm:block" />}
+    {next && (
+      <a href={next.href} class="group min-h-20 rounded-xl border border-neutral-900 p-5 text-left sm:text-right transition hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+        <span class="lab-label">Next →</span>
+        <span class="mt-2 block text-sm font-medium text-neutral-300 group-hover:text-white">{next.title}</span>
+      </a>
+    )}
+  </nav>
+)}
