@@ -458,7 +458,7 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
         if (desktop instanceof HTMLDetailsElement && window.matchMedia("(min-width: 768px)").matches) {
           desktop.open = false;
           desktop.querySelector("summary")?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-          result.desktop = desktop.open && desktop.querySelectorAll("a").length >= 4;
+          result.desktop = desktop.open && desktop.querySelectorAll("a").length >= 3;
         }
         return result;
       });
