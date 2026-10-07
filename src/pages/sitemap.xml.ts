@@ -14,6 +14,8 @@ const staticRoutes = [
   "/timeline/",
   "/writing/",
   "/evidence/",
+  "/explore/",
+  "/connections/",
 ];
 
 export const GET: APIRoute = async ({ site }) => {
