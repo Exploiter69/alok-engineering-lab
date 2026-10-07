@@ -230,3 +230,12 @@ Verified on Phase 5 HEAD:
 - production viewport audit passed
 
 Phase 5 remains intentionally unmerged because Phase 4 PR #8 has not yet completed its required Vercel deployment gate. Do not merge Phase 5 until Phase 4 is legitimately merged and the Phase 5 branch is safely reconciled with the resulting master state.
+
+## Admin Phase 5 targeted completeness audit
+
+A targeted post-implementation audit found and corrected three concrete issues without changing the Phase 5 architecture:
+- JSON export now loads and includes repository-backed site configuration instead of referencing an undefined value.
+- Content relationship target validation now uses the correct Markdown/MDX path expression.
+- Malformed percent-encoded cookies are rejected safely instead of throwing during session parsing.
+
+Regression coverage was added for configuration export and malformed-cookie handling. Phase 5 remains unmerged and dependency-blocked by Phase 4.
