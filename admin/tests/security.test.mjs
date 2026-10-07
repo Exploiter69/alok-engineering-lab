@@ -52,3 +52,15 @@ test("session cookies use host-only prefixes", () => {
   assert.match(security.cookie(security.SESSION_COOKIE, "abc", 3600), /^__Host-ael_admin_session=/);
   assert.match(security.cookie(security.OAUTH_COOKIE, "abc", 600), /^__Host-ael_admin_oauth=/);
 });
+
+test("malformed cookie encoding is ignored instead of throwing", () => {
+  assert.doesNotThrow(() => security.parseCookies("a=%E0%A4%A; b=safe"));
+  assert.equal(security.parseCookies("a=%E0%A4%A; b=safe").b, "safe");
+});
+
+test("CSRF tokens require an exact match", () => {
+  const req = { headers: { "x-csrf-token": "token" } };
+  assert.equal(security.requireCsrf(req, { csrf: "token" }), true);
+  assert.equal(security.requireCsrf(req, { csrf: "other" }), false);
+  assert.equal(security.requireCsrf({ headers: {} }, { csrf: "token" }), false);
+});
