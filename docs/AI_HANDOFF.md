@@ -85,6 +85,12 @@ The project remains permanently ₹0 / $0. No paid APIs, services, subscriptions
 
 Do not rewrite v1.0.0. Prefer small, durable, reviewable changes. Keep canonical docs concise and current.
 
+## CP9 status
+CP9 Knowledge Expansion is complete. Knowledge content is derived from real project architecture, constraints, verification and lessons rather than generic publishing quotas.
+
+## CP10 status
+CP10 Project Intelligence is complete. Project records now expose structured objective, lifecycle, architecture summary, decisions, lessons, linked knowledge and linked timeline entries.
+
 ## Continuation
 When continuing:
 1. inspect current GitHub state
