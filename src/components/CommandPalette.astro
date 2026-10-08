@@ -262,13 +262,16 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
   dialog?.addEventListener("close", () => {
     const target = restoreFocusTarget;
     restoreFocusTarget = null;
-    if (target && document.contains(target) && target.getClientRects().length > 0) {
-      target.focus();
-      return;
-    }
-    if (lastOpener && document.contains(lastOpener) && lastOpener.getClientRects().length > 0) {
-      lastOpener.focus();
-    }
+    const fallback = lastOpener;
+    requestAnimationFrame(() => {
+      const candidate =
+        target && document.contains(target) && target.getClientRects().length > 0
+          ? target
+          : fallback && document.contains(fallback) && fallback.getClientRects().length > 0
+            ? fallback
+            : null;
+      candidate?.focus({ preventScroll: true });
+    });
   });
 
   dialog?.addEventListener("keydown", (event) => {
