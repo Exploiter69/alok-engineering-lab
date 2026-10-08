@@ -280,6 +280,8 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
     };
     restore();
     requestAnimationFrame(restore);
+    requestAnimationFrame(() => requestAnimationFrame(restore));
+    window.setTimeout(restore, 0);
   });
 
   dialog?.addEventListener("keydown", (event) => {
