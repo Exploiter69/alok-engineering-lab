@@ -51,6 +51,7 @@ import Layout from "../layouts/Layout.astro";
   const topicsRoot = document.querySelector<HTMLElement>("#explore-topics");
   let activeType = "All";
   let activeTopic = "";
+  let searchGeneration = 0;
   let pagefindPromise: Promise<any> | undefined;
 
   const loadPagefind = async () => {
@@ -129,13 +130,17 @@ import Layout from "../layouts/Layout.astro";
   };
 
   const search = async () => {
+    const generation = ++searchGeneration;
     const pagefind = await loadPagefind();
+    if (generation !== searchGeneration) return;
     const query = input?.value.trim() ?? "";
     const filters: Record<string, string> = {};
     if (activeType !== "All") filters.type = activeType;
     if (activeTopic) filters.tag = activeTopic;
     const result = await pagefind.search(query || null, { filters });
+    if (generation !== searchGeneration) return;
     const data = await Promise.all(result.results.slice(0, 60).map((item: { data: () => Promise<SearchResult> }) => item.data()));
+    if (generation !== searchGeneration) return;
     renderResults(data);
     if (status) status.textContent = `${data.length} result${data.length === 1 ? "" : "s"}${query ? ` for “${query}”` : ""}`;
   };
