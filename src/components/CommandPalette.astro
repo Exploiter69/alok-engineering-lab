@@ -90,8 +90,9 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
 
   const loadPagefind = async () => {
     if (!pagefindPromise) {
-      // @ts-ignore Pagefind generates this static module after Astro check.
-      pagefindPromise = import(/* @vite-ignore */ "/pagefind/pagefind.js").then(async (pagefind) => {
+      const pagefindUrl = new URL("/pagefind/pagefind.js", window.location.origin).href;
+      // @ts-ignore Pagefind generates this static module after the production build.
+      pagefindPromise = import(/* @vite-ignore */ pagefindUrl).then(async (pagefind) => {
         await pagefind.options({
           excerptLength: 24,
           ranking: {
@@ -170,12 +171,17 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
     }
 
     setStatus("Searching…");
-    const pagefind = await loadPagefind();
-    const result = await pagefind.search(query, {
-      filters: activeType === "All" ? {} : { type: activeType },
-    });
-    const data = await Promise.all(result.results.slice(0, 24).map((item: { data: () => Promise<SearchResult> }) => item.data()));
-    renderResults(data, "Results");
+    try {
+      const pagefind = await loadPagefind();
+      const result = await pagefind.search(query, {
+        filters: activeType === "All" ? {} : { type: activeType },
+      });
+      const data = await Promise.all(result.results.slice(0, 24).map((item: { data: () => Promise<SearchResult> }) => item.data()));
+      renderResults(data, "Results");
+    } catch {
+      renderResults([], "Search unavailable");
+      setStatus("Search is available in the production preview.");
+    }
   };
 
   const setActive = (index: number) => {
@@ -195,7 +201,9 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
     dialog.showModal();
     renderRecent();
     requestAnimationFrame(() => input?.focus());
-    void loadPagefind();
+    void loadPagefind().catch(() => {
+      // Pagefind is generated during the production build.
+    });
   };
 
   const closePalette = () => {
