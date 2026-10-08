@@ -15,10 +15,10 @@ stack:
   - D1
   - Telegram Mini App
 architectureNodes:
-  - "Signal / Official Data"
+  - "Official Signal"
   - "Campus Discovery"
   - "Social Graph"
-  - "Telegram Surfaces"
+  - "Telegram / Mini App"
 objective: "Build a student operating layer around VGU information without confusing official authority with student-generated participation."
 currentFocus: "Production reliability, student-owned social workflows, moderation, community discovery and Telegram Mini App UX."
 knownProblems:
