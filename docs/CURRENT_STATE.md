@@ -21,7 +21,7 @@ The v1.0.0 history remains preserved and must not be rewritten.
 CP4.1 through CP4.10 are complete.
 
 ### Archive and knowledge surfaces
-Ten substantive engineering project records, substantive Writing/Notes/Experiments, project/content cross-linking, meaningful Timeline milestones, Garden discovery, public Docs, Changelog history and About/identity are established.
+Eleven substantive engineering project records, substantive Writing/Notes/Experiments, project/content cross-linking, meaningful Timeline milestones, Garden discovery, public Docs, Changelog history and About/identity are established.
 
 ## CP5 status
 CP5 Product Quality / UX Hardening is complete at the repository level.
