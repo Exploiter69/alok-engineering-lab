@@ -68,6 +68,7 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
   let currentResults: SearchResult[] = [];
   let pagefindPromise: Promise<any> | undefined;
   let lastOpener: HTMLButtonElement | null = null;
+  let restoreFocusTarget: HTMLButtonElement | HTMLElement | null = null;
 
   const recentKey = "alok-lab-recent-search";
   const getRecent = (): SearchResult[] => {
@@ -198,6 +199,11 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
   const openPalette = async (opener?: HTMLButtonElement) => {
     if (!dialog) return;
     lastOpener = opener ?? lastOpener;
+    const mobileMenu = opener?.closest<HTMLElement>("[data-nav-mobile]");
+    restoreFocusTarget =
+      mobileMenu?.querySelector<HTMLElement>("summary") ??
+      opener ??
+      document.querySelector<HTMLElement>("nav [data-nav-desktop] [data-command-open]");
     dialog.showModal();
     renderRecent();
     requestAnimationFrame(() => input?.focus());
@@ -251,7 +257,15 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
   });
 
   dialog?.addEventListener("close", () => {
-    if (lastOpener && document.contains(lastOpener)) lastOpener.focus();
+    const target = restoreFocusTarget;
+    restoreFocusTarget = null;
+    if (target && document.contains(target) && target.getClientRects().length > 0) {
+      target.focus();
+      return;
+    }
+    if (lastOpener && document.contains(lastOpener) && lastOpener.getClientRects().length > 0) {
+      lastOpener.focus();
+    }
   });
 
   dialog?.addEventListener("keydown", (event) => {
