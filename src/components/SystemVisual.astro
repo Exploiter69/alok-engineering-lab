@@ -19,8 +19,9 @@
   const visual = document.querySelector<HTMLElement>("[data-system-visual]");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+  const saveData = "connection" in navigator && (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
 
-  if (visual && !reduceMotion && !coarsePointer && "IntersectionObserver" in window) {
+  if (visual && !reduceMotion && !coarsePointer && !saveData && "IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
       if (entries[0]?.isIntersecting) {
         visual.classList.add("is-active");
