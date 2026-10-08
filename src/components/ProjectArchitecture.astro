@@ -1,13 +1,15 @@
 ---
-interface Props { projectId: string; title: string; architectureSummary?: string; decisions?: string[]; }
-const { projectId, title, architectureSummary = "", decisions = [] } = Astro.props;
+interface Props { projectId: string; title: string; architectureSummary?: string; architectureNodes?: string[]; decisions?: string[]; }
+const { projectId, title, architectureSummary = "", architectureNodes = [], decisions = [] } = Astro.props;
 const raw = architectureSummary.replace(/\s+/g, " ").trim();
 const fromSummary = raw.split(/\s*(?:→|->|=>)\s*/).map(item => item.trim()).filter(Boolean);
 
-const fallbackLabels = ["Input", "Architecture", "Decision boundary", "Output"];
-const nodes = fromSummary.length > 1
-  ? fromSummary.slice(0, 4)
-  : fallbackLabels;
+const fallbackLabels = ["Source", "System", "Control", "Output"];
+const nodes = architectureNodes.length === 4
+  ? architectureNodes
+  : fromSummary.length > 1
+    ? fromSummary.slice(0, 4)
+    : fallbackLabels;
 
 while (nodes.length < 4) nodes.push(fallbackLabels[nodes.length]);
 
