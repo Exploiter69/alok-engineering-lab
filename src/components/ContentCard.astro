@@ -35,8 +35,8 @@ const statusClass = ["building", "verification"].includes(status?.toLowerCase() 
     <a
       href={href}
       class:list={[
-        "group block min-w-0 border-b border-lab transition-colors duration-200 motion-reduce:transition-none hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white",
-        featured ? "border-t border-lab-strong py-8 sm:py-10 lg:py-12" : compact ? "py-5 sm:py-6" : "py-6 sm:py-7",
+        "spotlight-card reveal group relative block min-w-0 overflow-hidden rounded-[var(--radius-lg)] border border-lab transition-colors duration-200 motion-reduce:transition-none hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white",
+        featured ? "border-t border-lab-strong px-5 py-8 sm:px-6 sm:py-10 lg:px-7 lg:py-12" : compact ? "px-5 py-5 sm:px-6 sm:py-6" : "px-5 py-6 sm:px-6 sm:py-7",
       ]}
     >
       {eyebrow && (
