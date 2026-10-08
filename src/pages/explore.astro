@@ -55,6 +55,7 @@ import Layout from "../layouts/Layout.astro";
 
   const loadPagefind = async () => {
     if (!pagefindPromise) {
+      // @ts-ignore Pagefind generates this static module after Astro check.
       pagefindPromise = import("/pagefind/pagefind.js").then(async (pagefind) => {
         await pagefind.options({ excerptLength: 32, ranking: { metaWeights: { title: 8, tags: 5, description: 3, type: 1 } } });
         await pagefind.init();
