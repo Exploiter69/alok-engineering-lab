@@ -1,21 +1,31 @@
 ---
 import { getCollection } from "astro:content";
 import { NAVIGATION } from "../data/navigation";
+import { SEARCH_TYPES, toSearchRecord } from "../lib/search-index";
 const currentPath = Astro.url.pathname;
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(`${href}/`);
 const primaryLinks = NAVIGATION.primary;
+const [projects, writing, notes, experiments, evidence] = await Promise.all([
+  getCollection("projects"),
+  getCollection("writing"),
+  getCollection("notes"),
+  getCollection("experiments"),
+  getCollection("evidence"),
+]);
 const commandEntries = [
-  ...(await getCollection("projects")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Project", href: "/projects/" + item.id })),
-  ...(await getCollection("writing")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Writing", href: "/writing/" + item.id })),
-  ...(await getCollection("notes")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Note", href: "/notes/" + item.id })),
-  ...(await getCollection("experiments")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Experiment", href: "/experiments/" + item.id })),
-  ...(await getCollection("evidence")).filter(item => item.data.status !== "draft").map(item => ({ title: item.data.title, type: "Evidence", href: "/evidence/" + item.id })),
-  { title: "Projects", type: "Page", href: "/projects" },
-  { title: "Lab", type: "Page", href: "/garden" },
-  { title: "Journey", type: "Page", href: "/timeline" },
-  { title: "About", type: "Page", href: "/about" },
-  { title: "Contact", type: "Page", href: "/contact" },
+  ...projects.filter(item => item.data.status !== "draft").map(item => toSearchRecord(item, "Project", `/projects/${item.id}`)),
+  ...writing.filter(item => item.data.status !== "draft").map(item => toSearchRecord(item, "Writing", `/writing/${item.id}`)),
+  ...notes.filter(item => item.data.status !== "draft").map(item => toSearchRecord(item, "Note", `/notes/${item.id}`)),
+  ...experiments.filter(item => item.data.status !== "draft").map(item => toSearchRecord(item, "Experiment", `/experiments/${item.id}`)),
+  ...evidence.filter(item => item.data.status !== "draft").map(item => toSearchRecord(item, "Evidence", `/evidence/${item.id}`)),
+  { id: "page:projects", title: "Projects", description: "Engineering project archive", tags: ["projects"], type: "Page" as const, href: "/projects" },
+  { id: "page:lab", title: "Lab", description: "Notes, writing, experiments and evidence", tags: ["lab", "garden"], type: "Page" as const, href: "/garden" },
+  { id: "page:journey", title: "Journey", description: "Engineering timeline and milestones", tags: ["journey", "timeline"], type: "Page" as const, href: "/timeline" },
+  { id: "page:about", title: "About", description: "About Alok and the Engineering Lab", tags: ["about"], type: "Page" as const, href: "/about" },
+  { id: "page:contact", title: "Contact", description: "Contact and verified public links", tags: ["contact"], type: "Page" as const, href: "/contact" },
 ];
+const initialData = JSON.stringify(commandEntries).replaceAll("<", "\\u003c");
+const initialEntries = commandEntries.slice(0, 10);
 const gardenLinks = NAVIGATION.lab;
 ---
 
@@ -46,7 +56,7 @@ const gardenLinks = NAVIGATION.lab;
             ))}
           </div>
         </details>
-        <button type="button" data-command-open class="hidden min-h-11 items-center gap-2 rounded-lg border border-lab-strong px-3 text-sm text-subtle transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:inline-flex" aria-label="Open command palette">
+        <button type="button" data-command-open class="hidden min-h-11 items-center gap-2 rounded-lg border border-lab-strong px-3 text-sm text-subtle transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" aria-label="Open command palette">
           <span aria-hidden="true">⌕</span><span>Search</span><kbd class="rounded border border-lab-strong px-1.5 py-0.5 font-mono text-[10px] text-faint">⌘K</kbd>
         </button>
       </div>
@@ -78,67 +88,215 @@ const gardenLinks = NAVIGATION.lab;
   </div>
 </nav>
 
-<dialog id="command-palette" class="glass-surface fixed left-1/2 top-[10vh] m-0 w-[min(94vw,680px)] -translate-x-1/2 rounded-2xl p-0 text-white shadow-2xl backdrop:bg-black/72">
-  <form method="dialog" class="border-b border-lab p-3">
-    <label class="sr-only" for="command-search">Search the Lab</label>
-    <input id="command-search" type="search" autocomplete="off" placeholder="Search projects, writing, notes…" class="min-h-11 w-full bg-transparent px-3 text-base text-white outline-none placeholder:text-faint" />
-  </form>
-  <div id="command-results" class="max-h-[60vh] overflow-y-auto p-2 sm:p-3" role="listbox" aria-label="Search results">
-    {commandEntries.map((entry, index) => (
-      <a data-command-item href={entry.href} data-search={entry.title.toLowerCase()} class:list={["flex min-h-11 items-center justify-between gap-4 rounded-lg px-3 py-2 text-sm hover:bg-surface-2 focus-visible:bg-surface-2 focus-visible:outline-none", index > 8 ? "hidden" : ""]}>
-        <span>{entry.title}</span><span class="font-mono text-[10px] uppercase tracking-wider text-faint">{entry.type}</span>
+<dialog id="command-palette" class="glass-surface fixed left-1/2 top-[10vh] m-0 w-[min(94vw,720px)] -translate-x-1/2 rounded-2xl p-0 text-white shadow-2xl backdrop:bg-black/72" aria-labelledby="command-title">
+  <div class="border-b border-lab p-3">
+    <div class="mb-2 flex items-center justify-between gap-3 px-3">
+      <p id="command-title" class="lab-label">Search the Lab</p>
+      <kbd class="font-mono text-[10px] text-faint">Esc</kbd>
+    </div>
+    <label class="sr-only" for="command-search">Search projects, writing, notes and other Lab records</label>
+    <input id="command-search" type="search" role="combobox" aria-autocomplete="list" aria-controls="command-results" aria-expanded="true" aria-activedescendant="" autocomplete="off" placeholder="Search title, tag, description, or type…" class="min-h-11 w-full bg-transparent px-3 text-base text-white outline-none placeholder:text-faint" />
+    <div class="mt-3 flex flex-wrap gap-2" role="group" aria-label="Filter search results by type">
+      <button type="button" data-command-type="all" aria-pressed="true" class="min-h-11 rounded-full border border-neutral-600 bg-neutral-900 px-3 font-mono text-[10px] uppercase tracking-wider text-white">All</button>
+      {SEARCH_TYPES.map(type => (
+        <button type="button" data-command-type={type} aria-pressed="false" class="min-h-11 rounded-full border border-neutral-900 px-3 font-mono text-[10px] uppercase tracking-wider text-neutral-500 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{type}</button>
+      ))}
+    </div>
+  </div>
+  <div id="command-results" class="max-h-[60vh] overflow-y-auto p-2 sm:p-3" role="listbox" aria-label="Search results" aria-live="off">
+    {initialEntries.map((entry, index) => (
+      <a id={`command-option-${index}`} role="option" aria-selected={index === 0 ? "true" : "false"} data-command-item data-id={entry.id} href={entry.href} class="flex min-h-11 items-center justify-between gap-4 rounded-lg px-3 py-2 text-sm hover:bg-surface-2 focus-visible:bg-surface-2 focus-visible:outline-none">
+        <span class="min-w-0 truncate">{entry.title}</span><span class="shrink-0 font-mono text-[10px] uppercase tracking-wider text-faint">{entry.type}</span>
       </a>
     ))}
-    <p id="command-empty" class="hidden px-3 py-6 text-sm text-subtle">No matching records.</p>
   </div>
+  <div class="flex items-center justify-between gap-4 border-t border-lab px-4 py-3">
+    <p id="command-status" class="font-mono text-xs text-faint" aria-live="polite">{commandEntries.length} results</p>
+    <p class="font-mono text-[10px] text-faint">↑↓ navigate · Enter open · Esc close</p>
+  </div>
+  <script type="application/json" id="command-search-data" set:html={initialData}></script>
 </dialog>
 
 <script>
+  import { searchRecords, type SearchRecord } from "../lib/search-index";
+
   const setupNavigation = () => {
-  const dialog = document.querySelector<HTMLDialogElement>("#command-palette");
-  const openers = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-command-open]"));
-  const input = document.querySelector<HTMLInputElement>("#command-search");
-  const items = Array.from(document.querySelectorAll<HTMLElement>("[data-command-item]"));
-  const empty = document.querySelector<HTMLElement>("#command-empty");
-  const render = () => {
-    const query = input?.value.trim().toLowerCase() ?? "";
-    let visible = 0;
-    for (const item of items) {
-      const matches = !query || (item.dataset.search ?? "").includes(query);
-      item.hidden = !matches;
-      if (matches) visible += 1;
-    }
-    empty?.classList.toggle("hidden", visible !== 0);
+    const dialog = document.querySelector<HTMLDialogElement>("#command-palette");
+    const input = document.querySelector<HTMLInputElement>("#command-search");
+    const results = document.querySelector<HTMLElement>("#command-results");
+    const status = document.querySelector<HTMLElement>("#command-status");
+    const dataNode = document.querySelector<HTMLScriptElement>("#command-search-data");
+    if (!dialog || !input || !results || !status || !dataNode || dialog.dataset.ready === "true") return;
+    dialog.dataset.ready = "true";
+
+    const records = JSON.parse(dataNode.textContent || "[]") as SearchRecord[];
+    const typeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-command-type]"));
+    const openers = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-command-open]"));
+    let activeType = "all";
+    let activeIndex = 0;
+    let renderedRecords: SearchRecord[] = [];
+    let lastFocused: HTMLElement | null = null;
+
+    const getRecent = (): SearchRecord[] => {
+      try {
+        const recent = JSON.parse(localStorage.getItem("lab:recent-search") || "[]") as string[];
+        return recent.map(id => records.find(record => record.id === id)).filter((record): record is SearchRecord => Boolean(record));
+      } catch {
+        return [];
+      }
+    };
+
+    const remember = (record: SearchRecord) => {
+      try {
+        const recent = getRecent().filter(item => item.id !== record.id);
+        localStorage.setItem("lab:recent-search", JSON.stringify([record.id, ...recent.map(item => item.id)].slice(0, 5)));
+      } catch {}
+    };
+
+    const setActive = (index: number) => {
+      if (!renderedRecords.length) {
+        activeIndex = 0;
+        input.removeAttribute("aria-activedescendant");
+        return;
+      }
+      activeIndex = (index + renderedRecords.length) % renderedRecords.length;
+      const items = Array.from(results.querySelectorAll<HTMLElement>("[data-command-item]"));
+      items.forEach((item, itemIndex) => {
+        const active = itemIndex === activeIndex;
+        item.setAttribute("aria-selected", String(active));
+        item.classList.toggle("bg-surface-2", active);
+      });
+      const activeId = items[activeIndex]?.id;
+      if (activeId) input.setAttribute("aria-activedescendant", activeId);
+      items[activeIndex]?.scrollIntoView({ block: "nearest" });
+    };
+
+    const paint = () => {
+      const query = input.value.trim();
+      const pool = activeType === "all" ? records : records.filter(record => record.type === activeType);
+      const ranked = searchRecords(query, pool);
+      renderedRecords = query ? ranked : [...getRecent(), ...ranked.filter(record => !getRecent().some(recent => recent.id === record.id))];
+      activeIndex = 0;
+      results.replaceChildren();
+
+      for (const [index, record] of renderedRecords.slice(0, 40).entries()) {
+        const item = document.createElement("a");
+        item.id = `command-option-${index}`;
+        item.href = record.href;
+        item.setAttribute("role", "option");
+        item.setAttribute("aria-selected", index === 0 ? "true" : "false");
+        item.dataset.commandItem = "";
+        item.dataset.id = record.id;
+        item.className = "flex min-h-11 items-center justify-between gap-4 rounded-lg px-3 py-2 text-sm hover:bg-surface-2 focus-visible:bg-surface-2 focus-visible:outline-none";
+        item.innerHTML = `<span class="min-w-0 truncate"></span><span class="shrink-0 font-mono text-[10px] uppercase tracking-wider text-faint"></span>`;
+        const [title, type] = Array.from(item.children) as [HTMLElement, HTMLElement];
+        title.textContent = record.title;
+        type.textContent = record.type;
+        item.addEventListener("click", () => remember(record));
+        results.append(item);
+      }
+
+      renderedRecords = renderedRecords.slice(0, 40);
+      status.textContent = query || activeType !== "all"
+        ? `${renderedRecords.length} result${renderedRecords.length === 1 ? "" : "s"}`
+        : getRecent().length
+          ? `${renderedRecords.length} results · recent first`
+          : `${renderedRecords.length} results`;
+      setActive(0);
+    };
+
+    const closeMenus = () => {
+      for (const menu of document.querySelectorAll<HTMLDetailsElement>("nav details")) menu.open = false;
+    };
+
+    const openPalette = () => {
+      if (!dialog) return;
+      lastFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      dialog.dataset.ready = "true";
+      paint();
+      dialog.showModal();
+      requestAnimationFrame(() => input.focus());
+    };
+
+    const closePalette = () => {
+      if (dialog.open) dialog.close();
+      lastFocused?.focus();
+      lastFocused = null;
+    };
+
+    for (const opener of openers) opener.addEventListener("click", () => { closeMenus(); openPalette(); });
+    input.addEventListener("input", paint);
+
+    for (const button of typeButtons) button.addEventListener("click", () => {
+      activeType = button.dataset.commandType || "all";
+      typeButtons.forEach(candidate => {
+        const active = candidate === button;
+        candidate.setAttribute("aria-pressed", String(active));
+        candidate.classList.toggle("bg-neutral-900", active);
+        candidate.classList.toggle("border-neutral-600", active);
+        candidate.classList.toggle("text-white", active);
+        candidate.classList.toggle("border-neutral-900", !active);
+        candidate.classList.toggle("text-neutral-500", !active);
+      });
+      paint();
+      input.focus();
+    });
+
+    input.addEventListener("keydown", event => {
+      if (event.key === "ArrowDown") { event.preventDefault(); setActive(activeIndex + 1); }
+      if (event.key === "ArrowUp") { event.preventDefault(); setActive(activeIndex - 1); }
+      if (event.key === "Home") { event.preventDefault(); setActive(0); }
+      if (event.key === "End") { event.preventDefault(); setActive(renderedRecords.length - 1); }
+      if (event.key === "Enter" && renderedRecords[activeIndex]) {
+        event.preventDefault();
+        const record = renderedRecords[activeIndex];
+        remember(record);
+        window.location.href = record.href;
+      }
+    });
+
+    dialog.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closePalette();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = Array.from(dialog.querySelectorAll<HTMLElement>("button, input, a[href], [tabindex]:not([tabindex='-1'])")).filter(el => !el.hidden);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    });
+
+    dialog.addEventListener("close", () => {
+      lastFocused?.focus();
+      lastFocused = null;
+    });
+
+    document.addEventListener("keydown", event => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        if (dialog.open) closePalette(); else openPalette();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeMenus();
+    });
+
+    document.addEventListener("click", event => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      for (const menu of document.querySelectorAll<HTMLDetailsElement>("nav details")) {
+        if (!menu.contains(target)) menu.open = false;
+      }
+    });
+
+    for (const link of document.querySelectorAll("nav a")) link.addEventListener("click", closeMenus);
   };
-  const openPalette = () => {
-    if (!dialog) return;
-    dialog.showModal();
-    render();
-    requestAnimationFrame(() => input?.focus());
-  };
-  for (const opener of openers) opener.addEventListener("click", openPalette);
-  input?.addEventListener("input", render);
-  document.addEventListener("keydown", event => {
-    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-      event.preventDefault();
-      if (dialog?.open) dialog.close(); else openPalette();
-    }
-  });
-  const closeMenus = () => {
-    for (const menu of document.querySelectorAll<HTMLDetailsElement>("nav details")) menu.open = false;
-  };
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape") closeMenus();
-  });
-  document.addEventListener("click", event => {
-    const target = event.target;
-    if (!(target instanceof Node)) return;
-    for (const menu of document.querySelectorAll<HTMLDetailsElement>("nav details")) {
-      if (!menu.contains(target)) menu.open = false;
-    }
-  });
-  for (const link of document.querySelectorAll("nav a")) link.addEventListener("click", closeMenus);
-  };
+
   document.addEventListener("astro:page-load", setupNavigation);
   setupNavigation();
 </script>
