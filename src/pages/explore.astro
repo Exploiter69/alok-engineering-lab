@@ -1,40 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import ContentCard from "../components/ContentCard.astro";
-import { getCollection } from "astro:content";
-
-const collectionMeta = {
-  projects: { label: "Projects", route: "/projects" },
-  writing: { label: "Writing", route: "/writing" },
-  notes: { label: "Notes", route: "/notes" },
-  experiments: { label: "Experiments", route: "/experiments" },
-  evidence: { label: "Evidence", route: "/evidence" },
-  timeline: { label: "Timeline", route: "/timeline" },
-  changelog: { label: "Changelog", route: "/changelog" },
-} as const;
-
-const collectionNames = Object.keys(collectionMeta) as (keyof typeof collectionMeta)[];
-const collections = await Promise.all(collectionNames.map(name => getCollection(name)));
-const records = collections.flatMap((entries, index) => entries
-  .filter(entry => entry.data.status !== "draft")
-  .map(entry => {
-    const name = collectionNames[index];
-    const meta = collectionMeta[name];
-    const body = entry.body ?? "";
-    return {
-      title: entry.data.title,
-      description: entry.data.description,
-      type: meta.label,
-      href: meta.route + "/" + entry.id,
-      date: entry.data.date.toISOString(),
-      tags: entry.data.tags,
-      text: [entry.data.title, entry.data.description, entry.data.tags.join(" "), body].join(" ").toLowerCase(),
-    };
-  }))
-  .sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
-
-const topics = [...new Set(records.flatMap(record => record.tags))].sort();
-const initialData = JSON.stringify(records).replaceAll("<", "\\u003c");
 ---
 
 <Layout title="Explore" description="Search the connected engineering archive across projects, writing, notes, experiments, evidence and history.">
@@ -42,7 +7,7 @@ const initialData = JSON.stringify(records).replaceAll("<", "\\u003c");
   <header class="max-w-3xl border-b border-neutral-900 pb-10">
     <p class="lab-label mb-4">Archive / Discovery</p>
     <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Explore the Lab</h1>
-    <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">One zero-cost search surface for the connected engineering archive. Search full text, filter by record type, or narrow by topic.</p>
+    <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">The canonical search surface for the connected engineering archive. Search full text, filter by record type, or narrow by topic.</p>
   </header>
 
   <section class="mt-8 border-y border-neutral-900 py-7" aria-labelledby="explore-search-heading">
@@ -51,114 +16,163 @@ const initialData = JSON.stringify(records).replaceAll("<", "\\u003c");
         <span id="explore-search-heading" class="lab-label">Search the archive</span>
         <input id="explore-search" type="search" placeholder="Try “verification”, “Telegram”, or a project name…" autocomplete="off" class="mt-3 min-h-11 w-full rounded-xl border border-neutral-800 bg-black px-4 text-sm text-white outline-none placeholder:text-neutral-600 focus:border-neutral-600 focus:ring-1 focus:ring-neutral-600" />
       </label>
-      <p id="explore-status" class="font-mono text-xs text-neutral-600" aria-live="polite">{records.length} published records</p>
+      <p id="explore-status" class="font-mono text-xs text-neutral-600" aria-live="polite">Loading search index…</p>
     </div>
 
     <div class="mt-5 flex flex-wrap gap-2" role="group" aria-label="Filter archive by record type">
-      <button type="button" data-type="all" aria-pressed="true" class="min-h-11 rounded-full border border-neutral-600 bg-neutral-900 px-4 font-mono text-xs uppercase tracking-[0.12em] text-white">All</button>
-      {collectionNames.map(name => (
-        <button type="button" data-type={collectionMeta[name].label} aria-pressed="false" class="min-h-11 rounded-full border border-neutral-900 px-4 font-mono text-xs uppercase tracking-[0.12em] text-neutral-500 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{collectionMeta[name].label}</button>
+      {["All", "Project", "Writing", "Note", "Experiment", "Evidence", "Page"].map((type) => (
+        <button type="button" data-type={type} aria-pressed={type === "All" ? "true" : "false"} class:list={[
+          "min-h-11 rounded-full border px-4 font-mono text-xs uppercase tracking-[0.12em] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+          type === "All" ? "border-neutral-600 bg-neutral-900 text-white" : "border-neutral-900 text-neutral-500 hover:border-neutral-600 hover:text-white"
+        ]}>{type}</button>
       ))}
     </div>
 
-    <div class="mt-4 flex flex-wrap gap-2" aria-label="Filter archive by topic">
-      {topics.map(topic => (
-        <button type="button" data-topic={topic} aria-pressed="false" class="min-h-11 rounded-full border border-neutral-900 px-4 text-xs text-neutral-500 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{topic}</button>
-      ))}
-    </div>
+    <div id="explore-topics" class="mt-4 flex flex-wrap gap-2" role="group" aria-label="Filter archive by topic"></div>
   </section>
 
   <section class="mt-10" aria-labelledby="results-heading">
     <div class="mb-5 flex items-baseline justify-between gap-4">
       <p id="results-heading" class="lab-label">Results</p>
-      <a href="/garden" class="min-h-11 inline-flex items-center text-sm text-neutral-500 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Lab view →</a>
+      <a href="/garden" class="inline-flex min-h-11 items-center text-sm text-neutral-500 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Lab view →</a>
     </div>
-    <div id="explore-results" data-records={initialData}>
-      {records.map(record => (
-        <article data-explore-item data-type={record.type} data-topics={record.tags.join("|").toLowerCase()} data-search={record.text}>
-          <ContentCard title={record.title} description={record.description} meta={record.type + " • " + record.tags.join(" • ")} href={record.href} headingLevel="h2" compact />
-        </article>
-      ))}
-    </div>
+    <div id="explore-results" class="divide-y divide-neutral-900"></div>
     <p id="explore-empty" class="hidden border border-dashed border-neutral-900 p-6 text-sm leading-6 text-neutral-500">No published records match those filters. Try a broader search or reset the filters.</p>
   </section>
 </main>
 
 <script>
-  const resultsRoot = document.getElementById("explore-results");
-  const records = resultsRoot?.dataset.records ? JSON.parse(resultsRoot.dataset.records) : [];
-  const searchInput = document.getElementById("explore-search");
-  const status = document.getElementById("explore-status");
-  const empty = document.getElementById("explore-empty");
-  const items = Array.from(document.querySelectorAll<HTMLElement>("[data-explore-item]"));
+  type SearchResult = { url: string; meta?: Record<string, string>; plain_excerpt?: string };
+  const input = document.querySelector<HTMLInputElement>("#explore-search");
+  const status = document.querySelector<HTMLElement>("#explore-status");
+  const resultsRoot = document.querySelector<HTMLElement>("#explore-results");
+  const empty = document.querySelector<HTMLElement>("#explore-empty");
   const typeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-type]"));
-  const topicButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-topic]"));
-  let activeType = "all";
+  const topicsRoot = document.querySelector<HTMLElement>("#explore-topics");
+  let activeType = "All";
   let activeTopic = "";
+  let pagefindPromise: Promise<any> | undefined;
 
-  const url = new URL(window.location.href);
-  const initialQuery = url.searchParams.get("q") ?? "";
-  if (searchInput instanceof HTMLInputElement) searchInput.value = initialQuery;
-
-  function syncQuery() {
-    const current = new URL(window.location.href);
-    const query = searchInput instanceof HTMLInputElement ? searchInput.value.trim() : "";
-    if (query) current.searchParams.set("q", query);
-    else current.searchParams.delete("q");
-    window.history.replaceState(null, "", current);
-  }
-
-  function paint() {
-    const query = searchInput instanceof HTMLInputElement ? searchInput.value.trim().toLowerCase() : "";
-    let visible = 0;
-    for (const item of items) {
-      const matchesQuery = !query || (item.dataset.search ?? "").includes(query);
-      const matchesType = activeType === "all" || item.dataset.type === activeType;
-      const topics = (item.dataset.topics ?? "").split("|").filter(Boolean);
-      const matchesTopic = !activeTopic || topics.includes(activeTopic);
-      const visibleItem = matchesQuery && matchesType && matchesTopic;
-      item.hidden = !visibleItem;
-      if (visibleItem) visible++;
+  const loadPagefind = async () => {
+    if (!pagefindPromise) {
+      pagefindPromise = import("/pagefind/pagefind.js").then(async (pagefind) => {
+        await pagefind.options({ excerptLength: 32, ranking: { metaWeights: { title: 8, tags: 5, description: 3, type: 1 } } });
+        await pagefind.init();
+        return pagefind;
+      });
     }
-    if (status) status.textContent = query || activeType !== "all" || activeTopic ? `${visible} matching record${visible === 1 ? "" : "s"}` : `${records.length} published records`;
-    empty?.classList.toggle("hidden", visible !== 0);
-  }
+    return pagefindPromise;
+  };
 
-  if (searchInput instanceof HTMLInputElement) {
-    searchInput.addEventListener("input", () => {
-      syncQuery();
-      paint();
+  const renderTopics = async (pagefind: any) => {
+    if (!topicsRoot) return;
+    const filters = await pagefind.filters();
+    const tags = Object.entries(filters.tag ?? {})
+      .sort(([, a], [, b]) => Number(b) - Number(a))
+      .slice(0, 32)
+      .map(([tag]) => tag);
+    topicsRoot.replaceChildren(...tags.map((tag) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.topic = tag;
+      button.setAttribute("aria-pressed", "false");
+      button.className = "min-h-11 rounded-full border border-neutral-900 px-4 text-xs text-neutral-500 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+      button.textContent = tag;
+      return button;
+    }));
+    for (const button of Array.from(topicsRoot.querySelectorAll<HTMLButtonElement>("[data-topic]"))) {
+      button.addEventListener("click", () => {
+        activeTopic = activeTopic === button.dataset.topic ? "" : button.dataset.topic ?? "";
+        for (const candidate of Array.from(topicsRoot.querySelectorAll<HTMLButtonElement>("[data-topic]"))) {
+          const active = candidate.dataset.topic === activeTopic && activeTopic !== "";
+          candidate.setAttribute("aria-pressed", String(active));
+          candidate.classList.toggle("bg-neutral-900", active);
+          candidate.classList.toggle("border-neutral-600", active);
+          candidate.classList.toggle("text-white", active);
+          candidate.classList.toggle("border-neutral-900", !active);
+          candidate.classList.toggle("text-neutral-500", !active);
+        }
+        void search();
+      });
+    }
+  };
+
+  const renderResults = (results: SearchResult[]) => {
+    if (!resultsRoot) return;
+    resultsRoot.replaceChildren(...results.map((result) => {
+      const article = document.createElement("article");
+      article.className = "py-5";
+      const link = document.createElement("a");
+      link.href = result.url;
+      link.className = "block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white";
+      const meta = document.createElement("p");
+      meta.className = "font-mono text-[10px] uppercase tracking-[0.12em] text-neutral-600";
+      meta.textContent = result.meta?.type ?? "Page";
+      const title = document.createElement("h2");
+      title.className = "mt-2 text-lg font-semibold text-white";
+      title.textContent = result.meta?.title ?? result.url;
+      const description = document.createElement("p");
+      description.className = "mt-2 max-w-3xl text-sm leading-6 text-neutral-500";
+      description.textContent = result.meta?.description ?? result.plain_excerpt ?? "";
+      link.append(meta, title, description);
+      if (result.plain_excerpt && result.meta?.description !== result.plain_excerpt) {
+        const excerpt = document.createElement("p");
+        excerpt.className = "mt-2 max-w-3xl text-xs leading-5 text-neutral-600";
+        excerpt.textContent = result.plain_excerpt;
+        link.append(excerpt);
+      }
+      article.append(link);
+      return article;
+    }));
+    empty?.classList.toggle("hidden", results.length !== 0);
+  };
+
+  const search = async () => {
+    const pagefind = await loadPagefind();
+    const query = input?.value.trim() ?? "";
+    const filters: Record<string, string> = {};
+    if (activeType !== "All") filters.type = activeType;
+    if (activeTopic) filters.tag = activeTopic;
+    const result = await pagefind.search(query || null, { filters });
+    const data = await Promise.all(result.results.slice(0, 60).map((item: { data: () => Promise<SearchResult> }) => item.data()));
+    renderResults(data);
+    if (status) status.textContent = `${data.length} result${data.length === 1 ? "" : "s"}${query ? ` for “${query}”` : ""}`;
+  };
+
+  const syncQuery = () => {
+    const url = new URL(window.location.href);
+    const query = input?.value.trim() ?? "";
+    if (query) url.searchParams.set("q", query);
+    else url.searchParams.delete("q");
+    window.history.replaceState(null, "", url);
+  };
+
+  for (const button of typeButtons) {
+    button.addEventListener("click", () => {
+      activeType = button.dataset.type ?? "All";
+      for (const candidate of typeButtons) {
+        const active = candidate === button;
+        candidate.setAttribute("aria-pressed", String(active));
+        candidate.classList.toggle("bg-neutral-900", active);
+        candidate.classList.toggle("border-neutral-600", active);
+        candidate.classList.toggle("text-white", active);
+        candidate.classList.toggle("border-neutral-900", !active);
+        candidate.classList.toggle("text-neutral-500", !active);
+      }
+      void search();
     });
   }
 
-  for (const button of typeButtons) button.addEventListener("click", () => {
-    activeType = button.dataset.type ?? "all";
-    for (const candidate of typeButtons) {
-      const active = candidate === button;
-      candidate.setAttribute("aria-pressed", String(active));
-      candidate.classList.toggle("bg-neutral-900", active);
-      candidate.classList.toggle("border-neutral-600", active);
-      candidate.classList.toggle("text-white", active);
-      candidate.classList.toggle("border-neutral-900", !active);
-      candidate.classList.toggle("text-neutral-500", !active);
-    }
-    paint();
+  input?.addEventListener("input", () => {
+    syncQuery();
+    void search();
   });
 
-  for (const button of topicButtons) button.addEventListener("click", () => {
-    activeTopic = activeTopic === (button.dataset.topic ?? "").toLowerCase() ? "" : (button.dataset.topic ?? "").toLowerCase();
-    for (const candidate of topicButtons) {
-      const active = (candidate.dataset.topic ?? "").toLowerCase() === activeTopic && activeTopic !== "";
-      candidate.setAttribute("aria-pressed", String(active));
-      candidate.classList.toggle("bg-neutral-900", active);
-      candidate.classList.toggle("border-neutral-600", active);
-      candidate.classList.toggle("text-white", active);
-      candidate.classList.toggle("border-neutral-900", !active);
-      candidate.classList.toggle("text-neutral-500", !active);
-    }
-    paint();
-  });
+  const initialQuery = new URL(window.location.href).searchParams.get("q") ?? "";
+  if (input) input.value = initialQuery;
 
-  paint();
+  const pagefind = await loadPagefind();
+  await renderTopics(pagefind);
+  await search();
 </script>
 </Layout>
