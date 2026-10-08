@@ -448,32 +448,29 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
         if (!interaction.ok) errors.push("Explore shared-index search/filter interaction failed: " + (interaction.reason || "state mismatch"));
       }
 
-      const pageWaitFor = async (predicate, timeout) => {
-        const started = Date.now();
-        while (Date.now() - started < timeout) {
-          if (predicate()) return true;
-          await new Promise(resolve => setTimeout(resolve, 50));
-        }
-        return false;
-      };
-
-      if (route === "/" ) {
+      if (route === "/") {
         const interaction = await page.evaluate(async () => {
-          const desktop = window.matchMedia("(min-width: 1024px)").matches;
+          const desktop = window.matchMedia("(min-width: 768px)").matches;
           const opener = document.querySelector(desktop ? "nav [data-nav-desktop] [data-command-open]" : "nav [data-nav-mobile] [data-command-open]");
           if (!(opener instanceof HTMLButtonElement)) return { ok: false, reason: "command opener missing" };
           if (!desktop) {
-            const menu = document.querySelector<HTMLDetailsElement>("[data-nav-mobile]");
-            menu?.querySelector("summary")?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+            const menu = document.querySelector("[data-nav-mobile]");
+            if (menu instanceof HTMLDetailsElement && !menu.open) {
+              menu.querySelector("summary")?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+            }
           }
+          if (!opener.getClientRects().length) return { ok: false, reason: "command opener is not visible" };
           opener.click();
-          await new Promise(resolve => setTimeout(resolve, 400));
           const dialog = document.querySelector("#command-palette");
           const input = document.querySelector("#command-search");
           if (!dialog?.open || !(input instanceof HTMLInputElement)) return { ok: false, reason: "command palette did not open" };
           input.value = "vajra";
           input.dispatchEvent(new Event("input", { bubbles: true }));
-          await pageWaitFor(() => document.querySelectorAll("#command-result-items a[role='option']").length >= 1, 2000);
+          const started = Date.now();
+          while (Date.now() - started < 2000) {
+            if (document.querySelectorAll("#command-result-items a[role='option']").length >= 1) break;
+            await new Promise(resolve => setTimeout(resolve, 50));
+          }
           const resultCount = document.querySelectorAll("#command-result-items a[role='option']").length;
           input.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true }));
           const active = input.getAttribute("aria-activedescendant");
