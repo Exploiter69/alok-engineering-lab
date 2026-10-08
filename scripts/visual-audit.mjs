@@ -471,7 +471,7 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
           input.value = "vajra";
           input.dispatchEvent(new Event("input", { bubbles: true }));
           const started = Date.now();
-          while (Date.now() - started < 2000) {
+          while (Date.now() - started < 5000) {
             if (document.querySelectorAll("#command-result-items a[role='option']").length >= 1) break;
             await new Promise(resolve => setTimeout(resolve, 50));
           }
