@@ -198,8 +198,60 @@ body {
 @view-transition { navigation: auto; }
 
 .nav-menu-panel { transform-origin: top right; transition: opacity .18s ease, transform .18s ease; }
-nav details:not([open]) .nav-menu-panel { opacity: 0; transform: translateY(-5px); pointer-events: none; }
+nav details:not([open]) .nav-menu-panel { opacity: 0; transform: translateY(-5px) scale(.985); pointer-events: none; }
 nav details[open] .nav-menu-panel { opacity: 1; transform: none; }
+
+nav [data-nav-link] {
+  position: relative;
+  isolation: isolate;
+}
+
+nav [data-nav-link][aria-current="page"]::after,
+nav [data-nav-lab] > summary[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.35rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--accent-gradient);
+  box-shadow: 0 0 16px rgba(163, 230, 53, 0.18);
+  transform: scaleX(1);
+  transform-origin: center;
+  animation: nav-indicator-in var(--motion-base) var(--ease-standard) both;
+}
+
+@keyframes nav-indicator-in {
+  from { opacity: 0; transform: scaleX(0.15); }
+  to { opacity: 1; transform: scaleX(1); }
+}
+
+#command-palette {
+  max-height: min(78vh, 720px);
+}
+
+#command-palette::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+#command-palette input::selection {
+  background: rgba(163, 230, 53, 0.28);
+  color: white;
+}
+
+@media (max-width: 767px) {
+  nav [data-nav-link][aria-current="page"]::after {
+    left: 0.75rem;
+    right: auto;
+    width: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  nav [data-nav-link][aria-current="page"]::after { animation: none; }
+  .nav-menu-panel { transition: none; }
+}
 @media (prefers-reduced-motion: reduce) { .nav-menu-panel { transition: none; } }
 
 
