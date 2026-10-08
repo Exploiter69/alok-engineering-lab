@@ -301,3 +301,138 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   body::before { opacity: 0.028; }
 }
+
+
+.hero-stagger > h1 {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+.hero-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(0.45em);
+  animation: hero-line-in var(--motion-slow) var(--ease-standard) forwards;
+}
+
+.hero-line:nth-child(2) {
+  animation-delay: 90ms;
+}
+
+@keyframes hero-line-in {
+  to { opacity: 1; transform: none; }
+}
+
+.system-visual {
+  position: absolute;
+  inset: 0;
+  min-height: 24rem;
+  overflow: hidden;
+  border-radius: calc(var(--radius-lg) - .2rem);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(163,230,53,.10), transparent 34%),
+    radial-gradient(circle at 75% 25%, rgba(103,232,249,.07), transparent 30%),
+    var(--surface-1);
+}
+
+.system-visual__grid {
+  position: absolute;
+  inset: 0;
+  opacity: .28;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(circle at center, black, transparent 78%);
+}
+
+.system-visual__orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 1px solid rgba(163,230,53,.18);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: system-orbit 12s linear infinite;
+  animation-play-state: paused;
+}
+
+.system-visual__orbit--outer { width: 78%; aspect-ratio: 1; }
+.system-visual__orbit--inner { width: 48%; aspect-ratio: 1; border-color: rgba(103,232,249,.18); animation-duration: 8s; animation-direction: reverse; }
+
+.system-visual__core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5rem;
+  height: 5rem;
+  display: grid;
+  place-items: center;
+  gap: .3rem;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(163,230,53,.4);
+  border-radius: 1.25rem;
+  background: rgba(9,9,9,.82);
+  box-shadow: var(--glow-accent);
+  animation: system-pulse 2.8s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.system-visual__core span {
+  width: 1.8rem;
+  height: 2px;
+  background: var(--accent-gradient);
+  opacity: .85;
+}
+
+.system-visual__node {
+  position: absolute;
+  width: .55rem;
+  height: .55rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(163,230,53,.55);
+  animation: system-node 3.6s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.system-visual__node--one { left: 18%; top: 34%; }
+.system-visual__node--two { right: 16%; top: 61%; animation-delay: 900ms; }
+.system-visual__node--three { left: 67%; bottom: 18%; animation-delay: 1500ms; background: var(--accent-cyan); }
+
+.system-visual__scan {
+  position: absolute;
+  inset: -20% 0 auto;
+  height: 25%;
+  background: linear-gradient(to bottom, transparent, rgba(163,230,53,.07), transparent);
+  animation: system-scan 5s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.system-visual.is-active :is(.system-visual__orbit, .system-visual__core, .system-visual__node, .system-visual__scan) {
+  animation-play-state: running;
+}
+
+@keyframes system-orbit { to { transform: translate(-50%, -50%) rotate(360deg); } }
+@keyframes system-pulse { 50% { transform: translate(-50%, -50%) scale(1.04); box-shadow: var(--glow-accent-strong); } }
+@keyframes system-node { 50% { transform: translateY(-7px); opacity: .55; } }
+@keyframes system-scan { 0%, 100% { transform: translateY(-20%); opacity: 0; } 25%, 75% { opacity: 1; } 50% { transform: translateY(360%); } }
+
+@media (max-width: 767px) {
+  .system-visual { min-height: 20rem; }
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .system-visual :is(.system-visual__orbit, .system-visual__core, .system-visual__node, .system-visual__scan) {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-line {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
