@@ -1,0 +1,277 @@
+---
+const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidence", "Page"];
+---
+
+<dialog
+  id="command-palette"
+  class="fixed left-1/2 top-[8vh] m-0 w-[min(94vw,720px)] -translate-x-1/2 rounded-2xl border border-lab-strong bg-surface-1 p-0 text-white shadow-2xl backdrop:bg-black/70 backdrop:backdrop-blur-sm"
+  aria-labelledby="command-title"
+  aria-describedby="command-status"
+>
+  <div class="border-b border-lab p-3">
+    <div class="flex items-center justify-between gap-4 px-3 pb-2">
+      <p id="command-title" class="font-mono text-[11px] uppercase tracking-[0.14em] text-faint">Search the Lab</p>
+      <kbd class="rounded border border-lab-strong px-1.5 py-0.5 font-mono text-[10px] text-faint">Esc</kbd>
+    </div>
+    <label class="sr-only" for="command-search">Search the Lab</label>
+    <input
+      id="command-search"
+      type="search"
+      autocomplete="off"
+      placeholder="Search projects, writing, notes…"
+      class="min-h-12 w-full rounded-xl border border-lab-strong bg-black px-3 text-base text-white outline-none placeholder:text-faint focus:border-neutral-600 focus:ring-1 focus:ring-neutral-600"
+      role="combobox"
+      aria-autocomplete="list"
+      aria-controls="command-results"
+      aria-expanded="true"
+      aria-activedescendant=""
+    />
+    <div class="mt-3 flex flex-wrap gap-2" role="group" aria-label="Filter search by type">
+      {filterTypes.map((type) => (
+        <button
+          type="button"
+          data-search-type={type}
+          aria-pressed={type === "All" ? "true" : "false"}
+          class="min-h-10 rounded-full border border-lab-strong px-3 font-mono text-[10px] uppercase tracking-[0.12em] text-subtle transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          class:bg-surface-2={type === "All"}
+          class:text-white={type === "All"}
+        >{type}</button>
+      ))}
+    </div>
+  </div>
+
+  <div id="command-status" class="sr-only" aria-live="polite">Search ready.</div>
+  <div id="command-results" class="max-h-[58vh] overflow-y-auto p-2" role="listbox" aria-label="Search results" tabindex="-1">
+    <p id="command-recent-label" class="px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">Recently viewed</p>
+    <div id="command-result-items" class="space-y-1"></div>
+    <p id="command-empty" class="hidden px-3 py-8 text-sm text-subtle">No results. Try a broader search.</p>
+  </div>
+</dialog>
+
+<script>
+  type SearchResult = {
+    url: string;
+    meta?: Record<string, string>;
+    plain_excerpt?: string;
+  };
+
+  const dialog = document.querySelector<HTMLDialogElement>("#command-palette");
+  const openers = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-command-open]"));
+  const input = document.querySelector<HTMLInputElement>("#command-search");
+  const resultsRoot = document.querySelector<HTMLElement>("#command-results");
+  const resultItems = document.querySelector<HTMLElement>("#command-result-items");
+  const empty = document.querySelector<HTMLElement>("#command-empty");
+  const status = document.querySelector<HTMLElement>("#command-status");
+  const recentLabel = document.querySelector<HTMLElement>("#command-recent-label");
+  const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-search-type]"));
+  let activeType = "All";
+  let activeIndex = -1;
+  let currentResults: SearchResult[] = [];
+  let pagefindPromise: Promise<any> | undefined;
+  let lastOpener: HTMLButtonElement | null = null;
+
+  const recentKey = "alok-lab-recent-search";
+  const getRecent = (): SearchResult[] => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(recentKey) ?? "[]");
+      return Array.isArray(stored) ? stored.slice(0, 6) : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const saveRecent = (result: SearchResult) => {
+    try {
+      const current = getRecent().filter((item) => item.url !== result.url);
+      localStorage.setItem(recentKey, JSON.stringify([result, ...current].slice(0, 6)));
+    } catch {
+      // localStorage can be unavailable in privacy-restricted contexts.
+    }
+  };
+
+  const loadPagefind = async () => {
+    if (!pagefindPromise) {
+      pagefindPromise = import("/pagefind/pagefind.js").then(async (pagefind) => {
+        await pagefind.options({
+          excerptLength: 24,
+          ranking: {
+            metaWeights: {
+              title: 8,
+              tags: 5,
+              description: 3,
+              type: 1,
+            },
+          },
+        });
+        await pagefind.init();
+        return pagefind;
+      });
+    }
+    return pagefindPromise;
+  };
+
+  const setStatus = (message: string) => {
+    if (status) status.textContent = message;
+  };
+
+  const makeResult = (result: SearchResult, index: number) => {
+    const link = document.createElement("a");
+    link.id = "command-option-" + index;
+    link.href = result.url;
+    link.setAttribute("role", "option");
+    link.setAttribute("aria-selected", String(index === activeIndex));
+    link.className = "flex min-h-12 items-center justify-between gap-4 rounded-lg border border-transparent px-3 py-2 text-sm transition hover:border-lab-strong hover:bg-surface-2 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white";
+    link.addEventListener("click", () => saveRecent(result));
+
+    const copy = document.createElement("span");
+    copy.className = "min-w-0";
+    const title = document.createElement("span");
+    title.className = "block truncate font-medium text-white";
+    title.textContent = result.meta?.title || result.url;
+    copy.append(title);
+
+    if (result.plain_excerpt) {
+      const excerpt = document.createElement("span");
+      excerpt.className = "mt-1 block line-clamp-1 text-xs text-subtle";
+      excerpt.textContent = result.plain_excerpt;
+      copy.append(excerpt);
+    }
+
+    const type = document.createElement("span");
+    type.className = "shrink-0 rounded-full border border-lab-strong px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-faint";
+    type.textContent = result.meta?.type || "Page";
+
+    link.append(copy, type);
+    return link;
+  };
+
+  const renderResults = (results: SearchResult[], label: string) => {
+    currentResults = results;
+    activeIndex = results.length ? 0 : -1;
+    if (resultItems) {
+      resultItems.replaceChildren(...results.map(makeResult));
+    }
+    if (recentLabel) recentLabel.textContent = label;
+    empty?.classList.toggle("hidden", results.length !== 0);
+    if (input) input.setAttribute("aria-activedescendant", activeIndex >= 0 ? "command-option-" + activeIndex : "");
+    setStatus(results.length ? `${results.length} result${results.length === 1 ? "" : "s"}` : "No search results.");
+  };
+
+  const renderRecent = () => {
+    const recent = getRecent().filter((result) => activeType === "All" || result.meta?.type === activeType);
+    renderResults(recent, recent.length ? "Recently viewed" : "Search the archive");
+  };
+
+  const search = async () => {
+    const query = input?.value.trim() ?? "";
+    if (!query) {
+      renderRecent();
+      return;
+    }
+
+    setStatus("Searching…");
+    const pagefind = await loadPagefind();
+    const result = await pagefind.search(query, {
+      filters: activeType === "All" ? {} : { type: activeType },
+    });
+    const data = await Promise.all(result.results.slice(0, 24).map((item: { data: () => Promise<SearchResult> }) => item.data()));
+    renderResults(data, "Results");
+  };
+
+  const setActive = (index: number) => {
+    if (!currentResults.length) return;
+    activeIndex = (index + currentResults.length) % currentResults.length;
+    for (const [candidateIndex, item] of Array.from(resultItems?.children ?? []).entries()) {
+      if (!(item instanceof HTMLElement)) continue;
+      item.setAttribute("aria-selected", String(candidateIndex === activeIndex));
+      if (candidateIndex === activeIndex) item.scrollIntoView({ block: "nearest" });
+    }
+    if (input) input.setAttribute("aria-activedescendant", "command-option-" + activeIndex);
+  };
+
+  const openPalette = async (opener?: HTMLButtonElement) => {
+    if (!dialog) return;
+    lastOpener = opener ?? lastOpener;
+    dialog.showModal();
+    renderRecent();
+    requestAnimationFrame(() => input?.focus());
+    void loadPagefind();
+  };
+
+  const closePalette = () => {
+    if (dialog?.open) dialog.close();
+  };
+
+  for (const opener of openers) opener.addEventListener("click", () => void openPalette(opener));
+
+  input?.addEventListener("input", () => void search());
+
+  input?.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setActive(activeIndex + 1);
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setActive(activeIndex - 1);
+    } else if (event.key === "Enter" && activeIndex >= 0 && currentResults[activeIndex]) {
+      event.preventDefault();
+      saveRecent(currentResults[activeIndex]);
+      window.location.assign(currentResults[activeIndex].url);
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      closePalette();
+    }
+  });
+
+  for (const button of filterButtons) {
+    button.addEventListener("click", () => {
+      activeType = button.dataset.searchType ?? "All";
+      for (const candidate of filterButtons) {
+        const active = candidate === button;
+        candidate.setAttribute("aria-pressed", String(active));
+        candidate.classList.toggle("bg-surface-2", active);
+        candidate.classList.toggle("text-white", active);
+      }
+      void search();
+      input?.focus();
+    });
+  }
+
+  dialog?.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closePalette();
+  });
+
+  dialog?.addEventListener("close", () => {
+    if (lastOpener && document.contains(lastOpener)) lastOpener.focus();
+  });
+
+  dialog?.addEventListener("keydown", (event) => {
+    if (event.key !== "Tab") return;
+    const focusable = Array.from(dialog.querySelectorAll<HTMLElement>("button, input, a[href]")).filter((element) => !element.hidden && element.getAttribute("tabindex") !== "-1");
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      if (dialog?.open) closePalette();
+      else void openPalette();
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Node)) return;
+    if (dialog?.open && target === dialog) closePalette();
+  });
+</script>
