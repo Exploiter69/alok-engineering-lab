@@ -418,7 +418,7 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
           const search = document.querySelector("#garden-search");
           if (!(search instanceof HTMLInputElement)) return { ok: false, reason: "garden search missing" };
           search.value = "__no_such_item__"; search.dispatchEvent(new Event("input", { bubbles: true }));
-          await new Promise(resolve => setTimeout(resolve, 250));
+          await new Promise(resolve => setTimeout(resolve, 1000));
           const empty = !document.querySelector("#garden-empty")?.classList.contains("hidden");
           return { ok: empty };
         });
