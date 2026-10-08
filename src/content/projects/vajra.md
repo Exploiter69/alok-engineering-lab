@@ -29,6 +29,11 @@ lifecycleHistory:
     date: 2026-10-06
     note: "Lifecycle baseline recorded in the Engineering Lab."
 architectureSummary: "Local-first runtime separating objective/context/reasoning from policy, an execution broker, sandbox/workspace, artifacts and independent verification, with durable runs and disposable attempts/workers/models."
+architectureNodes:
+  - "Objective / Context"
+  - "Policy / Broker"
+  - "Sandbox / Workspace"
+  - "Verification / Evidence"
 decisions:
   - "Run, step and evidence state must survive disposable workers and attempts."
   - "The model proposes intent but policy and the execution broker own authority."
