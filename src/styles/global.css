@@ -436,3 +436,46 @@ body::before {
     animation: none;
   }
 }
+
+
+.spotlight-card {
+  --spotlight-x: 50%;
+  --spotlight-y: 50%;
+  background: var(--surface-1);
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(180px circle at var(--spotlight-x) var(--spotlight-y), rgba(163,230,53,.32), transparent 70%);
+  opacity: 0;
+  transition: opacity var(--motion-fast) ease;
+}
+
+.spotlight-card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: calc(var(--radius-lg) - 1px);
+  background: var(--surface-1);
+}
+
+.spotlight-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before,
+.spotlight-card:focus-within::before {
+  opacity: 1;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .spotlight-card::before { display: none; }
+}
