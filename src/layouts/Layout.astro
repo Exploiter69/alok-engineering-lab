@@ -9,9 +9,11 @@ interface Props {
   description?: string;
   ogImage?: string;
   noindex?: boolean;
+  searchType?: string;
+  searchTags?: string[];
 }
 
-const { title = SITE.name, description = SITE.description, ogImage, noindex = false } = Astro.props;
+const { title = SITE.name, description = SITE.description, ogImage, noindex = false, searchType = "Page", searchTags = [] } = Astro.props;
 const site = Astro.site ?? new URL("https://www.alokthakur.me");
 const canonicalURL = new URL(Astro.url.pathname, site);
 const pageTitle = title === SITE.name ? SITE.name : title + " — " + SITE.name;
@@ -53,7 +55,12 @@ const resolvedOgImage = new URL(ogImage ?? SITE.seo.ogImage, site).href;
     potentialAction: { "@type": "SearchAction", target: `${site.href}explore?q={search_term_string}`, "query-input": "required name=search_term_string" },
   })} />
 </head>
-<body class="bg-black text-white">
+<body class="bg-black text-white" data-search-type={searchType}>
+<div data-pagefind-meta="description" class="sr-only">{description}</div>
+<div data-pagefind-meta="type" class="sr-only">{searchType}</div>
+{searchTags.length > 0 && <div data-pagefind-meta="tags" class="sr-only">{searchTags.join(" ")}</div>}
+<div data-pagefind-filter={"type:" + searchType} class="hidden" aria-hidden="true"></div>
+{searchTags.map((tag) => <span data-pagefind-filter={"tag:" + tag} class="hidden" aria-hidden="true"></span>)}
 <a href="#main-content" class="sr-only z-[100] rounded-md bg-white px-4 py-2 text-sm font-medium text-black focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to main content</a>
 <Navbar />
 <div id="reading-progress" aria-hidden="true"></div>
