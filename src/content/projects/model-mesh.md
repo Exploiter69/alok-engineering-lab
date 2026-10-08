@@ -29,7 +29,7 @@ lifecycleHistory:
 architectureSummary: "A model-oriented engineering workspace separates model inputs, reusable model infrastructure, provider/research experiments and resulting evaluation or output."
 architectureNodes:
   - "Model Inputs"
-  - "Model Infrastructure"
+  - "Reusable Infrastructure"
   - "Provider / Research"
   - "Evaluation / Output"
 decisions:
