@@ -33,7 +33,7 @@ architectureNodes:
   - "Telegram / Telethon"
   - "Application Core"
   - "Jobs / Plugins"
-  - "SQLite / Services"
+  - "SQLite / Recovery"
 decisions:
   - "Keep durable state in SQLite/WAL instead of introducing a distributed data layer."
   - "Keep plugin and background-work ownership explicit through shared lifecycle and supervision boundaries."
