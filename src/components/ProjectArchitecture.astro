@@ -3,17 +3,19 @@ interface Props { projectId: string; title: string; architectureSummary?: string
 const { projectId, title, architectureSummary = "", decisions = [] } = Astro.props;
 const raw = architectureSummary.replace(/\s+/g, " ").trim();
 const fromSummary = raw.split(/\s*(?:→|->|=>)\s*/).map(item => item.trim()).filter(Boolean);
-const fromDecisions = decisions
-  .filter(item => /(?:→|->|=>)/.test(item))
-  .flatMap(item => item.split(/\s*(?:→|->|=>)\s*/).map(part => part.trim()))
-  .filter(Boolean);
-const nodes = [...new Set([...fromSummary, ...fromDecisions])].slice(0, 4);
-while (nodes.length < 4) nodes.push(["Input", "Architecture", "Decision boundary", "Output"][nodes.length]);
-const caption = fromSummary.length > 1 ? fromSummary.join(" → ") : "Repository-backed architecture derived from the project record.";
+
+const fallbackLabels = ["Input", "Architecture", "Decision boundary", "Output"];
+const nodes = fromSummary.length > 1
+  ? fromSummary.slice(0, 4)
+  : fallbackLabels;
+
+while (nodes.length < 4) nodes.push(fallbackLabels[nodes.length]);
+
+const caption = raw || "Repository-backed architecture derived from the project record.";
 
 const splitLabel = (value: string) => {
   const clean = value.replace(/\s+/g, " ").trim();
-  if (clean.length <= 22) return [clean];
+  if (clean.length <= 20) return [clean];
 
   const words = clean.split(" ");
   const lines: string[] = [];
@@ -21,24 +23,20 @@ const splitLabel = (value: string) => {
 
   for (const word of words) {
     const candidate = current ? current + " " + word : word;
-    if (candidate.length <= 22) {
+    if (candidate.length <= 20) {
       current = candidate;
-    } else if (current) {
-      lines.push(current);
-      current = word;
     } else {
-      lines.push(word.slice(0, 21) + "…");
-      current = "";
+      if (current) lines.push(current);
+      current = word;
+      if (lines.length === 1) break;
     }
-
-    if (lines.length === 2) break;
   }
 
   if (current && lines.length < 2) lines.push(current);
 
-  const consumed = lines.join(" ").length;
-  if (consumed < clean.length && lines.length) {
-    lines[lines.length - 1] = lines[lines.length - 1].replace(/[.…]$/, "") + "…";
+  const isTruncated = words.join(" ") !== lines.join(" ");
+  if (isTruncated && lines.length) {
+    lines[lines.length - 1] = lines[lines.length - 1].replace(/…$/, "") + "…";
   }
 
   return lines.slice(0, 2);
@@ -59,7 +57,7 @@ const splitLabel = (value: string) => {
         {index < nodes.length - 1 && <path d={"M " + (x + 202) + " 109 L " + (x + 212) + " 115 L " + (x + 202) + " 121"} stroke="var(--accent)" stroke-width="2" fill="none" />}
         <rect x={x} y="50" width="180" height="130" rx="14" fill="var(--surface-2)" stroke={index === 0 ? "var(--accent)" : "var(--border-strong)"} />
         {splitLabel(node).map((line, lineIndex) => (
-          <text x={x + 90} y={String(100 + lineIndex * 18)} text-anchor="middle" fill="var(--foreground)" font-size="13" font-family="var(--font-sans)">{line}</text>
+          <text x={x + 90} y={String(104 + lineIndex * 18)} text-anchor="middle" fill="var(--foreground)" font-size="13" font-family="var(--font-sans)">{line}</text>
         ))}
         <text x={x + 90} y="154" text-anchor="middle" fill="var(--subtle)" font-size="10" font-family="var(--font-mono)">0{index + 1}</text>
       </>;
