@@ -69,6 +69,7 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
   let pagefindPromise: Promise<any> | undefined;
   let lastOpener: HTMLButtonElement | null = null;
   let restoreFocusTarget: HTMLButtonElement | HTMLElement | null = null;
+  let searchGeneration = 0;
 
   const recentKey = "alok-lab-recent-search";
   const getRecent = (): SearchResult[] => {
@@ -168,6 +169,7 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
   };
 
   const search = async () => {
+    const generation = ++searchGeneration;
     const query = input?.value.trim() ?? "";
     if (!query) {
       renderRecent();
@@ -177,12 +179,16 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
     setStatus("Searching…");
     try {
       const pagefind = await loadPagefind();
+      if (generation !== searchGeneration) return;
       const result = await pagefind.search(query, {
         filters: activeType === "All" ? {} : { type: activeType },
       });
+      if (generation !== searchGeneration) return;
       const data = await Promise.all(result.results.slice(0, 24).map((item: { data: () => Promise<SearchResult> }) => item.data()));
+      if (generation !== searchGeneration) return;
       renderResults(data, "Results");
     } catch {
+      if (generation !== searchGeneration) return;
       renderResults([], "Search unavailable");
       setStatus("Search is available in the production preview.");
     }
