@@ -91,7 +91,7 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
   const loadPagefind = async () => {
     if (!pagefindPromise) {
       // @ts-ignore Pagefind generates this static module after Astro check.
-      pagefindPromise = import("/pagefind/pagefind.js").then(async (pagefind) => {
+      pagefindPromise = import(/* @vite-ignore */ "/pagefind/pagefind.js").then(async (pagefind) => {
         await pagefind.options({
           excerptLength: 24,
           ranking: {
