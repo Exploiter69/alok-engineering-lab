@@ -448,6 +448,15 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
         if (!interaction.ok) errors.push("Explore shared-index search/filter interaction failed: " + (interaction.reason || "state mismatch"));
       }
 
+      const pageWaitFor = async (predicate, timeout) => {
+        const started = Date.now();
+        while (Date.now() - started < timeout) {
+          if (predicate()) return true;
+          await new Promise(resolve => setTimeout(resolve, 50));
+        }
+        return false;
+      };
+
       if (route === "/" ) {
         const interaction = await page.evaluate(async () => {
           const desktop = window.matchMedia("(min-width: 1024px)").matches;
@@ -464,7 +473,7 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
           if (!dialog?.open || !(input instanceof HTMLInputElement)) return { ok: false, reason: "command palette did not open" };
           input.value = "vajra";
           input.dispatchEvent(new Event("input", { bubbles: true }));
-          await new Promise(resolve => setTimeout(resolve, 400));
+          await pageWaitFor(() => document.querySelectorAll("#command-result-items a[role='option']").length >= 1, 2000);
           const resultCount = document.querySelectorAll("#command-result-items a[role='option']").length;
           input.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true }));
           const active = input.getAttribute("aria-activedescendant");
