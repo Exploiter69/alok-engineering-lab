@@ -64,7 +64,7 @@ const resolvedOgImage = new URL(ogImage ?? SITE.seo.ogImage, site).href;
 <a href="#main-content" class="sr-only z-[100] rounded-md bg-white px-4 py-2 text-sm font-medium text-black focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to main content</a>
 <Navbar />
 <div id="reading-progress" aria-hidden="true"></div>
-<div id="main-content"><slot /></div>
+<div id="main-content" data-pagefind-body><slot /></div>
 <script>
   const progress = document.querySelector<HTMLElement>("#reading-progress");
   const article = document.querySelector<HTMLElement>("article.prose");
