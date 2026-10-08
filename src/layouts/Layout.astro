@@ -61,9 +61,16 @@ const resolvedOgImage = new URL(ogImage ?? SITE.seo.ogImage, site).href;
 <div id="reading-progress" aria-hidden="true"></div>
 <div id="main-content"><slot /></div>
 <script>
-  const progress = document.querySelector<HTMLElement>("#reading-progress");
-  const article = document.querySelector<HTMLElement>("article.prose");
-  if (progress && article) {
+  const setupReadingProgress = () => {
+    const progress = document.querySelector<HTMLElement>("#reading-progress");
+    const article = document.querySelector<HTMLElement>("article.prose");
+    const state = window as Window & { __labReadingProgressCleanup?: () => void };
+    state.__labReadingProgressCleanup?.();
+    if (!progress || !article) {
+      progress?.remove();
+      state.__labReadingProgressCleanup = undefined;
+      return;
+    }
     const update = () => {
       const start = article.getBoundingClientRect().top + window.scrollY;
       const total = Math.max(1, article.scrollHeight - window.innerHeight);
@@ -73,11 +80,16 @@ const resolvedOgImage = new URL(ogImage ?? SITE.seo.ogImage, site).href;
     update();
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
-  } else {
-    progress?.remove();
-  }
+    state.__labReadingProgressCleanup = () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  };
+  document.addEventListener("astro:page-load", setupReadingProgress);
+  setupReadingProgress();
 </script>
 <script>
+  const setupInteractiveUI = () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const revealTargets = document.querySelectorAll<HTMLElement>("main section, main article.prose, main > header, [data-reveal-card], .reveal");
   if (!reduceMotion && "IntersectionObserver" in window) {
@@ -119,6 +131,9 @@ const resolvedOgImage = new URL(ogImage ?? SITE.seo.ogImage, site).href;
     if (reduceMotion || !("IntersectionObserver" in window)) { counter.textContent = String(target); continue; }
     const observer = new IntersectionObserver(entries => { if (!entries[0]?.isIntersecting) return; const started = performance.now(); const tick = (now: number) => { const progress = Math.min(1, (now - started) / 700); counter.textContent = String(Math.round(target * (1 - Math.pow(1 - progress, 3)))); if (progress < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); observer.disconnect(); }, { threshold: .6 }); observer.observe(counter);
   }
+  };
+  document.addEventListener("astro:page-load", setupInteractiveUI);
+  setupInteractiveUI();
 </script>
 <Footer />
 </body>
