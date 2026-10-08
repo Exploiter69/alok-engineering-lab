@@ -20,7 +20,7 @@ const { Content } = await render(entry);
 const relatedItems = await resolveRelated(entry.data.related);
 const projectItems = relatedItems.filter(item => item.type === "Projects");
 ---
-<Layout title={entry.data.title} description={entry.data.description}>
+<Layout title={entry.data.title} description={entry.data.description} searchType="Evidence" searchTags={entry.data.tags}>
 <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
   <a href="/evidence" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-neutral-500 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span aria-hidden="true">←</span>Evidence</a>
   <header class="mt-12 max-w-3xl border-b border-neutral-900 pb-10">
