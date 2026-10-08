@@ -32,7 +32,7 @@ architectureNodes:
   - "CLI / Workspace"
   - "Detection / Planning"
   - "Execution / Validation"
-  - "Legacy Anchor"
+  - "Legacy Compatibility"
 decisions:
   - "Use replacement behind stable boundaries instead of a full rewrite."
   - "Treat existing tested behavior as migration evidence rather than disposable legacy."
