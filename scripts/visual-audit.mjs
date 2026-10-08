@@ -417,7 +417,7 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
         const interaction = await page.evaluate(async () => {
           const search = document.querySelector("#garden-search");
           if (!(search instanceof HTMLInputElement)) return { ok: false, reason: "garden search missing" };
-          search.value = "__no_such_item__"; search.dispatchEvent(new Event("input", { bubbles: true }));
+          search.value = "zzzzzzzzzzzzzzzzzzzzzz"; search.dispatchEvent(new Event("input", { bubbles: true }));
           await new Promise(resolve => setTimeout(resolve, 1000));
           const empty = !document.querySelector("#garden-empty")?.classList.contains("hidden");
           return { ok: empty };
@@ -431,7 +431,7 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
           const all = document.querySelector('button[data-type="All"]');
           const projects = document.querySelector('button[data-type="Project"]');
           if (!(search instanceof HTMLInputElement) || !(projects instanceof HTMLButtonElement) || !(all instanceof HTMLButtonElement)) return { ok: false, reason: "Explore controls missing" };
-          search.value = "__no_such_record__";
+          search.value = "zzzzzzzzzzzzzzzzzzzzzz";
           search.dispatchEvent(new Event("input", { bubbles: true }));
           await new Promise(resolve => setTimeout(resolve, 250));
           const empty = !document.querySelector("#explore-empty")?.classList.contains("hidden");
@@ -481,7 +481,7 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
         const result = { mobile: true, desktop: true };
         if (mobile instanceof HTMLDetailsElement && window.matchMedia("(max-width: 767px)").matches) {
           mobile.open = false;
-          mobile.querySelector("summary")?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+          document.querySelector("[data-nav-mobile] summary")?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
           result.mobile = mobile.open && mobile.querySelectorAll("a").length >= 8;
         }
         if (desktop instanceof HTMLDetailsElement && window.matchMedia("(min-width: 768px)").matches) {
