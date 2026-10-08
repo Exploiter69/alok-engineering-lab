@@ -94,6 +94,7 @@ const gardenLinks = NAVIGATION.lab;
 </dialog>
 
 <script>
+  const setupNavigation = () => {
   const dialog = document.querySelector<HTMLDialogElement>("#command-palette");
   const openers = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-command-open]"));
   const input = document.querySelector<HTMLInputElement>("#command-search");
@@ -137,4 +138,7 @@ const gardenLinks = NAVIGATION.lab;
     }
   });
   for (const link of document.querySelectorAll("nav a")) link.addEventListener("click", closeMenus);
+  };
+  document.addEventListener("astro:page-load", setupNavigation);
+  setupNavigation();
 </script>
