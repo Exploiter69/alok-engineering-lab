@@ -29,6 +29,11 @@ lifecycleHistory:
     date: 2026-10-06
     note: "Lifecycle baseline recorded in the Engineering Lab."
 architectureSummary: "A deterministic acquisition and evidence pipeline feeds structured verification and personalization, with Cloudflare Worker/D1 and Telegram providing the delivery/control layer."
+architectureNodes:
+  - "Official Sources"
+  - "Evidence Pipeline"
+  - "Verification / Trust"
+  - "Telegram Delivery"
 decisions:
   - "Official VGU sources remain authoritative; student reports remain signals rather than authority."
   - "Evidence and provenance are preserved before information is personalized or delivered."
