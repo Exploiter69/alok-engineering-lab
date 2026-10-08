@@ -263,17 +263,17 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
     const target = restoreFocusTarget;
     restoreFocusTarget = null;
     const fallback = lastOpener;
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const candidate =
+    const restore = () => {
+      const candidate =
         target && document.contains(target) && target.getClientRects().length > 0
           ? target
           : fallback && document.contains(fallback) && fallback.getClientRects().length > 0
             ? fallback
             : null;
-        candidate?.focus({ preventScroll: true });
-      });
-    });
+      candidate?.focus({ preventScroll: true });
+    };
+    restore();
+    requestAnimationFrame(restore);
   });
 
   dialog?.addEventListener("keydown", (event) => {
