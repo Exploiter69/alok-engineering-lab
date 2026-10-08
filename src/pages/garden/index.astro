@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
 import { toSearchRecord } from "../../lib/search-index";
+import { slugifyTopic } from "../../lib/topics";
 
 const [notes, writing, experiments, evidence] = await Promise.all([
   getCollection("notes"),
@@ -18,7 +19,7 @@ const gardenItems = [
   ...evidence.filter(item => item.data.status !== "draft").map(item => toSearchRecord(item, "Evidence", `/evidence/${item.id}`)),
 ];
 const topics = [...new Set(gardenItems.flatMap(item => item.tags))].sort();
-const topicSlugs = new Map(topics.map(topic => [topic, topic.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")]));
+const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 const initialData = JSON.stringify(gardenItems).replaceAll("<", "\\u003c");
 ---
 
