@@ -92,8 +92,11 @@ const filterTypes = ["All", "Project", "Writing", "Note", "Experiment", "Evidenc
   const loadPagefind = async () => {
     if (!pagefindPromise) {
       const pagefindUrl = new URL("/pagefind/pagefind.js", window.location.origin).href;
-      // @ts-ignore Pagefind generates this static module after the production build.
-      pagefindPromise = import(/* @vite-ignore */ pagefindUrl).then(async (pagefind) => {
+      // Pagefind is generated after Astro builds, so load it through the unprocessed
+      // public helper to keep Vite from trying to resolve a build-only module in dev.
+      const load = (window as Window & { __loadPagefind?: (url: string) => Promise<any> }).__loadPagefind;
+      if (!load) throw new Error("Pagefind loader unavailable");
+      pagefindPromise = load(pagefindUrl).then(async (pagefind) => {
         await pagefind.options({
           excerptLength: 24,
           ranking: {
