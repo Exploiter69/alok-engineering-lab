@@ -29,6 +29,11 @@ lifecycleHistory:
     date: 2026-10-06
     note: "Lifecycle baseline recorded in the Engineering Lab."
 architectureSummary: "Single-process Python/asyncio modular monolith with Telethon at the edge, ApplicationContext and supervised services around a SQLite/WAL source of truth."
+architectureNodes:
+  - "Telegram / Telethon"
+  - "Application Core"
+  - "Jobs / Plugins"
+  - "SQLite / Services"
 decisions:
   - "Keep durable state in SQLite/WAL instead of introducing a distributed data layer."
   - "Keep plugin and background-work ownership explicit through shared lifecycle and supervision boundaries."
