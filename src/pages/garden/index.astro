@@ -96,6 +96,7 @@ type === "All" ? "border-neutral-600 bg-neutral-900 text-white" : "border-neutra
   const typeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-type]"));
   let activeType = "All";
   let pagefindPromise: Promise<any> | undefined;
+  let searchGeneration = 0;
 
   const loadPagefind = async () => {
     if (!pagefindPromise) {
@@ -134,11 +135,15 @@ type === "All" ? "border-neutral-600 bg-neutral-900 text-white" : "border-neutra
   };
 
   const search = async () => {
+    const generation = ++searchGeneration;
     const pagefind = await loadPagefind();
+    if (generation !== searchGeneration) return;
     const query = input?.value.trim() ?? "";
     const filters = activeType === "All" ? { type: { any: ["Writing", "Note", "Experiment", "Evidence"] } } : { type: activeType };
     const result = await pagefind.search(query || null, { filters });
+    if (generation !== searchGeneration) return;
     const data = await Promise.all(result.results.slice(0, 40).map((item: { data: () => Promise<SearchResult> }) => item.data()));
+    if (generation !== searchGeneration) return;
     renderResults(data);
     if (status) status.textContent = `${data.length} item${data.length === 1 ? "" : "s"}${query ? ` for “${query}”` : ""}`;
   };
