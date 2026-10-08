@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import { SITE } from "../data/site";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title?: string;
@@ -22,6 +23,7 @@ const resolvedOgImage = new URL(ogImage ?? SITE.seo.ogImage, site).href;
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <ClientRouter />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
