@@ -29,6 +29,11 @@ lifecycleHistory:
     date: 2026-10-06
     note: "Lifecycle baseline recorded in the Engineering Lab."
 architectureSummary: "A local Python bridge normalizes OpenAI-compatible requests and Gemini Web reasoning while tool proposals return to the downstream agent for execution and observation."
+architectureNodes:
+  - "Agent Client"
+  - "OpenAI-Compatible Bridge"
+  - "Gemini Web"
+  - "Tool Authority"
 decisions:
   - "The bridge never executes arbitrary downstream tools for the model."
   - "Loopback operation is the default; non-loopback access requires explicit authentication."
