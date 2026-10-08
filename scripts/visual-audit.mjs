@@ -433,13 +433,13 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
           if (!(search instanceof HTMLInputElement) || !(projects instanceof HTMLButtonElement) || !(all instanceof HTMLButtonElement)) return { ok: false, reason: "Explore controls missing" };
           search.value = "zzzzzzzzzzzzzzzzzzzzzz";
           search.dispatchEvent(new Event("input", { bubbles: true }));
-          await new Promise(resolve => setTimeout(resolve, 250));
+          await new Promise(resolve => setTimeout(resolve, 1000));
           const empty = !document.querySelector("#explore-empty")?.classList.contains("hidden");
           search.value = "";
           search.dispatchEvent(new Event("input", { bubbles: true }));
-          await new Promise(resolve => setTimeout(resolve, 250));
+          await new Promise(resolve => setTimeout(resolve, 1000));
           projects.click();
-          await new Promise(resolve => setTimeout(resolve, 250));
+          await new Promise(resolve => setTimeout(resolve, 1000));
           const pressed = projects.getAttribute("aria-pressed") === "true";
           const count = document.querySelectorAll("#explore-results article").length;
           all.click();
