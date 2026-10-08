@@ -451,7 +451,7 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
       if (route === "/" ) {
         const interaction = await page.evaluate(async () => {
           const desktop = window.matchMedia("(min-width: 1024px)").matches;
-          const opener = document.querySelector<HTMLButtonElement>(desktop ? "nav [data-nav-desktop] [data-command-open]" : "nav [data-nav-mobile] [data-command-open]");
+          const opener = document.querySelector(desktop ? "nav [data-nav-desktop] [data-command-open]" : "nav [data-nav-mobile] [data-command-open]");
           if (!(opener instanceof HTMLButtonElement)) return { ok: false, reason: "command opener missing" };
           if (!desktop) {
             const menu = document.querySelector<HTMLDetailsElement>("[data-nav-mobile]");
@@ -459,8 +459,8 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
           }
           opener.click();
           await new Promise(resolve => setTimeout(resolve, 400));
-          const dialog = document.querySelector<HTMLDialogElement>("#command-palette");
-          const input = document.querySelector<HTMLInputElement>("#command-search");
+          const dialog = document.querySelector("#command-palette");
+          const input = document.querySelector("#command-search");
           if (!dialog?.open || !(input instanceof HTMLInputElement)) return { ok: false, reason: "command palette did not open" };
           input.value = "vajra";
           input.dispatchEvent(new Event("input", { bubbles: true }));
