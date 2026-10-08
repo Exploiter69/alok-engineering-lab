@@ -453,13 +453,17 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
           const desktop = window.matchMedia("(min-width: 768px)").matches;
           const opener = document.querySelector(desktop ? "nav [data-nav-desktop] [data-command-open]" : "nav [data-nav-mobile] [data-command-open]");
           if (!(opener instanceof HTMLButtonElement)) return { ok: false, reason: "command opener missing" };
+          const menu = document.querySelector("[data-nav-mobile]");
           if (!desktop) {
-            const menu = document.querySelector("[data-nav-mobile]");
             if (menu instanceof HTMLDetailsElement && !menu.open) {
               menu.querySelector("summary")?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
             }
           }
           if (!opener.getClientRects().length) return { ok: false, reason: "command opener is not visible" };
+          const expectedFocus = !desktop && menu instanceof HTMLDetailsElement
+            ? menu.querySelector("summary")
+            : opener;
+          if (!(expectedFocus instanceof HTMLElement)) return { ok: false, reason: "focus restore target missing" };
           opener.click();
           const dialog = document.querySelector("#command-palette");
           const input = document.querySelector("#command-search");
@@ -476,7 +480,10 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
           const active = input.getAttribute("aria-activedescendant");
           input.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
           await new Promise(resolve => setTimeout(resolve, 50));
-          return { ok: resultCount >= 1 && Boolean(active) && !dialog.open && document.activeElement === opener };
+          return {
+            ok: resultCount >= 1 && Boolean(active) && !dialog.open && document.activeElement === expectedFocus,
+            reason: document.activeElement === expectedFocus ? undefined : "focus restore target mismatch",
+          };
         });
         if (!interaction.ok) errors.push("command palette keyboard interaction failed: " + (interaction.reason || "state mismatch"));
       }
