@@ -135,8 +135,8 @@ type === "All" ? "border-neutral-600 bg-neutral-900 text-white" : "border-neutra
   const search = async () => {
     const pagefind = await loadPagefind();
     const query = input?.value.trim() ?? "";
-    const filters = { type: activeType === "All" ? ["Writing", "Note", "Experiment", "Evidence"] : activeType };
-    const result = await pagefind.search(query || null, { filters: { type: filters } });
+    const filters = activeType === "All" ? { type: { any: ["Writing", "Note", "Experiment", "Evidence"] } } : { type: activeType };
+    const result = await pagefind.search(query || null, { filters });
     const data = await Promise.all(result.results.slice(0, 40).map((item: { data: () => Promise<SearchResult> }) => item.data()));
     renderResults(data);
     if (status) status.textContent = `${data.length} item${data.length === 1 ? "" : "s"}${query ? ` for “${query}”` : ""}`;
