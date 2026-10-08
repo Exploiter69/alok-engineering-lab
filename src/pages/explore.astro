@@ -2,37 +2,27 @@
 import Layout from "../layouts/Layout.astro";
 import ContentCard from "../components/ContentCard.astro";
 import { getCollection } from "astro:content";
+import { searchRecords, toSearchRecord, type SearchRecord } from "../lib/search-index";
 
 const collectionMeta = {
-  projects: { label: "Projects", route: "/projects" },
+  projects: { label: "Project", route: "/projects" },
   writing: { label: "Writing", route: "/writing" },
-  notes: { label: "Notes", route: "/notes" },
-  experiments: { label: "Experiments", route: "/experiments" },
+  notes: { label: "Note", route: "/notes" },
+  experiments: { label: "Experiment", route: "/experiments" },
   evidence: { label: "Evidence", route: "/evidence" },
-  timeline: { label: "Timeline", route: "/timeline" },
-  changelog: { label: "Changelog", route: "/changelog" },
+  timeline: { label: "Page", route: "/timeline" },
+  changelog: { label: "Page", route: "/changelog" },
 } as const;
 
 const collectionNames = Object.keys(collectionMeta) as (keyof typeof collectionMeta)[];
 const collections = await Promise.all(collectionNames.map(name => getCollection(name)));
-const records = collections.flatMap((entries, index) => entries
-  .filter(entry => entry.data.status !== "draft")
-  .map(entry => {
-    const name = collectionNames[index];
-    const meta = collectionMeta[name];
-    const body = entry.body ?? "";
-    return {
-      title: entry.data.title,
-      description: entry.data.description,
-      type: meta.label,
-      href: meta.route + "/" + entry.id,
-      date: entry.data.date.toISOString(),
-      tags: entry.data.tags,
-      text: [entry.data.title, entry.data.description, entry.data.tags.join(" "), body].join(" ").toLowerCase(),
-    };
-  }))
-  .sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
-
+const records = collections.flatMap((entries, index) => {
+  const name = collectionNames[index];
+  const meta = collectionMeta[name];
+  return entries
+    .filter(entry => entry.data.status !== "draft")
+    .map(entry => toSearchRecord(entry, meta.label, `${meta.route}/${entry.id}`));
+});
 const topics = [...new Set(records.flatMap(record => record.tags))].sort();
 const initialData = JSON.stringify(records).replaceAll("<", "\\u003c");
 ---
@@ -42,7 +32,7 @@ const initialData = JSON.stringify(records).replaceAll("<", "\\u003c");
   <header class="max-w-3xl border-b border-neutral-900 pb-10">
     <p class="lab-label mb-4">Archive / Discovery</p>
     <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Explore the Lab</h1>
-    <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">One zero-cost search surface for the connected engineering archive. Search full text, filter by record type, or narrow by topic.</p>
+    <p class="mt-5 max-w-2xl text-lg leading-8 text-neutral-400">The canonical archive search: one static index across projects, writing, notes, experiments and evidence. Search by title, description, tag, or record type.</p>
   </header>
 
   <section class="mt-8 border-y border-neutral-900 py-7" aria-labelledby="explore-search-heading">
@@ -56,8 +46,8 @@ const initialData = JSON.stringify(records).replaceAll("<", "\\u003c");
 
     <div class="mt-5 flex flex-wrap gap-2" role="group" aria-label="Filter archive by record type">
       <button type="button" data-type="all" aria-pressed="true" class="min-h-11 rounded-full border border-neutral-600 bg-neutral-900 px-4 font-mono text-xs uppercase tracking-[0.12em] text-white">All</button>
-      {collectionNames.map(name => (
-        <button type="button" data-type={collectionMeta[name].label} aria-pressed="false" class="min-h-11 rounded-full border border-neutral-900 px-4 font-mono text-xs uppercase tracking-[0.12em] text-neutral-500 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{collectionMeta[name].label}</button>
+      {["Project", "Writing", "Note", "Experiment", "Evidence"].map(type => (
+        <button type="button" data-type={type} aria-pressed="false" class="min-h-11 rounded-full border border-neutral-900 px-4 font-mono text-xs uppercase tracking-[0.12em] text-neutral-500 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{type}</button>
       ))}
     </div>
 
@@ -73,10 +63,10 @@ const initialData = JSON.stringify(records).replaceAll("<", "\\u003c");
       <p id="results-heading" class="lab-label">Results</p>
       <a href="/garden" class="min-h-11 inline-flex items-center text-sm text-neutral-500 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Lab view →</a>
     </div>
-    <div id="explore-results" data-records={initialData}>
+    <div id="explore-results">
       {records.map(record => (
-        <article data-explore-item data-type={record.type} data-topics={record.tags.join("|").toLowerCase()} data-search={record.text}>
-          <ContentCard title={record.title} description={record.description} meta={record.type + " • " + record.tags.join(" • ")} href={record.href} headingLevel="h2" compact />
+        <article data-explore-item data-id={record.id} data-type={record.type} data-topics={record.tags.join("|").toLowerCase()}>
+          <ContentCard title={record.title} description={record.description} meta={record.type + (record.tags.length ? " • " + record.tags.join(" • ") : "")} href={record.href} headingLevel="h2" compact />
         </article>
       ))}
     </div>
@@ -84,81 +74,93 @@ const initialData = JSON.stringify(records).replaceAll("<", "\\u003c");
   </section>
 </main>
 
+<script type="application/json" id="explore-search-data" set:html={initialData}></script>
 <script>
-  const resultsRoot = document.getElementById("explore-results");
-  const records = resultsRoot?.dataset.records ? JSON.parse(resultsRoot.dataset.records) : [];
-  const searchInput = document.getElementById("explore-search");
-  const status = document.getElementById("explore-status");
-  const empty = document.getElementById("explore-empty");
-  const items = Array.from(document.querySelectorAll<HTMLElement>("[data-explore-item]"));
-  const typeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-type]"));
-  const topicButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-topic]"));
-  let activeType = "all";
-  let activeTopic = "";
+  import { searchRecords, type SearchRecord } from "../lib/search-index";
 
-  const url = new URL(window.location.href);
-  const initialQuery = url.searchParams.get("q") ?? "";
-  if (searchInput instanceof HTMLInputElement) searchInput.value = initialQuery;
+  const setupExplore = () => {
+    const resultsRoot = document.getElementById("explore-results");
+    const dataNode = document.getElementById("explore-search-data");
+    const searchInput = document.getElementById("explore-search");
+    const status = document.getElementById("explore-status");
+    const empty = document.getElementById("explore-empty");
+    if (!resultsRoot || !dataNode || !(searchInput instanceof HTMLInputElement) || !status || !empty || resultsRoot.dataset.ready === "true") return;
+    resultsRoot.dataset.ready = "true";
 
-  function syncQuery() {
-    const current = new URL(window.location.href);
-    const query = searchInput instanceof HTMLInputElement ? searchInput.value.trim() : "";
-    if (query) current.searchParams.set("q", query);
-    else current.searchParams.delete("q");
-    window.history.replaceState(null, "", current);
-  }
+    const records = JSON.parse(dataNode.textContent || "[]") as SearchRecord[];
+    const items = Array.from(resultsRoot.querySelectorAll<HTMLElement>("[data-explore-item]"));
+    const typeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-type]"));
+    const topicButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-topic]"));
+    let activeType = "all";
+    let activeTopic = "";
 
-  function paint() {
-    const query = searchInput instanceof HTMLInputElement ? searchInput.value.trim().toLowerCase() : "";
-    let visible = 0;
-    for (const item of items) {
-      const matchesQuery = !query || (item.dataset.search ?? "").includes(query);
-      const matchesType = activeType === "all" || item.dataset.type === activeType;
-      const topics = (item.dataset.topics ?? "").split("|").filter(Boolean);
-      const matchesTopic = !activeTopic || topics.includes(activeTopic);
-      const visibleItem = matchesQuery && matchesType && matchesTopic;
-      item.hidden = !visibleItem;
-      if (visibleItem) visible++;
+    const url = new URL(window.location.href);
+    const initialQuery = url.searchParams.get("q") ?? "";
+    searchInput.value = initialQuery;
+
+    function syncQuery() {
+      const current = new URL(window.location.href);
+      const query = searchInput.value.trim();
+      if (query) current.searchParams.set("q", query);
+      else current.searchParams.delete("q");
+      window.history.replaceState(null, "", current);
     }
-    if (status) status.textContent = query || activeType !== "all" || activeTopic ? `${visible} matching record${visible === 1 ? "" : "s"}` : `${records.length} published records`;
-    empty?.classList.toggle("hidden", visible !== 0);
-  }
 
-  if (searchInput instanceof HTMLInputElement) {
-    searchInput.addEventListener("input", () => {
-      syncQuery();
+    function paint() {
+      const query = searchInput.value.trim();
+      const ranked = searchRecords(query, activeType === "all" ? records : records.filter(record => record.type === activeType));
+      const orderedIds = new Map(ranked.map((record, index) => [record.id, index]));
+      let visible = 0;
+
+      for (const item of items) {
+        const record = records.find(candidate => candidate.id === item.dataset.id);
+        const topics = (item.dataset.topics ?? "").split("|").filter(Boolean);
+        const matchesTopic = !activeTopic || topics.includes(activeTopic);
+        const rank = record ? orderedIds.get(record.id) : undefined;
+        const visibleItem = rank !== undefined && matchesTopic;
+        item.hidden = !visibleItem;
+        if (visibleItem) visible++;
+        if (visibleItem && rank !== undefined) item.style.order = String(rank);
+      }
+
+      if (resultsRoot instanceof HTMLElement) resultsRoot.classList.add("flex", "flex-col");
+      status.textContent = query || activeType !== "all" || activeTopic ? `${visible} matching record${visible === 1 ? "" : "s"}` : `${records.length} published records`;
+      empty.classList.toggle("hidden", visible !== 0);
+    }
+
+    searchInput.addEventListener("input", () => { syncQuery(); paint(); });
+    for (const button of typeButtons) button.addEventListener("click", () => {
+      activeType = button.dataset.type ?? "all";
+      for (const candidate of typeButtons) {
+        const active = candidate === button;
+        candidate.setAttribute("aria-pressed", String(active));
+        candidate.classList.toggle("bg-neutral-900", active);
+        candidate.classList.toggle("border-neutral-600", active);
+        candidate.classList.toggle("text-white", active);
+        candidate.classList.toggle("border-neutral-900", !active);
+        candidate.classList.toggle("text-neutral-500", !active);
+      }
       paint();
     });
-  }
 
-  for (const button of typeButtons) button.addEventListener("click", () => {
-    activeType = button.dataset.type ?? "all";
-    for (const candidate of typeButtons) {
-      const active = candidate === button;
-      candidate.setAttribute("aria-pressed", String(active));
-      candidate.classList.toggle("bg-neutral-900", active);
-      candidate.classList.toggle("border-neutral-600", active);
-      candidate.classList.toggle("text-white", active);
-      candidate.classList.toggle("border-neutral-900", !active);
-      candidate.classList.toggle("text-neutral-500", !active);
-    }
+    for (const button of topicButtons) button.addEventListener("click", () => {
+      activeTopic = activeTopic === (button.dataset.topic ?? "").toLowerCase() ? "" : (button.dataset.topic ?? "").toLowerCase();
+      for (const candidate of topicButtons) {
+        const active = (candidate.dataset.topic ?? "").toLowerCase() === activeTopic && activeTopic !== "";
+        candidate.setAttribute("aria-pressed", String(active));
+        candidate.classList.toggle("bg-neutral-900", active);
+        candidate.classList.toggle("border-neutral-600", active);
+        candidate.classList.toggle("text-white", active);
+        candidate.classList.toggle("border-neutral-900", !active);
+        candidate.classList.toggle("text-neutral-500", !active);
+      }
+      paint();
+    });
+
     paint();
-  });
+  };
 
-  for (const button of topicButtons) button.addEventListener("click", () => {
-    activeTopic = activeTopic === (button.dataset.topic ?? "").toLowerCase() ? "" : (button.dataset.topic ?? "").toLowerCase();
-    for (const candidate of topicButtons) {
-      const active = (candidate.dataset.topic ?? "").toLowerCase() === activeTopic && activeTopic !== "";
-      candidate.setAttribute("aria-pressed", String(active));
-      candidate.classList.toggle("bg-neutral-900", active);
-      candidate.classList.toggle("border-neutral-600", active);
-      candidate.classList.toggle("text-white", active);
-      candidate.classList.toggle("border-neutral-900", !active);
-      candidate.classList.toggle("text-neutral-500", !active);
-    }
-    paint();
-  });
-
-  paint();
+  document.addEventListener("astro:page-load", setupExplore);
+  setupExplore();
 </script>
 </Layout>
