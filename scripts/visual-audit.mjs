@@ -101,6 +101,23 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
 
       status = response?.status() ?? "no response";
 
+      // Never run DOM/accessibility checks against an HTTP error document.
+      // A dev-server/build failure otherwise produces a cascade of misleading
+      // secondary failures (missing lang, main, h1, metadata, etc.).
+      if (status < 200 || status >= 400) {
+        errors.push("HTTP response status " + status);
+        results.push({
+          device,
+          route,
+          status,
+          overflow: false,
+          errors,
+          warnings,
+          checks: {},
+        });
+        continue;
+      }
+
       audit = await page.evaluate(() => {
         const root = document.documentElement;
 
@@ -589,10 +606,10 @@ const summary = {
   failedCases: failures,
   warnings: warningCount,
   desktopCases: results.filter(
-    (result) => result.device === "desktop"
+    (result) => result.device.startsWith("desktop")
   ).length,
   mobileCases: results.filter(
-    (result) => result.device === "mobile"
+    (result) => result.device.startsWith("mobile")
   ).length,
 };
 
