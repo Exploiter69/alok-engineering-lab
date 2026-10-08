@@ -16,6 +16,7 @@
 </div>
 
 <script>
+  const initSystemVisual = () => {
   const visual = document.querySelector<HTMLElement>("[data-system-visual]");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
@@ -30,4 +31,8 @@
     }, { threshold: 0.15 });
     observer.observe(visual);
   }
+  };
+
+  document.addEventListener("astro:page-load", initSystemVisual);
+  initSystemVisual();
 </script>
