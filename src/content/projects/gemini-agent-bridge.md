@@ -31,7 +31,7 @@ lifecycleHistory:
 architectureSummary: "A local Python bridge normalizes OpenAI-compatible requests and Gemini Web reasoning while tool proposals return to the downstream agent for execution and observation."
 architectureNodes:
   - "Agent Client"
-  - "OpenAI-Compatible Bridge"
+  - "Compatibility Bridge"
   - "Gemini Web"
   - "Tool Authority"
 decisions:
