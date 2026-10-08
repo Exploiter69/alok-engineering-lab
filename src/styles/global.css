@@ -343,7 +343,7 @@ body::before {
 
 .hero-line {
   display: block;
-  opacity: 0;
+  opacity: 1;
   transform: translateY(0.45em);
   animation: hero-line-in var(--motion-slow) var(--ease-standard) forwards;
 }
@@ -353,7 +353,8 @@ body::before {
 }
 
 @keyframes hero-line-in {
-  to { opacity: 1; transform: none; }
+  from { transform: translateY(0.45em); }
+  to { transform: none; }
 }
 
 .system-visual {
