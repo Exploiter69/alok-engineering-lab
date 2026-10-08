@@ -30,7 +30,7 @@ lifecycleHistory:
     note: "Project record added from the current MVP repository."
 architectureSummary: "A deterministic CSV pipeline validates receivables, evaluates evidence and dispute signals, computes transparent priorities and presents an operator-controlled action queue."
 architectureNodes:
-  - "CSV / Invoices"
+  - "Invoices / CSV"
   - "Quality / Evidence"
   - "Priority Engine"
   - "Action Queue"
