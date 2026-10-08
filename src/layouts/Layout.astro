@@ -79,7 +79,7 @@ const resolvedOgImage = new URL(ogImage ?? SITE.seo.ogImage, site).href;
 </script>
 <script>
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const revealTargets = document.querySelectorAll<HTMLElement>("main section, main article.prose, main > header, [data-reveal-card]");
+  const revealTargets = document.querySelectorAll<HTMLElement>("main section, main article.prose, main > header, [data-reveal-card], .reveal");
   if (!reduceMotion && "IntersectionObserver" in window) {
     const observer = new IntersectionObserver(entries => {
       for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-visible"); observer.unobserve(entry.target); }
