@@ -65,6 +65,11 @@ await fs.mkdir(auditDir, { recursive: true });
 
 const browser = await chromium.launch({ timeout: 15000 });
 const results = [];
+const auditStartedAt = Date.now();
+const totalCases = routes.length * Object.keys(auditViewports).length;
+
+console.log(`Starting browser audit: ${routes.length} routes × ${Object.keys(auditViewports).length} viewports = ${totalCases} cases`);
+console.log(`Viewports: ${Object.keys(auditViewports).join(", ")}`);
 
 for (const [device, viewport] of Object.entries(auditViewports)) {
   const deviceDir = path.join(auditDir, device);
@@ -551,6 +556,12 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
       });
     } finally {
       await page.close();
+      const completedCases = results.length;
+      const elapsedSeconds = Math.round((Date.now() - auditStartedAt) / 1000);
+      const latest = results.at(-1);
+      console.log(
+        `[${completedCases}/${totalCases}] ${device} ${route} → HTTP ${latest?.status ?? status} | ${elapsedSeconds}s elapsed`
+      );
     }
   }
 }
