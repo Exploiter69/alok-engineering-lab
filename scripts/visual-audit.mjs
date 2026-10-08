@@ -42,6 +42,7 @@ const routes = [...new Set(await discoverRoutes(distDir))].sort();
 
 const viewports = {
   mobile320: { width: 320, height: 800 },
+  mobile360: { width: 360, height: 820 },
   mobile375: { width: 375, height: 812 },
   mobile390: { width: 390, height: 844 },
   mobile430: { width: 430, height: 932 },
@@ -51,7 +52,7 @@ const viewports = {
   desktop1440: { width: 1440, height: 900 },
 };
 
-const ciViewportNames = new Set(["mobile320", "mobile390", "tablet768", "desktop1440"]);
+const ciViewportNames = new Set(["mobile320", "mobile360", "mobile390", "tablet768", "desktop1280", "desktop1440"]);
 const auditViewports = process.env.CI
   ? Object.fromEntries(Object.entries(viewports).filter(([name]) => ciViewportNames.has(name)))
   : viewports;
