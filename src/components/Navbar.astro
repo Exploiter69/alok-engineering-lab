@@ -17,7 +17,7 @@ const gardenLinks = NAVIGATION.lab;
       <div data-nav-desktop class="hidden items-center gap-1 md:flex">
         {primaryLinks.map(link => (
           <a href={link.href} aria-current={isActive(link.href) ? "page" : undefined} class:list={[
-            "inline-flex min-h-[45px] items-center rounded-lg px-3 text-sm transition-colors motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+            "inline-flex min-h-[45px] min-w-[45px] items-center rounded-lg px-3 text-sm transition-colors motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
             isActive(link.href) ? "bg-surface-2 text-white" : "text-muted hover:bg-surface-1 hover:text-white"
           ]}>{link.label}</a>
         ))}
