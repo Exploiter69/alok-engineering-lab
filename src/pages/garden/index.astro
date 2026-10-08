@@ -2,7 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
-import { slugifyTopic } from "../../lib/topics";
+import { toSearchRecord } from "../../lib/search-index";
 
 const [notes, writing, experiments, evidence] = await Promise.all([
   getCollection("notes"),
@@ -12,14 +12,14 @@ const [notes, writing, experiments, evidence] = await Promise.all([
 ]);
 
 const gardenItems = [
-  ...notes.filter(item => item.data.status !== "draft").map(item => ({ ...item, href: `/notes/${item.id}`, type: "Note" })),
-  ...writing.filter(item => item.data.status !== "draft").map(item => ({ ...item, href: `/writing/${item.id}`, type: "Writing" })),
-  ...experiments.filter(item => item.data.status !== "draft").map(item => ({ ...item, href: `/experiments/${item.id}`, type: "Experiment" })),
-  ...evidence.filter(item => item.data.status !== "draft").map(item => ({ ...item, href: `/evidence/${item.id}`, type: "Evidence" })),
-].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-const topics = [...new Set(gardenItems.flatMap(item => item.data.tags))].sort();
-const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
+  ...notes.filter(item => item.data.status !== "draft").map(item => toSearchRecord(item, "Note", `/notes/${item.id}`)),
+  ...writing.filter(item => item.data.status !== "draft").map(item => toSearchRecord(item, "Writing", `/writing/${item.id}`)),
+  ...experiments.filter(item => item.data.status !== "draft").map(item => toSearchRecord(item, "Experiment", `/experiments/${item.id}`)),
+  ...evidence.filter(item => item.data.status !== "draft").map(item => toSearchRecord(item, "Evidence", `/evidence/${item.id}`)),
+];
+const topics = [...new Set(gardenItems.flatMap(item => item.tags))].sort();
+const topicSlugs = new Map(topics.map(topic => [topic, topic.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")]));
+const initialData = JSON.stringify(gardenItems).replaceAll("<", "\\u003c");
 ---
 
 <Layout title="Lab">
@@ -42,17 +42,17 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 <section class="mt-10 border-y border-neutral-900 py-7 sm:py-8" aria-labelledby="search-heading">
 <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 <div>
-<p id="search-heading" class="lab-label">Find in the Garden</p>
-<p class="mt-2 text-sm text-neutral-500">Search the full text, titles, topics and content types across the published archive.</p>
+<p id="search-heading" class="lab-label">Find in the Lab</p>
+<p class="mt-2 text-sm text-neutral-500">A thin Lab view over the same static search index used by the command palette and archive search.</p>
 </div>
 <label class="block w-full sm:max-w-sm">
 <span class="sr-only">Search the Lab</span>
-<input id="garden-search" type="search" placeholder="Search title, topic, or text…" autocomplete="off"
-  class="w-full rounded-xl border border-neutral-800 bg-black px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-600 focus:border-neutral-600 focus:ring-1 focus:ring-neutral-600" />
+<input id="garden-search" type="search" placeholder="Search title, tag, description, or type…" autocomplete="off"
+  class="min-h-11 w-full rounded-xl border border-neutral-800 bg-black px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-600 focus:border-neutral-600 focus:ring-1 focus:ring-neutral-600" />
 </label>
 </div>
 <p id="garden-search-status" class="mt-3 font-mono text-xs text-neutral-600" aria-live="polite">{gardenItems.length} items</p>
-<p class="mt-4"><a href="/explore" class="inline-flex min-h-11 items-center text-sm text-neutral-300 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Search the entire Lab archive →</a></p>
+<p class="mt-4"><a href="/explore" class="inline-flex min-h-11 items-center text-sm text-neutral-300 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Open the canonical archive search →</a></p>
 </section>
 
 <section class="mt-12" aria-labelledby="topics-heading">
@@ -74,8 +74,8 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 </div>
 <div id="garden-items">
 {gardenItems.map(item => (
-<article data-garden-item data-search={`${item.data.title} ${item.data.description} ${item.type} ${item.data.tags.join(" ")} ${item.body ?? ""}`.toLowerCase()}>
-<ContentCard title={item.data.title} description={item.data.description} meta={`${item.type} • ${item.data.tags.join(" • ")}`} href={item.href} headingLevel="h2" />
+<article data-garden-item data-id={item.id}>
+<ContentCard title={item.title} description={item.description} meta={`${item.type} • ${item.tags.join(" • ")}`} href={item.href} headingLevel="h2" />
 </article>
 ))}
 </div>
@@ -87,7 +87,7 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 {topics.map(topic => {
   const slug = topicSlugs.get(topic)!;
-  const matches = gardenItems.filter(item => item.data.tags.includes(topic));
+  const matches = gardenItems.filter(item => item.tags.includes(topic));
   return (
     <a href={"/garden/topics/" + slug} class="block min-h-24 border-b border-neutral-900 py-5 transition hover:border-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
       <p class="font-mono text-xs uppercase tracking-wider text-neutral-500">{topic}</p>
@@ -99,29 +99,44 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 </section>
 </main>
 
+<script type="application/json" id="garden-search-data" set:html={initialData}></script>
 <script>
-  const input = document.querySelector<HTMLInputElement>("#garden-search");
-  const status = document.querySelector<HTMLElement>("#garden-search-status");
-  const empty = document.querySelector<HTMLElement>("#garden-empty");
-  const items = Array.from(document.querySelectorAll<HTMLElement>("[data-garden-item]"));
+  import { searchRecords, type SearchRecord } from "../../lib/search-index";
 
-  input?.addEventListener("input", () => {
-    const query = input.value.trim().toLowerCase();
-    let visible = 0;
+  const setupGardenSearch = () => {
+    const input = document.querySelector<HTMLInputElement>("#garden-search");
+    const status = document.querySelector<HTMLElement>("#garden-search-status");
+    const empty = document.querySelector<HTMLElement>("#garden-empty");
+    const dataNode = document.querySelector<HTMLScriptElement>("#garden-search-data");
+    const root = document.querySelector<HTMLElement>("#garden-items");
+    if (!input || !status || !empty || !dataNode || !root || root.dataset.ready === "true") return;
+    root.dataset.ready = "true";
 
-    for (const item of items) {
-      const matches = !query || (item.dataset.search ?? "").includes(query);
-      item.hidden = !matches;
-      if (matches) visible += 1;
-    }
+    const records = JSON.parse(dataNode.textContent || "[]") as SearchRecord[];
+    const items = Array.from(root.querySelectorAll<HTMLElement>("[data-garden-item]"));
 
-    if (status) {
-      status.textContent = query
-        ? `${visible} matching item${visible === 1 ? "" : "s"}`
-        : `${items.length} items`;
-    }
+    input.addEventListener("input", () => {
+      const query = input.value.trim();
+      const ranked = searchRecords(query, records);
+      const orderedIds = new Map(ranked.map((record, index) => [record.id, index]));
+      let visible = 0;
 
-    empty?.classList.toggle("hidden", visible !== 0);
-  });
+      for (const item of items) {
+        const visibleItem = orderedIds.has(item.dataset.id ?? "");
+        item.hidden = !visibleItem;
+        if (visibleItem) {
+          item.style.order = String(orderedIds.get(item.dataset.id ?? "") ?? 0);
+          visible++;
+        }
+      }
+
+      root.classList.add("flex", "flex-col");
+      status.textContent = query ? `${visible} matching item${visible === 1 ? "" : "s"}` : `${items.length} items`;
+      empty.classList.toggle("hidden", visible !== 0);
+    });
+  };
+
+  document.addEventListener("astro:page-load", setupGardenSearch);
+  setupGardenSearch();
 </script>
 </Layout>
