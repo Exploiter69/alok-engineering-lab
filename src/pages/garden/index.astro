@@ -1,6 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import ContentCard from "../../components/ContentCard.astro";
 import { getCollection } from "astro:content";
 import { slugifyTopic } from "../../lib/topics";
 
@@ -12,17 +11,17 @@ const [notes, writing, experiments, evidence] = await Promise.all([
 ]);
 
 const gardenItems = [
-  ...notes.filter(item => item.data.status !== "draft").map(item => ({ ...item, href: `/notes/${item.id}`, type: "Note" })),
-  ...writing.filter(item => item.data.status !== "draft").map(item => ({ ...item, href: `/writing/${item.id}`, type: "Writing" })),
-  ...experiments.filter(item => item.data.status !== "draft").map(item => ({ ...item, href: `/experiments/${item.id}`, type: "Experiment" })),
-  ...evidence.filter(item => item.data.status !== "draft").map(item => ({ ...item, href: `/evidence/${item.id}`, type: "Evidence" })),
+  ...notes.filter(item => item.data.status !== "draft"),
+  ...writing.filter(item => item.data.status !== "draft"),
+  ...experiments.filter(item => item.data.status !== "draft"),
+  ...evidence.filter(item => item.data.status !== "draft"),
 ].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const topics = [...new Set(gardenItems.flatMap(item => item.data.tags))].sort();
 const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 ---
 
-<Layout title="Lab">
+<Layout title="Lab" description="A connected layer for notes, writing, experiments and evidence growing through the Engineering Lab.">
 <main class="mx-auto min-h-screen max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
 <header class="max-w-3xl border-b border-neutral-900 pb-10">
 <p class="lab-label mb-4">Lab / Explore</p>
@@ -33,52 +32,41 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 <nav class="mt-8 flex flex-wrap items-center gap-2" aria-label="Lab content views">
 <span class="mr-2 lab-label">View</span>
 <a href="/garden" aria-current="page" class="inline-flex min-h-11 items-center rounded-full border border-neutral-600 px-4 font-mono text-xs uppercase tracking-wider text-white">All</a>
-<a href="/notes" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-4 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white">Notes</a>
-<a href="/writing" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white">Writing</a>
-<a href="/experiments" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white">Experiments</a>
-<a href="/evidence" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-4 py-2 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Evidence</a>
+<a href="/notes" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-4 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Notes</a>
+<a href="/writing" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-4 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Writing</a>
+<a href="/experiments" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-4 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Experiments</a>
+<a href="/evidence" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-4 font-mono text-xs uppercase tracking-wider text-neutral-500 hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Evidence</a>
 </nav>
 
-<section class="mt-10 border-y border-neutral-900 py-7 sm:py-8" aria-labelledby="search-heading">
+<section class="mt-8 border-y border-neutral-900 py-7 sm:py-8" aria-labelledby="garden-search-heading">
 <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 <div>
-<p id="search-heading" class="lab-label">Find in the Garden</p>
-<p class="mt-2 text-sm text-neutral-500">Search the full text, titles, topics and content types across the published archive.</p>
+<p id="garden-search-heading" class="lab-label">Find in the Lab</p>
+<p class="mt-2 text-sm text-neutral-500">A lightweight view of the shared archive index. Use Explore for full archive controls.</p>
 </div>
 <label class="block w-full sm:max-w-sm">
 <span class="sr-only">Search the Lab</span>
-<input id="garden-search" type="search" placeholder="Search title, topic, or text…" autocomplete="off"
-  class="w-full rounded-xl border border-neutral-800 bg-black px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-600 focus:border-neutral-600 focus:ring-1 focus:ring-neutral-600" />
+<input id="garden-search" type="search" placeholder="Search the Lab…" autocomplete="off" class="min-h-11 w-full rounded-xl border border-neutral-800 bg-black px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-600 focus:border-neutral-600 focus:ring-1 focus:ring-neutral-600" />
 </label>
 </div>
-<p id="garden-search-status" class="mt-3 font-mono text-xs text-neutral-600" aria-live="polite">{gardenItems.length} items</p>
+<div class="mt-4 flex flex-wrap gap-2" role="group" aria-label="Filter Lab by type">
+{["All", "Writing", "Note", "Experiment", "Evidence"].map((type) => (
+<button type="button" data-type={type} aria-pressed={type === "All" ? "true" : "false"} class:list={[
+"min-h-11 rounded-full border px-4 font-mono text-xs uppercase tracking-[0.12em] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+type === "All" ? "border-neutral-600 bg-neutral-900 text-white" : "border-neutral-900 text-neutral-500 hover:border-neutral-600 hover:text-white"
+]}>{type}</button>
+))}
+</div>
+<p id="garden-search-status" class="mt-3 font-mono text-xs text-neutral-600" aria-live="polite">Loading search index…</p>
 <p class="mt-4"><a href="/explore" class="inline-flex min-h-11 items-center text-sm text-neutral-300 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Search the entire Lab archive →</a></p>
 </section>
 
-<section class="mt-12" aria-labelledby="topics-heading">
-<div class="mb-5 flex items-baseline justify-between gap-4">
-<p id="topics-heading" class="lab-label">Topics</p>
-<span class="font-mono text-xs text-neutral-600">{topics.length} topics</span>
-</div>
-<div class="flex flex-wrap gap-2">
-{topics.map(topic => (
-<a href={"/garden/topics/" + topicSlugs.get(topic)} class="inline-flex min-h-11 items-center rounded-full border border-neutral-900 px-4 text-xs text-neutral-500 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{topic}</a>
-))}
-</div>
-</section>
-
-<section class="mt-14" aria-labelledby="latest-heading">
+<section class="mt-12" aria-labelledby="latest-heading">
 <div class="mb-5 flex items-baseline justify-between gap-4">
 <p id="latest-heading" class="lab-label">Latest across the Lab</p>
 <span class="font-mono text-xs text-neutral-600">{gardenItems.length} items</span>
 </div>
-<div id="garden-items">
-{gardenItems.map(item => (
-<article data-garden-item data-search={`${item.data.title} ${item.data.description} ${item.type} ${item.data.tags.join(" ")} ${item.body ?? ""}`.toLowerCase()}>
-<ContentCard title={item.data.title} description={item.data.description} meta={`${item.type} • ${item.data.tags.join(" • ")}`} href={item.href} headingLevel="h2" />
-</article>
-))}
-</div>
+<div id="garden-items" class="divide-y divide-neutral-900"></div>
 <p id="garden-empty" class="hidden border border-dashed border-neutral-900 p-6 text-sm text-neutral-500">No published Lab items match that search.</p>
 </section>
 
@@ -100,28 +88,77 @@ const topicSlugs = new Map(topics.map(topic => [topic, slugifyTopic(topic)]));
 </main>
 
 <script>
+  type SearchResult = { url: string; meta?: Record<string, string>; plain_excerpt?: string };
   const input = document.querySelector<HTMLInputElement>("#garden-search");
   const status = document.querySelector<HTMLElement>("#garden-search-status");
+  const resultsRoot = document.querySelector<HTMLElement>("#garden-items");
   const empty = document.querySelector<HTMLElement>("#garden-empty");
-  const items = Array.from(document.querySelectorAll<HTMLElement>("[data-garden-item]"));
+  const typeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-type]"));
+  let activeType = "All";
+  let pagefindPromise: Promise<any> | undefined;
 
-  input?.addEventListener("input", () => {
-    const query = input.value.trim().toLowerCase();
-    let visible = 0;
-
-    for (const item of items) {
-      const matches = !query || (item.dataset.search ?? "").includes(query);
-      item.hidden = !matches;
-      if (matches) visible += 1;
+  const loadPagefind = async () => {
+    if (!pagefindPromise) {
+      pagefindPromise = import("/pagefind/pagefind.js").then(async (pagefind) => {
+        await pagefind.options({ excerptLength: 28, ranking: { metaWeights: { title: 8, tags: 5, description: 3, type: 1 } } });
+        await pagefind.init();
+        return pagefind;
+      });
     }
+    return pagefindPromise;
+  };
 
-    if (status) {
-      status.textContent = query
-        ? `${visible} matching item${visible === 1 ? "" : "s"}`
-        : `${items.length} items`;
-    }
+  const renderResults = (results: SearchResult[]) => {
+    if (!resultsRoot) return;
+    resultsRoot.replaceChildren(...results.map((result) => {
+      const article = document.createElement("article");
+      article.className = "py-5";
+      const link = document.createElement("a");
+      link.href = result.url;
+      link.className = "block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white";
+      const meta = document.createElement("p");
+      meta.className = "font-mono text-[10px] uppercase tracking-[0.12em] text-neutral-600";
+      meta.textContent = result.meta?.type ?? "Page";
+      const title = document.createElement("h2");
+      title.className = "mt-2 text-lg font-semibold text-white";
+      title.textContent = result.meta?.title ?? result.url;
+      const description = document.createElement("p");
+      description.className = "mt-2 max-w-3xl text-sm leading-6 text-neutral-500";
+      description.textContent = result.meta?.description ?? result.plain_excerpt ?? "";
+      link.append(meta, title, description);
+      article.append(link);
+      return article;
+    }));
+    empty?.classList.toggle("hidden", results.length !== 0);
+  };
 
-    empty?.classList.toggle("hidden", visible !== 0);
-  });
+  const search = async () => {
+    const pagefind = await loadPagefind();
+    const query = input?.value.trim() ?? "";
+    const filters = { type: activeType === "All" ? ["Writing", "Note", "Experiment", "Evidence"] : activeType };
+    const result = await pagefind.search(query || null, { filters: { type: filters } });
+    const data = await Promise.all(result.results.slice(0, 40).map((item: { data: () => Promise<SearchResult> }) => item.data()));
+    renderResults(data);
+    if (status) status.textContent = `${data.length} item${data.length === 1 ? "" : "s"}${query ? ` for “${query}”` : ""}`;
+  };
+
+  for (const button of typeButtons) {
+    button.addEventListener("click", () => {
+      activeType = button.dataset.type ?? "All";
+      for (const candidate of typeButtons) {
+        const active = candidate === button;
+        candidate.setAttribute("aria-pressed", String(active));
+        candidate.classList.toggle("bg-neutral-900", active);
+        candidate.classList.toggle("border-neutral-600", active);
+        candidate.classList.toggle("text-white", active);
+        candidate.classList.toggle("border-neutral-900", !active);
+        candidate.classList.toggle("text-neutral-500", !active);
+      }
+      void search();
+    });
+  }
+
+  input?.addEventListener("input", () => void search());
+  void search();
 </script>
 </Layout>
