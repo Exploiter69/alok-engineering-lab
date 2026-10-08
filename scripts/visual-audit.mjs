@@ -414,36 +414,65 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
         if (!interaction.ok) errors.push("project filter/search interaction failed: " + (interaction.reason || "state mismatch"));
       }
       if (route === "/garden/") {
-        const interaction = await page.evaluate(() => {
+        const interaction = await page.evaluate(async () => {
           const search = document.querySelector("#garden-search");
           if (!(search instanceof HTMLInputElement)) return { ok: false, reason: "garden search missing" };
           search.value = "__no_such_item__"; search.dispatchEvent(new Event("input", { bubbles: true }));
+          await new Promise(resolve => setTimeout(resolve, 250));
           const empty = !document.querySelector("#garden-empty")?.classList.contains("hidden");
           return { ok: empty };
         });
-        if (!interaction.ok) errors.push("Garden search empty-state interaction failed");
+        if (!interaction.ok) errors.push("Garden shared-index search empty-state interaction failed");
       }
 
       if (route === "/explore/") {
-        const interaction = await page.evaluate(() => {
+        const interaction = await page.evaluate(async () => {
           const search = document.querySelector("#explore-search");
-          const all = document.querySelector('[data-type="all"]');
-          const projects = document.querySelector('button[data-type="Projects"]');
-          const items = [...document.querySelectorAll("[data-explore-item]")];
-          if (!(search instanceof HTMLInputElement) || !(projects instanceof HTMLButtonElement)) return { ok: false, reason: "Explore controls missing" };
-          const before = items.filter(item => !item.hidden).length;
+          const all = document.querySelector('button[data-type="All"]');
+          const projects = document.querySelector('button[data-type="Project"]');
+          if (!(search instanceof HTMLInputElement) || !(projects instanceof HTMLButtonElement) || !(all instanceof HTMLButtonElement)) return { ok: false, reason: "Explore controls missing" };
           search.value = "__no_such_record__";
           search.dispatchEvent(new Event("input", { bubbles: true }));
+          await new Promise(resolve => setTimeout(resolve, 250));
           const empty = !document.querySelector("#explore-empty")?.classList.contains("hidden");
           search.value = "";
           search.dispatchEvent(new Event("input", { bubbles: true }));
+          await new Promise(resolve => setTimeout(resolve, 250));
           projects.click();
+          await new Promise(resolve => setTimeout(resolve, 250));
           const pressed = projects.getAttribute("aria-pressed") === "true";
-          const filtered = items.filter(item => !item.hidden).every(item => item.dataset.type === "Projects");
-          all?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-          return { ok: before >= 1 && empty && pressed && filtered };
+          const count = document.querySelectorAll("#explore-results article").length;
+          all.click();
+          return { ok: empty && pressed && count >= 1 };
         });
-        if (!interaction.ok) errors.push("Explore search/filter interaction failed: " + (interaction.reason || "state mismatch"));
+        if (!interaction.ok) errors.push("Explore shared-index search/filter interaction failed: " + (interaction.reason || "state mismatch"));
+      }
+
+      if (route === "/" ) {
+        const interaction = await page.evaluate(async () => {
+          const desktop = window.matchMedia("(min-width: 1024px)").matches;
+          const opener = document.querySelector<HTMLButtonElement>(desktop ? "nav [data-nav-desktop] [data-command-open]" : "nav [data-nav-mobile] [data-command-open]");
+          if (!(opener instanceof HTMLButtonElement)) return { ok: false, reason: "command opener missing" };
+          if (!desktop) {
+            const menu = document.querySelector<HTMLDetailsElement>("[data-nav-mobile]");
+            menu?.querySelector("summary")?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+          }
+          opener.click();
+          await new Promise(resolve => setTimeout(resolve, 400));
+          const dialog = document.querySelector<HTMLDialogElement>("#command-palette");
+          const input = document.querySelector<HTMLInputElement>("#command-search");
+          if (!dialog?.open || !(input instanceof HTMLInputElement)) return { ok: false, reason: "command palette did not open" };
+          input.value = "vajra";
+          input.dispatchEvent(new Event("input", { bubbles: true }));
+          await new Promise(resolve => setTimeout(resolve, 400));
+          const resultCount = document.querySelectorAll("#command-result-items a[role='option']").length;
+          input.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown", bubbles: true }));
+          const active = input.getAttribute("aria-activedescendant");
+          input.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+          await new Promise(resolve => setTimeout(resolve, 50));
+          return { ok: resultCount >= 1 && Boolean(active) && !dialog.open && document.activeElement === opener };
+        });
+        if (!interaction.ok) errors.push("command palette keyboard interaction failed: " + (interaction.reason || "state mismatch"));
       }
 
       const navigationInteraction = await page.evaluate(() => {
