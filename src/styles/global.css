@@ -166,7 +166,39 @@ body {
 }
 
 .prose a { text-decoration-thickness: 1px; text-underline-offset: 3px; }
-.prose :where(pre):not(:where([class~="not-prose"] *)) { overflow-x: auto; border: 1px solid #222; background: #090909; }
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
+  position: relative;
+  overflow-x: auto;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.025), transparent 3.5rem),
+    var(--surface-1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+  padding-top: 3.5rem;
+}
+
+.prose :where(pre):not(:where([class~="not-prose"] *))::before {
+  content: "●  ●  ●";
+  position: absolute;
+  top: .9rem;
+  left: 1rem;
+  font: 700 .55rem/1 var(--font-mono);
+  letter-spacing: .18em;
+  color: var(--faint);
+  pointer-events: none;
+}
+
+.prose :where(pre):not(:where([class~="not-prose"] *))::after {
+  content: "TERMINAL";
+  position: absolute;
+  top: .78rem;
+  right: 1rem;
+  font: 500 .55rem/1 var(--font-mono);
+  letter-spacing: .16em;
+  color: var(--faint);
+  pointer-events: none;
+}
 .prose :where(code):not(:where([class~="not-prose"] *))::before,
 .prose :where(code):not(:where([class~="not-prose"] *))::after { content: ""; }
 
@@ -478,4 +510,24 @@ body::before {
 
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .spotlight-card::before { display: none; }
+}
+
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--motion-slow);
+  animation-timing-function: var(--ease-standard);
+}
+
+::view-transition-old(root) { animation-name: lab-fade-out; }
+::view-transition-new(root) { animation-name: lab-fade-in; }
+
+@keyframes lab-fade-out { to { opacity: 0; transform: translateY(-4px); } }
+@keyframes lab-fade-in { from { opacity: 0; transform: translateY(4px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
 }
