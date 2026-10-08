@@ -26,7 +26,7 @@ Established the current Astro/Tailwind website foundation.
 **Complete.** Established initial content depth, related-content support, Garden, timeline/release milestones and browser quality auditing.
 
 ### CP4.2 — Engineering Archive Curation
-**Complete.** Curated ten substantive engineering projects from current repository evidence and added repository provenance.
+**Complete.** Curated eleven substantive engineering projects from current repository evidence and added repository provenance.
 
 ### CP4.3 — Deep Engineering Case Studies
 **Complete.** Ten projects now explain problem, constraints, architecture, engineering evolution, verification/safety boundaries, current state and lessons.
