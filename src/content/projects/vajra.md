@@ -31,9 +31,9 @@ lifecycleHistory:
 architectureSummary: "Local-first runtime separating objective/context/reasoning from policy, an execution broker, sandbox/workspace, artifacts and independent verification, with durable runs and disposable attempts/workers/models."
 architectureNodes:
   - "Objective / Context"
-  - "Policy / Broker"
+  - "Policy / Authority"
   - "Sandbox / Workspace"
-  - "Verification / Evidence"
+  - "Independent Verification"
 decisions:
   - "Run, step and evidence state must survive disposable workers and attempts."
   - "The model proposes intent but policy and the execution broker own authority."
