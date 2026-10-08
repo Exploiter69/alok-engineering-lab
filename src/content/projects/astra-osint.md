@@ -17,7 +17,7 @@ stack:
 architectureNodes:
   - "Dataset Sources"
   - "DuckDB Federation"
-  - "Entity Search API"
+  - "Entity Search"
   - "Admin / Results"
 objective: "Explore a practical local workbench for searching structured intelligence datasets while keeping remote data access bounded and failure-tolerant."
 currentFocus: "Repository is an archived experiment; its useful lessons are dataset federation, bounded remote queries and predictable API failure handling."
