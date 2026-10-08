@@ -32,7 +32,7 @@ architectureSummary: "A local control plane derives catalogs, search, analytics 
 architectureNodes:
   - "Production Storage"
   - "Catalog / Search"
-  - "Control Plane"
+  - "Control / Planning"
   - "Verify / Audit"
 decisions:
   - "TelDrive remains the production storage authority."
