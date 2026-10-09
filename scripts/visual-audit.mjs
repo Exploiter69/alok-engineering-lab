@@ -42,6 +42,7 @@ const routes = [...new Set(await discoverRoutes(distDir))].sort();
 
 const viewports = {
   mobile320: { width: 320, height: 800 },
+  mobile360: { width: 360, height: 820 },
   mobile375: { width: 375, height: 812 },
   mobile390: { width: 390, height: 844 },
   mobile430: { width: 430, height: 932 },
@@ -51,7 +52,7 @@ const viewports = {
   desktop1440: { width: 1440, height: 900 },
 };
 
-const ciViewportNames = new Set(["mobile320", "mobile390", "tablet768", "desktop1440"]);
+const ciViewportNames = new Set(["mobile320", "mobile360", "mobile390", "tablet768", "desktop1280", "desktop1440"]);
 const auditViewports = process.env.CI
   ? Object.fromEntries(Object.entries(viewports).filter(([name]) => ciViewportNames.has(name)))
   : viewports;
@@ -64,6 +65,11 @@ await fs.mkdir(auditDir, { recursive: true });
 
 const browser = await chromium.launch({ timeout: 15000 });
 const results = [];
+const auditStartedAt = Date.now();
+const totalCases = routes.length * Object.keys(auditViewports).length;
+
+console.log(`Starting browser audit: ${routes.length} routes × ${Object.keys(auditViewports).length} viewports = ${totalCases} cases`);
+console.log(`Viewports: ${Object.keys(auditViewports).join(", ")}`);
 
 for (const [device, viewport] of Object.entries(auditViewports)) {
   const deviceDir = path.join(auditDir, device);
@@ -99,6 +105,23 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
       });
 
       status = response?.status() ?? "no response";
+
+      // Never run DOM/accessibility checks against an HTTP error document.
+      // A dev-server/build failure otherwise produces a cascade of misleading
+      // secondary failures (missing lang, main, h1, metadata, etc.).
+      if (status < 200 || status >= 400) {
+        errors.push("HTTP response status " + status);
+        results.push({
+          device,
+          route,
+          status,
+          overflow: false,
+          errors,
+          warnings,
+          checks: {},
+        });
+        continue;
+      }
 
       audit = await page.evaluate(() => {
         const root = document.documentElement;
@@ -533,6 +556,12 @@ for (const [device, viewport] of Object.entries(auditViewports)) {
       });
     } finally {
       await page.close();
+      const completedCases = results.length;
+      const elapsedSeconds = Math.round((Date.now() - auditStartedAt) / 1000);
+      const latest = results.at(-1);
+      console.log(
+        `[${completedCases}/${totalCases}] ${device} ${route} → HTTP ${latest?.status ?? status} | ${elapsedSeconds}s elapsed`
+      );
     }
   }
 }
@@ -588,10 +617,10 @@ const summary = {
   failedCases: failures,
   warnings: warningCount,
   desktopCases: results.filter(
-    (result) => result.device === "desktop"
+    (result) => result.device.startsWith("desktop")
   ).length,
   mobileCases: results.filter(
-    (result) => result.device === "mobile"
+    (result) => result.device.startsWith("mobile")
   ).length,
 };
 

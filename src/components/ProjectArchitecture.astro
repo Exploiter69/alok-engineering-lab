@@ -1,24 +1,46 @@
 ---
-interface Props { projectId: string; title: string; architectureSummary?: string; decisions?: string[]; }
-const { projectId, title, architectureSummary = "", decisions = [] } = Astro.props;
+interface Props { projectId: string; title: string; architectureSummary?: string; architectureNodes?: string[]; decisions?: string[]; }
+const { projectId, title, architectureSummary = "", architectureNodes = [], decisions = [] } = Astro.props;
 const raw = architectureSummary.replace(/\s+/g, " ").trim();
 const fromSummary = raw.split(/\s*(?:→|->|=>)\s*/).map(item => item.trim()).filter(Boolean);
-const fromDecisions = decisions.flatMap(item => item.split(/\s*(?:→|->|=>)\s*/).map(part => part.trim())).filter(Boolean);
-const nodes = [...new Set([...fromSummary, ...fromDecisions])].slice(0, 4);
-while (nodes.length < 4) nodes.push(["Input", "Architecture", "Decision boundary", "Output"][nodes.length]);
-const caption = fromSummary.length > 1 ? fromSummary.join(" → ") : "Repository-backed architecture derived from the project record.";
+
+const fallbackLabels = ["Source", "System", "Control", "Output"];
+const nodes = architectureNodes.length === 4
+  ? architectureNodes
+  : fromSummary.length > 1
+    ? fromSummary.slice(0, 4)
+    : fallbackLabels;
+
+while (nodes.length < 4) nodes.push(fallbackLabels[nodes.length]);
+
+const caption = raw || "Repository-backed architecture derived from the project record.";
+
 const splitLabel = (value: string) => {
   const clean = value.replace(/\s+/g, " ").trim();
-  if (clean.length <= 18) return [clean];
+  if (clean.length <= 20) return [clean];
+
   const words = clean.split(" ");
   const lines: string[] = [];
   let current = "";
+
   for (const word of words) {
-    if ((current + " " + word).trim().length <= 18) current = (current + " " + word).trim();
-    else if (current) { lines.push(current); current = word; }
-    else { lines.push(word.slice(0, 18)); current = word.slice(18); }
+    const candidate = current ? current + " " + word : word;
+    if (candidate.length <= 20) {
+      current = candidate;
+    } else {
+      if (current) lines.push(current);
+      current = word;
+      if (lines.length === 1) break;
+    }
   }
-  if (current) lines.push(current);
+
+  if (current && lines.length < 2) lines.push(current);
+
+  const isTruncated = words.join(" ") !== lines.join(" ");
+  if (isTruncated && lines.length) {
+    lines[lines.length - 1] = lines[lines.length - 1].replace(/…$/, "") + "…";
+  }
+
   return lines.slice(0, 2);
 };
 ---
@@ -27,19 +49,19 @@ const splitLabel = (value: string) => {
     <p class="lab-label">Architecture / repository record</p>
     <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">SVG</span>
   </div>
-  <svg viewBox="0 0 920 210" role="img" aria-labelledby={projectId + "-architecture-title " + projectId + "-architecture-desc"} class="mt-5 h-auto w-full">
+  <svg viewBox="0 0 920 240" role="img" aria-labelledby={projectId + "-architecture-title " + projectId + "-architecture-desc"} class="mt-5 h-auto w-full">
     <title id={projectId + "-architecture-title"}>{title} architecture</title>
     <desc id={projectId + "-architecture-desc"}>{caption}</desc>
     {nodes.map((node, index) => {
       const x = 20 + index * 225;
       return <>
-        {index < nodes.length - 1 && <path d={"M " + (x + 180) + " 105 H " + (x + 212)} stroke="var(--border-strong)" stroke-width="2" fill="none" />}
-        {index < nodes.length - 1 && <path d={"M " + (x + 202) + " 99 L " + (x + 212) + " 105 L " + (x + 202) + " 111"} stroke="var(--accent)" stroke-width="2" fill="none" />}
-        <rect x={x} y="55" width="180" height="100" rx="14" fill="var(--surface-2)" stroke={index === 0 ? "var(--accent)" : "var(--border-strong)"} />
+        {index < nodes.length - 1 && <path d={"M " + (x + 180) + " 115 H " + (x + 212)} stroke="var(--border-strong)" stroke-width="2" fill="none" />}
+        {index < nodes.length - 1 && <path d={"M " + (x + 202) + " 109 L " + (x + 212) + " 115 L " + (x + 202) + " 121"} stroke="var(--accent)" stroke-width="2" fill="none" />}
+        <rect x={x} y="50" width="180" height="130" rx="14" fill="var(--surface-2)" stroke={index === 0 ? "var(--accent)" : "var(--border-strong)"} />
         {splitLabel(node).map((line, lineIndex) => (
-          <text x={x + 90} y={lineIndex === 0 ? "96" : "116"} text-anchor="middle" fill="var(--foreground)" font-size="13" font-family="var(--font-sans)">{line}</text>
+          <text x={x + 90} y={String(104 + lineIndex * 18)} text-anchor="middle" fill="var(--foreground)" font-size="13" font-family="var(--font-sans)">{line}</text>
         ))}
-        <text x={x + 90} y="140" text-anchor="middle" fill="var(--subtle)" font-size="10" font-family="var(--font-mono)">0{index + 1}</text>
+        <text x={x + 90} y="154" text-anchor="middle" fill="var(--subtle)" font-size="10" font-family="var(--font-mono)">0{index + 1}</text>
       </>;
     })}
   </svg>

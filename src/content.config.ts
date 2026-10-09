@@ -37,6 +37,7 @@ export const collections = {
         note: z.string(),
       })).default([]),
       architectureSummary: z.string().optional(),
+      architectureNodes: z.array(z.string()).length(4).default(["Source", "System", "Control", "Output"]),
       decisions: z.array(z.string()).default([]),
       lessons: z.array(z.string()).default([]),
       currentFocus: z.string().optional(),

@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import { SITE } from "../data/site";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title?: string;
@@ -22,6 +23,7 @@ const resolvedOgImage = new URL(ogImage ?? SITE.seo.ogImage, site).href;
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <ClientRouter />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
@@ -59,9 +61,16 @@ const resolvedOgImage = new URL(ogImage ?? SITE.seo.ogImage, site).href;
 <div id="reading-progress" aria-hidden="true"></div>
 <div id="main-content"><slot /></div>
 <script>
-  const progress = document.querySelector<HTMLElement>("#reading-progress");
-  const article = document.querySelector<HTMLElement>("article.prose");
-  if (progress && article) {
+  const setupReadingProgress = () => {
+    const progress = document.querySelector<HTMLElement>("#reading-progress");
+    const article = document.querySelector<HTMLElement>("article.prose");
+    const state = window as Window & { __labReadingProgressCleanup?: () => void };
+    state.__labReadingProgressCleanup?.();
+    if (!progress || !article) {
+      progress?.remove();
+      state.__labReadingProgressCleanup = undefined;
+      return;
+    }
     const update = () => {
       const start = article.getBoundingClientRect().top + window.scrollY;
       const total = Math.max(1, article.scrollHeight - window.innerHeight);
@@ -71,13 +80,18 @@ const resolvedOgImage = new URL(ogImage ?? SITE.seo.ogImage, site).href;
     update();
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
-  } else {
-    progress?.remove();
-  }
+    state.__labReadingProgressCleanup = () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  };
+  document.addEventListener("astro:page-load", setupReadingProgress);
+  setupReadingProgress();
 </script>
 <script>
+  const setupInteractiveUI = () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const revealTargets = document.querySelectorAll<HTMLElement>("main section, main article.prose, main > header");
+  const revealTargets = document.querySelectorAll<HTMLElement>("main section, main article.prose, main > header, [data-reveal-card], .reveal");
   if (!reduceMotion && "IntersectionObserver" in window) {
     const observer = new IntersectionObserver(entries => {
       for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-visible"); observer.unobserve(entry.target); }
@@ -102,11 +116,24 @@ const resolvedOgImage = new URL(ogImage ?? SITE.seo.ogImage, site).href;
     pre.append(button);
   }
 
+  for (const card of document.querySelectorAll<HTMLElement>("[data-spotlight]")) {
+    if (window.matchMedia("(pointer: fine)").matches && !reduceMotion) {
+      card.addEventListener("pointermove", (event) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty("--spotlight-x", String(event.clientX - rect.left) + "px");
+        card.style.setProperty("--spotlight-y", String(event.clientY - rect.top) + "px");
+      });
+    }
+  }
+
   for (const counter of document.querySelectorAll<HTMLElement>("[data-counter]")) {
     const target = Number(counter.dataset.counter ?? "0");
     if (reduceMotion || !("IntersectionObserver" in window)) { counter.textContent = String(target); continue; }
     const observer = new IntersectionObserver(entries => { if (!entries[0]?.isIntersecting) return; const started = performance.now(); const tick = (now: number) => { const progress = Math.min(1, (now - started) / 700); counter.textContent = String(Math.round(target * (1 - Math.pow(1 - progress, 3)))); if (progress < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); observer.disconnect(); }, { threshold: .6 }); observer.observe(counter);
   }
+  };
+  document.addEventListener("astro:page-load", setupInteractiveUI);
+  setupInteractiveUI();
 </script>
 <Footer />
 </body>

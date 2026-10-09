@@ -1,0 +1,38 @@
+---
+---
+<div class="system-visual" data-system-visual aria-hidden="true">
+  <div class="system-visual__grid"></div>
+  <div class="system-visual__orbit system-visual__orbit--outer"></div>
+  <div class="system-visual__orbit system-visual__orbit--inner"></div>
+  <div class="system-visual__core">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <i class="system-visual__node system-visual__node--one"></i>
+  <i class="system-visual__node system-visual__node--two"></i>
+  <i class="system-visual__node system-visual__node--three"></i>
+  <div class="system-visual__scan"></div>
+</div>
+
+<script>
+  const initSystemVisual = () => {
+  const visual = document.querySelector<HTMLElement>("[data-system-visual]");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+  const saveData = "connection" in navigator && (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+
+  if (visual && !reduceMotion && !coarsePointer && !saveData && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0]?.isIntersecting) {
+        visual.classList.add("is-active");
+        observer.disconnect();
+      }
+    }, { threshold: 0.15 });
+    observer.observe(visual);
+  }
+  };
+
+  document.addEventListener("astro:page-load", initSystemVisual);
+  initSystemVisual();
+</script>

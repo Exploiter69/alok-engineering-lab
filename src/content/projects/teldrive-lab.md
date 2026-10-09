@@ -29,6 +29,11 @@ lifecycleHistory:
     date: 2026-10-06
     note: "Lifecycle baseline recorded in the Engineering Lab."
 architectureSummary: "A local control plane derives catalogs, search, analytics and plans from the production storage while consequential mutation stays behind explicit authorization and verification boundaries."
+architectureNodes:
+  - "Production Storage"
+  - "Catalog / Search"
+  - "Control / Planning"
+  - "Verify / Audit"
 decisions:
   - "TelDrive remains the production storage authority."
   - "Derived indexes and catalogs are disposable views rather than canonical data stores."
