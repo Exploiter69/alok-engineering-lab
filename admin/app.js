@@ -454,6 +454,9 @@ async function boot() {
     state.schema = await api("/api/schema");
     await dashboard();
   } catch (error) {
+    // An unauthenticated or expired session is normal before GitHub sign-in.
+    // Keep the static login screen visible for the expected 401 response.
+    if (error.message === "Request failed: 401") return;
     app.innerHTML = `<div class="card"><h1>Admin unavailable</h1><p class="muted">${esc(error.message)}</p></div>`;
   }
 }
