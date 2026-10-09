@@ -1,4 +1,4 @@
-import { encrypt, OAUTH_COOKIE, pkceChallenge, randomToken, cookie } from "../../lib/security.mjs";
+import { adminBaseUrl, encrypt, OAUTH_COOKIE, pkceChallenge, randomToken, cookie } from "../../lib/security.mjs";
 import { redirect, text } from "../../lib/response.mjs";
 
 export default async function handler(req, res) {
@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (!process.env.GITHUB_CLIENT_ID || !process.env.GITHUB_CLIENT_SECRET || !process.env.ADMIN_SESSION_SECRET) return text(res, 503, "Admin authentication is not configured.");
 
   const state = randomToken(32), verifier = randomToken(48);
-  const redirectUri = `${process.env.ADMIN_BASE_URL || `https://${req.headers.host}`}/api/auth/callback`;
+  let redirectUri; try { redirectUri = new URL("/api/auth/callback", adminBaseUrl()).toString(); } catch { return text(res, 503, "Admin authentication base URL is not configured correctly."); }
   const payload = encrypt({ state, verifier, redirectUri, exp: Date.now() + 10 * 60_000 });
   const params = new URLSearchParams({
     client_id: process.env.GITHUB_CLIENT_ID,
