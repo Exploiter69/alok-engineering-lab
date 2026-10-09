@@ -1,0 +1,1747 @@
+npm notice run alok-engineering-lab@1.0.0 check
+npm notice run npm run validate && astro check && npm run build && npm run audit && npm run audit:performance
+npm notice run alok-engineering-lab@1.0.0 validate
+npm notice run npm run validate:site-control && npm run validate:metadata && npm run validate:links && npm run validate:lifecycle && npm run validate:writing
+npm notice run alok-engineering-lab@1.0.0 validate:site-control
+npm notice run node scripts/validate-site-control.mjs
+Site control validation passed.
+npm notice run alok-engineering-lab@1.0.0 validate:metadata
+npm notice run node scripts/validate-content-metadata.mjs
+Content metadata validation passed.
+npm notice run alok-engineering-lab@1.0.0 validate:links
+npm notice run node scripts/validate-content-links.mjs
+Content relationship validation passed: 85 entries checked.
+npm notice run alok-engineering-lab@1.0.0 validate:lifecycle
+npm notice run node scripts/validate-project-lifecycle.mjs
+Project lifecycle validation passed.
+npm notice run alok-engineering-lab@1.0.0 validate:writing
+npm notice run node scripts/validate-writing.mjs
+Writing workflow validation passed.
+18:25:22 [content] Syncing content
+18:25:22 [content] Synced content
+18:25:22 [types] Generated 1.63s
+18:25:22 [check] Getting diagnostics for Astro files in /home/thakuralok/alok-engineering-lab...
+[96madmin/api/content.mjs[0m:[93m4[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'collection' is declared but its value is never read.
+
+[7m4[0m import { collection } from "../lib/schema.mjs";
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96madmin/api/content.mjs[0m:[93m1[0m:[93m16[0m - [93mwarning[0m[90m ts(6133): [0m'text' is declared but its value is never read.
+
+[7m1[0m import { send, text } from "../lib/response.mjs";
+[7m [0m [93m               ~~~~[0m
+
+[96madmin/lib/content.mjs[0m:[93m77[0m:[93m10[0m - [93mwarning[0m[90m ts(6133): [0m'serialize' is declared but its value is never read.
+
+[7m77[0m function serialize(metadata, body) {
+[7m  [0m [93m         ~~~~~~~~~[0m
+
+[96madmin/lib/site-control.mjs[0m:[93m17[0m:[93m10[0m - [93mwarning[0m[90m ts(80006): [0mThis may be converted to an async function.
+
+[7m17[0m function readJson(token, path, ref) {
+[7m  [0m [93m         ~~~~~~~~[0m
+
+[96mscripts/performance-audit.mjs[0m:[93m31[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'cls' is declared but its value is never read.
+
+[7m31[0m   let cls = 0;
+[7m  [0m [93m      ~~~[0m
+[96mscripts/performance-audit.mjs[0m:[93m30[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'lcp' is declared but its value is never read.
+
+[7m30[0m   let lcp = 0;
+[7m  [0m [93m      ~~~[0m
+
+[96msrc/content.config.ts[0m:[93m30[0m:[93m30[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { pattern?: RegExp | undefined; abort?: boolean | undefined; normalize?: boolean | undefined; hostname?: RegExp | undefined; protocol?: RegExp | undefined; error?: string | ... 1 more ... | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m30[0m       repository: z.string().url().optional(),
+[7m  [0m [93m                             ~~~[0m
+
+[96msrc/layouts/Layout.astro[0m:[93m48[0m:[93m11[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m48[0m   <script type="application/ld+json" set:html={JSON.stringify({
+[7m  [0m [93m          ~~~~[0m
+
+Result (82 files): 
+- 0 errors
+- 0 warnings
+- 8 hints
+
+npm notice run alok-engineering-lab@1.0.0 build
+npm notice run node scripts/prepare-fonts.mjs && npm run validate && astro check && astro build && pagefind --site dist
+npm notice run alok-engineering-lab@1.0.0 validate
+npm notice run npm run validate:site-control && npm run validate:metadata && npm run validate:links && npm run validate:lifecycle && npm run validate:writing
+npm notice run alok-engineering-lab@1.0.0 validate:site-control
+npm notice run node scripts/validate-site-control.mjs
+Site control validation passed.
+npm notice run alok-engineering-lab@1.0.0 validate:metadata
+npm notice run node scripts/validate-content-metadata.mjs
+Content metadata validation passed.
+npm notice run alok-engineering-lab@1.0.0 validate:links
+npm notice run node scripts/validate-content-links.mjs
+Content relationship validation passed: 85 entries checked.
+npm notice run alok-engineering-lab@1.0.0 validate:lifecycle
+npm notice run node scripts/validate-project-lifecycle.mjs
+Project lifecycle validation passed.
+npm notice run alok-engineering-lab@1.0.0 validate:writing
+npm notice run node scripts/validate-writing.mjs
+Writing workflow validation passed.
+18:25:39 [content] Syncing content
+18:25:39 [content] Synced content
+18:25:39 [types] Generated 1.58s
+18:25:39 [check] Getting diagnostics for Astro files in /home/thakuralok/alok-engineering-lab...
+[96madmin/api/content.mjs[0m:[93m4[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'collection' is declared but its value is never read.
+
+[7m4[0m import { collection } from "../lib/schema.mjs";
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96madmin/api/content.mjs[0m:[93m1[0m:[93m16[0m - [93mwarning[0m[90m ts(6133): [0m'text' is declared but its value is never read.
+
+[7m1[0m import { send, text } from "../lib/response.mjs";
+[7m [0m [93m               ~~~~[0m
+
+[96madmin/lib/content.mjs[0m:[93m77[0m:[93m10[0m - [93mwarning[0m[90m ts(6133): [0m'serialize' is declared but its value is never read.
+
+[7m77[0m function serialize(metadata, body) {
+[7m  [0m [93m         ~~~~~~~~~[0m
+
+[96madmin/lib/site-control.mjs[0m:[93m17[0m:[93m10[0m - [93mwarning[0m[90m ts(80006): [0mThis may be converted to an async function.
+
+[7m17[0m function readJson(token, path, ref) {
+[7m  [0m [93m         ~~~~~~~~[0m
+
+[96mscripts/performance-audit.mjs[0m:[93m31[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'cls' is declared but its value is never read.
+
+[7m31[0m   let cls = 0;
+[7m  [0m [93m      ~~~[0m
+[96mscripts/performance-audit.mjs[0m:[93m30[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'lcp' is declared but its value is never read.
+
+[7m30[0m   let lcp = 0;
+[7m  [0m [93m      ~~~[0m
+
+[96msrc/content.config.ts[0m:[93m30[0m:[93m30[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { pattern?: RegExp | undefined; abort?: boolean | undefined; normalize?: boolean | undefined; hostname?: RegExp | undefined; protocol?: RegExp | undefined; error?: string | ... 1 more ... | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m30[0m       repository: z.string().url().optional(),
+[7m  [0m [93m                             ~~~[0m
+
+[96msrc/layouts/Layout.astro[0m:[93m48[0m:[93m11[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
+
+See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
+
+Add the `is:inline` directive explicitly to silence this hint.
+
+[7m48[0m   <script type="application/ld+json" set:html={JSON.stringify({
+[7m  [0m [93m          ~~~~[0m
+
+Result (82 files): 
+- 0 errors
+- 0 warnings
+- 8 hints
+
+18:25:54 [content] Syncing content
+18:25:54 [content] Synced content
+18:25:54 [types] Generated 1.89s
+18:25:54 [build] output: "static"
+18:25:54 [build] mode: "static"
+18:25:54 [build] directory: /home/thakuralok/alok-engineering-lab/dist/
+18:25:54 [build] Collecting build info...
+18:25:54 [build] ✓ Completed in 2.01s.
+18:25:54 [build] Building static entrypoints...
+18:25:56 [vite] ✓ built in 1.69s
+18:25:56 [vite] ✓ built in 74ms
+18:25:56 [build] Rearranging server assets...
+
+ generating static routes 
+18:25:57   ├─ /404.html (+54ms) 
+18:25:57   ├─ /about/index.html (+9ms) 
+18:25:57   ├─ /changelog/cp10-project-intelligence/index.html (+13ms) 
+18:25:57   ├─ /changelog/cp11-knowledge-provenance/index.html (+6ms) 
+18:25:57   ├─ /changelog/cp13-discovery-navigation/index.html (+5ms) 
+18:25:57   ├─ /changelog/cp14-engineering-evidence/index.html (+4ms) 
+18:25:57   ├─ /changelog/cp15-technical-writing/index.html (+4ms) 
+18:25:57   ├─ /changelog/cp16-lab-automation/index.html (+4ms) 
+18:25:57   ├─ /changelog/cp17-long-term-archive/index.html (+5ms) 
+18:25:57   ├─ /changelog/cp20-experience-excellence/index.html (+5ms) 
+18:25:57   ├─ /changelog/cp21-ux-reliability/index.html (+4ms) 
+18:25:57   ├─ /changelog/cp22-cp27-engineering-lab-expansion/index.html (+4ms) 
+18:25:57   ├─ /changelog/cp43/index.html (+4ms) 
+18:25:57   ├─ /changelog/cp6-production-readiness/index.html (+3ms) 
+18:25:57   ├─ /changelog/cp7-maintenance/index.html (+3ms) 
+18:25:57   ├─ /changelog/cp8-engineering-growth/index.html (+4ms) 
+18:25:57   ├─ /changelog/cp9-knowledge-expansion/index.html (+3ms) 
+18:25:57   ├─ /changelog/post-cp10-stabilization/index.html (+5ms) 
+18:25:57   ├─ /changelog/v100/index.html (+4ms) 
+18:25:57   ├─ /changelog/index.html (+7ms) 
+18:25:57   ├─ /connections/index.html (+9ms) 
+18:25:57   ├─ /contact/index.html (+4ms) 
+18:25:57   ├─ /docs/content-workflow/index.html (+4ms) 
+18:25:57   ├─ /docs/index.html (+5ms) 
+18:25:57   ├─ /evidence/project-status-boundary/index.html (+5ms) 
+18:25:57   ├─ /evidence/route-audit-coverage/index.html (+3ms) 
+18:25:57   ├─ /evidence/vajra-independent-verification/index.html (+3ms) 
+18:25:57   ├─ /evidence/vgu-signal-conflict-model/index.html (+5ms) 
+18:25:57   ├─ /evidence/index.html (+6ms) 
+18:25:57   ├─ /experiments/architecture-boundary-test/index.html (+5ms) 
+18:25:57   ├─ /experiments/first-experiment/index.html (+4ms) 
+18:25:57   ├─ /experiments/local-first-architecture/index.html (+3ms) 
+18:25:57   ├─ /experiments/project-knowledge-extraction/index.html (+3ms) 
+18:25:57   ├─ /experiments/provenance-driven-information/index.html (+3ms) 
+18:25:57   ├─ /experiments/repository-backed-status/index.html (+3ms) 
+18:25:57   ├─ /experiments/static-discovery-and-performance-gates/index.html (+4ms) 
+18:25:57   ├─ /experiments/static-garden-discovery/index.html (+5ms) 
+18:25:57   ├─ /experiments/static-site-verification/index.html (+4ms) 
+18:25:57   ├─ /experiments/index.html (+6ms) 
+18:25:57   ├─ /explore/index.html (+6ms) 
+18:25:57   ├─ /garden/topics/architecture/index.html (+6ms) 
+18:25:57   ├─ /garden/topics/ai/index.html (+3ms) 
+18:25:57   ├─ /garden/topics/security/index.html (+3ms) 
+18:25:57   ├─ /garden/topics/systems/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/python/index.html (+3ms) 
+18:25:57   ├─ /garden/topics/simplicity/index.html (+3ms) 
+18:25:57   ├─ /garden/topics/maintainability/index.html (+3ms) 
+18:25:57   ├─ /garden/topics/content/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/verification/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/ux/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/accessibility/index.html (+6ms) 
+18:25:57   ├─ /garden/topics/knowledge/index.html (+19ms) 
+18:25:57   ├─ /garden/topics/engineering/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/quality/index.html (+3ms) 
+18:25:57   ├─ /garden/topics/maintenance/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/writing/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/provenance/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/databases/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/reliability/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/philosophy/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/workflow/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/git/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/documentation/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/archive/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/lifecycle/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/projects/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/evidence/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/information-systems/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/static-sites/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/discovery/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/navigation/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/web-engineering/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/debugging/index.html (+6ms) 
+18:25:57   ├─ /garden/topics/learning/index.html (+7ms) 
+18:25:57   ├─ /garden/topics/testing/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/experiment/index.html (+7ms) 
+18:25:57   ├─ /garden/topics/automation/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/cost/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/content-model/index.html (+21ms) 
+18:25:57   ├─ /garden/topics/performance/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/javascript/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/astro/index.html (+6ms) 
+18:25:57   ├─ /garden/topics/observation/index.html (+5ms) 
+18:25:57   ├─ /garden/topics/benchmark/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/browser/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/vajra/index.html (+4ms) 
+18:25:57   ├─ /garden/topics/agents/index.html (+3ms) 
+18:25:57   ├─ /garden/topics/failure/index.html (+3ms) 
+18:25:57   ├─ /garden/topics/vgu/index.html (+3ms) 
+18:25:57   ├─ /garden/index.html (+8ms) 
+18:25:57   ├─ /notes/authority-is-a-boundary/index.html (+5ms) 
+18:25:57   ├─ /notes/authority-vs-capability/index.html (+4ms) 
+18:25:57   ├─ /notes/bounded-complexity-scales-better/index.html (+3ms) 
+18:25:57   ├─ /notes/complexity-budget/index.html (+4ms) 
+18:25:57   ├─ /notes/content-integrity/index.html (+4ms) 
+18:25:57   ├─ /notes/cp20-experience-excellence/index.html (+4ms) 
+18:25:57   ├─ /notes/cp21-ux-reliability/index.html (+4ms) 
+18:25:57   ├─ /notes/cp22-cp27-engineering-lab-architecture/index.html (+4ms) 
+18:25:57   ├─ /notes/deep-writing-preserves-source/index.html (+3ms) 
+18:25:57   ├─ /notes/derived-views-should-stay-disposable/index.html (+4ms) 
+18:25:57   ├─ /notes/durable-state-outlives-workers/index.html (+3ms) 
+18:25:57   ├─ /notes/engineering-philosophy/index.html (+4ms) 
+18:25:57   ├─ /notes/inspect-before-modifying/index.html (+4ms) 
+18:25:57   ├─ /notes/knowledge-should-show-provenance/index.html (+4ms) 
+18:25:57   ├─ /notes/long-lived-archives-need-explicit-chronology/index.html (+3ms) 
+18:25:57   ├─ /notes/project-lifecycle-is-history/index.html (+3ms) 
+18:25:57   ├─ /notes/project-status-is-part-of-the-archive/index.html (+3ms) 
+18:25:57   ├─ /notes/provenance-makes-memory-useful/index.html (+3ms) 
+18:25:57   ├─ /notes/repository-is-the-memory/index.html (+4ms) 
+18:25:57   ├─ /notes/static-discovery-scales-with-indexes/index.html (+4ms) 
+18:25:57   ├─ /notes/static-sites-can-record-live-work/index.html (+3ms) 
+18:25:57   ├─ /notes/verification-is-a-boundary/index.html (+3ms) 
+18:25:57   ├─ /notes/verification-needs-independence/index.html (+4ms) 
+18:25:57   ├─ /notes/index.html (+7ms) 
+18:25:57   ├─ /projects/astra/index.html (+10ms) 
+18:25:57   ├─ /projects/astra-userbot/index.html (+4ms) 
+18:25:57   ├─ /projects/gemini-agent-bridge/index.html (+4ms) 
+18:25:57   ├─ /projects/teldrive-lab/index.html (+5ms) 
+18:25:57   ├─ /projects/vajra/index.html (+4ms) 
+18:25:57   ├─ /projects/vgu-signal/index.html (+4ms) 
+18:25:57   ├─ /projects/index.html (+10ms) 
+18:25:57   ├─ /resume.pdf (+5ms) 
+18:25:57   ├─ /sitemap.xml (+5ms) 
+18:25:57   ├─ /timeline/cp10-project-intelligence/index.html (+5ms) 
+18:25:57   ├─ /timeline/cp11-knowledge-provenance/index.html (+5ms) 
+18:25:57   ├─ /timeline/cp13-discovery-navigation/index.html (+4ms) 
+18:25:57   ├─ /timeline/cp14-engineering-evidence/index.html (+4ms) 
+18:25:57   ├─ /timeline/cp15-technical-writing/index.html (+6ms) 
+18:25:57   ├─ /timeline/cp16-lab-automation/index.html (+4ms) 
+18:25:57   ├─ /timeline/cp17-long-term-archive/index.html (+3ms) 
+18:25:57   ├─ /timeline/cp20-experience-excellence/index.html (+3ms) 
+18:25:57   ├─ /timeline/cp21-ux-reliability/index.html (+4ms) 
+18:25:57   ├─ /timeline/cp22-cp27-engineering-lab-expansion/index.html (+5ms) 
+18:25:57   ├─ /timeline/cp4-knowledge-archive/index.html (+9ms) 
+18:25:57   ├─ /timeline/cp4-project-archive/index.html (+6ms) 
+18:25:57   ├─ /timeline/cp8-engineering-growth/index.html (+4ms) 
+18:25:57   ├─ /timeline/cp9-knowledge-expansion/index.html (+3ms) 
+18:25:57   ├─ /timeline/engineering-lab-foundation/index.html (+2ms) 
+18:25:57   ├─ /timeline/post-cp10-stabilization/index.html (+4ms) 
+18:25:57   ├─ /timeline/start/index.html (+4ms) 
+18:25:57   ├─ /timeline/v1-0-0-responsive-release/index.html (+4ms) 
+18:25:57   ├─ /timeline/v1-1-website-release/index.html (+6ms) 
+18:25:57   ├─ /timeline/verification-as-a-theme/index.html (+5ms) 
+18:25:57   ├─ /timeline/index.html (+10ms) 
+18:25:57   ├─ /writing/engineering-through-failure/index.html (+8ms) 
+18:25:57   ├─ /writing/from-projects-to-engineering-knowledge/index.html (+5ms) 
+18:25:57   ├─ /writing/production-readiness-is-a-boundary/index.html (+6ms) 
+18:25:57   ├─ /writing/verification-first-engineering/index.html (+5ms) 
+18:25:57   ├─ /writing/welcome/index.html (+5ms) 
+18:25:57   ├─ /writing/why-small-systems-win/index.html (+5ms) 
+18:25:57   ├─ /writing/index.html (+9ms) 
+18:25:57   ├─ /index.html (+12ms) 
+18:25:57 ✓ Completed in 905ms.
+
+18:25:57 [build] ✓ Completed in 2.83s.
+18:25:57 [build] 150 page(s) built in 4.88s
+18:25:57 [build] Complete!
+
+Running Pagefind v1.5.2 (Extended)
+Running from: "/home/thakuralok/alok-engineering-lab"
+Source:       "dist"
+Output:       "dist/pagefind"
+
+[Walking source directory]
+Found 150 files matching **/*.{html}
+
+[Parsing files]
+Found a data-pagefind-body element on the site.
+↳ Ignoring pages without this tag.
+
+[Reading languages]
+Discovered 1 language: en
+
+[Building search indexes]
+Total: 
+  Indexed 1 language
+  Indexed 150 pages
+  Indexed 1630 words
+  Indexed 2 filters
+  Indexed 0 sorts
+
+Finished in 0.432 seconds
+npm notice run alok-engineering-lab@1.0.0 audit
+npm notice run node scripts/visual-audit.mjs
+
+=== ALOK ENGINEERING LAB QUALITY AUDIT ===
+
+✓ mobile320 /                                   HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ mobile320 /about/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /changelog/                         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp15-technical-writing/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp16-lab-automation/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp17-long-term-archive/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp21-ux-reliability/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp43/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp6-production-readiness/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp7-maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp8-engineering-growth/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/cp9-knowledge-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/post-cp10-stabilization/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /changelog/v100/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /connections/                       HTTP 200 | overflow=false | errors=0 | warnings=2
+    WARN:  heading hierarchy jumps from h1 to h3
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /contact/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /docs/                              HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /docs/content-workflow/             HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /evidence/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /evidence/project-status-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /evidence/route-audit-coverage/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /evidence/vajra-independent-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /evidence/vgu-signal-conflict-model/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /experiments/                       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /experiments/architecture-boundary-test/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /experiments/first-experiment/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /experiments/local-first-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /experiments/project-knowledge-extraction/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /experiments/provenance-driven-information/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /experiments/repository-backed-status/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /experiments/static-discovery-and-performance-gates/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /experiments/static-garden-discovery/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /experiments/static-site-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /explore/                           HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile320 /garden/                            HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ mobile320 /garden/topics/accessibility/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/agents/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/ai/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/architecture/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/archive/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/astro/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/automation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/benchmark/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/browser/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/content-model/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/content/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/cost/                HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/databases/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/debugging/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/discovery/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/documentation/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/engineering/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/evidence/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/experiment/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/failure/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/git/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/information-systems/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/javascript/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/knowledge/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/learning/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/lifecycle/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/maintainability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/navigation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/observation/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/performance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/philosophy/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/projects/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/provenance/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/python/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/quality/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/security/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/simplicity/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/static-sites/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/systems/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/testing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/ux/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/vajra/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/verification/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/vgu/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/web-engineering/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/workflow/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /garden/topics/writing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/authority-is-a-boundary/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/authority-vs-capability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/bounded-complexity-scales-better/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/complexity-budget/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/content-integrity/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/cp20-experience-excellence/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/cp21-ux-reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/cp22-cp27-engineering-lab-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/deep-writing-preserves-source/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/derived-views-should-stay-disposable/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/durable-state-outlives-workers/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/engineering-philosophy/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/inspect-before-modifying/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/knowledge-should-show-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/long-lived-archives-need-explicit-chronology/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/project-lifecycle-is-history/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/project-status-is-part-of-the-archive/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/provenance-makes-memory-useful/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/repository-is-the-memory/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/static-discovery-scales-with-indexes/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/static-sites-can-record-live-work/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/verification-is-a-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /notes/verification-needs-independence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /projects/                          HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ mobile320 /projects/astra-userbot/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /projects/astra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /projects/gemini-agent-bridge/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /projects/teldrive-lab/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /projects/vajra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /projects/vgu-signal/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp15-technical-writing/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp16-lab-automation/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp17-long-term-archive/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp21-ux-reliability/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp4-knowledge-archive/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp4-project-archive/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp8-engineering-growth/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/cp9-knowledge-expansion/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/engineering-lab-foundation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/post-cp10-stabilization/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/start/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/v1-0-0-responsive-release/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/v1-1-website-release/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /timeline/verification-as-a-theme/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /writing/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /writing/engineering-through-failure/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /writing/from-projects-to-engineering-knowledge/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /writing/production-readiness-is-a-boundary/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /writing/verification-first-engineering/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /writing/welcome/                   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile320 /writing/why-small-systems-win/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /                                   HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ mobile375 /about/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /changelog/                         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp15-technical-writing/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp16-lab-automation/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp17-long-term-archive/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp21-ux-reliability/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp43/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp6-production-readiness/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp7-maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp8-engineering-growth/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/cp9-knowledge-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/post-cp10-stabilization/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /changelog/v100/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /connections/                       HTTP 200 | overflow=false | errors=0 | warnings=2
+    WARN:  heading hierarchy jumps from h1 to h3
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /contact/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /docs/                              HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /docs/content-workflow/             HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /evidence/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /evidence/project-status-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /evidence/route-audit-coverage/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /evidence/vajra-independent-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /evidence/vgu-signal-conflict-model/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /experiments/                       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /experiments/architecture-boundary-test/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /experiments/first-experiment/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /experiments/local-first-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /experiments/project-knowledge-extraction/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /experiments/provenance-driven-information/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /experiments/repository-backed-status/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /experiments/static-discovery-and-performance-gates/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /experiments/static-garden-discovery/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /experiments/static-site-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /explore/                           HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile375 /garden/                            HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ mobile375 /garden/topics/accessibility/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/agents/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/ai/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/architecture/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/archive/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/astro/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/automation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/benchmark/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/browser/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/content-model/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/content/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/cost/                HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/databases/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/debugging/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/discovery/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/documentation/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/engineering/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/evidence/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/experiment/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/failure/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/git/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/information-systems/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/javascript/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/knowledge/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/learning/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/lifecycle/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/maintainability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/navigation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/observation/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/performance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/philosophy/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/projects/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/provenance/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/python/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/quality/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/security/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/simplicity/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/static-sites/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/systems/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/testing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/ux/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/vajra/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/verification/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/vgu/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/web-engineering/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/workflow/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /garden/topics/writing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/authority-is-a-boundary/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/authority-vs-capability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/bounded-complexity-scales-better/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/complexity-budget/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/content-integrity/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/cp20-experience-excellence/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/cp21-ux-reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/cp22-cp27-engineering-lab-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/deep-writing-preserves-source/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/derived-views-should-stay-disposable/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/durable-state-outlives-workers/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/engineering-philosophy/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/inspect-before-modifying/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/knowledge-should-show-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/long-lived-archives-need-explicit-chronology/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/project-lifecycle-is-history/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/project-status-is-part-of-the-archive/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/provenance-makes-memory-useful/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/repository-is-the-memory/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/static-discovery-scales-with-indexes/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/static-sites-can-record-live-work/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/verification-is-a-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /notes/verification-needs-independence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /projects/                          HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ mobile375 /projects/astra-userbot/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /projects/astra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /projects/gemini-agent-bridge/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /projects/teldrive-lab/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /projects/vajra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /projects/vgu-signal/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp15-technical-writing/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp16-lab-automation/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp17-long-term-archive/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp21-ux-reliability/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp4-knowledge-archive/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp4-project-archive/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp8-engineering-growth/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/cp9-knowledge-expansion/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/engineering-lab-foundation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/post-cp10-stabilization/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/start/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/v1-0-0-responsive-release/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/v1-1-website-release/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /timeline/verification-as-a-theme/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /writing/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /writing/engineering-through-failure/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /writing/from-projects-to-engineering-knowledge/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /writing/production-readiness-is-a-boundary/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /writing/verification-first-engineering/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /writing/welcome/                   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile375 /writing/why-small-systems-win/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /                                   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /about/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /changelog/                         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp15-technical-writing/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp16-lab-automation/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp17-long-term-archive/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp21-ux-reliability/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp43/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp6-production-readiness/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp7-maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp8-engineering-growth/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/cp9-knowledge-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/post-cp10-stabilization/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /changelog/v100/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /connections/                       HTTP 200 | overflow=false | errors=0 | warnings=2
+    WARN:  heading hierarchy jumps from h1 to h3
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /contact/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /docs/                              HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /docs/content-workflow/             HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /evidence/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /evidence/project-status-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /evidence/route-audit-coverage/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /evidence/vajra-independent-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /evidence/vgu-signal-conflict-model/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /experiments/                       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /experiments/architecture-boundary-test/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /experiments/first-experiment/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /experiments/local-first-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /experiments/project-knowledge-extraction/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /experiments/provenance-driven-information/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /experiments/repository-backed-status/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /experiments/static-discovery-and-performance-gates/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /experiments/static-garden-discovery/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /experiments/static-site-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /explore/                           HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile390 /garden/                            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/accessibility/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/agents/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/ai/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/architecture/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/archive/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/astro/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/automation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/benchmark/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/browser/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/content-model/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/content/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/cost/                HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/databases/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/debugging/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/discovery/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/documentation/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/engineering/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/evidence/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/experiment/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/failure/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/git/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/information-systems/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/javascript/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/knowledge/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/learning/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/lifecycle/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/maintainability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/navigation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/observation/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/performance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/philosophy/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/projects/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/provenance/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/python/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/quality/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/security/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/simplicity/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/static-sites/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/systems/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/testing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/ux/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/vajra/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/verification/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/vgu/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/web-engineering/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/workflow/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /garden/topics/writing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/authority-is-a-boundary/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/authority-vs-capability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/bounded-complexity-scales-better/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/complexity-budget/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/content-integrity/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/cp20-experience-excellence/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/cp21-ux-reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/cp22-cp27-engineering-lab-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/deep-writing-preserves-source/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/derived-views-should-stay-disposable/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/durable-state-outlives-workers/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/engineering-philosophy/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/inspect-before-modifying/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/knowledge-should-show-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/long-lived-archives-need-explicit-chronology/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/project-lifecycle-is-history/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/project-status-is-part-of-the-archive/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/provenance-makes-memory-useful/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/repository-is-the-memory/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/static-discovery-scales-with-indexes/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/static-sites-can-record-live-work/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/verification-is-a-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /notes/verification-needs-independence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /projects/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /projects/astra-userbot/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /projects/astra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /projects/gemini-agent-bridge/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /projects/teldrive-lab/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /projects/vajra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /projects/vgu-signal/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp15-technical-writing/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp16-lab-automation/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp17-long-term-archive/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp21-ux-reliability/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp4-knowledge-archive/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp4-project-archive/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp8-engineering-growth/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/cp9-knowledge-expansion/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/engineering-lab-foundation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/post-cp10-stabilization/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/start/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/v1-0-0-responsive-release/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/v1-1-website-release/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /timeline/verification-as-a-theme/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /writing/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /writing/engineering-through-failure/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /writing/from-projects-to-engineering-knowledge/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /writing/production-readiness-is-a-boundary/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /writing/verification-first-engineering/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /writing/welcome/                   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile390 /writing/why-small-systems-win/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✗ mobile430 /                                   HTTP 200 | overflow=false | errors=1 | warnings=1
+    ERROR: command palette keyboard interaction failed: focus restore target mismatch
+    WARN:  keyboard focus indicator may be insufficient
+✓ mobile430 /about/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /changelog/                         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp15-technical-writing/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp16-lab-automation/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp17-long-term-archive/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp21-ux-reliability/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp43/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp6-production-readiness/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp7-maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp8-engineering-growth/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/cp9-knowledge-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/post-cp10-stabilization/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /changelog/v100/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /connections/                       HTTP 200 | overflow=false | errors=0 | warnings=2
+    WARN:  heading hierarchy jumps from h1 to h3
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /contact/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /docs/                              HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /docs/content-workflow/             HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /evidence/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /evidence/project-status-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /evidence/route-audit-coverage/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /evidence/vajra-independent-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /evidence/vgu-signal-conflict-model/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /experiments/                       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /experiments/architecture-boundary-test/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /experiments/first-experiment/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /experiments/local-first-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /experiments/project-knowledge-extraction/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /experiments/provenance-driven-information/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /experiments/repository-backed-status/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /experiments/static-discovery-and-performance-gates/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /experiments/static-garden-discovery/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /experiments/static-site-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /explore/                           HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ mobile430 /garden/                            HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ mobile430 /garden/topics/accessibility/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/agents/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/ai/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/architecture/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/archive/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/astro/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/automation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/benchmark/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/browser/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/content-model/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/content/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/cost/                HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/databases/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/debugging/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/discovery/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/documentation/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/engineering/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/evidence/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/experiment/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/failure/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/git/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/information-systems/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/javascript/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/knowledge/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/learning/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/lifecycle/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/maintainability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/navigation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/observation/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/performance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/philosophy/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/projects/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/provenance/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/python/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/quality/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/security/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/simplicity/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/static-sites/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/systems/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/testing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/ux/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/vajra/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/verification/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/vgu/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/web-engineering/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/workflow/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /garden/topics/writing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/authority-is-a-boundary/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/authority-vs-capability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/bounded-complexity-scales-better/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/complexity-budget/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/content-integrity/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/cp20-experience-excellence/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/cp21-ux-reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/cp22-cp27-engineering-lab-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/deep-writing-preserves-source/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/derived-views-should-stay-disposable/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/durable-state-outlives-workers/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/engineering-philosophy/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/inspect-before-modifying/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/knowledge-should-show-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/long-lived-archives-need-explicit-chronology/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/project-lifecycle-is-history/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/project-status-is-part-of-the-archive/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/provenance-makes-memory-useful/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/repository-is-the-memory/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/static-discovery-scales-with-indexes/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/static-sites-can-record-live-work/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/verification-is-a-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /notes/verification-needs-independence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /projects/                          HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ mobile430 /projects/astra-userbot/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /projects/astra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /projects/gemini-agent-bridge/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /projects/teldrive-lab/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /projects/vajra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /projects/vgu-signal/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp15-technical-writing/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp16-lab-automation/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp17-long-term-archive/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp21-ux-reliability/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp4-knowledge-archive/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp4-project-archive/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp8-engineering-growth/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/cp9-knowledge-expansion/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/engineering-lab-foundation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/post-cp10-stabilization/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/start/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/v1-0-0-responsive-release/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/v1-1-website-release/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /timeline/verification-as-a-theme/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /writing/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /writing/engineering-through-failure/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /writing/from-projects-to-engineering-knowledge/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /writing/production-readiness-is-a-boundary/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /writing/verification-first-engineering/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /writing/welcome/                   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ mobile430 /writing/why-small-systems-win/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /                                   HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ tablet768 /about/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /changelog/                         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp15-technical-writing/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp16-lab-automation/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp17-long-term-archive/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp21-ux-reliability/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp43/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp6-production-readiness/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp7-maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp8-engineering-growth/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/cp9-knowledge-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/post-cp10-stabilization/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /changelog/v100/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /connections/                       HTTP 200 | overflow=false | errors=0 | warnings=2
+    WARN:  heading hierarchy jumps from h1 to h3
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /contact/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /docs/                              HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /docs/content-workflow/             HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /evidence/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /evidence/project-status-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /evidence/route-audit-coverage/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /evidence/vajra-independent-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /evidence/vgu-signal-conflict-model/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /experiments/                       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /experiments/architecture-boundary-test/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /experiments/first-experiment/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /experiments/local-first-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /experiments/project-knowledge-extraction/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /experiments/provenance-driven-information/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /experiments/repository-backed-status/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /experiments/static-discovery-and-performance-gates/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /experiments/static-garden-discovery/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /experiments/static-site-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /explore/                           HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet768 /garden/                            HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ tablet768 /garden/topics/accessibility/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/agents/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/ai/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/architecture/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/archive/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/astro/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/automation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/benchmark/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/browser/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/content-model/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/content/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/cost/                HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/databases/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/debugging/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/discovery/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/documentation/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/engineering/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/evidence/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/experiment/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/failure/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/git/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/information-systems/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/javascript/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/knowledge/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/learning/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/lifecycle/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/maintainability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/navigation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/observation/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/performance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/philosophy/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/projects/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/provenance/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/python/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/quality/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/security/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/simplicity/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/static-sites/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/systems/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/testing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/ux/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/vajra/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/verification/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/vgu/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/web-engineering/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/workflow/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /garden/topics/writing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/authority-is-a-boundary/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/authority-vs-capability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/bounded-complexity-scales-better/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/complexity-budget/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/content-integrity/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/cp20-experience-excellence/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/cp21-ux-reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/cp22-cp27-engineering-lab-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/deep-writing-preserves-source/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/derived-views-should-stay-disposable/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/durable-state-outlives-workers/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/engineering-philosophy/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/inspect-before-modifying/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/knowledge-should-show-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/long-lived-archives-need-explicit-chronology/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/project-lifecycle-is-history/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/project-status-is-part-of-the-archive/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/provenance-makes-memory-useful/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/repository-is-the-memory/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/static-discovery-scales-with-indexes/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/static-sites-can-record-live-work/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/verification-is-a-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /notes/verification-needs-independence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /projects/                          HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ tablet768 /projects/astra-userbot/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /projects/astra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /projects/gemini-agent-bridge/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /projects/teldrive-lab/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /projects/vajra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /projects/vgu-signal/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp15-technical-writing/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp16-lab-automation/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp17-long-term-archive/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp21-ux-reliability/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp4-knowledge-archive/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp4-project-archive/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp8-engineering-growth/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/cp9-knowledge-expansion/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/engineering-lab-foundation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/post-cp10-stabilization/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/start/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/v1-0-0-responsive-release/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/v1-1-website-release/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /timeline/verification-as-a-theme/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /writing/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /writing/engineering-through-failure/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /writing/from-projects-to-engineering-knowledge/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /writing/production-readiness-is-a-boundary/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /writing/verification-first-engineering/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /writing/welcome/                   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet768 /writing/why-small-systems-win/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /                                   HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ tablet1024 /about/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /changelog/                         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp15-technical-writing/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp16-lab-automation/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp17-long-term-archive/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp21-ux-reliability/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp43/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp6-production-readiness/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp7-maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp8-engineering-growth/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/cp9-knowledge-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/post-cp10-stabilization/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /changelog/v100/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /connections/                       HTTP 200 | overflow=false | errors=0 | warnings=2
+    WARN:  heading hierarchy jumps from h1 to h3
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /contact/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /docs/                              HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /docs/content-workflow/             HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /evidence/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /evidence/project-status-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /evidence/route-audit-coverage/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /evidence/vajra-independent-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /evidence/vgu-signal-conflict-model/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /experiments/                       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /experiments/architecture-boundary-test/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /experiments/first-experiment/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /experiments/local-first-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /experiments/project-knowledge-extraction/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /experiments/provenance-driven-information/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /experiments/repository-backed-status/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /experiments/static-discovery-and-performance-gates/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /experiments/static-garden-discovery/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /experiments/static-site-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /explore/                           HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ tablet1024 /garden/                            HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ tablet1024 /garden/topics/accessibility/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/agents/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/ai/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/architecture/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/archive/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/astro/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/automation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/benchmark/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/browser/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/content-model/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/content/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/cost/                HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/databases/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/debugging/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/discovery/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/documentation/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/engineering/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/evidence/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/experiment/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/failure/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/git/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/information-systems/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/javascript/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/knowledge/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/learning/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/lifecycle/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/maintainability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/navigation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/observation/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/performance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/philosophy/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/projects/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/provenance/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/python/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/quality/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/security/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/simplicity/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/static-sites/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/systems/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/testing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/ux/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/vajra/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/verification/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/vgu/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/web-engineering/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/workflow/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /garden/topics/writing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/authority-is-a-boundary/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/authority-vs-capability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/bounded-complexity-scales-better/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/complexity-budget/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/content-integrity/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/cp20-experience-excellence/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/cp21-ux-reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/cp22-cp27-engineering-lab-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/deep-writing-preserves-source/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/derived-views-should-stay-disposable/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/durable-state-outlives-workers/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/engineering-philosophy/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/inspect-before-modifying/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/knowledge-should-show-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/long-lived-archives-need-explicit-chronology/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/project-lifecycle-is-history/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/project-status-is-part-of-the-archive/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/provenance-makes-memory-useful/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/repository-is-the-memory/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/static-discovery-scales-with-indexes/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/static-sites-can-record-live-work/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/verification-is-a-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /notes/verification-needs-independence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /projects/                          HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ tablet1024 /projects/astra-userbot/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /projects/astra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /projects/gemini-agent-bridge/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /projects/teldrive-lab/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /projects/vajra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /projects/vgu-signal/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp15-technical-writing/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp16-lab-automation/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp17-long-term-archive/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp21-ux-reliability/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp4-knowledge-archive/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp4-project-archive/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp8-engineering-growth/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/cp9-knowledge-expansion/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/engineering-lab-foundation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/post-cp10-stabilization/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/start/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/v1-0-0-responsive-release/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/v1-1-website-release/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /timeline/verification-as-a-theme/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /writing/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /writing/engineering-through-failure/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /writing/from-projects-to-engineering-knowledge/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /writing/production-readiness-is-a-boundary/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /writing/verification-first-engineering/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /writing/welcome/                   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ tablet1024 /writing/why-small-systems-win/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /                                   HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ desktop1280 /about/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /changelog/                         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp15-technical-writing/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp16-lab-automation/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp17-long-term-archive/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp21-ux-reliability/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp43/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp6-production-readiness/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp7-maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp8-engineering-growth/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/cp9-knowledge-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/post-cp10-stabilization/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /changelog/v100/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /connections/                       HTTP 200 | overflow=false | errors=0 | warnings=2
+    WARN:  heading hierarchy jumps from h1 to h3
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /contact/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /docs/                              HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /docs/content-workflow/             HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /evidence/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /evidence/project-status-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /evidence/route-audit-coverage/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /evidence/vajra-independent-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /evidence/vgu-signal-conflict-model/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /experiments/                       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /experiments/architecture-boundary-test/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /experiments/first-experiment/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /experiments/local-first-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /experiments/project-knowledge-extraction/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /experiments/provenance-driven-information/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /experiments/repository-backed-status/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /experiments/static-discovery-and-performance-gates/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /experiments/static-garden-discovery/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /experiments/static-site-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /explore/                           HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1280 /garden/                            HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ desktop1280 /garden/topics/accessibility/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/agents/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/ai/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/architecture/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/archive/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/astro/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/automation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/benchmark/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/browser/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/content-model/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/content/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/cost/                HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/databases/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/debugging/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/discovery/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/documentation/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/engineering/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/evidence/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/experiment/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/failure/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/git/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/information-systems/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/javascript/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/knowledge/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/learning/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/lifecycle/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/maintainability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/navigation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/observation/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/performance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/philosophy/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/projects/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/provenance/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/python/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/quality/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/security/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/simplicity/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/static-sites/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/systems/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/testing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/ux/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/vajra/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/verification/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/vgu/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/web-engineering/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/workflow/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /garden/topics/writing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/authority-is-a-boundary/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/authority-vs-capability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/bounded-complexity-scales-better/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/complexity-budget/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/content-integrity/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/cp20-experience-excellence/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/cp21-ux-reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/cp22-cp27-engineering-lab-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/deep-writing-preserves-source/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/derived-views-should-stay-disposable/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/durable-state-outlives-workers/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/engineering-philosophy/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/inspect-before-modifying/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/knowledge-should-show-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/long-lived-archives-need-explicit-chronology/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/project-lifecycle-is-history/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/project-status-is-part-of-the-archive/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/provenance-makes-memory-useful/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/repository-is-the-memory/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/static-discovery-scales-with-indexes/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/static-sites-can-record-live-work/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/verification-is-a-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /notes/verification-needs-independence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /projects/                          HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  keyboard focus indicator may be insufficient
+✓ desktop1280 /projects/astra-userbot/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /projects/astra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /projects/gemini-agent-bridge/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /projects/teldrive-lab/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /projects/vajra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /projects/vgu-signal/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp15-technical-writing/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp16-lab-automation/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp17-long-term-archive/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp21-ux-reliability/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp4-knowledge-archive/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp4-project-archive/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp8-engineering-growth/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/cp9-knowledge-expansion/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/engineering-lab-foundation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/post-cp10-stabilization/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/start/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/v1-0-0-responsive-release/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/v1-1-website-release/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /timeline/verification-as-a-theme/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /writing/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /writing/engineering-through-failure/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /writing/from-projects-to-engineering-knowledge/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /writing/production-readiness-is-a-boundary/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /writing/verification-first-engineering/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /writing/welcome/                   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1280 /writing/why-small-systems-win/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /                                   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /about/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /changelog/                         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp15-technical-writing/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp16-lab-automation/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp17-long-term-archive/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp21-ux-reliability/     HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp43/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp6-production-readiness/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp7-maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp8-engineering-growth/  HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/cp9-knowledge-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/post-cp10-stabilization/ HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /changelog/v100/                    HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /connections/                       HTTP 200 | overflow=false | errors=0 | warnings=2
+    WARN:  heading hierarchy jumps from h1 to h3
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /contact/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /docs/                              HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /docs/content-workflow/             HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /evidence/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /evidence/project-status-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /evidence/route-audit-coverage/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /evidence/vajra-independent-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /evidence/vgu-signal-conflict-model/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /experiments/                       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /experiments/architecture-boundary-test/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /experiments/first-experiment/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /experiments/local-first-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /experiments/project-knowledge-extraction/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /experiments/provenance-driven-information/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /experiments/repository-backed-status/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /experiments/static-discovery-and-performance-gates/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /experiments/static-garden-discovery/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /experiments/static-site-verification/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /explore/                           HTTP 200 | overflow=false | errors=0 | warnings=1
+    WARN:  current navigation state may not match the current route
+✓ desktop1440 /garden/                            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/accessibility/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/agents/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/ai/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/architecture/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/archive/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/astro/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/automation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/benchmark/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/browser/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/content-model/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/content/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/cost/                HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/databases/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/debugging/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/discovery/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/documentation/       HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/engineering/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/evidence/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/experiment/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/failure/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/git/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/information-systems/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/javascript/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/knowledge/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/learning/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/lifecycle/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/maintainability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/maintenance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/navigation/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/observation/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/performance/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/philosophy/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/projects/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/provenance/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/python/              HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/quality/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/security/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/simplicity/          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/static-sites/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/systems/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/testing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/ux/                  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/vajra/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/verification/        HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/vgu/                 HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/web-engineering/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/workflow/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /garden/topics/writing/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/                             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/authority-is-a-boundary/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/authority-vs-capability/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/bounded-complexity-scales-better/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/complexity-budget/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/content-integrity/           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/cp20-experience-excellence/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/cp21-ux-reliability/         HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/cp22-cp27-engineering-lab-architecture/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/deep-writing-preserves-source/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/derived-views-should-stay-disposable/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/durable-state-outlives-workers/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/engineering-philosophy/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/inspect-before-modifying/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/knowledge-should-show-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/long-lived-archives-need-explicit-chronology/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/project-lifecycle-is-history/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/project-status-is-part-of-the-archive/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/provenance-makes-memory-useful/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/repository-is-the-memory/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/static-discovery-scales-with-indexes/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/static-sites-can-record-live-work/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/verification-is-a-boundary/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /notes/verification-needs-independence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /projects/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /projects/astra-userbot/            HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /projects/astra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /projects/gemini-agent-bridge/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /projects/teldrive-lab/             HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /projects/vajra/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /projects/vgu-signal/               HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/                          HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp10-project-intelligence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp11-knowledge-provenance/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp13-discovery-navigation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp14-engineering-evidence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp15-technical-writing/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp16-lab-automation/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp17-long-term-archive/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp20-experience-excellence/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp21-ux-reliability/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp22-cp27-engineering-lab-expansion/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp4-knowledge-archive/    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp4-project-archive/      HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp8-engineering-growth/   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/cp9-knowledge-expansion/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/engineering-lab-foundation/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/post-cp10-stabilization/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/start/                    HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/v1-0-0-responsive-release/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/v1-1-website-release/     HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /timeline/verification-as-a-theme/  HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /writing/                           HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /writing/engineering-through-failure/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /writing/from-projects-to-engineering-knowledge/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /writing/production-readiness-is-a-boundary/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /writing/verification-first-engineering/ HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /writing/welcome/                   HTTP 200 | overflow=false | errors=0 | warnings=0
+✓ desktop1440 /writing/why-small-systems-win/     HTTP 200 | overflow=false | errors=0 | warnings=0
+
+=== SUMMARY ===
+Cases:     1192
+Passed:    1191
+Failed:    1
+Warnings:  202
+Screenshots: /home/thakuralok/alok-engineering-lab/audit/
+Results:     /home/thakuralok/alok-engineering-lab/audit/results.json
+Summary:     /home/thakuralok/alok-engineering-lab/audit/summary.json
+
+✗ 1 audit case(s) need attention.

@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/prepare-fonts.mjs && npm run validate && astro check && astro build",
+    "build": "node scripts/prepare-fonts.mjs && npm run validate && astro check && astro build && pagefind --site dist",
     "audit": "node scripts/visual-audit.mjs",
     "preview": "astro preview",
     "astro": "astro",
@@ -22,7 +22,7 @@
     "validate:writing": "node scripts/validate-writing.mjs",
     "audit:performance": "node scripts/performance-audit.mjs",
     "new:content": "node scripts/new-content.mjs",
-    "check": "npm run validate && astro check && astro build && npm run audit",
+    "check": "npm run validate && astro check && npm run build && npm run audit && npm run audit:performance",
     "validate:site-control": "node scripts/validate-site-control.mjs"
   },
   "dependencies": {
@@ -40,6 +40,7 @@
     "@astrojs/check": "^0.9.10",
     "@playwright/test": "^1.62.1",
     "@tailwindcss/typography": "^0.5.20",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "pagefind": "^1.5.2"
   }
 }

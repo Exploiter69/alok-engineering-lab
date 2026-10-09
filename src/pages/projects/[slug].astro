@@ -20,7 +20,7 @@ const timelineItems = (await getCollection("timeline"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .map(item => ({ title: item.data.title, description: item.data.description, date: item.data.date, href: `/timeline/${item.id}` }));
 ---
-<Layout title={project.data.title} description={project.data.description}>
+<Layout title={project.data.title} description={project.data.description} searchType="Project" searchTags={project.data.tags}>
 <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
   <a href="/projects" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-neutral-500 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span aria-hidden="true">←</span>Projects</a>
   <header class="mt-12 max-w-3xl border-b border-neutral-900 pb-10">
