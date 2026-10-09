@@ -1,5 +1,5 @@
 import { send } from "../lib/response.mjs";
-import { requireSameOrigin } from "../lib/security.mjs";
+import { parseJsonBody, requireCsrf, requireSameOrigin } from "../lib/security.mjs";
 import { requireSession } from "../lib/session.mjs";
 import { readRecord, repositorySnapshot, repositoryRuns, contentHealth, auditFromHealth, serializeExport, markdownArchive, validateBulkSelection, bulkMetadata, serializeMetadata } from "../lib/intelligence.mjs";
 import { tree, writeFile } from "../lib/content.mjs";
@@ -114,8 +114,9 @@ export default async function handler(req, res) {
     }
 
     if (req.method === "POST") {
-      if (!requireSameOrigin(req)) return send(res, 403, { error: "cross_origin_request" });
-      const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body || {};
+      if (!requireSameOrigin(req) || !requireCsrf(req, session)) return send(res, 403, { error: "csrf_validation_failed" });
+      let body;
+    try { body = parseJsonBody(req); } catch (error) { return send(res, error.status || 400, { error: error.message }); }
       if (body.action === "bulk") return send(res, 200, await bulk(session.token, body));
       if (body.action === "export") {
         const exportRef = body.ref || "master";
@@ -123,15 +124,10 @@ export default async function handler(req, res) {
         const health = await contentHealth(session.token, exportRef);
         const repository = await repositorySnapshot(session.token, exportRef);
         const runs = await repositoryRuns(session.token, exportRef, 12);
+        const config = await readSiteControl(session.token, exportRef).catch(() => null);
         const selection = Array.isArray(body.selection) ? body.selection : null;
         if (selection && !validateBulkSelection(selection).ok) return send(res, 400, { error: "invalid_selection" });
         const format = body.format === "markdown" ? "markdown" : "json";
-        const siteControl = format === "json" ? await readSiteControl(session.token, exportRef) : null;
-        const config = siteControl ? {
-          site: siteControl.site.value,
-          navigation: siteControl.navigation.value,
-          redirects: siteControl.redirects.value,
-        } : null;
         const payload = format === "markdown" ? markdownArchive(health, selection) : JSON.stringify(serializeExport({ health, repository, runs, config, selection }), null, 2);
         res.statusCode = 200;
         res.setHeader("Content-Type", format === "markdown" ? "text/markdown; charset=utf-8" : "application/json; charset=utf-8");
