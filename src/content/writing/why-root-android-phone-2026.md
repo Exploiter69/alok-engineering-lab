@@ -9,7 +9,7 @@ tags:
   - "Security"
   - "Mobile Engineering"
 related: []
-status: "draft"
+status: "published"
 format: "essay"
 audience: "Android enthusiasts, curious beginners, Linux learners, and developers who want to understand Android rooting, its benefits, limitations, security implications, and practical uses."
 ---
