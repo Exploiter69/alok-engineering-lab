@@ -229,7 +229,8 @@ Verified on Phase 5 HEAD:
 - interaction responsiveness audit passed
 - production viewport audit passed
 
-Phase 4 PR #8 was merged as `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d` after the updated Phase 4 head passed the Quality workflow and received a READY Vercel preview. Phase 5 is now the next integration step. Its current head predates the Phase 4 merge-gate hardening commit, but it does not modify that file relative to its Phase 4 base; verify the PR mergeability and all fresh checks before merging.
+Phase 4 PR #8 merged as `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d` after Quality passed and its Vercel preview reached READY. Phase 5 PR #9 merged as `3ac527254efc3658169e62e87d30f1162c523459` after fresh Quality run `37888706035` passed and its Vercel preview reached READY. Phase 6 remains the final integration step.
+
 
 ## Admin Phase 5 targeted completeness audit
 
@@ -238,6 +239,42 @@ A targeted post-implementation audit found and corrected three concrete issues w
 - Content relationship target validation now uses the correct Markdown/MDX path expression.
 - Malformed percent-encoded cookies are rejected safely instead of throwing during session parsing.
 
-Regression coverage was added for configuration export and malformed-cookie handling. Phase 4 is now merged; Phase 5 still requires a fresh READY Vercel preview for its current head and green Quality checks before merge.
+Regression coverage was added for configuration export and malformed-cookie handling. Phase 5 is merged; its fresh Quality run `37888706035` passed and its Vercel preview reached READY.
 
-Phase 5 verification note: the first post-audit Quality run exposed only test-file newline escaping introduced by the regression-test append; those test files were corrected. A fresh Quality run is required before Phase 5 can be called verified after these changes.
+Phase 5 verification: fresh Quality run `37888706035` passed the admin-security suite and all repository validation, build, browser, performance, Lighthouse, interaction and viewport audits.
+
+
+## Admin integration status — 2026-10-09
+
+Phase 4 PR #8 is merged as `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d`. Phase 5 PR #9 is merged as `3ac527254efc3658169e62e87d30f1162c523459`; its fresh Quality run `37888706035` passed and its Vercel preview reached READY. These current results supersede the historical Phase 5 gate note above. Phase 6 still requires fresh Quality and Vercel verification on its current head before final integration.
+
+
+## Phase 6 independent hardening
+
+Phase 6 independent hardening is implemented and quality-verified on branch `admin/phase-6-hardening`.
+
+Verified independently:
+- explicit `ADMIN_BASE_URL` OAuth callback construction
+- `__Host-` session/OAuth cookies
+- bounded JSON mutation parsing and controlled malformed-body responses
+- GitHub request timeouts and sanitized upstream failures
+- strict `.md` / `.mdx` content path matching
+- engineering-intelligence export configuration wiring
+- command-palette modal focus containment and restoration
+- GitHub failure regression coverage
+
+Quality run: GitHub Actions run `37656763756` — admin-security PASS; repository validation/build/browser/performance/Lighthouse/interaction/viewport checks PASS.
+
+Phase boundary remains:
+- Phase 4: merged as `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d`; Quality and Vercel preview passed.
+- Phase 5: merged as `3ac527254efc3658169e62e87d30f1162c523459`; fresh Quality and Vercel preview passed.
+- Phase 6 final integration: pending fresh verification on the current head.
+- Final production verification: pending the Phase 6 merge and resulting READY production deployment.
+
+## Admin Phase 6 current quality checkpoint
+
+Phase 6 hardening remains on `admin/phase-6-hardening` / draft PR #10. The branch preserves its existing hardening history and now additionally enforces CSRF tokens on admin mutations and safely handles malformed cookie encoding.
+
+Quality workflow `37659657170` passed `admin-security` and `build-and-audit`, including repository validation, build, browser quality, performance, Lighthouse, interaction responsiveness and production viewport checks.
+
+Phase 6 status is **IMPLEMENTED / PRIOR QUALITY VERIFIED / FINAL INTEGRATION PENDING**. Phases 4 and 5 are now merged; this branch needs fresh Quality and Vercel checks on its current head before Phase 6 can merge.
