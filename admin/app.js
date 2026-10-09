@@ -8,7 +8,9 @@ const esc = (value) => {
 };
 
 async function api(path, options = {}) {
-  const response = await fetch(path, { credentials: "same-origin", ...options, headers: { "Content-Type": "application/json", ...(options.headers || {}) } });
+  const method = String(options.method || "GET").toUpperCase();
+  const csrf = method === "GET" || method === "HEAD" ? {} : { "X-CSRF-Token": state.session?.csrf || "" };
+  const response = await fetch(path, { credentials: "same-origin", ...options, headers: { "Content-Type": "application/json", ...csrf, ...(options.headers || {}) } });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.errors?.join("\n") || data.message || data.error || `Request failed: ${response.status}`);
   return data;
@@ -233,7 +235,7 @@ async function evidenceManager(health) {
 
 async function downloadExport(format, selection) {
   try {
-    const response=await fetch("/api/intelligence",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"export",format,selection:selection.length?selection:null})});
+    const response=await fetch("/api/intelligence",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json","X-CSRF-Token":state.session?.csrf || ""},body:JSON.stringify({action:"export",format,selection:selection.length?selection:null})});
     if(!response.ok){const data=await response.json().catch(()=>({}));throw new Error(data.message||data.error||`Export failed: ${response.status}`);}
     const blob=await response.blob(), url=URL.createObjectURL(blob), anchor=document.createElement("a");
     anchor.href=url; anchor.download=format==="markdown"?"engineering-lab-archive.md":"engineering-lab-export.json"; anchor.click(); URL.revokeObjectURL(url);
@@ -253,20 +255,24 @@ function commandDefinitions() {
 function openCommandPalette() {
   if(document.querySelector("#command-palette")) return;
   const commands=commandDefinitions(), overlay=document.createElement("div");
+  const previous=document.activeElement;
   overlay.id="command-palette"; overlay.className="command-overlay";
-  overlay.innerHTML=`<div class="command-dialog" role="dialog" aria-modal="true" aria-labelledby="command-title"><div class="command-head"><h2 id="command-title">Command palette</h2><kbd>Esc</kbd></div><input id="command-search" aria-label="Search commands" placeholder="Search commands…" autocomplete="off"><div id="command-list" role="listbox"></div><p class="tiny">↑ ↓ navigate · Enter run · Escape close</p></div>`;
+  overlay.innerHTML=`<div class="command-dialog" role="dialog" aria-modal="true" aria-labelledby="command-title" aria-describedby="command-help"><div class="command-head"><h2 id="command-title">Command palette</h2><button id="command-close" class="button secondary" type="button">Close</button></div><input id="command-search" aria-label="Search commands" placeholder="Search commands…" autocomplete="off"><div id="command-list" role="listbox" aria-label="Commands"></div><p id="command-help" class="tiny">↑ ↓ navigate · Enter run · Escape close</p></div>`;
   document.body.appendChild(overlay);
   const input=overlay.querySelector("#command-search"), listNode=overlay.querySelector("#command-list"); let index=0;
+  const close=()=>{overlay.remove();if(previous instanceof HTMLElement&&document.contains(previous))previous.focus();};
   function render(filter="") {
     const filtered=commands.filter(([label])=>label.toLowerCase().includes(filter.toLowerCase()));
     index=Math.min(index,Math.max(filtered.length-1,0));
-    listNode.innerHTML=filtered.length?filtered.map(([label],i)=>`<button class="command-item ${i===index?"active":""}" role="option" aria-selected="${i===index}">${esc(label)}</button>`).join(""):"<div class='empty'>No commands match.</div>";
-    listNode.querySelectorAll(".command-item").forEach((button,i)=>button.addEventListener("click",()=>{filtered[i][1]();overlay.remove();}));
+    listNode.innerHTML=filtered.length?filtered.map(([label],i)=>`<button class="command-item ${i===index?"active":""}" role="option" aria-selected="${i===index}" type="button">${esc(label)}</button>`).join(""):"<div class='empty'>No commands match.</div>";
+    listNode.querySelectorAll(".command-item").forEach((button,i)=>button.addEventListener("click",()=>{filtered[i][1]();close();}));
     return filtered;
   }
   render(); input.addEventListener("input",()=>render(input.value));
-  input.addEventListener("keydown",event=>{const filtered=render(input.value);if(event.key==="ArrowDown"){event.preventDefault();index=Math.min(index+1,filtered.length-1);render(input.value);}if(event.key==="ArrowUp"){event.preventDefault();index=Math.max(index-1,0);render(input.value);}if(event.key==="Enter"&&filtered[index]){event.preventDefault();filtered[index][1]();overlay.remove();}if(event.key==="Escape"){event.preventDefault();overlay.remove();}});
-  overlay.addEventListener("click",event=>{if(event.target===overlay)overlay.remove();}); input.focus();
+  input.addEventListener("keydown",event=>{const filtered=render(input.value);if(event.key==="ArrowDown"){event.preventDefault();if(filtered.length)index=(index+1)%filtered.length;render(input.value);}else if(event.key==="ArrowUp"){event.preventDefault();if(filtered.length)index=(index-1+filtered.length)%filtered.length;render(input.value);}else if(event.key==="Enter"&&filtered[index]){event.preventDefault();filtered[index][1]();close();}else if(event.key==="Escape"){event.preventDefault();close();}});
+  overlay.addEventListener("keydown",event=>{if(event.key!=="Tab")return;const focusable=[...overlay.querySelectorAll("button,input")].filter(node=>!node.disabled);if(!focusable.length)return;const first=focusable[0],last=focusable.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}});
+  overlay.addEventListener("click",event=>{if(event.target===overlay)close();});
+  overlay.querySelector("#command-close").addEventListener("click",close); input.focus();
 }
 
 function installCommandShortcut() {
