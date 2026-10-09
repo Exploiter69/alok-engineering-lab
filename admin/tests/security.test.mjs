@@ -28,7 +28,39 @@ test("security headers prevent indexing and framing", () => {
   assert.equal(headers["X-Frame-Options"], "DENY");
 });
 
+
+test("admin base URL is explicit and production-safe", () => {
+  delete process.env.ADMIN_BASE_URL;
+  assert.throws(() => security.adminBaseUrl(), /must be configured/);
+  process.env.ADMIN_BASE_URL = "https://admin.example.test";
+  process.env.NODE_ENV = "production";
+  assert.equal(security.adminBaseUrl(), "https://admin.example.test");
+  process.env.ADMIN_BASE_URL = "https://admin.example.test/path";
+  assert.throws(() => security.adminBaseUrl(), /must be an origin/);
+  process.env.ADMIN_BASE_URL = "http://admin.example.test";
+  assert.throws(() => security.adminBaseUrl(), /HTTPS in production/);
+  delete process.env.ADMIN_BASE_URL;
+});
+
+test("admin mutation bodies are bounded and reject malformed JSON", () => {
+  assert.deepEqual(security.parseJsonBody({ body: '{"ok":true}' }), { ok: true });
+  assert.throws(() => security.parseJsonBody({ body: "{" }), /invalid JSON body/);
+  assert.throws(() => security.parseJsonBody({ body: "x".repeat(1_000_001) }), /request body too large/);
+});
+
+test("session cookies use host-only prefixes", () => {
+  assert.match(security.cookie(security.SESSION_COOKIE, "abc", 3600), /^__Host-ael_admin_session=/);
+  assert.match(security.cookie(security.OAUTH_COOKIE, "abc", 600), /^__Host-ael_admin_oauth=/);
+});
+
 test("malformed cookie encoding is ignored instead of throwing", () => {
   assert.doesNotThrow(() => security.parseCookies("a=%E0%A4%A; b=safe"));
   assert.equal(security.parseCookies("a=%E0%A4%A; b=safe").b, "safe");
+});
+
+test("CSRF tokens require an exact match", () => {
+  const req = { headers: { "x-csrf-token": "token" } };
+  assert.equal(security.requireCsrf(req, { csrf: "token" }), true);
+  assert.equal(security.requireCsrf(req, { csrf: "other" }), false);
+  assert.equal(security.requireCsrf({ headers: {} }, { csrf: "token" }), false);
 });
