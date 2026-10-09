@@ -214,30 +214,18 @@ The remaining implementation scope is:
 These are continuation requirements from the original admin implementation specification, not previously completed work. Each phase remains subject to the repository Quality workflow, Git review and production verification.
 
 
-## Admin Phase 5 checkpoint
+## Admin Phase 4 — Git / CI / Deployment
 
-Phase 5 — Engineering Intelligence is implemented and verified on branch `admin/phase-5-engineering-intelligence` / PR #9, based directly on the frozen Phase 4 HEAD `af8968bbf767748aa839a8bd952734f61426a4e8`.
+Merged to master in PR #8 at `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d`. The admin exposes branch/PR state, content-aware diffs, GitHub Actions status and safe failed-job reruns, guarded merge readiness, and optional server-side Vercel deployment visibility.
 
-Verified on Phase 5 HEAD:
-- GitHub Actions Quality run `37653718026` passed
-- admin suite: 27/27 tests passed
-- repository validation passed
-- production build passed
-- browser quality audit passed
-- performance audit passed
-- Lighthouse audit passed
-- interaction responsiveness audit passed
-- production viewport audit passed
+## Admin Phase 5 — Engineering Intelligence
 
-Phase 4 PR #8 was merged as `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d` after the updated Phase 4 head passed the Quality workflow and received a READY Vercel preview. Phase 5 is now the next integration step. Its current head predates the Phase 4 merge-gate hardening commit, but it does not modify that file relative to its Phase 4 base; verify the PR mergeability and all fresh checks before merging.
+Merged to master in PR #9 at `3ac527254efc3658169e62e87d30f1162c523459`. Includes repository-derived health and content-integrity reports, evidence/provenance and relationship intelligence, JSON/Markdown exports, safe branch-scoped bulk operations, semantic diffs, and command-palette actions. Phase 5 Quality and preview gates passed before merge.
 
-## Admin Phase 5 targeted completeness audit
+## Admin Phase 6 — Hardening / Final Verification
 
-A targeted post-implementation audit found and corrected three concrete issues without changing the Phase 5 architecture:
-- JSON export now loads and includes repository-backed site configuration instead of referencing an undefined value.
-- Content relationship target validation now uses the correct Markdown/MDX path expression.
-- Malformed percent-encoded cookies are rejected safely instead of throwing during session parsing.
+Integration PR #13: https://github.com/Exploiter69/alok-engineering-lab/pull/13
 
-Regression coverage was added for configuration export and malformed-cookie handling. Phase 4 is now merged; Phase 5 still requires a fresh READY Vercel preview for its current head and green Quality checks before merge.
+Ported the previously quality-verified hardening changes onto current master to resolve the historical draft PR #10 merge conflict. Included OAuth callback/cookie hardening, bounded and sanitized GitHub API failures, request timeouts, strict content-path matching, safe malformed-cookie handling, CSRF/session protections, and regression tests.
 
-Phase 5 verification note: the first post-audit Quality run exposed only test-file newline escaping introduced by the regression-test append; those test files were corrected. A fresh Quality run is required before Phase 5 can be called verified after these changes.
+Current integration head: `961dbea45252641a4d748455c4edf8f4f2ec1532`. GitHub Actions Quality run `37889370883` was in progress at the last check; Vercel status was pending. Phase 6 remains **implemented, integration checks pending**. Do not merge until Quality passes and the deployment gate is resolved. Vercel's free-tier daily deployment limit has previously blocked previews; do not upgrade or incur costs.
