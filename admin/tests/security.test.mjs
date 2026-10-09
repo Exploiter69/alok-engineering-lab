@@ -69,6 +69,6 @@ test("CSRF tokens require an exact match", () => {
 
 test("engineering intelligence mutations require CSRF and bounded JSON parsing", async () => {
   const source = await readFile(new URL("../api/intelligence.mjs", import.meta.url), "utf8");
-  assert.match(source, /requireCsrf\\(req, session\\)/);
-  assert.match(source, /parseJsonBody\\(req\\)/);
+  assert.match(source, /requireCsrf\(req, session\)/);
+  assert.match(source, /parseJsonBody\(req\)/);
 });
