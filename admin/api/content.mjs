@@ -59,8 +59,8 @@ export default async function handler(req,res) {
       const errors = validateMetadata(body.collection,body.metadata,refs);
       if (errors.length) return send(res,422,{error:"validation_failed",errors});
       const entries = await tree(session.token, body.branch);
-      const known = new Set(entries.filter((entry) => /^(src\/content\/[^/]+\/.*\\.(md|mdx))$/.test(entry.path)).map((entry) => {
-        const match = entry.path.match(/^src\/content\/([^/]+)\/(.+)\\.(md|mdx)$/);
+      const known = new Set(entries.filter((entry) => /^src\/content\/[^/]+\/.*\.(md|mdx)$/.test(entry.path)).map((entry) => {
+        const match = entry.path.match(/^src\/content\/([^/]+)\/(.+)\.(md|mdx)$/);
         return match ? `${match[1]}:${match[2]}` : null;
       }).filter(Boolean));
       for (const reference of refs) {

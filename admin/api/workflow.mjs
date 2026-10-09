@@ -3,6 +3,7 @@ import { requireSession } from "../lib/session.mjs";
 import { requireSameOrigin } from "../lib/security.mjs";
 import { branches, branchStatus, commitStatus, createPullRequest, mergePullRequest, pullRequests, rerunFailed, workflowRuns } from "../lib/git-workflow.mjs";
 import { deployments } from "../lib/vercel.mjs";
+import { contentAwareDiff } from "../lib/intelligence.mjs";
 
 export default async function handler(req, res) {
   const session = requireSession(req, res);

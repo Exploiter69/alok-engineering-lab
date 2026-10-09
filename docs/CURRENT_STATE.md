@@ -212,3 +212,32 @@ The remaining implementation scope is:
 - Phase 6 — Hardening / Final Verification
 
 These are continuation requirements from the original admin implementation specification, not previously completed work. Each phase remains subject to the repository Quality workflow, Git review and production verification.
+
+
+## Admin Phase 5 checkpoint
+
+Phase 5 — Engineering Intelligence is implemented and verified on branch `admin/phase-5-engineering-intelligence` / PR #9, based directly on the frozen Phase 4 HEAD `af8968bbf767748aa839a8bd952734f61426a4e8`.
+
+Verified on Phase 5 HEAD:
+- GitHub Actions Quality run `37653718026` passed
+- admin suite: 27/27 tests passed
+- repository validation passed
+- production build passed
+- browser quality audit passed
+- performance audit passed
+- Lighthouse audit passed
+- interaction responsiveness audit passed
+- production viewport audit passed
+
+Phase 4 PR #8 was merged as `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d` after the updated Phase 4 head passed the Quality workflow and received a READY Vercel preview. Phase 5 is now the next integration step. Its current head predates the Phase 4 merge-gate hardening commit, but it does not modify that file relative to its Phase 4 base; verify the PR mergeability and all fresh checks before merging.
+
+## Admin Phase 5 targeted completeness audit
+
+A targeted post-implementation audit found and corrected three concrete issues without changing the Phase 5 architecture:
+- JSON export now loads and includes repository-backed site configuration instead of referencing an undefined value.
+- Content relationship target validation now uses the correct Markdown/MDX path expression.
+- Malformed percent-encoded cookies are rejected safely instead of throwing during session parsing.
+
+Regression coverage was added for configuration export and malformed-cookie handling. Phase 4 is now merged; Phase 5 still requires a fresh READY Vercel preview for its current head and green Quality checks before merge.
+
+Phase 5 verification note: the first post-audit Quality run exposed only test-file newline escaping introduced by the regression-test append; those test files were corrected. A fresh Quality run is required before Phase 5 can be called verified after these changes.
