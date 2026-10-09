@@ -26,9 +26,16 @@ function iso(value) {
   return Number.isNaN(date.getTime()) ? null : date.toISOString();
 }
 
+export function contentEntryFromPath(path) {
+  const normalized = String(path || "");
+  const match = normalized.match(/^src\/content\/([^/]+)\/([^/]+)\.(md|mdx)$/);
+  return match && validCollection(match[1]) && validSlug(match[2])
+    ? { collection: match[1], slug: match[2], path: normalized, extension: match[3] }
+    : null;
+}
+
 function slugFromPath(path) {
-  const match = path.match(/^src\/content\/([^/]+)\/(.+)\.(md|mdx)$/);
-  return match && validCollection(match[1]) ? { collection: match[1], slug: match[2], path } : null;
+  return contentEntryFromPath(path);
 }
 
 function unique(values) {

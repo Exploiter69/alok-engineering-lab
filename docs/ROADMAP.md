@@ -273,3 +273,12 @@ The repository-backed admin control plane follows the original implementation sp
 - complete documentation and production verification
 
 These phases extend, rather than replace, the completed Phase 0–3 admin implementation. Master remains protected by GitHub review/CI; the public Astro site remains static and Git remains the source of truth.
+
+
+## Admin phase delivery status — 2026-10-09
+
+- **Phase 4 — Git / CI / Deployment: MERGED.** PR #8, merge commit `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d`.
+- **Phase 5 — Engineering Intelligence: MERGED.** PR #9, merge commit `3ac527254efc3658169e62e87d30f1162c523459`.
+- **Phase 6 — Hardening / Final Verification: INTEGRATION CHECKS PENDING.** PR #13 ports the security/reliability hardening onto current master after historical PR #10 developed merge conflicts. Required gate: green current Quality workflow, review of its changed files, and a confirmed READY deployment/preview status. If Vercel free-tier deployment quota blocks a preview, preserve the $0 constraint and report the limitation rather than upgrading.
+
+Do not mark the admin platform complete until Phase 6 is merged and final production verification is recorded. Preserve Astro, static public-site architecture, Git-backed content, and the existing `v1.0.0` history.

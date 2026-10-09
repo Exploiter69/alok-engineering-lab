@@ -214,3 +214,12 @@ The remaining admin roadmap is explicitly recorded here so future sessions do no
 - Phase 6 — Hardening / Final Verification: security, public-site security, accessibility, responsive behavior, performance, failure/recovery and final production verification.
 
 Phase 0–3 remain complete checkpoints. Do not claim Phase 4–6 complete until each phase is implemented, tested, documented, committed, merged to master and independently verified.
+
+
+## Admin Phase 4–6 integration status — 2026-10-09
+
+- Phase 4 — Git / CI / Deployment: merged to master in PR #8 at `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d`.
+- Phase 5 — Engineering Intelligence: merged to master in PR #9 at `3ac527254efc3658169e62e87d30f1162c523459`.
+- Phase 6 — Security / Accessibility / Reliability hardening: integrated onto current master in branch `admin/phase-6-integration`, PR #13. Final Quality and deployment checks are pending; do not call Phase 6 complete or merge until those checks pass.
+- Historical PR #10 had merge conflicts against updated master. Its hardening changes are being integrated through PR #13 without rewriting master or the `v1.0.0` history.
+- Keep Astro public output static, Git as the source of truth, and the project at ₹0 / $0.
