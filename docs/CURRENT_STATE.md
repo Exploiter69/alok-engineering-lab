@@ -229,7 +229,7 @@ Verified on Phase 5 HEAD:
 - interaction responsiveness audit passed
 - production viewport audit passed
 
-Phase 5 remains intentionally unmerged because Phase 4 PR #8 has not yet completed its required Vercel deployment gate. Do not merge Phase 5 until Phase 4 is legitimately merged and the Phase 5 branch is safely reconciled with the resulting master state.
+Phase 4 PR #8 was merged as `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d` after the updated Phase 4 head passed the Quality workflow and received a READY Vercel preview. Phase 5 is now the next integration step. Its current head predates the Phase 4 merge-gate hardening commit, but it does not modify that file relative to its Phase 4 base; verify the PR mergeability and all fresh checks before merging.
 
 ## Admin Phase 5 targeted completeness audit
 
@@ -238,6 +238,6 @@ A targeted post-implementation audit found and corrected three concrete issues w
 - Content relationship target validation now uses the correct Markdown/MDX path expression.
 - Malformed percent-encoded cookies are rejected safely instead of throwing during session parsing.
 
-Regression coverage was added for configuration export and malformed-cookie handling. Phase 5 remains unmerged and dependency-blocked by Phase 4.
+Regression coverage was added for configuration export and malformed-cookie handling. Phase 4 is now merged; Phase 5 still requires a fresh READY Vercel preview for its current head and green Quality checks before merge.
 
 Phase 5 verification note: the first post-audit Quality run exposed only test-file newline escaping introduced by the regression-test append; those test files were corrected. A fresh Quality run is required before Phase 5 can be called verified after these changes.
