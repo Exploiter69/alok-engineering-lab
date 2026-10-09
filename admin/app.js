@@ -7,6 +7,16 @@ const esc = (value) => {
   return node.innerHTML;
 };
 
+function commitLabel(commit) {
+  if (!commit || typeof commit !== "object") return esc(commit || "created");
+  const sha = typeof commit.sha === "string" ? commit.sha : "";
+  const shortSha = sha ? sha.slice(0, 12) : "created";
+  const url = typeof commit.html_url === "string" ? commit.html_url : "";
+  return url
+    ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer"><code>${esc(shortSha)}</code></a>`
+    : `<code>${esc(shortSha)}</code>`;
+}
+
 async function api(path, options = {}) {
   const method = String(options.method || "GET").toUpperCase();
   const csrf = method === "GET" || method === "HEAD" ? {} : { "X-CSRF-Token": state.session?.csrf || "" };
@@ -428,7 +438,7 @@ async function save(def) {
     const branch = await ensureBranch(slug);
     const result = await api("/api/content", { method:"POST", body: JSON.stringify({ collection:state.collection, slug, metadata, body:document.querySelector("#body").value, branch, sha:state.sha, extension:state.extension, message:`admin: update ${state.collection}/${slug}` }) });
     state.slug = slug; state.sha = result.content?.sha || null;
-    document.querySelector("#validation").innerHTML = `<strong>✓ Saved</strong> <span class="muted">Commit ${esc(result.commit)}</span>`;
+    document.querySelector("#validation").innerHTML = `<strong>✓ Saved</strong> <span class="muted">Commit ${commitLabel(result.commit)}</span>`;
   } catch (error) { showError(error.message); }
 }
 
@@ -438,7 +448,7 @@ async function remove() {
     const branch = await ensureBranch(state.slug);
     const data = await api(`/api/content?collection=${encodeURIComponent(state.collection)}&slug=${encodeURIComponent(state.slug)}&ref=${encodeURIComponent(branch)}`);
     const result = await api(`/api/content?collection=${encodeURIComponent(state.collection)}&slug=${encodeURIComponent(state.slug)}&branch=${encodeURIComponent(branch)}&path=${encodeURIComponent(data.path)}&sha=${encodeURIComponent(data.sha)}`, { method:"DELETE" });
-    document.querySelector("#validation").innerHTML = `<strong>✓ Deleted on branch</strong> <span class="muted">Commit ${esc(result.commit)}</span>`;
+    document.querySelector("#validation").innerHTML = `<strong>✓ Deleted on branch</strong> <span class="muted">Commit ${commitLabel(result.commit)}</span>`;
   } catch (error) { showError(error.message); }
 }
 
