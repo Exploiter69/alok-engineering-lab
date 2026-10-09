@@ -200,3 +200,15 @@ Implemented as the next capability layer after CP21:
 Experience refinement after CP27 adds clearer positioning, repository-derived proof metrics, simplified navigation, static command search, technology filtering, contact/discovery surfaces and a static social preview. Personal contact credentials are only added when verified public destinations exist.
 
 Final release status remains pending until the combined GitHub Actions Quality run passes and the resulting Vercel deployment is READY.
+
+
+## Admin continuation
+
+Admin Phase 0–3 are complete through master commit 21b01332ba10761e525881b0604e7acb3dae9c66.
+
+The remaining implementation scope is:
+- Phase 4 — Git / CI / Deployment
+- Phase 5 — Engineering Intelligence
+- Phase 6 — Hardening / Final Verification
+
+These are continuation requirements from the original admin implementation specification, not previously completed work. Each phase remains subject to the repository Quality workflow, Git review and production verification.

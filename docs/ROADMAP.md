@@ -240,3 +240,36 @@ The post-CP27 refinement pass implements the actionable parts of the external UX
 - contact added to sitemap
 
 Not invented: email, LinkedIn, education, internship claims, personal metrics, testimonials or a fabricated resume credential set. The repository remains the source of truth and the site remains ₹0 / $0.
+
+
+## Admin Platform — Phase 4–6 continuation scope
+
+The repository-backed admin control plane follows the original implementation specification in three remaining phases.
+
+### Phase 4 — Git / CI / Deployment
+- branch and release-state visibility
+- changed-file and content-aware diff review
+- pull-request creation/state and conflict/staleness visibility
+- GitHub Actions status and safe failed-job reruns
+- CI-gated publish/merge flow
+- server-side Vercel deployment visibility when credentials are legitimately configured
+- Lighthouse and release-quality results remain repository/CI-derived; never fabricated
+
+### Phase 5 — Engineering Intelligence
+- repository/site health center using actual validation and audit results
+- evidence/provenance management
+- relationship explorer, orphan/broken-reference reporting
+- stale-content and repository/content consistency reports
+- repository-backed export/archive capabilities
+- keyboard command palette and safe bulk content operations
+- content-aware review surfaces
+
+### Phase 6 — Hardening / Final Verification
+- authentication/authorization, CSRF, OAuth, session, CSP, XSS/MDX, path, URL, SSRF and secret-handling audit
+- public-site security/SEO verification
+- accessibility and responsive verification
+- performance verification
+- failure/recovery testing across GitHub, CI, deployment and malformed input paths
+- complete documentation and production verification
+
+These phases extend, rather than replace, the completed Phase 0–3 admin implementation. Master remains protected by GitHub review/CI; the public Astro site remains static and Git remains the source of truth.

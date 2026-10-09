@@ -139,3 +139,9 @@ The Lab should improve through explicit interaction states, accessible semantics
 **Decision:** Build the admin as a separate, server-side management application that operates on Git branches, commits and pull requests while leaving the public Astro site static.
 **Status:** Active.
 **Reason:** The admin should improve repository maintenance without creating a second source of truth, runtime CMS or paid infrastructure. Master remains protected by the normal CI/review path.
+
+
+## D-028 — Admin phase continuation contract
+Decision: Treat the original admin implementation specification as the authoritative scope for Phases 4–6 when separately named phase documents are absent.
+Status: Active.
+Reason: The project already established the intended control-plane architecture; the documentation gap should not block its remaining implementation. The phases remain incomplete until independently verified and merged.

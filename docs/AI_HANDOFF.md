@@ -203,3 +203,14 @@ Current production implementation uses `www.alokthakur.me` as the canonical URL.
 Timeline CP records dated 2026-10-07 were checked against Git history. The relevant CP commits genuinely occurred on the same calendar date, so no artificial dates were introduced.
 
 Admin architecture remains separate from the public static site and must preserve Git as the source of truth.
+
+
+## Admin Phase 4–6 scope
+
+The remaining admin roadmap is explicitly recorded here so future sessions do not treat the absence of separate phase files as an architectural ambiguity.
+
+- Phase 4 — Git / CI / Deployment: repository workflow orchestration, branch/PR/diff state, CI visibility and safe reruns, guarded merge/publish flow, and server-side Vercel deployment visibility.
+- Phase 5 — Engineering Intelligence: health, evidence/provenance, relationship intelligence, reports, repository-backed export/archive, command palette and safe bulk operations.
+- Phase 6 — Hardening / Final Verification: security, public-site security, accessibility, responsive behavior, performance, failure/recovery and final production verification.
+
+Phase 0–3 remain complete checkpoints. Do not claim Phase 4–6 complete until each phase is implemented, tested, documented, committed, merged to master and independently verified.
