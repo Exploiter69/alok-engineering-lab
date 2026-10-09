@@ -229,7 +229,7 @@ Verified on Phase 5 HEAD:
 - interaction responsiveness audit passed
 - production viewport audit passed
 
-Phase 5 remains intentionally unmerged because Phase 4 PR #8 has not yet completed its required Vercel deployment gate. Do not merge Phase 5 until Phase 4 is legitimately merged and the Phase 5 branch is safely reconciled with the resulting master state.
+Phase 4 PR #8 was merged as `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d` after the updated Phase 4 head passed the Quality workflow and received a READY Vercel preview. Phase 5 is now the next integration step. Its current head predates the Phase 4 merge-gate hardening commit, but it does not modify that file relative to its Phase 4 base; verify the PR mergeability and all fresh checks before merging.
 
 
 ## Phase 6 independent hardening
@@ -249,11 +249,10 @@ Verified independently:
 Quality run: GitHub Actions run `37656763756` — admin-security PASS; repository validation/build/browser/performance/Lighthouse/interaction/viewport checks PASS.
 
 Phase boundary remains:
-- Phase 4 Vercel gate: blocked
-- Phase 4 merge: blocked
-- Phase 5 merge: blocked
-- Phase 6 final integration: blocked
-- production verification: blocked
+- Phase 4: merged as `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d`; Quality and Vercel preview passed.
+- Phase 5: merged as `3ac527254efc3658169e62e87d30f1162c523459`; fresh Quality and Vercel preview passed.
+- Phase 6 final integration: pending fresh verification on the current head.
+- Final production verification: pending the Phase 6 merge and resulting READY production deployment.
 
 ## Admin Phase 6 current quality checkpoint
 
@@ -261,4 +260,4 @@ Phase 6 hardening remains on `admin/phase-6-hardening` / draft PR #10. The branc
 
 Quality workflow `37659657170` passed `admin-security` and `build-and-audit`, including repository validation, build, browser quality, performance, Lighthouse, interaction responsiveness and production viewport checks.
 
-Phase 6 status is **IMPLEMENTED / QUALITY VERIFIED / WAITING FOR PHASE 4 + PHASE 5**. It is not merged and is not production-complete.
+Phase 6 status is **IMPLEMENTED / PRIOR QUALITY VERIFIED / FINAL INTEGRATION PENDING**. Phases 4 and 5 are now merged; this branch needs fresh Quality and Vercel checks on its current head before Phase 6 can merge.
