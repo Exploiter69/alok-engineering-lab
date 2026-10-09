@@ -225,3 +225,17 @@ Phase 0–3 remain complete checkpoints. Do not claim Phase 4–6 complete until
 - Vercel production deployment for the Phase 6 merge commit reached READY and restored the configured aliases, including `www.alokthakur.me`.
 - Historical PR #10 was closed as superseded; its branch history was preserved. PR #13 resolved integration on current master without rewriting release history.
 - Keep Astro public output static, Git as the source of truth, and the project at ₹0 / $0.
+
+
+## Admin production activation boundary — 2026-10-09
+
+The Phase 4–6 code, CI gates, merge integration and public-site production deployment are verified. The separate admin application is **not yet operationally deployed**. Repository docs specify a separate Vercel project rooted at `admin/` and callback `https://admin.alokthakur.me/api/auth/callback`, but the available Vercel account view currently exposes only the Astro `alok-engineering-lab` project; its domain aliases do not include `admin.alokthakur.me`, and its environment-variable list is empty. Creating the separate admin project was blocked by a Vercel API 403 authorization error for the account scope. No paid upgrade was attempted.
+
+Activation checklist once Vercel project-creation/domain permissions are available:
+1. Create/link a Vercel project for this repository with root directory `admin/` and name `alok-engineering-lab-admin`.
+2. Attach `admin.alokthakur.me` and verify its DNS/domain status.
+3. Set production-only `ADMIN_BASE_URL=https://admin.alokthakur.me`, `ADMIN_ALLOWED_LOGINS=Exploiter69`, `ADMIN_SESSION_SECRET` (random, at least 32 characters), `GITHUB_CLIENT_ID`, and `GITHUB_CLIENT_SECRET`. `GITHUB_OAUTH_SCOPE` may remain at the code default `read:user repo`.
+4. Configure the GitHub OAuth app callback exactly as `https://admin.alokthakur.me/api/auth/callback`.
+5. Verify `/api/health`, the GitHub OAuth allowlist, session/CSRF behavior, content edits on an admin branch, CI-gated merge, and deployment visibility before calling the admin panel production-ready.
+
+Do not commit secrets, weaken the allowlist, deploy credentials in the public Astro project, or violate the ₹0 / $0 constraint.
