@@ -220,6 +220,6 @@ Phase 0–3 remain complete checkpoints. Do not claim Phase 4–6 complete until
 
 - Phase 4 — Git / CI / Deployment: merged to master in PR #8 at `ecb2a1b96c5e7a5fc0d6580fe5eadca58c7e0f6d`.
 - Phase 5 — Engineering Intelligence: merged to master in PR #9 at `3ac527254efc3658169e62e87d30f1162c523459`.
-- Phase 6 — Security / Accessibility / Reliability hardening: integrated onto current master in branch `admin/phase-6-integration`, PR #13. Final Quality and deployment checks are pending; do not call Phase 6 complete or merge until those checks pass.
+- Phase 6 — Security / Accessibility / Reliability hardening: merged to `master` as `95820fc98a94e5f61d59420b67e3fa6c285fb2d0` via PR #13. Quality run `37889448189` passed `admin-security` and `build-and-audit`, including repository validation, build, browser, performance, Lighthouse, interaction and viewport audits. The Vercel production deployment for that commit is READY. Admin Phases 0–6 are integrated; the public Astro site remains static and the project remains ₹0/$0.
 - Historical PR #10 had merge conflicts against updated master. Its hardening changes are being integrated through PR #13 without rewriting master or the `v1.0.0` history.
 - Keep Astro public output static, Git as the source of truth, and the project at ₹0 / $0.
