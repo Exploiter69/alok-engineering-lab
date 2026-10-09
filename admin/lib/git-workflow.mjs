@@ -5,6 +5,29 @@ const REPO = "alok-engineering-lab";
 
 function apiPath(path) { return `/repos/${OWNER}/${REPO}${path}`; }
 
+export function mergeReadiness({ status, checkRuns, pr, expectedSha, number }) {
+  if (status?.state !== "success") return { ready: false, reason: `Commit statuses are not green: ${status?.state || "unknown"}` };
+
+  const runs = checkRuns?.check_runs || [];
+  const total = Number(checkRuns?.total_count || 0);
+  if (!total || !runs.length || runs.length !== total) {
+    return { ready: false, reason: "GitHub check runs are missing or incomplete" };
+  }
+  const pending = runs.filter((run) => run.status !== "completed");
+  if (pending.length) return { ready: false, reason: "GitHub check runs are still in progress" };
+  const failed = runs.filter((run) => !["success", "skipped", "neutral"].includes(run.conclusion));
+  if (failed.length) return { ready: false, reason: `GitHub check runs are not green: ${failed.map((run) => run.name).join(", ")}` };
+
+  if (!pr || pr.number !== number || pr.head?.sha !== expectedSha || pr.base?.ref !== "master" || pr.state !== "open") {
+    return { ready: false, reason: "Pull request changed or is no longer open" };
+  }
+  if (pr.draft) return { ready: false, reason: "Draft pull requests cannot be merged" };
+  if (pr.mergeable !== true || ["dirty", "blocked"].includes(pr.mergeable_state)) {
+    return { ready: false, reason: "Pull request is not confirmed mergeable" };
+  }
+  return { ready: true, reason: "Commit statuses, check runs and pull request state are green" };
+}
+
 export async function branches(token) {
   const data = await github(apiPath("/branches?per_page=100"), {}, token);
   return data.map((item) => ({ name: item.name, sha: item.commit.sha, protected: item.protected }));
@@ -53,15 +76,14 @@ export async function createPullRequest(token, branch, title, body = "") {
 }
 
 export async function mergePullRequest(token, number, expectedSha) {
-  const status = await github(apiPath(`/commits/${expectedSha}/status`), {}, token);
-  if (status.state !== "success") {
-    const error = new Error(`CI is not green: ${status.state}`);
-    error.status = 409;
-    throw error;
-  }
+  const [status, checkRuns] = await Promise.all([
+    github(apiPath(`/commits/${expectedSha}/status`), {}, token),
+    github(apiPath(`/commits/${expectedSha}/check-runs?per_page=100`), {}, token),
+  ]);
   const pr = await github(apiPath(`/pulls/${number}`), {}, token);
-  if (pr.head.sha !== expectedSha || pr.base.ref !== "master" || pr.state !== "open") {
-    const error = new Error("Pull request changed or is no longer open");
+  const readiness = mergeReadiness({ status, checkRuns, pr, expectedSha, number });
+  if (!readiness.ready) {
+    const error = new Error(readiness.reason);
     error.status = 409;
     throw error;
   }
