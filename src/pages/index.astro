@@ -30,24 +30,37 @@ const evidence = (await getCollection("evidence")).filter(item => item.data.stat
       </h1>
       <p class="mt-8 max-w-2xl type-body-lg text-muted">{SITE.tagline} Python · asyncio · Linux · AI agents.</p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href="/projects" class="inline-flex min-h-11 items-center rounded-full border border-white bg-white px-5 py-2.5 text-sm font-medium text-black transition hover:bg-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+        <a href="/projects" class="inline-flex min-h-11 items-center rounded-md border border-orange-400 bg-orange-500 px-5 py-2.5 text-sm font-medium text-black transition hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
           View projects <span aria-hidden="true" class="ml-2">→</span>
         </a>
-        <a href="/about" class="inline-flex min-h-11 items-center rounded-full border border-neutral-800 px-5 py-2.5 text-sm font-medium text-neutral-300 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+        <a href="/about" class="inline-flex min-h-11 items-center rounded-md border border-neutral-800 px-5 py-2.5 text-sm font-medium text-neutral-300 transition hover:border-neutral-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
           How I work
         </a>
       </div>
     </div>
 
-    <aside class="surface-1 self-end rounded-[var(--radius-lg)] border border-lab p-6 shadow-[var(--shadow-2)] lg:p-7">
-      <p class="lab-label">System status</p>
-      <div class="mt-4 flex items-center gap-3"><span class="h-2.5 w-2.5 rounded-full bg-lime-400 shadow-[0_0_0_4px_var(--accent-soft)]" aria-hidden="true"></span><span class="font-mono text-sm uppercase tracking-[0.14em] text-accent">Building</span></div>
-      <p class="mt-3 text-sm leading-7 text-muted">Static by design. Content is generated from repository-backed records; there is no runtime database or telemetry layer.</p>
-      <dl class="mt-6 space-y-3 border-t border-lab pt-5 text-sm">
-        <div class="flex justify-between gap-4"><dt class="text-faint">Runtime</dt><dd class="text-right text-muted">None</dd></div>
-        <div class="flex justify-between gap-4"><dt class="text-faint">Data</dt><dd class="text-right text-muted">Git + MDX</dd></div>
-        <div class="flex justify-between gap-4"><dt class="text-faint">Delivery</dt><dd class="text-right text-muted">Static HTML</dd></div>
-      </dl>
+    <aside class="workspace-window workspace-grid self-stretch overflow-hidden rounded-lg lg:self-end" aria-label="Illustrative engineering workspace preview">
+      <div class="workspace-titlebar flex min-h-12 items-center justify-between gap-3 px-4">
+        <div class="flex items-center gap-2" aria-hidden="true"><span class="workspace-dot"></span><span class="workspace-dot"></span><span class="workspace-dot"></span></div>
+        <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-subtle">workspace / 01</span>
+        <span class="font-mono text-[10px] text-accent">LOCAL</span>
+      </div>
+      <div class="p-4 sm:p-5">
+        <div class="flex items-center justify-between gap-3 border-b border-lab pb-4">
+          <div><p class="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">Active directory</p><p class="mt-1 font-mono text-sm text-white">~/engineering-lab</p></div>
+          <span class="border border-lab-strong px-2 py-1 font-mono text-[10px] text-muted">GIT</span>
+        </div>
+        <div class="mt-5 space-y-4 font-mono text-xs">
+          <div class="flex items-start gap-3"><span class="text-accent" aria-hidden="true">›</span><div class="min-w-0"><p class="text-white">building systems that hold up</p><p class="mt-1 text-faint">automation · agents · reliability</p></div></div>
+          <div class="border-l border-lab-strong pl-4">
+            <div class="flex items-center justify-between gap-3 py-2"><span class="text-muted">vajra/</span><span class="text-faint">orchestration</span></div>
+            <div class="flex items-center justify-between gap-3 border-t border-lab py-2"><span class="text-muted">vgu-signal/</span><span class="text-faint">automation</span></div>
+            <div class="flex items-center justify-between gap-3 border-t border-lab py-2"><span class="text-muted">astra-userbot/</span><span class="text-faint">async runtime</span></div>
+          </div>
+          <div class="flex items-center justify-between gap-3 border-t border-lab pt-4"><span class="text-faint">source of truth</span><span class="text-accent">git + evidence</span></div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between gap-3 border-t border-lab bg-black/50 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] text-faint"><span>static by design</span><span>₹0 / $0</span></div>
     </aside>
   </section>
 
