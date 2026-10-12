@@ -27,7 +27,7 @@ const statusSymbol = {
   exploring: "○", building: "●", maintaining: "◇", archived: "—",
   benchmark: "◎", failure: "×", verification: "✓", observation: "·",
 }[status?.toLowerCase() ?? ""] ?? "·";
-const statusClass = ["building", "verification"].includes(status?.toLowerCase() ?? "") ? "text-lime-300" : "text-muted";
+const statusClass = ["building", "verification"].includes(status?.toLowerCase() ?? "") ? "text-accent" : "text-muted";
 ---
 
 {
